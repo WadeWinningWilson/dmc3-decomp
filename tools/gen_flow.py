@@ -11,7 +11,7 @@ handled like in gen_leaf.
 Only byte-identical results are kept (call targets included):
 src/game/auto/flow.c. Names stay func_XXXXXXXX; types are placeholders.
 
-usage: python -I tools/gen_flow.py [max instructions, default 40]
+usage: python -I tools/gen_flow.py [max instructions, default 80] [permutation rounds, default 0]
 """
 import contextlib
 import importlib.util
@@ -26,6 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src/game/auto/flow.c"
 LO, HI = 0x195158, 0x50FE28
 MAX_INS = int(sys.argv[1]) if len(sys.argv) > 1 else 80
+NEAR = 0.6  # minimum match ratio for a function to get permutation rounds
 CC = ("MWCIncludes=. wibo tools/compilers/mwcps2-3.0b52-030722/mwccps2.exe -c -O3,p "
       "-fl divbyzerocheck -inline depth=8 -nostdinc")
 
@@ -62,7 +63,7 @@ def is_vu(op):
 
 
 def split(i):
-    m = re.match(r"(\w+(?:\.\w+)?)\s*(.*)", i)
+    m = re.match(r"(\w+(?:\.\w+)*)\s*(.*)", i)
     if not m:
         raise Fail  # e.g. ".word" data inside a function
     return m.group(1), [a.strip() for a in m.group(2).split(",")] if m.group(2) else []
@@ -217,8 +218,62 @@ def blocks_of(seq):
     return [(a, b) for a, b in blocks]
 
 
+
+def reorder(lines, rng, rate=0.35):
+    """Randomly swap adjacent independent statements (units: a line, or a whole
+    if/else/do block) at the same indentation. Units touching memory, calls,
+    returns, loops control or asm never move."""
+    def units(ls):
+        out, i = [], 0
+        while i < len(ls):
+            ind = len(ls[i]) - len(ls[i].lstrip())
+            j = i + 1
+            if ls[i].rstrip().endswith("{"):
+                while j < len(ls) and not (len(ls[j]) - len(ls[j].lstrip()) == ind and
+                                           ls[j].strip().startswith("}") and not ls[j].rstrip().endswith("{")):
+                    j += 1
+                j += 1
+            out.append(ls[i:j])
+            i = j
+        return out
+
+    def info(u):
+        text = "\n".join(u)
+        if re.search(r"\*\(|->|func_|return|break|continue|__asm__|do \{|while", text):
+            return None
+        writes = set(re.findall(r"\b(\w+) [-+*/&|^]?=(?!=)", text))
+        reads = set(re.findall(r"\b[a-z]\w*\b", text))
+        return writes, reads
+
+    def walk(ls):
+        us = units(ls)
+        for k in range(len(us) - 1):
+            a, b = us[k], us[k + 1]
+            ia, ib = info(a), info(b)
+            if ia and ib and rng.random() < rate:
+                wa, ra = ia
+                wb, rb = ib
+                if not (wa & (rb | wb)) and not (wb & ra):
+                    us[k], us[k + 1] = b, a
+        out = []
+        for u in us:
+            if len(u) > 2:
+                out += [u[0]] + walk(u[1:-1]) + [u[-1]]
+            else:
+                out += u
+        return out
+
+    return walk(lines)
+
+
 def translate(name, raw, externs, opts=None):
     opts = opts or {}
+    import random
+    rng = random.Random(opts["seed"]) if "seed" in opts else None
+
+    def coin(p=0.5):
+        """A seeded choice (only when permuting); deterministic default otherwise."""
+        return rng is not None and rng.random() < p
     seq, _, _ = prepare(raw)
     stack = STACK
     if not seq or len(seq) > MAX_INS:
@@ -439,7 +494,7 @@ def translate(name, raw, externs, opts=None):
                 if r not in local:
                     for d in ds:
                         crossing.add(d)
-                if opts.get("coalesce") and r in wr and not r.startswith("$f"):
+                if (opts.get("coalesce") if rng is None else coin()) and r in wr and not r.startswith("$f"):
                     # in-place update (x = x op y): one source variable, keep it in one web
                     union((k, pos, r), ds[0])
             if ins_ is not None:
@@ -709,10 +764,12 @@ def translate(name, raw, externs, opts=None):
                   off, vbase = num(mm.group(1)), mm.group(2)
                   if vbase == "$t9" and types.get("$t9") == "vptr":
                       regs["$t9"], types["$t9"] = f"{regs['$t9']}|{off}", "vslot"
-                  elif off == 0 and vbase != "$t9":
+                  elif vbase != "$t9":
                       obj, ot = val(vbase)
                       if ot != "char *":
                           raise Fail
+                      if off:  # vptr of a secondary base: `this` is the adjusted pointer
+                          obj = f"({obj} + {off})"
                       regs["$t9"], types["$t9"] = obj, "vptr"
                   else:
                       raise Fail
@@ -765,6 +822,8 @@ def translate(name, raw, externs, opts=None):
                   if op != "addu" and tx == "char *":
                       x, tx = ival(a[1])
                   sym = {"addu": "+", "subu": "-", "and": "&", "or": "|", "xor": "^"}[op]
+                  if op != "subu" and tx != "char *" and coin():
+                      x, y = y, x  # commutative: try the other operand order
                   define(a[0], f"({x} {sym} {y})", tx if tx == "char *" else "int", a[1] in memdep or a[2] in memdep)
               elif op in ("andi", "ori", "xori"):
                   x, _ = ival(a[1])
@@ -937,6 +996,8 @@ def translate(name, raw, externs, opts=None):
         x, o, y = cond
         if negate:
             o = NEG[o]
+        if y != "0" and coin(0.3):
+            x, o, y = y, {"==": "==", "!=": "!=", "<": ">", ">": "<", "<=": ">=", ">=": "<="}[o], x
         if y == "0" and o in ("!=", "==") and re.fullmatch(r"\(.*(==|<|<=|>|>=|!=).*\)", x):
             return x if o == "!=" else f"!{x}"
         return f"{x} {o} {y}"
@@ -1079,6 +1140,10 @@ def translate(name, raw, externs, opts=None):
                     out = [re.sub(rf"^(\s*{v} = )\({re.escape(nt)}\)", r"\1", l) for l in out]
     decl = [f"    {vtype[v]} {v};" for w, v in sorted(webvar.items(), key=lambda x: x[1])
             if not re.fullmatch(r"[pf]\d", v)]
+    if rng is not None and coin(0.7):
+        rng.shuffle(decl)  # MW's register allocation follows declaration order
+    if rng is not None and coin(0.6):
+        out = reorder(out, rng)
     if stack:
         decl = [f"    char stk[{stack[1]:#x}] __attribute__((aligned(16)));"] + decl
     lines = [f"{rtype} {name}({', '.join(plist) or 'void'}) {{"] + decl + [f"    {l}" for l in locs] + out + ["}"]
@@ -1090,13 +1155,20 @@ def check(path, cands):
     obj = f"scratch/{path.stem}.o"  # compiled by compile_ok() with the right language flags
     ok = set()
     for n, A in cands.items():
-        with contextlib.redirect_stdout(io.StringIO()):
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
             try:
                 if fd.main(str(ROOT / "orig/SLUS_209.64/SLUS_209.64"), str(ROOT / obj), n, hex(A)) == 0:
                     ok.add(n)
             except (SystemExit, Exception):
                 pass
+        m = re.search(r"(\d+)/(\d+) instructions", buf.getvalue())
+        if m:
+            SCORES[n] = max(SCORES.get(n, 0.0), int(m.group(1)) / max(int(m.group(2)), 1))
     return ok
+
+
+SCORES = {}  # best instruction-match ratio seen per function
 
 
 def write(path, funcs, externs):
@@ -1189,8 +1261,8 @@ def main():
                for m in re.finditer(r"/\* [0-9A-F]+ ([0-9A-F]{8}) [0-9A-F]{8} \*/\s+(.*)", body)]
         has_branch = any(re.match(r"b\w*\b", t) and not t.startswith("break") for _, t in raw)
         has_vcall = any(t.startswith("jalr") for _, t in raw)
-        if not has_branch and not has_vcall:
-            continue  # branch-free, call-free-of-virtuals functions belong to gen_leaf
+        # branch-free functions that tools/gen_leaf.py already matched are excluded by `taken`;
+        # the rest are tried here too (richer instruction set, webs, stack locals)
         work.append((name, A, raw, has_vcall))
     addr = {n: A for n, A, _, _ in work}
     externs, matched = {}, {"c": {}, "cpp": {}}
@@ -1228,6 +1300,45 @@ def main():
             if f[0] in ok:
                 matched[kind][f[0]] = f
         print(f"pass {opts}: {len(ok)} match of {len(keep)} candidates ({fails} not translatable)", flush=True)
+    # permutation rounds: near misses get seeded variants (variable merging, operand
+    # orders), batched into one compile per round and kind
+    rounds = int(sys.argv[2]) if len(sys.argv) > 2 else 0
+    near = {n for n, sc in SCORES.items() if sc >= NEAR and n not in matched["c"] and n not in matched["cpp"]}
+    by_name = {n: (raw, has_vcall) for n, A, raw, has_vcall in work}
+    for rnd in range(rounds):
+        got = 0
+        for kind in ("c", "cpp"):
+            funcs = []
+            for name in sorted(near):
+                raw, has_vcall = by_name[name]
+                if has_vcall != (kind == "cpp"):
+                    continue
+                try:
+                    code, calls, meta = translate(name, raw, externs,
+                                                  {"seed": f"{name}:{rnd}", "cpp": kind == "cpp"})
+                except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError):
+                    continue
+                META[name] = meta
+                funcs.append((name, code, calls))
+            defs = {n for n, _, _ in funcs} | set(matched["c"]) | set(matched["cpp"])
+            seen = {c: rt for d in matched.values() for _, _, cl in d.values() for c, rt in cl.items()}
+            keep = []
+            for f in funcs:
+                if any(c in defs for c in f[2]) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
+                    continue
+                seen.update(f[2])
+                keep.append(f)
+            if not keep:
+                continue
+            tmpfile = ROOT / ("scratch/flow_perm.cpp" if kind == "cpp" else "scratch/flow_perm.c")
+            keep = compile_ok(tmpfile, keep, externs, kind)
+            ok = check(tmpfile, {n: addr[n] for n, _, _ in keep})
+            for f in keep:
+                if f[0] in ok:
+                    matched[kind][f[0]] = f
+                    near.discard(f[0])
+            got += len(ok)
+        print(f"permute round {rnd + 1}/{rounds}: {got} new matches, {len(near)} near misses left", flush=True)
     # final files: re-verify everything together (a callee in the same file can change a caller)
     for kind, path in (("c", OUT), ("cpp", OUT_CPP)):
         final = [matched[kind][n] for n in sorted(matched[kind], key=lambda n: addr[n])]

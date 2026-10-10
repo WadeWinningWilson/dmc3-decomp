@@ -150,7 +150,7 @@ per-file "matching" switch; the per-file progress is in `build/us/progress.json`
 |---|---|
 | `tools/gen_trivial.py` | two-instruction functions (getters, setters, forwarders) |
 | `tools/gen_leaf.py` | short branch-free functions translated from asm: leaves, tail calls, straight-line calls, global data, VU0 runs as `__asm__` |
-| `tools/gen_flow.py` | functions with branches and simple loops, structured with post-dominators; variables per register web; C++ virtual calls through synthetic classes (`flow_v.cpp`) |
+| `tools/gen_flow.py` | functions with branches and loops (also branch-free leftovers), structured with post-dominators; variables per register web; C++ virtual calls through synthetic classes (`flow_v.cpp`); stack locals as one aligned buffer; optional permutation rounds for near misses (declaration order, statement order, operand order, variable merging) |
 | `tools/gen_dtors.py` | empty-body deleting destructors |
 | `tools/gen_cwork_dtors.py` | destructors of single-inheritance `CWork` chains, from RTTI + asm |
 | `tools/gen_class_dtors.py` | destructors that call their parent's (single or multiple inheritance) |
