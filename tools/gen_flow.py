@@ -161,7 +161,8 @@ def blocks_of(seq):
     return [(a, b) for a, b in blocks]
 
 
-def translate(name, raw, externs):
+def translate(name, raw, externs, opts=None):
+    opts = opts or {}
     seq, _, _ = prepare(raw)
     if not seq or len(seq) > MAX_INS:
         raise Fail
@@ -265,12 +266,162 @@ def translate(name, raw, externs):
             new_in = use[k] | (out - df[k])
             if new_in != live_in[k]:
                 live_in[k], changed = new_in, True
-    variables = set().union(*(live_in[k] for k in range(1, n))) - {"$zero", "$gp"}
-    for h in loops:  # values carried around a loop
-        variables |= live_in[h] - {"$zero", "$gp"}
-    variables |= {r for r in live_in[0] if r in ARGS or r in FARGS}
+    # ---- webs: definitions connected through shared uses (reaching definitions) ----
+    CALLER_SAVED = {f"$t{i}" for i in range(10)} | {"$v0", "$v1", "$at"} | set(ARGS) | \
+        {f"$f{i}" for i in range(20)}
 
-    based = set()
+    def bseq(k):
+        """(body, has_term, post) instruction tuples of block k, in block_code's order."""
+        ins = bl[k][1]
+        has_term = term[k][0] in ("ret", "tail", "goto", "cond")
+        body = [split(x) for x in (ins[:-1] if has_term else ins)]
+        post = [split(x) for x in (ins[-1].split(" || ")[1:] if term[k][0] == "cond" else [])]
+        return body, has_term, post
+
+    def positions(k):
+        """[(pos, reads, writes, clobbers)] for block k."""
+        body, has_term, post = bseq(k)
+        out, pos = [], 0
+        for op, a in body:
+            rd, wr = regs_of(op, a)
+            out.append((pos, rd, wr, CALLER_SAVED - wr if op == "jal" else set()))
+            pos += 1
+        if has_term:
+            tk = term[k]
+            rd = set()
+            if tk[0] == "cond":
+                rd = regs_of(tk[1], tk[2])[0]
+            elif tk[0] == "ret":
+                rd = {"$v0"}
+            elif tk[0] == "tail":
+                rd = set(ARGS)
+            out.append((pos, rd, set(), set()))
+            pos += 1
+        for op, a in post:
+            rd, wr = regs_of(op, a)
+            out.append((pos, rd, wr, set()))
+            pos += 1
+        return out
+
+    entry_defs = {r: ("entry", r) for r in ARGS + FARGS}
+    pos_of = {k: positions(k) for k in range(n)}
+    gen = {}
+    for k in range(n):
+        cur = {}
+        for pos, rd, wr, clob in pos_of[k]:
+            for r in clob:
+                cur[r] = {("clobber", k, pos, r)}
+            for r in wr:
+                cur[r] = {(k, pos, r)}
+        gen[k] = cur
+    preds = {k: [] for k in range(n)}
+    for k in range(n):
+        for s2 in succ[k]:
+            preds[s2].append(k)
+    IN = {k: {} for k in range(n)}
+    OUT = {k: {} for k in range(n)}
+    changed = True
+    while changed:
+        changed = False
+        for k in range(n):
+            inn = {}
+            if k == 0:
+                for r, d in entry_defs.items():
+                    inn[r] = {d}
+            for p_ in preds[k]:
+                for r, ds in OUT[p_].items():
+                    inn.setdefault(r, set()).update(ds)
+            outd = {r: set(ds) for r, ds in inn.items()}
+            outd.update({r: set(ds) for r, ds in gen[k].items()})
+            if inn != IN[k] or outd != OUT[k]:
+                IN[k], OUT[k], changed = inn, outd, True
+    parent = {}
+
+    def find(x):
+        parent.setdefault(x, x)
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        parent[find(x)] = find(y)
+
+    crossing = set()      # webs whose value flows across a block boundary
+    ptr_web = set()       # webs used as a base address
+    useweb = {}           # (k, pos, reg) -> reaching def set
+    for k in range(n):
+        cur = {r: set(ds) for r, ds in IN[k].items()}
+        local = set()
+        body, has_term, post = bseq(k)
+        flat = body + ([None] if has_term else []) + post
+        for (pos, rd, wr, clob), ins_ in zip(pos_of[k], flat):
+            for r in rd:
+                if r in ("$zero", "$gp", "$sp"):
+                    continue
+                ds = cur.get(r, set())
+                if not ds:
+                    continue
+                ds = list(ds)
+                for d in ds[1:]:
+                    union(ds[0], d)
+                find(ds[0])
+                useweb[(k, pos, r)] = ds
+                if r not in local:
+                    for d in ds:
+                        crossing.add(d)
+                if opts.get("coalesce") and r in wr and not r.startswith("$f"):
+                    # in-place update (x = x op y): one source variable, keep it in one web
+                    union((k, pos, r), ds[0])
+            if ins_ is not None:
+                op, a = ins_
+                if op in LOADS or op in STORES or op in ("lqc2", "sqc2"):
+                    mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", a[1])
+                    if mm and cur.get(mm.group(2)):
+                        for d in cur[mm.group(2)]:
+                            ptr_web.add(d)
+            for r in clob:
+                cur[r] = {("clobber", k, pos, r)}
+                local.add(r)
+            for r in wr:
+                cur[r] = {(k, pos, r)}
+                find((k, pos, r))
+                local.add(r)
+    crossing = {find(d) for d in crossing}
+    ptr_web = {find(d) for d in ptr_web}
+    webvar, webtype, varnames = {}, {}, set()
+    used_entry = {r for r, d in entry_defs.items() if d in parent and any(find(d) == find(x) for ds in useweb.values() for x in ds)}
+    params = {r for r in used_entry}
+    top = max((ARGS.index(r) for r in params if r in ARGS), default=-1)
+    params |= set(ARGS[:top + 1])
+    for r in params:
+        d = entry_defs[r]
+        w = find(d)
+        webvar[w] = f"p{ARGS.index(r)}" if r in ARGS else f"f{FARGS.index(r)}"
+        webtype[w] = "float" if r in FARGS else ("char *" if w in ptr_web else "int")
+    nv = 0
+    for w in sorted(crossing, key=str):
+        if w in webvar:
+            continue
+        if w[0] in ("clobber", "entry"):
+            continue
+        webvar[w] = f"v{nv}"
+        nv += 1
+        reg = w[2]
+        webtype[w] = "float" if reg.startswith("$f") else ("char *" if w in ptr_web else "int")
+    varnames = set(webvar.values())
+    # register -> web of the value that enters block k
+    inweb = {}
+    for k in range(n):
+        m = {}
+        for r, ds in IN[k].items():
+            ws = {find(d) for d in ds}
+            if len(ws) == 1:
+                w = ws.pop()
+                if w in webvar:
+                    m[r] = w
+        inweb[k] = m
+    based = set()  # kept for the jal / lw type heuristics
     for _, ins in bl:
         for t in ins:
             op, a = split(t)
@@ -279,21 +430,11 @@ def translate(name, raw, externs):
                 if mm:
                     based.add(mm.group(2))
 
-    def vname(r):
-        if r in ARGS:
-            return f"p{ARGS.index(r)}"
-        if r in FARGS:
-            return f"f{FARGS.index(r)}"
-        return "r_" + r[1:]
+    def defweb(k, pos, r):
+        d = (k, pos, r)
+        return find(d) if d in parent else None
 
-    vtypes = {r: ("float" if r.startswith("$f") else "char *" if r in based else "int") for r in variables}
-    params = {r for r in live_in[0] if r in ARGS or r in FARGS}
-    # every integer argument slot up to the last one used is a parameter (unused ones too),
-    # so a register like $a1 is always the parameter p1, never a separate local
-    top = max((ARGS.index(r) for r in params if r in ARGS), default=-1)
-    params |= set(ARGS[:top + 1])
-    for r in params:
-        vtypes[r] = "float" if r in FARGS else ("char *" if r in based else "int")
+    vtypes = {}
     locs, calls, local_ext = [], {}, {}
     ntemp = [0]
 
@@ -305,8 +446,9 @@ def translate(name, raw, externs):
     def block_code(k):
         """Statements of block k (without its terminator) and the branch condition."""
         regs, types, memdep, stmts = {}, {}, set(), []
-        for r in variables:
-            regs[r], types[r] = vname(r), vtypes[r]
+        for r, w in inweb[k].items():
+            regs[r], types[r] = webvar[w], webtype[w]
+        cur = [0]
 
         def val(r):
             if r == "$zero":
@@ -315,8 +457,6 @@ def translate(name, raw, externs):
                 if types[r] == "hi" or types[r].startswith("sh32"):
                     raise Fail
                 return regs[r], types[r]
-            if r in ARGS or r in FARGS:
-                return vname(r), vtypes.get(r, "int")
             raise Fail
 
         def ival(r):
@@ -332,20 +472,21 @@ def translate(name, raw, externs):
 
         def flush():
             for r in sorted(memdep):
-                if regs[r] != vname(r) or r not in variables:
+                if regs[r] not in varnames:
                     regs[r] = tmp(types[r], regs[r])
             memdep.clear()
 
         def define(r, e, t, mem=False):
-            if r in variables:
-                var = vname(r)
+            w = defweb(k, cur[0], r)
+            if w is not None and w in webvar:
+                var = webvar[w]
                 # values still pending that read the variable's old value must be kept first
                 for o in list(regs):
-                    if o != r and o not in variables and re.search(rf"\b{var}\b", regs[o]):
+                    if o != r and regs[o] not in varnames and re.search(rf"\b{var}\b", regs[o]):
                         regs[o] = tmp(types[o], regs[o])
                         memdep.discard(o)
                 if t != "hi":
-                    vt = vtypes[r]
+                    vt = webtype[w]
                     if vt == "char *" and t != "char *" and e != "0":
                         e = f"(char *){e}"
                     elif vt != "char *" and t == "char *":
@@ -379,9 +520,10 @@ def translate(name, raw, externs):
         st = {"fcmp": None, "vu": []}
         written = set()
 
-        def run(body):
+        def run(body, base=0):
           for idx, t in enumerate(body):
               op, a = split(t)
+              cur[0] = base + idx
               if is_vu(op):
                   st["vu"].append((op, a))
                   nxt_vu = idx + 1 < len(body) and is_vu(split(body[idx + 1])[0])
@@ -413,8 +555,8 @@ def translate(name, raw, externs):
                   cargs = [val(ARGS[i])[0] for i in range(nargs)]
                   flush()
                   call = f"{fn}({', '.join(cargs)})"
-                  for r in list(regs):
-                      if r not in variables and not re.fullmatch(r"\$s[0-7]|\$f(2[0-9]|3[01])", r):
+                  for r in list(regs):  # caller-saved registers are dead after the call
+                      if not re.fullmatch(r"\$s[0-7]|\$fp|\$f(2[0-9]|3[01])", r):
                           del regs[r]
                           types.pop(r, None)
                   written.clear()
@@ -431,14 +573,16 @@ def translate(name, raw, externs):
                       return rr in set().union(*(live_in[s] for s in (succ[k] or [EXIT]))) or \
                           (term[k][0] == "ret" and rr == "$v0") or \
                           (term[k][0] == "cond" and rr in regs_of(term[k][1], term[k][2])[0])
+                  wf, wv = defweb(k, cur[0], "$f0"), defweb(k, cur[0], "$v0")
                   if read_later("$f0"):
                       rt = "float"
-                      define("$f0", call, "float")
-                      if "$f0" not in variables:
-                          regs["$f0"] = tmp("float", call)
+                      if wf in webvar:
+                          define("$f0", call, "float")
+                      else:
+                          regs["$f0"], types["$f0"] = tmp("float", call), "float"
                   elif read_later("$v0"):
-                      rt = "char *" if "$v0" in based else "int"
-                      if "$v0" in variables:
+                      rt = "char *" if wv in ptr_web else "int"
+                      if wv in webvar:
                           define("$v0", call, rt)
                       else:
                           regs["$v0"], types["$v0"] = tmp(rt, call), rt
@@ -453,7 +597,7 @@ def translate(name, raw, externs):
                   written.add(a[0])
               if op in LOADS:
                   tt = LOADS[op]
-                  if op == "lw" and a[0] in based:
+                  if op == "lw" and defweb(k, cur[0], a[0]) in ptr_web:
                       tt = "char *"
                   define(a[0], lvalue(a[1], tt), tt, mem=True)
               elif op in STORES:
@@ -526,7 +670,7 @@ def translate(name, raw, externs):
                       define(a[1], repr(float(f)) + "f", "float")
                   else:
                       raise Fail
-              elif op == "dsll32" and a[0] not in variables:
+              elif op == "dsll32" and defweb(k, cur[0], a[0]) not in webvar:
                   x, _ = ival(a[1])
                   regs[a[0]], types[a[0]] = x, f"sh32:{num(a[2])}"
               elif op in ("dsra32", "dsrl32") and types.get(a[1], "").startswith("sh32"):
@@ -585,11 +729,11 @@ def translate(name, raw, externs):
             else:
                 x, o, y = cond
                 cond = (snap(x), o, snap(y))
-            run(post)
+            run(post, len(body) + 1)
         ret = None
         if tk[0] == "ret":
             ret = regs.get("$v0") if "$v0" in regs and types.get("$v0") != "hi" else None
-            if ret is not None and types.get("$v0") == "char *" and vtypes.get("$v0", "int") != "char *":
+            if ret is not None and types.get("$v0") == "char *":
                 ret = f"(int){ret}"
         if tk[0] == "tail":
             nargs = max((ARGS.index(r) + 1 for r in written if r in ARGS), default=0)
@@ -684,7 +828,7 @@ def translate(name, raw, externs):
         raise Fail
     rtype = "void"
     if all(r is not None for r in rets):
-        rtype = vtypes.get("$v0", "int")
+        rtype = "int"
     else:
         out = [l.replace("return r_v0;", "return;") for l in out]
         out = [re.sub(r"return [^;]+;", "return;", l) for l in out]
@@ -695,9 +839,10 @@ def translate(name, raw, externs):
     plist = []
     if ints:
         for i in range(ARGS.index(ints[-1]) + 1):
-            plist.append(f"{vtypes.get(ARGS[i], 'int')} p{i}")
+            plist.append(f"{webtype.get(find(entry_defs[ARGS[i]]), 'int') if entry_defs[ARGS[i]] in parent else 'int'} p{i}")
     plist += [f"float f{FARGS.index(r)}" for r in sorted(params) if r in FARGS]
-    decl = [f"    {vtypes[r]} {vname(r)};" for r in sorted(variables) if r not in params]
+    decl = [f"    {webtype[w]} {v};" for w, v in sorted(webvar.items(), key=lambda x: x[1])
+            if not re.fullmatch(r"[pf]\d", v)]
     lines = [f"{rtype} {name}({', '.join(plist) or 'void'}) {{"] + decl + [f"    {l}" for l in locs] + out + ["}"]
     externs.update(local_ext)
     return "\n".join(lines).replace("char * ", "char *"), calls
@@ -734,50 +879,20 @@ def write(path, funcs, externs):
     path.write_text(hdr + "\n".join(decl) + "\n\n" + "\n\n".join(c for _, c, _ in funcs) + "\n")
 
 
-def main():
-    taken = set()
-    for p in (ROOT / "src").rglob("*.c*"):
-        if p != OUT:
-            taken |= {int(x, 16) for x in re.findall(r"\bfunc_([0-9A-F]{8})\s*\([^;{}\n]*\)\s*\{", p.read_text())}
-    taken |= {int(m, 16) for m in re.findall(r"=\s*0x([0-9A-Fa-f]+);",
-                                             "".join(f.read_text() for f in (ROOT / "config/SLUS_209.64").glob("symbols*.txt")))}
-    src = (ROOT / "asm/us/text.s").read_text()
-    externs, funcs, addr = {}, [], {}
-    stats = {}
-    for name, a, body in re.findall(r"^glabel (func_([0-9A-F]+))\n(.*?)^endlabel", src, re.M | re.S):
-        A = int(a, 16)
-        if not (LO <= A < HI) or A in taken:
-            continue
-        raw = [(int(m.group(1), 16), re.sub(r"\s+", " ", m.group(2).strip()))
-               for m in re.finditer(r"/\* [0-9A-F]+ ([0-9A-F]{8}) [0-9A-F]{8} \*/\s+(.*)", body)]
-        if not any(re.match(r"b\w*\b", t) and not t.startswith("break") for _, t in raw):
-            continue  # branch-free functions belong to gen_leaf
-        if any(re.match(r"(jalr|mult\w*|div\w*|break)\b", t) for _, t in raw):
-            continue
-        try:
-            code, calls = translate(name, raw, externs)
-        except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError):
-            stats["fail"] = stats.get("fail", 0) + 1
-            continue
-        addr[name] = A
-        funcs.append((name, code, calls))
-    defs = {n for n, _, _ in funcs}
-    seen, keep = {}, []
-    for f in funcs:
-        if any(c in defs for c in f[2]) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
-            continue
-        seen.update(f[2])
-        keep.append(f)
-    funcs = keep
+OPTIONS = [{}, {"coalesce": True}]  # translation variants, tried in order on what is still unmatched
+
+
+def compile_ok(path, funcs, externs):
+    """Write funcs to path, dropping functions the compiler rejects, until it compiles."""
     for _ in range(400):
-        write(OUT, funcs, externs)
+        write(path, funcs, externs)
         r = subprocess.run(["docker", "exec", "-w", "/w", "dmc3b", "sh", "-c",
-                            f"{CC} -o scratch/flow_try.o {OUT.relative_to(ROOT).as_posix()}"],
+                            f"{CC} -o scratch/{path.stem}.o {path.relative_to(ROOT).as_posix()}"],
                            capture_output=True, text=True)
         if not r.returncode:
-            break
+            return funcs
         bad_lines = {int(x) for x in re.findall(r"#\s+(\d+):", r.stdout + r.stderr)}
-        text = OUT.read_text().split("\n")
+        text = path.read_text().split("\n")
         bad = set()
         for ln in bad_lines:
             for j in range(min(ln, len(text)) - 1, -1, -1):
@@ -788,10 +903,66 @@ def main():
         if not bad:
             raise SystemExit(r.stdout[-3000:])
         funcs = [f for f in funcs if f[0] not in bad]
-    ok = check(OUT, {n: addr[n] for n, _, _ in funcs})
-    kept = [f for f in funcs if f[0] in ok]
-    write(OUT, kept, externs)
-    print(f"flow.c: {len(kept)} match of {len(funcs)} candidates ({stats.get('fail', 0)} not translatable)")
+    raise SystemExit("too many compile errors")
+
+
+def main():
+    taken = set()
+    for p in (ROOT / "src").rglob("*.c*"):
+        if p != OUT:
+            taken |= {int(x, 16) for x in re.findall(r"\bfunc_([0-9A-F]{8})\s*\([^;{}\n]*\)\s*\{", p.read_text())}
+    taken |= {int(m, 16) for m in re.findall(r"=\s*0x([0-9A-Fa-f]+);",
+                                             "".join(f.read_text() for f in (ROOT / "config/SLUS_209.64").glob("symbols*.txt")))}
+    src = (ROOT / "asm/us/text.s").read_text()
+    work = []
+    for name, a, body in re.findall(r"^glabel (func_([0-9A-F]+))\n(.*?)^endlabel", src, re.M | re.S):
+        A = int(a, 16)
+        if not (LO <= A < HI) or A in taken:
+            continue
+        raw = [(int(m.group(1), 16), re.sub(r"\s+", " ", m.group(2).strip()))
+               for m in re.finditer(r"/\* [0-9A-F]+ ([0-9A-F]{8}) [0-9A-F]{8} \*/\s+(.*)", body)]
+        if not any(re.match(r"b\w*\b", t) and not t.startswith("break") for _, t in raw):
+            continue  # branch-free functions belong to gen_leaf
+        if any(re.match(r"(jalr|mult\w*|div\w*|break)\b", t) for _, t in raw):
+            continue
+        work.append((name, A, raw))
+    addr = {n: A for n, A, _ in work}
+    externs, matched = {}, {}
+    tmpfile = ROOT / "scratch/flow_pass.c"
+    for opts in OPTIONS:
+        funcs, fails = [], 0
+        for name, A, raw in work:
+            if name in matched:
+                continue
+            try:
+                code, calls = translate(name, raw, externs, opts)
+            except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError):
+                fails += 1
+                continue
+            funcs.append((name, code, calls))
+        defs = {n for n, _, _ in funcs} | set(matched)
+        seen = {c: rt for _, _, cl in matched.values() for c, rt in cl.items()}
+        keep = []
+        for f in funcs:
+            if any(c in defs for c in f[2]) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
+                continue
+            seen.update(f[2])
+            keep.append(f)
+        keep = compile_ok(tmpfile, keep, externs)
+        ok = check(tmpfile, {n: addr[n] for n, _, _ in keep})
+        for f in keep:
+            if f[0] in ok:
+                matched[f[0]] = f
+        print(f"pass {opts}: {len(ok)} match of {len(keep)} candidates ({fails} not translatable)", flush=True)
+    # final file: re-verify everything together (a callee in the same file can change a caller)
+    final = [matched[n] for n in sorted(matched, key=lambda n: addr[n])]
+    while True:
+        final = compile_ok(OUT, final, externs)
+        ok = check(OUT, {n: addr[n] for n, _, _ in final})
+        if len(ok) == len(final):
+            break
+        final = [f for f in final if f[0] in ok]
+    print(f"flow.c: {len(final)} functions")
 
 
 if __name__ == "__main__":
