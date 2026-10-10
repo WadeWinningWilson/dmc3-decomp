@@ -29,7 +29,7 @@ OUT_LEAF = ROOT / "src/game/auto/leaf2.c"
 OUT_TAIL = ROOT / "src/game/auto/tail.c"
 OUT_CALLS = ROOT / "src/game/auto/calls.c"
 LO, HI = 0x195158, 0x50FE28
-MAX_INS = 12
+MAX_INS = 30
 CC = ("MWCIncludes=. wibo tools/compilers/mwcps2-3.0b52-030722/mwccps2.exe -c -O3,p "
       "-fl divbyzerocheck -inline depth=8 -nostdinc")
 
@@ -88,7 +88,7 @@ def translate(name, ins, externs):
 
     based = set()
     for op, a in ops:
-        if op in LOADS or op in STORES:
+        if op in LOADS or op in STORES or op in ("lqc2", "sqc2"):
             mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", a[1])
             if mm:
                 based.add(mm.group(2))
@@ -169,7 +169,41 @@ def translate(name, ins, externs):
     if any(op == "jal" for op, _ in ops) and not frame:
         raise Fail
     written = set()
+    vu_run = []
+
+    def is_vu(o):
+        return o in ("lqc2", "sqc2", "vnop") or o.startswith(("qmtc2", "vadd", "vsub", "vmul", "vmadd", "vmsub",
+                                                            "vmove", "vmr32", "vdiv", "vsqrt", "vrsqrt", "vabs",
+                                                            "vmax", "vmini", "vopmula", "vopmsub", "vwaitq",
+                                                            "vitof", "vftoi", "vclip", "vsqi", "vlqi", "viadd"))
+
+    def emit_vu(run):
+        """One __asm__ statement for a run of VU0 macro instructions; GPRs become operands."""
+        operands, text = [], []
+        for o, args in run:
+            out = []
+            for arg in args:
+                mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", arg)
+                reg = mm.group(2) if mm else (arg if re.fullmatch(r"\$(a[0-3]|v[01]|t\d|s[0-7])", arg) else None)
+                if reg:
+                    e = val(reg)[0]
+                    if e not in operands:
+                        operands.append(e)
+                    k = operands.index(e)
+                    arg = f"{mm.group(1)}(%{k})" if mm else f"%{k}"
+                out.append(arg)
+            text.append(f"{o} {', '.join(out)}".strip())
+        flush()
+        ops_ = ", ".join(f'"r"({e})' for e in operands)
+        stmts.append('__asm__ volatile("' + "\\n\\t".join(text) + f'" : : {ops_} : "memory");')
+
     for idx, (op, a) in enumerate(ops):
+        if is_vu(op):
+            vu_run.append((op, a))
+            if not (idx + 1 < len(ops) and is_vu(ops[idx + 1][0])):
+                emit_vu(vu_run)
+                vu_run = []
+            continue
         if op == "jal":
             fn = a[0]
             if not re.fullmatch(r"func_[0-9A-F]{8}", fn):
@@ -212,6 +246,8 @@ def translate(name, ins, externs):
         elif op in STORES:
             ve, vt = val(a[0])
             t = "char *" if (op == "sw" and vt == "char *") else STORES[op]
+            if vt == "char *" and t != "char *":
+                ve = f"(int){ve}"
             lv = lvalue(a[1], t)
             flush()
             stmts.append(f"{lv} = {ve};")
