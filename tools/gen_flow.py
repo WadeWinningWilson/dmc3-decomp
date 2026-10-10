@@ -63,6 +63,8 @@ def is_vu(op):
 
 def split(i):
     m = re.match(r"(\w+(?:\.\w+)?)\s*(.*)", i)
+    if not m:
+        raise Fail  # e.g. ".word" data inside a function
     return m.group(1), [a.strip() for a in m.group(2).split(",")] if m.group(2) else []
 
 
@@ -85,6 +87,8 @@ def regs_of(op, a):
         return rd, set()
     if op == "jal":
         return set(ARGS), {"$v0", "$f0"}
+    if op == "jalr":
+        return set(ARGS) | {"$t9"}, {"$v0", "$f0"}
     if op in ("beq", "bne"):
         return {a[0], a[1]}, set()
     if op in COND1:
@@ -110,14 +114,14 @@ def prepare(ins):
     while i < len(ins):
         addr, t = ins[i]
         op, a = split(t)
-        if re.match(r"(b\w*|j|jal|jr)$", op) and op != "break":
+        if re.match(r"(b\w*|j|jal|jalr|jr)$", op) and op != "break":
             if op.endswith("l") and op not in ("jal",) and op.startswith("b"):
                 raise Fail  # branch-likely: delay slot is nullified
             if i + 1 >= len(ins):
                 raise Fail
             daddr, d = ins[i + 1]
             dop, da = split(d)
-            if d != "nop" and op not in ("b", "j", "jal", "jr") and regs_of(dop, da)[1] & regs_of(op, a)[0]:
+            if d != "nop" and op not in ("b", "j", "jal", "jalr", "jr") and regs_of(dop, da)[1] & regs_of(op, a)[0]:
                 # the delay slot overwrites a register the branch reads: the branch sees the
                 # old value, so the slot runs after the condition (kept on the branch line)
                 seq.append((addr, f"{t} || {d}"))
@@ -138,6 +142,21 @@ def prepare(ins):
     out = [(a, t) for a, t in seq if t != "nop" and not frame.fullmatch(t)]
     if any("$sp" in t for _, t in out):
         raise Fail
+    # a branch may target a nop or a frame instruction that was just dropped:
+    # retarget it to the next instruction that is kept (all original addresses, in order)
+    kept = sorted({a for a, _ in out})
+    every = sorted({a for a, _ in ins})
+
+    def retarget(m):
+        t_ = int(m.group(1), 16)
+        if t_ in kept:
+            return m.group(0)
+        nxt = next((a for a in kept if a > t_), None)
+        if nxt is None:
+            # past the last kept instruction: the function's end (a return)
+            raise Fail
+        return f".L{nxt:08X}"
+    out = [(a, re.sub(r"\.L([0-9A-F]{8})", retarget, t)) for a, t in out]
     return out, frame, seq
 
 
@@ -252,7 +271,7 @@ def translate(name, raw, externs, opts=None):
             r, w = regs_of(op, args)
             u |= (r - d)
             d |= w
-            if op == "jal":
+            if op in ("jal", "jalr"):
                 d |= {f"$t{i}" for i in range(10)} | {"$v1", "$at"} | set(ARGS)
         if term[k][0] == "ret":
             u |= ({"$v0"} - d)
@@ -284,7 +303,7 @@ def translate(name, raw, externs, opts=None):
         out, pos = [], 0
         for op, a in body:
             rd, wr = regs_of(op, a)
-            out.append((pos, rd, wr, CALLER_SAVED - wr if op == "jal" else set()))
+            out.append((pos, rd, wr, CALLER_SAVED - wr if op in ("jal", "jalr") else set()))
             pos += 1
         if has_term:
             tk = term[k]
@@ -436,6 +455,14 @@ def translate(name, raw, externs, opts=None):
 
     vtypes = {}
     locs, calls, local_ext = [], {}, {}
+    callsig, vclasses = {}, {}
+
+    def vclass(slot, sig, rt):
+        """Name of a synthetic class whose virtual method m(sig) -> rt sits at vtable byte `slot`."""
+        name_ = f"V{slot:X}_{len(sig)}_" + "".join("p" if x == "char *" else "f" if x == "float" else "i" for x in sig) + \
+            {"void": "v", "int": "i", "char *": "p", "float": "f"}[rt]
+        vclasses[name_] = (slot, sig, rt)
+        return name_
     ntemp = [0]
 
     def need(sym, decl):
@@ -547,14 +574,35 @@ def translate(name, raw, externs, opts=None):
                       stmts.append('__asm__ volatile("' + "\\n\\t".join(text) + f'" : : {ops_} : "memory");')
                       st["vu"] = []
                   continue
-              if op == "jal":
-                  fn = a[0]
-                  if not re.fullmatch(r"func_[0-9A-F]{8}", fn):
-                      raise Fail
+              if op in ("jal", "jalr"):
                   nargs = max((ARGS.index(r) + 1 for r in written if r in ARGS), default=0)
-                  cargs = [val(ARGS[i])[0] for i in range(nargs)]
+                  if op == "jalr":
+                      if a != ["$t9"] or types.get("$t9") != "vslot":
+                          raise Fail
+                      obj, slot = regs["$t9"].rsplit("|", 1)
+                      slot = int(slot)
+                      this, tt_ = val("$a0")
+                      if this != obj or slot < 8 or slot % 4:
+                          raise Fail
+                      nargs = max(nargs, 1)
+                      cv = [val(ARGS[i]) for i in range(1, nargs)]
+                      fn = None
+                  else:
+                      fn = a[0]
+                      if not re.fullmatch(r"func_[0-9A-F]{8}", fn):
+                          raise Fail
+                      cv = [val(ARGS[i]) for i in range(nargs)]
+                  cargs = [e for e, _ in cv]
+                  sig = tuple("char *" if t_ == "char *" else ("float" if t_ == "float" else "int") for _, t_ in cv)
                   flush()
-                  call = f"{fn}({', '.join(cargs)})"
+                  if op == "jalr":
+                      vkey = (slot, sig)
+                      call = f"(({{VCLS:{slot}:{'/'.join(sig)}:RT}} *){this})->m({', '.join(cargs)})"
+                  else:
+                      call = f"{fn}({', '.join(cargs)})"
+                      if callsig.get(fn, sig) != sig:
+                          raise Fail
+                      callsig[fn] = sig
                   for r in list(regs):  # caller-saved registers are dead after the call
                       if not re.fullmatch(r"\$s[0-7]|\$fp|\$f(2[0-9]|3[01])", r):
                           del regs[r]
@@ -589,9 +637,33 @@ def translate(name, raw, externs, opts=None):
                   else:
                       rt = "void"
                       stmts.append(f"{call};")
+                  if op == "jalr":
+                      cls = vclass(slot, sig, rt)
+                      for i_, x_ in enumerate(stmts):
+                          stmts[i_] = x_.replace(f"{{VCLS:{slot}:{'/'.join(sig)}:RT}}", cls)
+                      for r_ in list(regs):
+                          regs[r_] = regs[r_].replace(f"{{VCLS:{slot}:{'/'.join(sig)}:RT}}", cls)
+                      continue
                   if calls.get(fn, rt) != rt:
                       raise Fail
                   calls[fn] = rt
+                  continue
+              if op == "lw" and a[0] == "$t9":
+                  if not opts.get("cpp"):
+                      raise Fail
+                  mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", a[1])
+                  if not mm:
+                      raise Fail
+                  off, vbase = num(mm.group(1)), mm.group(2)
+                  if vbase == "$t9" and types.get("$t9") == "vptr":
+                      regs["$t9"], types["$t9"] = f"{regs['$t9']}|{off}", "vslot"
+                  elif off == 0 and vbase != "$t9":
+                      obj, ot = val(vbase)
+                      if ot != "char *":
+                          raise Fail
+                      regs["$t9"], types["$t9"] = obj, "vptr"
+                  else:
+                      raise Fail
                   continue
               if a and op not in STORES and op not in FCMP:
                   written.add(a[0])
@@ -845,15 +917,11 @@ def translate(name, raw, externs, opts=None):
             if not re.fullmatch(r"[pf]\d", v)]
     lines = [f"{rtype} {name}({', '.join(plist) or 'void'}) {{"] + decl + [f"    {l}" for l in locs] + out + ["}"]
     externs.update(local_ext)
-    return "\n".join(lines).replace("char * ", "char *"), calls
+    return "\n".join(lines).replace("char * ", "char *"), calls, {"callsig": callsig, "vclasses": vclasses}
 
 
 def check(path, cands):
-    obj = f"scratch/{path.stem}.o"
-    r = subprocess.run(["docker", "exec", "-w", "/w", "dmc3b", "sh", "-c",
-                        f"{CC} -o {obj} {path.relative_to(ROOT).as_posix()}"], capture_output=True, text=True)
-    if r.returncode:
-        raise SystemExit(r.stdout[-4000:] + r.stderr[-2000:])
+    obj = f"scratch/{path.stem}.o"  # compiled by compile_ok() with the right language flags
     ok = set()
     for n, A in cands.items():
         with contextlib.redirect_stdout(io.StringIO()):
@@ -879,15 +947,47 @@ def write(path, funcs, externs):
     path.write_text(hdr + "\n".join(decl) + "\n\n" + "\n\n".join(c for _, c, _ in funcs) + "\n")
 
 
-OPTIONS = [{}, {"coalesce": True}]  # translation variants, tried in order on what is still unmatched
+def write_cpp(path, funcs, externs):
+    """C++ file: extern "C" declarations, synthetic classes for virtual calls, definitions."""
+    used = {s for _, code, _ in funcs for s in re.findall(r"\bD_[0-9A-F]{8}\b", code)}
+    protos, classes = {}, {}
+    for name, _, calls in funcs:
+        meta = META[name]
+        for fn, rt in calls.items():
+            protos[fn] = (rt, meta["callsig"].get(fn, ()))
+        classes.update(meta["vclasses"])
+    out = [CPP_HDR, 'extern "C" {']
+    out += [externs[s] for s in sorted(used)]
+    for fn, (rt, sig) in sorted(protos.items()):
+        out.append(f"{rt} {fn}({', '.join(sig) or 'void'});".replace("* ", "*"))
+    out.append("}\n")
+    for cname, (slot, sig, rt) in sorted(classes.items()):
+        body = [f"    virtual void d{i}();" for i in range((slot - 8) // 4)]
+        body.append(f"    virtual {rt} m({', '.join(sig) or 'void'});".replace("* ", "*"))
+        out.append(f"class {cname} {{\npublic:\n" + "\n".join(body) + "\n};")
+    out.append('\nextern "C" {\n')
+    out.append("\n\n".join(c for _, c, _ in funcs))
+    out.append("\n}\n")
+    path.write_text("\n".join(out))
 
 
-def compile_ok(path, funcs, externs):
+CPP_HDR = ("/* AUTO-GENERATED by tools/gen_flow.py: functions that make C++ virtual calls, translated\n"
+           " * from the original asm and verified byte-for-byte (only matches are kept). The V* classes\n"
+           " * are synthetic: each has one method at the vtable slot a call site uses. */")
+
+# translation variants, tried in order on what is still unmatched: (options, output kind)
+OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp")]
+OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
+META = {}
+
+
+def compile_ok(path, funcs, externs, kind):
     """Write funcs to path, dropping functions the compiler rejects, until it compiles."""
+    cc = CC + (" -lang c++ -Cpp_exceptions off" if kind == "cpp" else "")
     for _ in range(400):
-        write(path, funcs, externs)
+        (write_cpp if kind == "cpp" else write)(path, funcs, externs)
         r = subprocess.run(["docker", "exec", "-w", "/w", "dmc3b", "sh", "-c",
-                            f"{CC} -o scratch/{path.stem}.o {path.relative_to(ROOT).as_posix()}"],
+                            f"{cc} -o scratch/{path.stem}.o {path.relative_to(ROOT).as_posix()}"],
                            capture_output=True, text=True)
         if not r.returncode:
             return funcs
@@ -909,7 +1009,7 @@ def compile_ok(path, funcs, externs):
 def main():
     taken = set()
     for p in (ROOT / "src").rglob("*.c*"):
-        if p != OUT:
+        if p not in (OUT, OUT_CPP):
             taken |= {int(x, 16) for x in re.findall(r"\bfunc_([0-9A-F]{8})\s*\([^;{}\n]*\)\s*\{", p.read_text())}
     taken |= {int(m, 16) for m in re.findall(r"=\s*0x([0-9A-Fa-f]+);",
                                              "".join(f.read_text() for f in (ROOT / "config/SLUS_209.64").glob("symbols*.txt")))}
@@ -921,48 +1021,52 @@ def main():
             continue
         raw = [(int(m.group(1), 16), re.sub(r"\s+", " ", m.group(2).strip()))
                for m in re.finditer(r"/\* [0-9A-F]+ ([0-9A-F]{8}) [0-9A-F]{8} \*/\s+(.*)", body)]
-        if not any(re.match(r"b\w*\b", t) and not t.startswith("break") for _, t in raw):
-            continue  # branch-free functions belong to gen_leaf
-        if any(re.match(r"(jalr|mult\w*|div\w*|break)\b", t) for _, t in raw):
+        has_branch = any(re.match(r"b\w*\b", t) and not t.startswith("break") for _, t in raw)
+        has_vcall = any(t.startswith("jalr") for _, t in raw)
+        if not has_branch and not has_vcall:
+            continue  # branch-free, call-free-of-virtuals functions belong to gen_leaf
+        if any(re.match(r"(mult\w*|div\w*|break)\b", t) for _, t in raw):
             continue
-        work.append((name, A, raw))
-    addr = {n: A for n, A, _ in work}
-    externs, matched = {}, {}
-    tmpfile = ROOT / "scratch/flow_pass.c"
-    for opts in OPTIONS:
+        work.append((name, A, raw, has_vcall))
+    addr = {n: A for n, A, _, _ in work}
+    externs, matched = {}, {"c": {}, "cpp": {}}
+    for opts, kind in OPTIONS:
         funcs, fails = [], 0
-        for name, A, raw in work:
-            if name in matched:
+        for name, A, raw, has_vcall in work:
+            if name in matched["c"] or name in matched["cpp"] or has_vcall != (kind == "cpp"):
                 continue
             try:
-                code, calls = translate(name, raw, externs, opts)
+                code, calls, meta = translate(name, raw, externs, opts)
             except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError):
                 fails += 1
                 continue
+            META[name] = meta
             funcs.append((name, code, calls))
-        defs = {n for n, _, _ in funcs} | set(matched)
-        seen = {c: rt for _, _, cl in matched.values() for c, rt in cl.items()}
+        defs = {n for n, _, _ in funcs} | set(matched["c"]) | set(matched["cpp"])
+        seen = {c: rt for d in matched.values() for _, _, cl in d.values() for c, rt in cl.items()}
         keep = []
         for f in funcs:
             if any(c in defs for c in f[2]) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
                 continue
             seen.update(f[2])
             keep.append(f)
-        keep = compile_ok(tmpfile, keep, externs)
+        tmpfile = ROOT / ("scratch/flow_pass.cpp" if kind == "cpp" else "scratch/flow_pass.c")
+        keep = compile_ok(tmpfile, keep, externs, kind)
         ok = check(tmpfile, {n: addr[n] for n, _, _ in keep})
         for f in keep:
             if f[0] in ok:
-                matched[f[0]] = f
+                matched[kind][f[0]] = f
         print(f"pass {opts}: {len(ok)} match of {len(keep)} candidates ({fails} not translatable)", flush=True)
-    # final file: re-verify everything together (a callee in the same file can change a caller)
-    final = [matched[n] for n in sorted(matched, key=lambda n: addr[n])]
-    while True:
-        final = compile_ok(OUT, final, externs)
-        ok = check(OUT, {n: addr[n] for n, _, _ in final})
-        if len(ok) == len(final):
-            break
-        final = [f for f in final if f[0] in ok]
-    print(f"flow.c: {len(final)} functions")
+    # final files: re-verify everything together (a callee in the same file can change a caller)
+    for kind, path in (("c", OUT), ("cpp", OUT_CPP)):
+        final = [matched[kind][n] for n in sorted(matched[kind], key=lambda n: addr[n])]
+        while True:
+            final = compile_ok(path, final, externs, kind)
+            ok = check(path, {n: addr[n] for n, _, _ in final})
+            if len(ok) == len(final):
+                break
+            final = [f for f in final if f[0] in ok]
+        print(f"{path.name}: {len(final)} functions")
 
 
 if __name__ == "__main__":
