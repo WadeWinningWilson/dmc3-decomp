@@ -41,7 +41,7 @@ LOADS = {"lb": "signed char", "lbu": "unsigned char", "lh": "short", "lhu": "uns
 STORES = {"sb": "char", "sh": "short", "sw": "int", "swc1": "float"}
 ARGS = ["$a0", "$a1", "$a2", "$a3", "$t0", "$t1", "$t2", "$t3"]  # EABI: 8 integer argument registers
 FARGS = ["$f12", "$f13", "$f14", "$f15"]
-NUM = r"-?0x[0-9A-F]+|-?\d+"
+NUM = r"-?0x[0-9A-F]+|-?\d+|\(0x[0-9A-F]+ & 0xFFFF\)"
 COND1 = {"beqz": "==", "bnez": "!=", "blez": "<=", "bgtz": ">", "bltz": "<", "bgez": ">="}
 NEG = {"==": "!=", "!=": "==", "<": ">=", ">=": "<", ">": "<=", "<=": ">"}
 FCMP = {"c.eq.s": "==", "c.lt.s": "<", "c.le.s": "<="}
@@ -55,6 +55,12 @@ class Fail(Exception):
 
 def num(s):
     s = s.strip()
+    m = re.fullmatch(r"\((0x[0-9A-F]+) & 0xFFFF\)", s)
+    if m:
+        return int(m.group(1), 16) & 0xFFFF
+    m = re.fullmatch(r"\((0x[0-9A-F]+) >> 16\)", s)
+    if m:
+        return int(m.group(1), 16) >> 16
     neg = s.startswith("-")
     v = int(s.lstrip("-"), 0)
     return -v if neg else v
@@ -120,7 +126,17 @@ def regs_of(op, a):
     return set(), set()
 
 
+def fix_word(t):
+    """`.word 0x46000864 # cvt.w.s $f1` (an R5900 encoding spimdisasm does not decode)."""
+    m = re.match(r"\.word (0x[0-9A-F]{8}) # cvt\.w\.s ", t)
+    if m:
+        w = int(m.group(1), 16)
+        return f"cvt.w.s $f{(w >> 6) & 31}, $f{(w >> 11) & 31}"
+    return t
+
+
 def prepare(ins):
+    ins = [(a, fix_word(t)) for a, t in ins]
     """[(addr, text)] -> list of instructions with delay slots resolved and the frame removed."""
     clean, j = [], 0
     while j < len(ins):
@@ -784,9 +800,16 @@ def translate(name, raw, externs, opts=None):
             mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", arg)
             if mm:
                 be, bt = val(mm.group(2))
+                off_ = num(mm.group(1))
+                if mm.group(1).startswith("(") and off_ & 0x8000:
+                    off_ -= 0x10000
                 if bt != "char *":
-                    raise Fail
-                return f"*({t} *)({be} + {num(mm.group(1))})"
+                    if not (opts.get("intbase") if rng is None else coin()) and not re.fullmatch(r"0x[0-9a-f]+", be):
+                        raise Fail
+                    if re.fullmatch(r"0x[0-9a-f]+", be):
+                        return f"*({t} *){(int(be, 16) + off_) & 0xFFFFFFFF:#x}"
+                    be = f"(char *){be}"
+                return f"*({t} *)({be} + {off_})"
             mm = re.fullmatch(r"%lo\((D_[0-9A-F]{8})\)\((\$\w+)\)", arg)
             if mm and regs.get(mm.group(2)) == mm.group(1) and types.get(mm.group(2)) == "hi":
                 need(mm.group(1), f"extern char {mm.group(1)}[];")
@@ -805,10 +828,20 @@ def translate(name, raw, externs, opts=None):
         st = {"fcmp": None, "vu": []}
         written = set()
 
+        skip_ = [None]
+
         def run(body, base=0):
           for idx, t in enumerate(body):
               op, a = split(t)
               cur[0] = base + idx
+              if skip_[0] == idx and op in ("dsra32", "dsrl32"):
+                  skip_[0] = None
+                  sh = int(types[a[1]].split(":")[1])
+                  cast = {(16, "dsra32"): "short", (24, "dsra32"): "signed char", (0, "dsra32"): "int",
+                          (16, "dsrl32"): "unsigned short", (24, "dsrl32"): "unsigned char",
+                          (0, "dsrl32"): "unsigned int"}[(sh, op)]
+                  define(a[0], f"({cast}){regs[a[1]]}", "int", False)
+                  continue
               if is_vu(op):
                   st["vu"].append((op, a))
                   nxt_vu = idx + 1 < len(body) and is_vu(split(body[idx + 1])[0])
@@ -858,7 +891,7 @@ def translate(name, raw, externs, opts=None):
                       call = f"(({{VCLS:{slot}:{'/'.join(sig)}:RT}} *){this})->m({', '.join(cargs)})"
                   else:
                       call = f"{fn}({', '.join(cargs)})"
-                      if callsig.get(fn, sig) != sig:
+                      if opts.get("cpp") and callsig.get(fn, sig) != sig:
                           raise Fail
                       callsig[fn] = sig
                   for r in list(regs):  # caller-saved registers are dead after the call
@@ -950,11 +983,22 @@ def translate(name, raw, externs, opts=None):
                   st["fcmp"] = (x, FCMP[op], y)
               elif op == "lui" and re.fullmatch(r"%hi\(jtbl_[0-9A-F]{8}\)", a[1]):
                   regs[a[0]], types[a[0]] = a[1], "hi"
-              elif op == "lui" and re.fullmatch(r"%hi\(D_[0-9A-F]{8}\)", a[1]):
+              elif op == "lui" and re.fullmatch(r"%hi\((?:D|func)_[0-9A-F]{8}\)", a[1]):
                   regs[a[0]], types[a[0]] = a[1][4:-1], "hi"
-              elif op == "addiu" and len(a) == 3 and re.fullmatch(r"%lo\(D_[0-9A-F]{8}\)", a[2]):
+              elif op == "addiu" and len(a) == 3 and re.fullmatch(r"%lo\(func_[0-9A-F]{8}\)", a[2]):
                   sym = a[2][4:-1]
                   if regs.get(a[1]) != sym or types.get(a[1]) != "hi":
+                      raise Fail
+                  calls.setdefault(sym, "void")
+                  define(a[0], f"(char *){sym}", "char *")
+              elif op == "addiu" and len(a) == 3 and re.fullmatch(r"%lo\(D_[0-9A-F]{8}\)", a[2]):
+                  sym = a[2][4:-1]
+                  # the %hi may sit in an earlier block (a branch delay slot)
+                  if (regs.get(a[1]) != sym or types.get(a[1]) != "hi") and not (
+                          a[1] == a[0] and useweb.get((k, cur[0], a[1])) and all(
+                              isinstance(d_[0], int) and d_[1] < len(bseq(d_[0])[0])
+                              and bseq(d_[0])[0][d_[1]] == ("lui", [a[1], f"%hi({sym})"])
+                              for d_ in useweb[(k, cur[0], a[1])])):
                       raise Fail
                   need(sym, f"extern char {sym}[];")
                   define(a[0], sym, "char *")
@@ -965,7 +1009,12 @@ def translate(name, raw, externs, opts=None):
               elif op == "addiu" and len(a) == 3 and re.fullmatch(NUM, a[2]):
                   e, tt = val(a[1])
                   kk = num(a[2])
-                  define(a[0], str(kk) if e == "0" else f"({e} + {kk})", tt, a[1] in memdep)
+                  if a[2].startswith("(") and kk & 0x8000:
+                      kk -= 0x10000  # %lo of an absolute address is sign-extended
+                  if re.fullmatch(r"0x[0-9a-f]+", e) and tt == "int":
+                      define(a[0], f"{(int(e, 16) + kk) & 0xFFFFFFFF:#x}", "int")
+                  else:
+                      define(a[0], str(kk) if e == "0" else f"({e} + {kk})", tt, a[1] in memdep)
               elif op == "daddu" and len(a) == 3 and a[2] == "$zero":
                   e, tt = val(a[1])
                   define(a[0], e, tt, a[1] in memdep)
@@ -982,6 +1031,11 @@ def translate(name, raw, externs, opts=None):
                   if op != "subu" and (coin() if rng is not None else opts.get("rev")):
                       x, y = y, x  # commutative: the other operand order
                   define(a[0], f"({x} {sym} {y})", tx if tx == "char *" else "int", a[1] in memdep or a[2] in memdep)
+              elif op in ("andi", "ori", "xori") and re.fullmatch(r"-?\d+|0x[0-9a-f]+", val(a[1])[0]):
+                  b_ = int(val(a[1])[0], 0)
+                  kk = num(a[2])
+                  r_ = (b_ | kk) if op == "ori" else (b_ & kk) if op == "andi" else (b_ ^ kk)
+                  define(a[0], f"{r_ & 0xFFFFFFFF:#x}", "int")
               elif op in ("andi", "ori", "xori"):
                   x, _ = ival(a[1])
                   sym = {"andi": "&", "ori": "|", "xori": "^"}[op]
@@ -1016,6 +1070,12 @@ def translate(name, raw, externs, opts=None):
                       define(a[1], repr(float(f)) + "f", "float")
                   else:
                       raise Fail
+              elif op == "dsll32" and idx + 1 < len(body) and re.fullmatch(
+                      rf"dsr[al]32 \{a[0]}, \{a[0]}, {re.escape(a[2])}", body[idx + 1]) and num(a[2]) in (0, 16, 24):
+                  # sign/zero extension pair: fold both into a cast now (the target may be a variable)
+                  x, _ = ival(a[1])
+                  regs[a[0]], types[a[0]] = x, f"sh32:{num(a[2])}"
+                  skip_[0] = idx + 1
               elif op == "dsll32" and defweb(k, cur[0], a[0]) not in webvar:
                   x, _ = ival(a[1])
                   regs[a[0]], types[a[0]] = x, f"sh32:{num(a[2])}"
@@ -1501,8 +1561,8 @@ CPP_HDR = ("/* AUTO-GENERATED by tools/gen_flow.py: functions that make C++ virt
            " * are synthetic: each has one method at the vtable slot a call site uses. */")
 
 # translation variants, tried in order on what is still unmatched: (options, output kind)
-OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"),
-           ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp"), ({"cpp": True, "new": True}, "cpp")]
+OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": True, "intbase": True}, "c"),
+           ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp"), ({"cpp": True, "new": True}, "cpp"), ({"cpp": True, "new": True, "intbase": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
 OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
 META = {}
