@@ -27,3 +27,10 @@ int func_001AE250(Table *t, int i, int j) { return t->rec[i].row[j].f4; }
 int func_001AE280(Table *t, int i, int j) { return t->rec[i].row[j].fC; }
 int func_001AE2B0(Table *t, int i, int j) { return t->rec[i].row[j].fE; }
 int func_001AE2E0(Table *t, int i, int j) { return t->rec[i].row[j].f8; }
+
+/* Flags of record i: its +0x2C0 halfword or row 1's first halfword. */
+int func_001AE1A0(void *, int);
+
+unsigned short func_001AE310(Table *t, int i) {
+    return (unsigned short)func_001AE1A0(t, i) | (unsigned short)func_001AE220(t, i, 1);
+}

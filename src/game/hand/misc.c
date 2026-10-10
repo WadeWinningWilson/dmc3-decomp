@@ -72,3 +72,48 @@ int func_00433F50(int a, int v, int dir) {
     }
     return v > 0 ? v - 1 : 15;
 }
+
+/* Two-dimensional table lookups: real array indexing gives MW's address order. */
+extern float D_005459C0[][2];
+
+float func_002DBD40(int a, int b) {
+    if ((unsigned char)b == 2) {
+        b = 1;
+    }
+    return D_005459C0[(unsigned char)a][(unsigned char)b];
+}
+
+extern signed char D_005BDD50[4]; /* small data ($gp) */
+extern int D_00586AD0[][8];
+
+int func_004B5D10(char *p, int i) {
+    int k = D_005BDD50[i];
+    int n = *(unsigned char *)(k + *(int *)(p + 13168) + 67);
+    if (n >= 8) {
+        n = 7;
+    }
+    return D_00586AD0[k][n];
+}
+
+/* Resets an entry (index from the global's +14 byte): a VU0 vector copy, then w = 1. */
+extern char *D_005BE0D8;
+
+void func_001A9CA0(char *p0, void *src) {
+    char *e = p0 + (*(signed char *)(D_005BE0D8 + 14) << 7) + 448;
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(src), "r"(e + 48) : "memory");
+    *(float *)(e + 112) = 0.0f;
+    *(float *)(e + 116) = 0.0f;
+    *(float *)(e + 120) = 0.0f;
+    *(float *)(e + 124) = 1.0f;
+}
+
+void func_003D0B20(char *p, int k) {
+    switch (k) {
+    case 0:
+        p[44260] = 0;
+        break;
+    case 1:
+        p[44261] = 1;
+        break;
+    }
+}

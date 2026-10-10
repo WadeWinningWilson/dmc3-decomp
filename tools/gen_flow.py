@@ -1208,6 +1208,11 @@ def translate(name, raw, externs, opts=None):
                               out.append(arg)
                           text.append(f"{o} {', '.join(out)}".strip())
                       flush()
+                      if len(operands) > 1 and (opts.get("asmrev") if rng is None else coin(0.5)):
+                          # MW computes asm inputs in reverse: list them the other way round
+                          nn_ = len(operands)
+                          text = [re.sub(r"%(\d+)", lambda m_: f"%{nn_ - 1 - int(m_.group(1))}", x_) for x_ in text]
+                          operands = operands[::-1]
                       ops_ = ", ".join(f'"r"({e})' for e in operands)
                       stmts.append('__asm__ volatile("' + "\\n\\t".join(text) + f'" : : {ops_} : "memory");')
                       st["vu"] = []
@@ -1240,7 +1245,7 @@ def translate(name, raw, externs, opts=None):
                   cv = cv + [val(CFARGS[i]) for i in range(nfargs)]
                   cargs = [e for e, _ in cv]
                   sig = tuple("char *" if t_ == "char *" else ("float" if t_ == "float" else "int") for _, t_ in cv)
-                  if opts.get("cpp") and (opts.get("narrow") if rng is None else coin(0.3)):
+                  if (opts.get("narrow") if rng is None else coin(0.3)):
                       # a directly loaded byte/halfword argument: the parameter has that type
                       # (MW orders the argument loads by parameter type)
                       sig = tuple(mm_.group(1) if (mm_ := re.match(
@@ -1458,6 +1463,11 @@ def translate(name, raw, externs, opts=None):
                   elif op == "sltu" and x == "0":
                       xo = top_xor(y)
                       e = f"({xo[0]} != {xo[1]})" if xo and not coin(0.15) else f"({y} != 0)"
+                  elif a[0] == "$at" and op in ("slti", "sltiu") and \
+                          (opts.get("le", True) if rng is None else coin(0.7)):
+                      # MW computes `x <= K` into $at (a branch macro); `x < K+1` uses a real register
+                      e = (f"((unsigned int){x} <= (unsigned int){int(y) - 1})" if op == "sltiu"
+                           else f"({x} <= {int(y) - 1})")
                   elif op in ("sltu", "sltiu"):
                       e = f"((unsigned int){x} < (unsigned int){y})"
                   else:
@@ -1717,9 +1727,21 @@ def translate(name, raw, externs, opts=None):
             before = len(out)
             emit(t_, {x for x in (nxt, j) if x is not None}, ind + "    ", ctx, active)
             last = out[-1].strip() if len(out) > before else ""
-            if not last.startswith("return"):
+            if last == "return;" and (j == EXIT or (j < n and term[j] == ("ret",) and len(bl[j][1]) == 1)) \
+                    and (opts.get("brk", True) if rng is None else coin(0.7)):
+                out[-1] = ind + "    break;"  # nothing follows the switch: `break` is the source form
+                last = "break;"
+            if not last.startswith("return") and last != "break;":
                 out.append(ind + "    break;" if not reaches(t_, nxt) else ind + "    /* fall through */")
         out.append(ind + "}")
+        # `default: break;` adds nothing: drop it
+        for i_ in range(len(out) - 2, 0, -1):
+            if out[i_].strip() == "default:" and out[i_ + 1].strip() == "break;" and out[i_].startswith(ind) \
+                    and not out[i_ - 1].strip().startswith("case "):
+                del out[i_:i_ + 2]
+                break
+            if out[i_].strip().startswith(f"switch ({x0})"):
+                break
 
     def jtbl_at(k):
         """Bounds check + table dispatch: (var, labels, default, dispatch block) or None."""
@@ -2035,7 +2057,7 @@ def write(path, funcs, externs):
     for name, _, c in funcs:
         for fn in c:
             sig = META.get(name, {}).get("callsig", {}).get(fn)
-            if sig and "float" in sig:
+            if sig and any(x in ("float", "unsigned char", "signed char", "short", "unsigned short") for x in sig):
                 fsig.setdefault(fn, sig)
     decl += [(f"{rt} {fn}({fparams[fn]});" if fn in fparams else
               f"{rt} {fn}({', '.join(fsig[fn])});" if fn in fsig else f"{rt} {fn}();").replace("* ", "*")
@@ -2100,6 +2122,9 @@ OPTIONS_ALL = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"ne
            ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "c"),
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "cpp"),
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "narrow": True}, "cpp"),
+           ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "narrow": True}, "c"),
+           ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "asmrev": True}, "c"),
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "asmrev": True}, "cpp"),
            ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "rev": True}, "c"),
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "rev": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
