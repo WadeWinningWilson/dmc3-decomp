@@ -915,6 +915,9 @@ def translate(name, raw, externs, opts=None):
                 val_ = str(num(a[2]))
             elif op == "daddu" and a[1:] == ["$zero", "$zero"]:
                 val_ = "0"
+            elif op == "lui" and len(a) == 2 and re.fullmatch(r"0x[0-9A-F]+|\d+|\(0x[0-9A-F]+ >> 16\)", a[1]):
+                mm_ = re.fullmatch(r"\((0x[0-9A-F]+) >> 16\)", a[1])
+                val_ = f"{((int(mm_.group(1), 16) >> 16) if mm_ else num(a[1])) << 16 & 0xFFFFFFFF:#x}"
             if a and (k, pos, a[0]) in parent:
                 defconst[(k, pos, a[0])] = val_
     webconst = {}
@@ -1057,6 +1060,7 @@ def translate(name, raw, externs, opts=None):
     def block_code_(k):
         """Statements of block k (without its terminator) and the branch condition."""
         regs, types, memdep, stmts = {}, {}, set(), []
+        lastlit = {}  # register -> integer literal it was last set to in this block
         for r, w in inweb[k].items():
             regs[r], types[r] = webvar[w], webtype[w]
         for r, c_ in inconst[k].items():
@@ -1099,6 +1103,10 @@ def translate(name, raw, externs, opts=None):
             memdep.clear()
 
         def define(r, e, t, mem=False):
+            if re.fullmatch(r"-?\d+|0x[0-9a-f]+", e):
+                lastlit[r] = e
+            else:
+                lastlit.pop(r, None)
             w = defweb(k, cur[0], r)
             if w is not None and w in webvar:
                 var = webvar[w]
@@ -1512,6 +1520,10 @@ def translate(name, raw, externs, opts=None):
                   test = f"{c_} != 0" if op == "movn" else f"{c_} == 0"
                   define(a[0], f"({test} ? {x} : {old})", tx if tx == to else "int",
                          a[1] in memdep or a[2] in memdep)
+              elif op == "mtc1" and a[0] in lastlit and not re.fullmatch(r"0|0x[0-9a-f]+", val(a[0])[0])                       and re.fullmatch(r"0x[0-9a-f]+", lastlit[a[0]]):
+                  # a float constant built in a variable register: the literal is what the source has
+                  f = struct.unpack("<f", struct.pack("<I", int(lastlit[a[0]], 16)))[0]
+                  define(a[1], repr(float(f)) + "f", "float")
               elif op == "mtc1" and not re.fullmatch(r"0|0x[0-9a-f]+", val(a[0])[0]):
                   x, _ = ival(a[0])
                   regs[a[1]], types[a[1]] = x, "fbits"
