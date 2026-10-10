@@ -26,6 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src/game/auto/flow.c"
 LO, HI = 0x195158, 0x50FE28
 MAX_INS = int(sys.argv[1]) if len(sys.argv) > 1 else 80
+SWITCH_MIN = 3  # compare chains this long become switch statements
 NEAR = 0.6  # minimum match ratio for a function to get permutation rounds
 CC = ("MWCIncludes=. wibo tools/compilers/mwcps2-3.0b52-030722/mwccps2.exe -c -O3,p "
       "-fl divbyzerocheck -inline depth=8 -nostdinc")
@@ -409,6 +410,19 @@ def translate(name, raw, externs, opts=None):
             new_in = use[k] | (out - df[k])
             if new_in != live_in[k]:
                 live_in[k], changed = new_in, True
+    last_ret = None  # whichever of $v0/$f0 is written last (in address order) carries the result
+    for _b, _ins in bl:
+        for _t in _ins:
+            for _x in _t.split(" || "):
+                _o, _a = split(_x)
+                if _o not in ("jal", "jalr"):
+                    _w = regs_of(_o, _a)[1]
+                    if "$v0" in _w:
+                        last_ret = "$v0"
+                    if "$f0" in _w:
+                        last_ret = "$f0"
+    fret = last_ret == "$f0" and (opts.get("new") if rng is None else coin())
+    RETREG = "$f0" if fret else "$v0"
     # ---- webs: definitions connected through shared uses (reaching definitions) ----
     CALLER_SAVED = {f"$t{i}" for i in range(10)} | {"$v0", "$v1", "$at"} | set(ARGS) | \
         {f"$f{i}" for i in range(20)}
@@ -435,7 +449,7 @@ def translate(name, raw, externs, opts=None):
             if tk[0] == "cond":
                 rd = regs_of(tk[1], tk[2])[0]
             elif tk[0] == "ret":
-                rd = {"$v0"}
+                rd = {RETREG}
             elif tk[0] == "tail":
                 rd = set(ARGS)
             out.append((pos, rd, set(), set()))
@@ -543,8 +557,31 @@ def translate(name, raw, externs, opts=None):
         webvar[w] = f"p{ARGS.index(r)}" if r in ARGS else f"f{FARGS.index(r)}"
         webtype[w] = "float" if r in FARGS else ("char *" if w in ptr_web else "int")
     nv = 0
+    # webs whose every definition loads the same constant stay literals
+    defconst = {}
+    for k in range(n):
+        body_, has_term_, post_ = bseq(k)
+        flat_ = list(enumerate(body_)) + [(len(body_) + 1 + i_, x_) for i_, x_ in enumerate(post_)]
+        for pos, (op, a) in flat_:
+            val_ = None
+            if op in ("addiu", "daddiu", "ori") and len(a) == 3 and a[1] == "$zero" and re.fullmatch(NUM, a[2]):
+                val_ = str(num(a[2]))
+            elif op == "daddu" and a[1:] == ["$zero", "$zero"]:
+                val_ = "0"
+            if a and (k, pos, a[0]) in parent:
+                defconst[(k, pos, a[0])] = val_
+    webconst = {}
+    for d, v_ in defconst.items():
+        w = find(d)
+        webconst.setdefault(w, set()).add(v_)
+    for d in parent:
+        if d not in defconst and isinstance(d[0], int):
+            webconst.setdefault(find(d), set()).add(None)
+    webconst = {w: vs.pop() for w, vs in webconst.items() if len(vs) == 1 and None not in vs}
+    if not (opts.get("new") if rng is None else coin()):
+        webconst = {}
     for w in sorted(crossing, key=str):
-        if w in webvar:
+        if w in webvar or w in webconst:
             continue
         if w[0] in ("clobber", "entry"):
             continue
@@ -552,18 +589,28 @@ def translate(name, raw, externs, opts=None):
         nv += 1
         reg = w[2]
         webtype[w] = "float" if reg.startswith("$f") else ("char *" if w in ptr_web else "int")
+    for k in range(n):
+        body_, _, post_ = bseq(k)
+        for pos, (op, a) in enumerate(body_):
+            if op == "daddiu" and len(a) == 3 and a[1] == "$zero" and (opts.get("new") if rng is None else coin()):
+                w = find((k, pos, a[0])) if (k, pos, a[0]) in parent else None
+                if w in webtype and webtype[w] == "int":
+                    webtype[w] = "unsigned char"
     varnames = set(webvar.values())
     # register -> web of the value that enters block k
     inweb = {}
+    inconst = {}
     for k in range(n):
-        m = {}
+        m, mc = {}, {}
         for r, ds in IN[k].items():
             ws = {find(d) for d in ds}
             if len(ws) == 1:
                 w = ws.pop()
                 if w in webvar:
                     m[r] = w
-        inweb[k] = m
+                elif w in webconst:
+                    mc[r] = webconst[w]
+        inweb[k], inconst[k] = m, mc
     based = set()  # kept for the jal / lw type heuristics
     for _, ins in bl:
         for t in ins:
@@ -594,11 +641,21 @@ def translate(name, raw, externs, opts=None):
             raise Fail
         local_ext[sym] = decl
 
+    bc_cache = {}
+    use_switch = coin()
+
     def block_code(k):
+        if k not in bc_cache:
+            bc_cache[k] = block_code_(k)
+        return bc_cache[k]
+
+    def block_code_(k):
         """Statements of block k (without its terminator) and the branch condition."""
         regs, types, memdep, stmts = {}, {}, set(), []
         for r, w in inweb[k].items():
             regs[r], types[r] = webvar[w], webtype[w]
+        for r, c_ in inconst[k].items():
+            regs[r], types[r] = c_, "int"
         cur = [0]
 
         def val(r):
@@ -999,8 +1056,8 @@ def translate(name, raw, externs, opts=None):
             run(post, len(body) + 1)
         ret = None
         if tk[0] == "ret":
-            ret = regs.get("$v0") if "$v0" in regs and types.get("$v0") != "hi" else None
-            if ret is not None and types.get("$v0") == "char *":
+            ret = regs.get(RETREG) if RETREG in regs and types.get(RETREG) not in ("hi", "fbits", "fint") else None
+            if ret is not None and types.get(RETREG) == "char *":
                 ret = f"(int){ret}"
         if tk[0] == "tail":
             nargs = max((ARGS.index(r) + 1 for r in written if r in ARGS), default=0)
@@ -1028,8 +1085,93 @@ def translate(name, raw, externs, opts=None):
     rets = []
     out = []
 
+    def reaches(t, nxt):
+        if nxt is None:
+            return False
+        b = t
+        seen = set()
+        while b is not None and b < n and b not in seen:
+            seen.add(b)
+            if b == nxt:
+                return True
+            if term[b][0] in ("ret", "tail"):
+                return False
+            b = ipdom(b)
+            if b == nxt:
+                return True
+        return False
+
+    def switch_at(k):
+        """(var, [(const, target)] in chain order, default target, chain blocks) or None."""
+        if term[k][0] != "cond" or term[k][1] not in ("beq", "beqz"):
+            return None
+        chain, blocks_, x0 = [], [], None
+        b = k
+        while b < n and term[b][0] == "cond" and term[b][1] in ("beq", "beqz"):
+            st_, cond_, _ = block_code(b)
+            if b != k and st_:
+                break
+            if cond_[0] == "!" or cond_[1] != "==" or not re.fullmatch(r"-?\d+", cond_[2]):
+                break
+            if x0 is None:
+                x0 = cond_[0]
+            elif cond_[0] != x0:
+                break
+            chain.append((int(cond_[2]), succ[b][1]))
+            blocks_.append(b)
+            b = succ[b][0]
+        if len(chain) < SWITCH_MIN or not (opts.get("new") if rng is None else use_switch):
+            return None
+        default = b
+        if b < n and term[b][0] == "goto" and not block_code(b)[0] and len(bl[b][1]) == 1:
+            blocks_.append(b)
+            default = succ[b][0]
+        return x0, chain, default, blocks_
+
     def emit(k, stop, ind, ctx=None, active=frozenset()):
-        while k is not None and k != stop and k != EXIT:
+        stops = stop if isinstance(stop, (set, frozenset)) else {stop}
+        while k is not None and k not in stops and k != EXIT:
+            sw = switch_at(k) if k not in loops else None
+            if sw:
+                x0, chain, default, blocks_ = sw
+                stmts, _, _ = block_code(k)
+                out.extend(ind + x for x in stmts)
+                j = ipdom(blocks_[-1]) if blocks_ else ipdom(k)
+                for b2 in [t for _, t in chain] + [default]:
+                    if b2 != j and b2 != EXIT and not (b2 < (j if j != EXIT else n + 1)):
+                        raise Fail
+                # source order of label groups is the reverse of the compare chain
+                labels = list(reversed(chain))
+                groups = []
+                for c_, t_ in labels:
+                    if groups and groups[-1][0] == t_:
+                        groups[-1][1].append(c_)
+                    else:
+                        groups.append((t_, [c_]))
+                bodies = [t_ for t_, _ in groups if t_ != j]
+                if bodies != sorted(bodies) or len(set(bodies)) != len(bodies):
+                    raise Fail
+                if default != j:
+                    # the default body goes where its address puts it
+                    pos_ = next((i_ for i_, (t_, _) in enumerate(groups) if t_ != j and t_ > default), len(groups))
+                    groups.insert(pos_, (default, ["default"]))
+                out.append(ind + f"switch ({x0}) {{")
+                order = [t_ for t_, _ in groups if t_ != j]
+                for gi, (t_, cs) in enumerate(groups):
+                    for c_ in cs:
+                        out.append(ind + ("default:" if c_ == "default" else f"case {c_}:"))
+                    if t_ == j:
+                        out.append(ind + "    break;")
+                        continue
+                    nxt = order[order.index(t_) + 1] if order.index(t_) + 1 < len(order) else None
+                    before = len(out)
+                    emit(t_, {x for x in (nxt, j) if x is not None}, ind + "    ", ctx, active)
+                    last = out[-1].strip() if len(out) > before else ""
+                    if not last.startswith("return"):
+                        out.append(ind + "    break;" if not reaches(t_, nxt) else ind + "    /* fall through */")
+                out.append(ind + "}")
+                k = j
+                continue
             if k in loops and k not in active:
                 L, kind = loops[k]
                 X = exit_of[k]
@@ -1109,7 +1251,7 @@ def translate(name, raw, externs, opts=None):
         raise Fail
     rtype = "void"
     if all(r is not None for r in rets):
-        rtype = "int"
+        rtype = "float" if fret else "int"
     else:
         out = [l.replace("return r_v0;", "return;") for l in out]
         out = [re.sub(r"return [^;]+;", "return;", l) for l in out]
@@ -1239,7 +1381,10 @@ CPP_HDR = ("/* AUTO-GENERATED by tools/gen_flow.py: functions that make C++ virt
            " * are synthetic: each has one method at the vtable slot a call site uses. */")
 
 # translation variants, tried in order on what is still unmatched: (options, output kind)
-OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp")]
+OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": True, "coalesce": True}, "c"),
+           ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp"),
+           ({"cpp": True, "new": True}, "cpp"), ({"cpp": True, "new": True, "coalesce": True}, "cpp")]
+# "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
 OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
 META = {}
 
