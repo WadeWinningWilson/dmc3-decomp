@@ -776,6 +776,10 @@ def translate(name, raw, externs, opts=None):
                   continue
               if op in ("jal", "jalr"):
                   nargs = max((ARGS.index(r) + 1 for r in written if r in ARGS), default=0)
+                  # argument registers set in an earlier block (e.g. in a branch delay slot)
+                  for i_, r_ in enumerate(ARGS):
+                      if any(isinstance(d_[0], int) for d_ in useweb.get((k, cur[0], r_), [])):
+                          nargs = max(nargs, i_ + 1)
                   if op == "jalr":
                       if a != ["$t9"] or types.get("$t9") != "vslot":
                           raise Fail
