@@ -33,7 +33,12 @@ NEAR = 0.6  # minimum match ratio for a function to get permutation rounds
 # GEN_GCC=ee-gcc2.96 (say): the SDK/CRI/library code below the game, built with ee-gcc -O2 -G0
 GCC = os.environ.get("GEN_GCC")
 GCC_FLAGS = os.environ.get("GEN_GCC_FLAGS", "-O2 -G0")
-SCR = "gflow" if GCC else "flow"  # scratch file prefix (a GCC run can go alongside an MW run)
+# GEN_MWLIB=1: MW-built code in the library range (Capcom libraries, C runtime)
+MWLIB = os.environ.get("GEN_MWLIB") and not GCC
+SCR = "gflow" if GCC else ("mflow" if MWLIB else "flow")  # scratch prefix: runs can go side by side
+if MWLIB:
+    LO, HI = 0x100000, 0x195158
+    OUT = ROOT / "src/lib/auto/flow_mw.c"
 if GCC:
     LO, HI = 0x100000, 0x195158
     OUT = ROOT / os.environ.get("GEN_GCC_OUT", "src/lib/auto/flow_gcc.c")
@@ -215,12 +220,21 @@ def prepare(ins, sink=False):
         elif at_.get(tgt - 4) == d:
             # `bxxl L+4` with the instruction at L in its slot is a plain branch to L
             likely.append((j, f"{mm.group(1)} {mm.group(2)}.L{tgt - 4:08X}", "nop"))
+        elif j + 2 < len(ins):
+            # general case: if (cond) { slot; goto L; } -> branch over the slot, then jump
+            inv = {"beq": "bne", "bne": "beq", "blez": "bgtz", "bgtz": "blez", "bltz": "bgez", "bgez": "bltz",
+                   "beqz": "bnez", "bnez": "beqz", "bc1t": "bc1f", "bc1f": "bc1t"}[mm.group(1)]
+            likely.append((j, f"{inv} {mm.group(2)}.L{ins[j + 2][0]:08X}", ("GEN", tgt)))
         else:
-            raise Fail  # a branch-likely slot that does something else
+            raise Fail
     for j, t, d in reversed(likely):
         ins[j] = (ins[j][0], t)
         if d == "SKIP":
             ins.insert(j + 1, (ins[j][0] + 2, "nop"))  # a fresh (empty) delay slot
+        elif isinstance(d, tuple):
+            daddr_ = ins[j + 1][0]
+            ins[j + 2:j + 2] = [(daddr_ + 1, f"b .L{d[1]:08X}"), (daddr_ + 2, "nop")]
+            ins.insert(j + 1, (ins[j][0] + 2, "nop"))
         elif d:
             ins[j + 1] = (ins[j + 1][0], d)
     targets = {int(t, 16) for _, t in ins for t in re.findall(r"\.L([0-9A-F]{8})", t)}
@@ -1046,9 +1060,15 @@ def translate(name, raw, externs, opts=None):
                   continue
               if op in ("jal", "jalr"):
                   nargs = argcount(written, (k, cur[0]))
-                  if op == "jalr":
-                      if a != ["$t9"] or types.get("$t9") != "vslot":
+                  fptr = None
+                  if op == "jalr" and not (a == ["$t9"] and types.get("$t9") == "vslot"):
+                      # a C function pointer: ((RT (*)(args))expr)(args)
+                      if len(a) != 1 or a[0] in ARGS[:nargs]:
                           raise Fail
+                      fptr = val(a[0])[0]
+                      cv = [val(ARGS[i]) for i in range(nargs)]
+                      fn = None
+                  elif op == "jalr":
                       obj, slot = regs["$t9"].rsplit("|", 1)
                       slot = int(slot)
                       this, tt_ = val("$a0")
@@ -1065,7 +1085,9 @@ def translate(name, raw, externs, opts=None):
                   cargs = [e for e, _ in cv]
                   sig = tuple("char *" if t_ == "char *" else ("float" if t_ == "float" else "int") for _, t_ in cv)
                   flush()
-                  if op == "jalr":
+                  if fptr is not None:
+                      call = f"((FPRT (*)({', '.join(sig) or 'void'})){fptr})({', '.join(cargs)})"
+                  elif op == "jalr":
                       vkey = (slot, sig)
                       call = f"(({{VCLS:{slot}:{'/'.join(sig)}:RT}} *){this})->m({', '.join(cargs)})"
                   else:
@@ -1107,6 +1129,12 @@ def translate(name, raw, externs, opts=None):
                   else:
                       rt = "void"
                       stmts.append(f"{call};")
+                  if fptr is not None:
+                      for i_, x_ in enumerate(stmts):
+                          stmts[i_] = x_.replace("FPRT (*)", f"{rt} (*)")
+                      for r_ in list(regs):
+                          regs[r_] = regs[r_].replace("FPRT (*)", f"{rt} (*)")
+                      continue
                   if op == "jalr":
                       cls = vclass(slot, sig, rt)
                       for i_, x_ in enumerate(stmts):
@@ -1131,9 +1159,7 @@ def translate(name, raw, externs, opts=None):
                           raise Fail
                   calls[fn] = rt
                   continue
-              if op == "lw" and a[0] == "$t9":
-                  if not opts.get("cpp"):
-                      raise Fail
+              if op == "lw" and a[0] == "$t9" and opts.get("cpp"):
                   mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", a[1])
                   if not mm:
                       raise Fail
@@ -1821,7 +1847,7 @@ OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": 
            ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "c"),
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
-OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
+OUT_CPP = ROOT / ("src/lib/auto/flow_mw_v.cpp" if MWLIB else "src/game/auto/flow_v.cpp")
 META = {}
 
 
