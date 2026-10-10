@@ -24,6 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src/game/auto/flow.c"
+ORIG = (ROOT / "orig/SLUS_209.64/SLUS_209.64").read_bytes()
 LO, HI = 0x195158, 0x50FE28
 MAX_INS = int(sys.argv[1]) if len(sys.argv) > 1 else 80
 SWITCH_MIN = 3  # compare chains this long become switch statements
@@ -305,9 +306,23 @@ def translate(name, raw, externs, opts=None):
     for k, (a, ins) in enumerate(bl):
         op, args = split(ins[-1].split(" || ")[0])
         nxt = k + 1 if k + 1 < len(bl) else None
-        if op == "jr":
-            if args != ["$ra"]:
+        if op == "jr" and args != ["$ra"]:
+            sym = next((m.group(1) for t in ins for m in [re.search(r"%lo\((jtbl_[0-9A-F]{8})\)", t)] if m), None)
+            cnt = next((num(m.group(1)) for _, t in seq for m in [re.fullmatch(r"sltiu \$at, \$\w+, (0x[0-9A-F]+|\d+)", t)] if m), None)
+            if not sym or not cnt or cnt > 256:
                 raise Fail
+            tbl = struct.unpack_from(f"<{cnt}I", ORIG, int(sym[5:], 16) - 0x100000 + 0x80)
+            kept = sorted(index)
+            targets = []
+            for tv in tbl:
+                if tv not in index:
+                    nxt_ = next((a_ for a_ in kept if a_ > tv), None)
+                    if nxt_ is None or tv < addrs[0]:
+                        raise Fail
+                    tv = nxt_
+                targets.append(index[tv])
+            succ[k], term[k] = sorted(set(targets)), ("jtbl", targets)
+        elif op == "jr":
             succ[k], term[k] = [], ("ret",)
         elif op == "j":
             if not re.fullmatch(r"func_[0-9A-F]{8}", args[0]):
@@ -725,6 +740,8 @@ def translate(name, raw, externs, opts=None):
             raise Fail
 
         a_, ins = bl[k]
+        if term[k][0] == "jtbl":
+            return [], None, None
         body = ins[:-1] if term[k][0] in ("ret", "tail", "goto", "cond") else ins
         post = ins[-1].split(" || ")[1:] if term[k][0] == "cond" else []
         st = {"fcmp": None, "vu": []}
@@ -873,6 +890,8 @@ def translate(name, raw, externs, opts=None):
                   x, _ = val(a[0])
                   y, _ = val(a[1])
                   st["fcmp"] = (x, FCMP[op], y)
+              elif op == "lui" and re.fullmatch(r"%hi\(jtbl_[0-9A-F]{8}\)", a[1]):
+                  regs[a[0]], types[a[0]] = a[1], "hi"
               elif op == "lui" and re.fullmatch(r"%hi\(D_[0-9A-F]{8}\)", a[1]):
                   regs[a[0]], types[a[0]] = a[1][4:-1], "hi"
               elif op == "addiu" and len(a) == 3 and re.fullmatch(r"%lo\(D_[0-9A-F]{8}\)", a[2]):
@@ -1128,6 +1147,64 @@ def translate(name, raw, externs, opts=None):
             default = succ[b][0]
         return x0, chain, default, blocks_
 
+    def emit_switch(x0, labels, default, j, ind, ctx, active):
+        """switch (x0) with labels [(value, target)] in source order, bodies in address order."""
+        for b2 in [t for _, t in labels] + [default]:
+            if b2 != j and b2 != EXIT and not (b2 < (j if j != EXIT else n + 1)):
+                raise Fail
+        groups = []
+        for c_, t_ in labels:
+            if groups and groups[-1][0] == t_:
+                groups[-1][1].append(c_)
+            else:
+                groups.append((t_, [c_]))
+        bodies = [t_ for t_, _ in groups if t_ != j]
+        if bodies != sorted(bodies) or len(set(bodies)) != len(bodies):
+            raise Fail
+        if default != j:
+            # the default body goes where its address puts it
+            if default in bodies:
+                raise Fail
+            pos_ = next((i_ for i_, (t_, _) in enumerate(groups) if t_ != j and t_ > default), len(groups))
+            groups.insert(pos_, (default, ["default"]))
+        out.append(ind + f"switch ({x0}) {{")
+        order = [t_ for t_, _ in groups if t_ != j]
+        for t_, cs in groups:
+            for c_ in cs:
+                out.append(ind + ("default:" if c_ == "default" else f"case {c_}:"))
+            if t_ == j:
+                out.append(ind + "    break;")
+                continue
+            nxt = order[order.index(t_) + 1] if order.index(t_) + 1 < len(order) else None
+            before = len(out)
+            emit(t_, {x for x in (nxt, j) if x is not None}, ind + "    ", ctx, active)
+            last = out[-1].strip() if len(out) > before else ""
+            if not last.startswith("return"):
+                out.append(ind + "    break;" if not reaches(t_, nxt) else ind + "    /* fall through */")
+        out.append(ind + "}")
+
+    def jtbl_at(k):
+        """Bounds check + table dispatch: (var, labels, default, dispatch block) or None."""
+        if term[k][0] != "cond" or term[k][1] not in ("beqz",):
+            return None
+        J = succ[k][0]
+        if J >= n or term[J][0] != "jtbl":
+            return None
+        _, cond_, _ = block_code(k)
+        if cond_[0] == "!" or cond_[1] != "==" or cond_[2] != "0":
+            return None
+        m_ = re.fullmatch(r"\(\(unsigned int\)(.+) < \(unsigned int\)(\d+)\)", cond_[0])
+        if not m_ or int(m_.group(2)) != len(term[J][1]):
+            return None
+        x0, shift = m_.group(1), 0
+        m2 = re.fullmatch(r"\((.+) \+ (-?\d+)\)", x0)
+        if m2:
+            x0, shift = m2.group(1), -int(m2.group(2))
+        default = succ[k][1]
+        table = term[J][1]
+        labels = sorted(((i + shift, t) for i, t in enumerate(table) if t != default), key=lambda x: (x[1], x[0]))
+        return x0, labels, default, J
+
     def emit(k, stop, ind, ctx=None, active=frozenset()):
         stops = stop if isinstance(stop, (set, frozenset)) else {stop}
         while k is not None and k not in stops and k != EXIT:
@@ -1137,39 +1214,17 @@ def translate(name, raw, externs, opts=None):
                 stmts, _, _ = block_code(k)
                 out.extend(ind + x for x in stmts)
                 j = ipdom(blocks_[-1]) if blocks_ else ipdom(k)
-                for b2 in [t for _, t in chain] + [default]:
-                    if b2 != j and b2 != EXIT and not (b2 < (j if j != EXIT else n + 1)):
-                        raise Fail
                 # source order of label groups is the reverse of the compare chain
-                labels = list(reversed(chain))
-                groups = []
-                for c_, t_ in labels:
-                    if groups and groups[-1][0] == t_:
-                        groups[-1][1].append(c_)
-                    else:
-                        groups.append((t_, [c_]))
-                bodies = [t_ for t_, _ in groups if t_ != j]
-                if bodies != sorted(bodies) or len(set(bodies)) != len(bodies):
-                    raise Fail
-                if default != j:
-                    # the default body goes where its address puts it
-                    pos_ = next((i_ for i_, (t_, _) in enumerate(groups) if t_ != j and t_ > default), len(groups))
-                    groups.insert(pos_, (default, ["default"]))
-                out.append(ind + f"switch ({x0}) {{")
-                order = [t_ for t_, _ in groups if t_ != j]
-                for gi, (t_, cs) in enumerate(groups):
-                    for c_ in cs:
-                        out.append(ind + ("default:" if c_ == "default" else f"case {c_}:"))
-                    if t_ == j:
-                        out.append(ind + "    break;")
-                        continue
-                    nxt = order[order.index(t_) + 1] if order.index(t_) + 1 < len(order) else None
-                    before = len(out)
-                    emit(t_, {x for x in (nxt, j) if x is not None}, ind + "    ", ctx, active)
-                    last = out[-1].strip() if len(out) > before else ""
-                    if not last.startswith("return"):
-                        out.append(ind + "    break;" if not reaches(t_, nxt) else ind + "    /* fall through */")
-                out.append(ind + "}")
+                emit_switch(x0, list(reversed(chain)), default, j, ind, ctx, active)
+                k = j
+                continue
+            jt = jtbl_at(k) if k not in loops else None
+            if jt:
+                x0, labels, default, J = jt
+                stmts, _, _ = block_code(k)
+                out.extend(ind + x for x in stmts)
+                j = ipdom(J)
+                emit_switch(x0, labels, default, j, ind, ctx, active)
                 k = j
                 continue
             if k in loops and k not in active:
