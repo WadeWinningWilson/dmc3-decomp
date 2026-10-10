@@ -152,6 +152,7 @@ extern char D_0053F800[];
 extern char D_0058CB68[];
 extern char D_0058CB78[];
 extern char D_0058CD10[];
+extern char D_0058EBF8[];
 extern char D_0058ED90[];
 extern char D_0058F888[];
 extern char D_0058F8B0[];
@@ -285,10 +286,12 @@ int func_00120D10();
 void func_00121250();
 int func_00121E40();
 int func_00121F10();
+void func_00124EA8();
 void func_00125040();
 void func_001265F0();
 void func_00126708();
 void func_001268D8();
+void func_001269A8();
 void func_00126B20();
 void func_001273C8();
 void func_00127460();
@@ -1202,6 +1205,11 @@ int func_001205E0(p0, p1, p2, p3) int p0; int p1; int p2; int p3; {
     *(long *)((stk + 0) + 16) = p3;
     tmp0 = func_0011FA98((stk + 0));
     return tmp0;
+}
+
+void func_00124ED8(p0, p1, p2) int p0; int p1; int p2; {
+    func_001269A8(*(int *)(*(char **)D_00518310 + 12), D_0058EBF8, p2, p0, p1);
+    func_00124EA8();
 }
 
 void func_00124F28(p0) int p0; {

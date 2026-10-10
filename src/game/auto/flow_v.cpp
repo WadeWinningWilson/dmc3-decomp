@@ -21,6 +21,7 @@ extern char D_005550A0[];
 extern char D_005550A4[];
 extern char D_005550A8[];
 extern char D_005550AC[];
+extern char D_00562740[];
 extern char D_00565278[];
 extern char D_00568250[];
 extern char D_005682B0[];
@@ -146,6 +147,9 @@ int func_00296140(char *, int);
 int func_00296400(char *, int);
 int func_002A6C10(char *, char *, char *);
 void func_002C31A0(char *, char *, int);
+int func_002CA740(char *, int, int, int, int, int);
+void func_002CAB30(...);
+void func_002CB7E0(char *);
 int func_002CFC90(int);
 int func_002D1890(char *);
 void func_002D2270(int, int);
@@ -19686,6 +19690,40 @@ int func_002C4C80(int p0) {
         } while ((v2 < *(int *)(v0 + 528)));
     }
     return v1;
+}
+
+void func_002C7EA0(char *p0) {
+    char *v0;
+    int v1;
+    int v3;
+    int v2;
+    int v4;
+    v0 = p0;
+    if (((int)*(char **)((char (*)[4])((char *)D_00562740 + 0))[*(unsigned char *)(p0 + 11492)] & 4) != 0) {
+        v1 = *(unsigned char *)(v0 + 1473);
+        switch (v1) {
+        case 0:
+            *(char *)(v0 + 1473) = (v1 + 1);
+            func_002CAB30(p0, v1);
+            /* fall through */
+        case 1:
+            v2 = (int)v0;
+            if (48 != *(unsigned char *)(v0 + 11492)) {
+                func_002CAB30(v2);
+            }
+            func_002CB7E0(v0);
+            v4 = ((V1C8_0_i *)v0)->m();
+            v3 = 1;
+            if ((v4 & 255) == v3) {
+                *(char *)(v0 + 1473) = 0;
+                *(char *)(v0 + 11644) = 4;
+                *(int *)(v0 + 11040) = 0;
+                func_002CA740(v0, 0, -1, 0, v3, 16);
+                v4 = func_002CA740(v0, 1, -1, 0, 1, 16);
+            }
+            break;
+        }
+    }
 }
 
 int func_002CBD60(char *p0, char *p1) {
