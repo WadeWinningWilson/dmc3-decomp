@@ -1076,7 +1076,7 @@ void func_00287430();
 int func_002874D0();
 int func_00287CF0();
 void func_00287D80();
-void func_0028C110();
+int func_0028C110();
 void func_0028C1A0();
 int func_0028C200();
 char *func_0028C290();
@@ -9334,6 +9334,41 @@ int func_0028AEC0(p0, p1) int p0; int p1; {
     }
     *(int *)(v1 + 56) = v3;
     return v2;
+}
+
+int func_0028C110(p0) char *p0; {
+    int v0;
+    char *v1;
+    char *v2;
+    v0 = 0;
+    v1 = p0;
+    v2 = p0;
+    *(int *)(p0 + 120) = *(int *)(*(char **)D_01CAFF0C + 0);
+    *(int *)(p0 + 188) = 0;
+    *(int *)(p0 + 192) = 0;
+    *(short *)(p0 + 6) = 0;
+    do {
+        *(unsigned short *)(v1 + 8) = 65535;
+        *(int *)(v2 + 124) = 0;
+        v0 = (v0 + 8);
+        *(unsigned short *)(v1 + 10) = 65535;
+        *(int *)(v2 + 128) = 0;
+        *(unsigned short *)(v1 + 12) = 65535;
+        *(int *)(v2 + 132) = 0;
+        *(unsigned short *)(v1 + 14) = 65535;
+        *(int *)(v2 + 136) = 0;
+        *(unsigned short *)(v1 + 16) = 65535;
+        *(int *)(v2 + 140) = 0;
+        *(unsigned short *)(v1 + 18) = 65535;
+        *(int *)(v2 + 144) = 0;
+        *(unsigned short *)(v1 + 20) = 65535;
+        *(int *)(v2 + 148) = 0;
+        *(unsigned short *)(v1 + 22) = 65535;
+        *(int *)(v2 + 152) = 0;
+        v1 = (v1 + 16);
+        v2 = (v2 + 32);
+    } while ((v0 < 16));
+    return (int)p0;
 }
 
 int func_0028C200(p0, p1, p2, p3, p4, p5, p6) char *p0; int p1; int p2; int p3; int p4; int p5; int p6; {

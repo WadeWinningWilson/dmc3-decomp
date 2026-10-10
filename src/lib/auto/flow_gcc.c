@@ -279,6 +279,7 @@ void func_001282D0();
 void func_00128488();
 void func_00128548();
 void func_001285C8();
+int func_00128618();
 void func_0012A900();
 void func_0012A970();
 void func_0012A9F0();
@@ -1204,6 +1205,14 @@ void func_00127758(p0) int p0; {
     func_00128548(*(int *)(D_00518310 + 0));
     func_00126B20(*(int *)(D_00518310 + 0), p0);
     func_001285C8(*(int *)(D_00518310 + 0));
+}
+
+int func_00128A68(p0, p1) int p0; int p1; {
+    int tmp0;
+    tmp0 = func_00128618(p0, 1);
+    *(int *)((char *)tmp0 + 20) = p1;
+    *(int *)((char *)tmp0 + 16) = 1;
+    return tmp0;
 }
 
 int func_0012A6F0(p0) char *p0; {

@@ -355,6 +355,8 @@ def prepare(ins, sink=False):
             continue
         seq.append((addr, t))
         i += 1
+    # `jr $t9` = a virtual call in tail position: return obj->m(...)
+    seq = [y for a_, t_ in seq for y in ([(a_, "jalr $t9"), (a_ + 1, "jr $ra")] if t_ == "jr $t9" else [(a_, t_)])]
     frame = re.compile(r"addiu \$sp, \$sp, -?0x[0-9A-F]+|(sd|ld) \$ra, 0x[0-9A-F]+\(\$sp\)|"
                        r"(sq|lq|sd|ld) \$(s[0-7]|fp), 0x[0-9A-F]+\(\$sp\)|(swc1|lwc1) \$f(2[0-9]|3[01]), 0x[0-9A-F]+\(\$sp\)")
     out = [(a, t) for a, t in seq if t != "nop" and not frame.fullmatch(t)]
@@ -1208,7 +1210,7 @@ def translate(name, raw, externs, opts=None):
                       obj, slot = regs["$t9"].rsplit("|", 1)
                       slot = int(slot)
                       this, tt_ = val("$a0")
-                      if this != obj or slot < 8 or slot % 4:
+                      if this.replace("(char *)", "") != obj.replace("(char *)", "") or slot < 8 or slot % 4:
                           raise Fail
                       nargs = max(nargs, 1)
                       cv = [val(ARGS[i]) for i in range(1, nargs)]
@@ -1236,8 +1238,9 @@ def translate(name, raw, externs, opts=None):
                   else:
                       call = f"{fn}({', '.join(cargs)})"
                       if opts.get("cpp") and callsig.get(fn, sig) != sig:
-                          raise Fail
-                      callsig[fn] = sig
+                          callsig[fn] = ("...",)  # called two ways: declared variadic
+                      elif callsig.get(fn) != ("...",):
+                          callsig[fn] = sig
                   for r in list(regs):  # caller-saved registers are dead after the call
                       if not re.fullmatch(r"\$s[0-7]|\$fp|\$f(2[0-9]|3[01])", r):
                           del regs[r]
@@ -1312,7 +1315,9 @@ def translate(name, raw, externs, opts=None):
                   elif vbase != "$t9":
                       obj, ot = val(vbase)
                       if ot != "char *":
-                          raise Fail
+                          if ot != "int":
+                              raise Fail
+                          obj = f"(char *){obj}"
                       if off:  # vptr of a secondary base: `this` is the adjusted pointer
                           obj = f"({obj} + {off})"
                       regs["$t9"], types["$t9"] = obj, "vptr"
@@ -2190,6 +2195,9 @@ def main():
         has_vcall = any(t.startswith("jalr") for _, t in raw)
         # branch-free functions that tools/gen_leaf.py already matched are excluded by `taken`;
         # the rest are tried here too (richer instruction set, webs, stack locals)
+        jt9 = [i for i, (_, t) in enumerate(raw) if t == "jr $t9"]
+        if jt9 and any(t != "nop" for _, t in raw[jt9[0] + 2:]):
+            continue  # splat merged a tail-calling function with the next one
         work.append((name, A, raw, has_vcall))
     addr = {n: A for n, A, _, _ in work}
     externs, matched = {}, {"c": {}, "cpp": {}}
