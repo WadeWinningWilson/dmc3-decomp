@@ -135,7 +135,43 @@ def fix_word(t):
     return t
 
 
-def prepare(ins):
+STORE_OPS = ("sb", "sh", "sw", "sd", "sq", "swc1", "sqc2", "swl", "swr", "sdl", "sdr")
+
+
+def dead_at(ins, addr, regs_, depth=0):
+    """True when none of regs_ is read on the path from addr before being written
+    (following unconditional branches; any other control flow counts as a read)."""
+    idx = next((i for i, (a, _) in enumerate(ins) if a == addr), None)
+    if idx is None or depth > 4:
+        return False
+    left = set(regs_)
+    for k_ in range(idx, len(ins)):
+        op, args = split(ins[k_][1])
+        rd, wr = regs_of(op, args)
+        if left & rd:
+            return False
+        if op in ("jr", "b"):
+            if k_ + 1 < len(ins):
+                dop_, da_ = split(ins[k_ + 1][1])
+                drd, dwr = regs_of(dop_, da_)
+                if left & drd:
+                    return False  # read by the delay slot
+                left -= dwr
+            if not left:
+                return True
+            if op == "jr":
+                return not (left & {"$v0", "$v1", "$f0"})
+            m_ = re.search(r"\.L([0-9A-F]{8})", ins[k_][1])
+            return bool(m_) and dead_at(ins, int(m_.group(1), 16), left, depth + 1)
+        if re.match(r"(b\w*|j|jal|jalr)$", op):
+            return False  # conservative: the path continues elsewhere
+        left -= wr
+        if not left:
+            return True
+    return False
+
+
+def prepare(ins, sink=False):
     ins = [(a, fix_word(t)) for a, t in ins]
     """[(addr, text)] -> list of instructions with delay slots resolved and the frame removed."""
     clean, j = [], 0
@@ -154,9 +190,12 @@ def prepare(ins):
         raise Fail
     targets = {int(t, 16) for _, t in ins for t in re.findall(r"\.L([0-9A-F]{8})", t)}
     seq = []
+    later_ = {}
     i = 0
     while i < len(ins):
         addr, t = ins[i]
+        if addr in later_:
+            seq.append((addr, later_.pop(addr)))
         op, a = split(t)
         if re.match(r"(b\w*|j|jal|jalr|jr)$", op) and op != "break":
             if op.endswith("l") and op not in ("jal",) and op.startswith("b"):
@@ -165,10 +204,28 @@ def prepare(ins):
                 raise Fail
             daddr, d = ins[i + 1]
             dop, da = split(d)
+            tgt_ = re.search(r"\.L([0-9A-F]{8})", t)
+            tgt_ = int(tgt_.group(1), 16) if tgt_ else None
+            if sink and d != "nop" and op not in ("b", "j", "jal", "jalr", "jr") and dop not in STORE_OPS                     and regs_of(dop, da)[1] and daddr not in targets and tgt_ is not None and tgt_ > daddr                     and not (regs_of(dop, da)[1] & regs_of(dop, da)[0]) and i + 2 < len(ins)                     and sum(t2.count(f".L{tgt_:08X}") for _, t2 in ins) == 1                     and dead_at(ins, ins[i + 2][0], regs_of(dop, da)[1]):
+                ti_ = next((x for x, (a2, _) in enumerate(ins) if a2 == tgt_), None)
+                if ti_ is not None and ti_ >= 2 and re.match(r"(b|j|jr)\b", ins[ti_ - 2][1])                         and not ins[ti_ - 2][1].startswith(("beq", "bne", "bgez", "bgtz", "blez", "bltz", "bc1")):
+                    # filled from the branch target (nothing else reaches it): the value is
+                    # computed at the start of the taken path in the source
+                    later_[tgt_] = d
+                    seq.append((addr, t))
+                    i += 2
+                    continue
             if d != "nop" and op not in ("b", "j", "jal", "jalr", "jr") and regs_of(dop, da)[1] & regs_of(op, a)[0]:
                 # the delay slot overwrites a register the branch reads: the branch sees the
                 # old value, so the slot runs after the condition (kept on the branch line)
                 seq.append((addr, f"{t} || {d}"))
+            elif sink and d != "nop" and op not in ("b", "j", "jal", "jalr", "jr") and dop not in STORE_OPS                     and regs_of(dop, da)[1] and daddr not in targets and not (regs_of(dop, da)[1] & regs_of(dop, da)[0])                     and dead_at(ins, int(re.search(r"\.L([0-9A-F]{8})", t).group(1), 16), regs_of(dop, da)[1]):
+                # MW fills a delay slot from the fall-through path: the value is dead where the
+                # branch goes, so in the source it belongs after the test
+                seq.append((addr, t))
+                seq.append((daddr, d))
+                i += 2
+                continue
             else:
                 if d != "nop":
                     seq.append((addr, d))
@@ -385,7 +442,7 @@ def translate(name, raw, externs, opts=None):
     def coin(p=0.5):
         """A seeded choice (only when permuting); deterministic default otherwise."""
         return rng is not None and rng.random() < p
-    seq, _, _ = prepare(raw)
+    seq, _, _ = prepare(raw, opts.get("sink") if rng is None else coin(0.3))
     stack = STACK
     if not seq or len(seq) > MAX_INS:
         raise Fail
@@ -1339,7 +1396,8 @@ def translate(name, raw, externs, opts=None):
             chain.append((int(cond_[2]), succ[b][1]))
             blocks_.append(b)
             b = succ[b][0]
-        if len(chain) < SWITCH_MIN or not (opts.get("new") if rng is None else use_switch):
+        smin = 2 if (opts.get("sw2") if rng is None else coin(0.3)) else SWITCH_MIN
+        if len(chain) < smin or not (opts.get("new") if rng is None else use_switch):
             return None
         default = b
         if b < n and term[b][0] == "goto" and not block_code(b)[0] and len(bl[b][1]) == 1:
@@ -1568,8 +1626,18 @@ def translate(name, raw, externs, opts=None):
                 ind_, v_, k_ = m1.groups()
                 m2 = re.fullmatch(re.escape(ind_) + r"if \((.+)\) \{", out[i + 1])
                 m3 = re.fullmatch(re.escape(ind_) + "    " + v_ + r" = (.+);", out[i + 2])
-                if m2 and m3 and out[i + 3] == ind_ + "}" and out[i + 4] == f"{ind_}return {v_};" and                         not re.search(rf"{v_}", m2.group(1) + m3.group(1) + k_):
+                if m2 and m3 and out[i + 3] == ind_ + "}" and out[i + 4] == f"{ind_}return {v_};" and                         not re.search(rf"\b{v_}\b", m2.group(1) + m3.group(1) + k_):
                     out[i:i + 5] = [out[i + 1], f"{ind_}    return {m3.group(1)};", ind_ + "}", f"{ind_}return {k_};"]
+            i += 1
+        # v = E; *(int *)X = v; return v;  ->  return *(int *)X = E;
+        i = 0
+        while i + 2 < len(out):
+            m1 = re.fullmatch(r"(\s*)((?:v|tmp)\d+) = (.+);", out[i])
+            if m1:
+                ind_, v_, e_ = m1.groups()
+                m2 = re.fullmatch(re.escape(ind_) + r"(\*\((?:int|char) \*\*?\)\(.+\)) = " + v_ + ";", out[i + 1])
+                if m2 and out[i + 2] == f"{ind_}return {v_};" and not re.search(rf"\b{v_}\b", m2.group(1) + e_):
+                    out[i:i + 3] = [f"{ind_}return {m2.group(1)} = {e_};"]
             i += 1
     decl = [f"    {vtype[v]} {v};" for w, v in sorted(webvar.items(), key=lambda x: x[1])
             if not re.fullmatch(r"[pf]\d", v)]
@@ -1659,7 +1727,9 @@ CPP_HDR = ("/* AUTO-GENERATED by tools/gen_flow.py: functions that make C++ virt
 # translation variants, tried in order on what is still unmatched: (options, output kind)
 OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": True, "intbase": True}, "c"),
            ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp"), ({"cpp": True, "new": True}, "cpp"), ({"cpp": True, "new": True, "intbase": True}, "cpp"),
-           ({"new": True, "intbase": True, "early": True}, "c"), ({"new": True, "intbase": True, "early": True, "arr": True}, "c"), ({"cpp": True, "new": True, "early": True}, "cpp")]
+           ({"new": True, "intbase": True, "early": True}, "c"), ({"new": True, "intbase": True, "early": True, "arr": True}, "c"),
+           ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True}, "c"),
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
 OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
 META = {}
@@ -1719,7 +1789,7 @@ def main():
                 continue
             try:
                 code, calls, meta = translate(name, raw, externs, opts)
-            except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError):
+            except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError, RecursionError):
                 fails += 1
                 continue
             META[name] = meta
@@ -1765,7 +1835,7 @@ def main():
                       {"seed": f"{name}:{rnd}", "cpp": kind == "cpp"})
                 try:
                     code, calls, meta = translate(name, raw, externs, o_)
-                except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError):
+                except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError, RecursionError):
                     continue
                 META[name] = meta
                 funcs.append((name, code, calls))
