@@ -105,10 +105,10 @@ def split(i):
 def regs_of(op, a):
     """(read, written) GPR/FPR names of one instruction (for liveness)."""
     if op in LOADS:
-        mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", a[1])
+        mm = re.fullmatch(rf"({NUM}|%lo\([^)]*\))\((\$\w+)\)", a[1])
         return ({mm.group(2)} if mm else set()), {a[0]}
     if op in STORES:
-        mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", a[1])
+        mm = re.fullmatch(rf"({NUM}|%lo\([^)]*\))\((\$\w+)\)", a[1])
         return {a[0]} | ({mm.group(2)} if mm else set()), set()
     if is_vu(op):
         rd = set()
@@ -850,6 +850,7 @@ def translate(name, raw, externs, opts=None):
     crossing = set()      # webs whose value flows across a block boundary
     ptr_web = set()       # webs used as a base address
     useweb = {}           # (k, pos, reg) -> reaching def set
+    useall = {}           # the same before clobber filtering
     for k in range(n):
         cur = {r: set(ds) for r, ds in IN[k].items()}
         local = set()
@@ -863,6 +864,7 @@ def translate(name, raw, externs, opts=None):
                 if not ds:
                     continue
                 ds = list(ds)
+                useall[(k, pos, r)] = ds
                 if any(d[0] == "clobber" for d in ds) and any(isinstance(d[0], int) for d in ds):
                     # garbage on some path (a call clobbered it): do not merge the real
                     # definitions into a clobber web, which would leave them without a variable
@@ -1069,7 +1071,7 @@ def translate(name, raw, externs, opts=None):
 
         def hi_reaches(r, sym):
             """Every definition of r reaching here is `lui r, %hi(sym)` (e.g. from a delay slot)."""
-            ds_ = useweb.get((k, cur[0], r))
+            ds_ = [d_ for d_ in useall.get((k, cur[0], r), []) if d_[0] != "clobber"]
             return bool(ds_) and all(
                 isinstance(d_[0], int) and d_[1] < len(bseq(d_[0])[0]) and
                 bseq(d_[0])[0][d_[1]] == ("lui", [r, f"%hi({sym})"]) for d_ in ds_)
