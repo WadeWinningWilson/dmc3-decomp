@@ -265,7 +265,7 @@ void func_0017B980();
 void func_0017BA60();
 int func_0017BE48();
 void func_0017C780();
-void func_0017C7F0();
+int func_0017C7F0();
 void func_0017C8A0();
 void func_0017D348();
 int func_0017D360();
@@ -2151,6 +2151,34 @@ int func_0017C750(p0) int p0; {
     func_0017C780();
     func_0017C7F0(p0);
     return 0;
+}
+
+int func_0017C7F0(p0) int p0; {
+    char *v0;
+    int v1;
+    int v2;
+    int v3;
+    int v4;
+    int v5;
+    int v6;
+    v0 = (char *)p0;
+    v1 = 1;
+    v3 = func_0018F998(p0, 7);
+    v2 = (int)v0;
+    if (v3 != v1) {
+        v3 = func_0017E050(v2, *(int *)(v0 + 8468));
+        v4 = (int)v0;
+        v5 = 7;
+        v6 = 1;
+        if (v3 == v1) {
+            func_0018F980(v4, v5, v6);
+            return;
+        } else {
+            return v3;
+        }
+    } else {
+        return v3;
+    }
 }
 
 int func_0017C860(p0) int p0; {
