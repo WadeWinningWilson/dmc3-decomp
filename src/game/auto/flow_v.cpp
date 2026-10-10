@@ -149,6 +149,7 @@ int func_0038ADD0(char *);
 int func_0038B050(char *);
 int func_00391DF0(char *, int);
 int func_003AF2D0(char *, int);
+int func_003B8AF0(char *);
 int func_003CBAD0(char *, int, char *, int);
 int func_003E4130(char *);
 int func_003E6750(char *, int, int, int);
@@ -22173,6 +22174,24 @@ int func_003B7850(int p0) {
         v0 = (v0 + 1536);
     } while ((v2 < 3));
     return v1;
+}
+
+int func_003B89E0(char *p0) {
+    int v0;
+    char *v1;
+    int v2;
+    v0 = *(unsigned char *)(p0 + 4);
+    v1 = p0;
+    switch (v0) {
+    case 0:
+        ((V130_0_v *)p0)->m();
+        *(char *)(v1 + 4) = (*(unsigned char *)(v1 + 4) + 1);
+        /* fall through */
+    case 1:
+        v2 = func_003B8AF0(v1);
+        break;
+    }
+    return v2;
 }
 
 int func_003BBA00(int p0) {

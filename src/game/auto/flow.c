@@ -501,6 +501,7 @@ int func_0011DBE0(float, float);
 void func_00121580();
 void func_00122060();
 int func_00122520();
+int func_001225A0();
 int func_00124F40();
 int func_001282D0();
 void func_00128488();
@@ -2843,6 +2844,31 @@ void func_001ACC30(p0, p1, p2, p3, p4) char *p0; int p1; int p2; int p3; int p4;
         *(short *)(p0 + 568) = (p2 & 255);
         break;
     }
+}
+
+int func_001AD290(p0, p1, p2) int p0; int p1; int p2; {
+    int v1;
+    int v3;
+    int v0;
+    int v5;
+    char *v2;
+    int v4;
+    v1 = p1;
+    v2 = (char *)((p0 + (p1 * 80)) + 16);
+    v3 = p2;
+    func_00130990(v2, 20);
+    v0 = ((p0 + (v1 << 8)) + 192);
+    do {
+        v4 = func_001225A0(v1, v3, v0);
+        v5 = 1;
+    } while (v4 != v5);
+    *(char *)(v2 + 74) = 0;
+    *(char *)(v2 + 75) = v5;
+    *(unsigned char *)(v2 + 76) = 255;
+    *(unsigned char *)(v2 + 77) = 255;
+    *(unsigned char *)(v2 + 78) = 255;
+    *(unsigned char *)(v2 + 79) = 255;
+    return v4;
 }
 
 void func_001AD340(p0) char *p0; {

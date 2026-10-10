@@ -2042,7 +2042,9 @@ OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": 
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "argstrict": True}, "cpp"),
            ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "c"),
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "cpp"),
-           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "narrow": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "narrow": True}, "cpp"),
+           ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "rev": True}, "c"),
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "rev": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
 OUT_CPP = ROOT / ("src/lib/auto/flow_mw_v.cpp" if MWLIB else "src/game/auto/flow_v.cpp")
 META = {}
