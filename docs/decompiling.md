@@ -148,6 +148,7 @@ per-file "matching" switch; the per-file progress is in `build/us/progress.json`
 | Tool | Output |
 |---|---|
 | `tools/gen_trivial.py` | two-instruction functions (getters, setters, forwarders) |
+| `tools/gen_leaf.py` | short branch-free leaf functions (loads, stores, arithmetic), translated from asm |
 | `tools/gen_dtors.py` | empty-body deleting destructors |
 | `tools/gen_cwork_dtors.py` | destructors of single-inheritance `CWork` chains, from RTTI + asm |
 | `tools/gen_class_dtors.py` | destructors that call their parent's (single or multiple inheritance) |
