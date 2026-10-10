@@ -642,10 +642,17 @@ def translate(name, raw, externs, opts=None):
             return False
         return False
 
+    pre_while = {}  # block that jumps to a while loop's test -> loop head
+    for h, (L, kind) in list(loops.items()):
+        A = h - 1
+        if kind == "dowhile" and A >= 0 and L > h and term[A] == ("goto",) and succ[A] == [L] and \
+                (opts.get("whiles", True) if rng is None else coin(0.8)):
+            loops[h] = (L, "while")
+            pre_while[A] = h
     latch_of = {L: h for h, (L, _) in loops.items()}
     exit_of = {}
     for h, (L, kind) in loops.items():
-        if kind == "dowhile":
+        if kind in ("dowhile", "while"):
             exit_of[h] = L + 1
         else:  # for (;;): the exit is where the first forward edge out of the loop goes
             outs = sorted(s2 for k2 in range(h, L + 1) for s2 in succ[k2] if s2 > L)
@@ -658,7 +665,7 @@ def translate(name, raw, externs, opts=None):
                 if s2 < h:
                     raise Fail
         for k2 in list(range(0, h)) + list(range(L + 1, n)):
-            if any(h < s2 <= L for s2 in succ[k2]):
+            if any(h < s2 <= L for s2 in succ[k2]) and not (pre_while.get(k2) == h and succ[k2] == [L]):
                 raise Fail
     dsucc = {}
     for k in range(n):
@@ -1692,6 +1699,15 @@ def translate(name, raw, externs, opts=None):
                 L, kind = loops[k]
                 X = exit_of[k]
                 inner = (k, L, X)
+                if kind == "while":
+                    stmts, cond, ret = block_code(L)
+                    if stmts:
+                        raise Fail  # the test must be a pure expression
+                    out.append(ind + f"while ({cstr(cond, False)}) {{")
+                    emit(k, L, ind + "    ", inner, active | {k})
+                    out.append(ind + "}")
+                    k = X
+                    continue
                 out.append(ind + ("do {" if kind == "dowhile" else "for (;;) {"))
                 if L != k:
                     emit(k, L, ind + "    ", inner, active | {k})
@@ -1714,7 +1730,7 @@ def translate(name, raw, externs, opts=None):
                 out.append(ind + "return;")
                 return
             if tk[0] in ("goto", "fall"):
-                nk = succ[k][0]
+                nk = pre_while.get(k, succ[k][0])
                 if ctx and nk == ctx[2] and k != ctx[1]:
                     out.append(ind + "break;")
                     return
