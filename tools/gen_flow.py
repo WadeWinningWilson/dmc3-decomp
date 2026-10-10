@@ -863,6 +863,10 @@ def translate(name, raw, externs, opts=None):
                 if not ds:
                     continue
                 ds = list(ds)
+                if any(d[0] == "clobber" for d in ds) and any(isinstance(d[0], int) for d in ds):
+                    # garbage on some path (a call clobbered it): do not merge the real
+                    # definitions into a clobber web, which would leave them without a variable
+                    ds = [d for d in ds if d[0] == "clobber"] or ds
                 for d in ds[1:]:
                     union(ds[0], d)
                 find(ds[0])
@@ -998,7 +1002,8 @@ def translate(name, raw, externs, opts=None):
     def fargcount(written, at):
         got = {r for r in written if r in CFARGS}
         for r_ in CFARGS:
-            if any(isinstance(d_[0], int) for d_ in useweb.get((at[0], at[1], r_), [])):
+            all_ = useweb.get((at[0], at[1], r_), [])
+            if all_ and all(isinstance(d_[0], int) for d_ in all_):  # garbage on some path: no arg
                 got.add(r_)
         n_ = 0
         while n_ < len(CFARGS) and CFARGS[n_] in got:
@@ -1012,6 +1017,8 @@ def translate(name, raw, externs, opts=None):
         strict_ = opts.get("argstrict") if rng is None else coin(0.3)
         for r_ in ARGS:
             ds_ = [d_ for d_ in useweb.get((at[0], at[1], r_), []) if isinstance(d_[0], int)]
+            if len(ds_) != len(useweb.get((at[0], at[1], r_), [])):
+                ds_ = []  # a call clobbers (or the entry value reaches) it on some path
             if ds_ and strict_ and any(not call_only(d_) for d_ in ds_):
                 continue  # the value is also read by something else (e.g. a switch test)
             if ds_:
