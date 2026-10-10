@@ -80,6 +80,26 @@ def file_flags(src):
     return cc, flags
 
 
+def fix_symtab_info(path):
+    """ee-gcc 2.96's gas puts its `gcc2_compiled.` LOCAL symbols after .symtab's sh_info
+    (the first global), which current ld rejects: recount it."""
+    d = bytearray(path.read_bytes())
+    shoff, = struct.unpack_from("<I", d, 0x20)
+    shentsize, shnum = struct.unpack_from("<HH", d, 0x2E)
+    for i in range(shnum):
+        o = shoff + i * shentsize
+        sh_type, = struct.unpack_from("<I", d, o + 4)
+        if sh_type != 2:  # SHT_SYMTAB
+            continue
+        off, size = struct.unpack_from("<II", d, o + 16)
+        binds = [d[off + k * 16 + 12] >> 4 for k in range(size // 16)]
+        first_global = next((k for k, b in enumerate(binds) if b != 0), len(binds))
+        if all(b == 0 for b in binds[:first_global]) and all(b != 0 for b in binds[first_global:]):
+            struct.pack_into("<I", d, o + 28, first_global)  # sh_info
+            path.write_bytes(d)
+        return
+
+
 def compile_sources(v, b):
     objs = []
     srcs = sorted(p for p in (ROOT / "src").rglob("*") if p.suffix in (".c", ".cpp")
@@ -97,6 +117,7 @@ def compile_sources(v, b):
                 # GNU names function sections itself
                 dexec(f"sh tools/eegcc.sh {cc} {out.relative_to(ROOT).as_posix()} {rel} "
                       f"{flags} -ffunction-sections -Iinclude")
+                fix_symtab_info(out)
             else:
                 dexec(f"MWCIncludes=. wibo tools/compilers/{cc}/mwccps2.exe -c {flags} -nostdinc "
                       f"-Iinclude -o {raw.relative_to(ROOT).as_posix()} {rel}")
