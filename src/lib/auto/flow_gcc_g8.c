@@ -201,6 +201,8 @@ void func_001621E0();
 void func_00162338();
 void func_001640C0();
 void func_00164460();
+void func_001648D8();
+int func_0016A398();
 void func_0016A3C0();
 void func_0016A3D8();
 void func_0016A3F0();
@@ -283,6 +285,7 @@ void func_00181A98();
 int func_00181B78();
 void func_00181BE8();
 int func_00181C48();
+void func_00182B20();
 void func_00182DA8();
 void func_00182E18();
 int func_00182EB8();
@@ -295,6 +298,7 @@ void func_00187C30();
 void func_00188558();
 int func_00188CA8();
 void func_00188FF8();
+void func_00189B00();
 void func_00189B10();
 void func_00189C60();
 void func_00189E30();
@@ -1117,6 +1121,39 @@ void func_00161D40(p0, p1, p2) int p0; int p1; int p2; {
     *(int *)((char (*)[8])((char *)(int)D_00634160 + 0))[p0] = p1;
     *(int *)((char (*)[8])((char *)D_00634160 + 4))[p0] = p2;
     func_00161710();
+}
+
+void func_00164960(p0, p1) int p0; int p1; {
+    int v2;
+    int v4;
+    int v1;
+    int v0;
+    int v3;
+    int tmp0;
+    int tmp1;
+    int tmp2;
+    v0 = p1;
+    v1 = p0;
+    tmp0 = func_0016A398();
+    if (tmp0 != 0) {
+        func_001648D8(0, 0xff03020a);
+        return;
+    } else {
+        v4 = 0xff030305;
+        do {
+            tmp1 = func_0016FB98(v0);
+            v3 = (tmp1 & 204);
+            v2 = v0;
+            if (tmp1 == 0) break;
+            if (v3 != 0) {
+                v4 = 0;
+                break;
+            }
+            tmp2 = func_0016FDC0(v2, 1, 4);
+        } while (tmp2 == 4);
+        func_001648D8(v1, v4);
+        return;
+    }
 }
 
 void func_0016A420() {
@@ -2313,6 +2350,30 @@ void func_00182290() {
     func_0016CF28();
 }
 
+void func_00182A98(p0, p1, p2, p3) int p0; int p1; int p2; int p3; {
+    int v5;
+    int v3;
+    int v1;
+    int v2;
+    int v4;
+    int v0;
+    int tmp0;
+    v0 = p0;
+    v1 = p1;
+    tmp0 = func_001803A0();
+    v2 = 0;
+    v3 = p2;
+    v5 = 0xff000185;
+    v4 = p3;
+    if (tmp0 != 0) {
+        func_00180180(v2, v5, v3, v4);
+        return;
+    } else {
+        func_00182B20(v0, v1);
+        return;
+    }
+}
+
 int func_00182D10(p0) int p0; {
     char *v0;
     int v1;
@@ -2422,6 +2483,23 @@ int func_001892D8(p0, p1) int p0; int p1; {
     }
 }
 
+void func_00189AB8(p0) int p0; {
+    int v0;
+    int v1;
+    int tmp0;
+    tmp0 = func_001803A0();
+    v0 = 0xff000000;
+    v1 = p0;
+    v0 = (v0 | 323);
+    if (tmp0 != 0) {
+        func_00180180(0);
+        return;
+    } else {
+        func_00189B00(v1, v0);
+        return;
+    }
+}
+
 int func_00189D80(p0) int p0; {
     int v0;
     int v1;
@@ -2436,6 +2514,25 @@ int func_00189D80(p0) int p0; {
     } else {
         func_00189E30(v1, v0);
         return 0;
+    }
+}
+
+void func_0018B970(p0, p1) int p0; int p1; {
+    int v0;
+    int v1;
+    int v2;
+    int tmp0;
+    v0 = p0;
+    tmp0 = func_001803A0();
+    v1 = 0xff000000;
+    v2 = p1;
+    v1 = (v1 | 308);
+    if (tmp0 != 0) {
+        func_00180180(0, v1, 9, v2, 0);
+        return;
+    } else {
+        func_0018F900(v0, 0);
+        return;
     }
 }
 

@@ -787,6 +787,7 @@ int func_00220860(char *, int, int, float);
 void func_00221240();
 void func_002282B0();
 int func_00228300();
+void func_00228350();
 int func_00228740();
 void func_00228AC0();
 int func_00228D20();
@@ -1170,6 +1171,7 @@ int func_004191C0();
 int func_0041D670();
 void func_0041DAB0();
 void func_0041DBA0();
+float func_0041E060();
 int func_0041E1F0(char *, char *, float, float);
 void func_0041E340();
 int func_0042DAC0();
@@ -1444,6 +1446,48 @@ int func_00196BF0(char *p0) {
     return v2;
 }
 
+int func_00196F20(p0, p1, p2, p3) int p0; int p1; int p2; int p3; {
+    int v0;
+    int v2;
+    int v1;
+    int tmp0;
+    int tmp1;
+    tmp0 = 20;
+    if (tmp0 != p1) {
+        if (p1 != 19) {
+            tmp1 = 2;
+            if (p1 != tmp1) {
+                switch (p1) {
+                case 0:
+                case 1:
+                    p1 = 64;
+                    v2 = 32;
+                    break;
+                }
+            } else {
+                p1 = 64;
+                v2 = p1;
+            }
+        } else {
+            p1 = 128;
+            v2 = 64;
+        }
+    } else {
+        p1 = 128;
+        v2 = p1;
+    }
+    v0 = (p2 / p1);
+    if ((p2 % p1) != 0) {
+        v0 = (v0 + 1);
+    }
+    v1 = (p3 / v2);
+    if ((p3 % v2) != 0) {
+        v1 = (v1 + 1);
+    }
+    v1 = (v1 * v0);
+    return v1;
+}
+
 void func_00197320(p0) int p0; {
     int v1;
     int v0;
@@ -1464,6 +1508,22 @@ void func_00197320(p0) int p0; {
         v2 = (v2 + 8);
     } while ((v0 < 128));
     *(int *)((char *)((v1 << 2) + p0) + 49920) = 0;
+}
+
+int func_001979E0(p0) int p0; {
+    char *v0;
+    int v1;
+    v0 = D_005BE0D8;
+    if (2 != *(signed char *)(v0 + 6)) {
+        v1 = (*(signed char *)(v0 + 11) == 0) ? *(unsigned short *)(v0 + 68) : *(unsigned short *)(v0 + 66);
+        v1 = (v1 & 65535);
+    } else {
+        v1 = *(unsigned short *)(v0 + 66);
+    }
+    if (p0 == 0) {
+        v1 = ((unsigned int)v1 >> 5);
+    }
+    return v1;
 }
 
 int func_00197A40(p0) int p0; {
@@ -6829,6 +6889,34 @@ int func_00247600(p0) int p0; {
     return tmp0;
 }
 
+void func_00247920(p0, p1, p2) int p0; int p1; int p2; {
+    char *v0;
+    char *v1;
+    int v2;
+    int v3;
+    float v4;
+    int v5;
+    float v6;
+    int v7;
+    float tmp0;
+    v0 = (char *)p0;
+    v1 = (char *)p1;
+    v2 = p2;
+    v7 = 0;
+    tmp0 = func_00132470(v2, (v0 + 240));
+    v6 = tmp0;
+    v3 = 1;
+    while ((v3 < *(signed char *)(v0 + 368))) {
+        v4 = func_00132470(v2, ((v0 + (v3 << 4)) + 240));
+        if (v4 < v6) {
+            v6 = v4;
+            v7 = v3;
+        }
+        v3 = (v3 + 1);
+    }
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(((v0 + (v7 << 4)) + 240)), "r"(v1) : "memory");
+}
+
 int func_002496D0(p0) char *p0; {
     int tmp9;
     func_0024DD30(((p0 + (*(unsigned char *)(p0 + 10400) * 416)) + 16880));
@@ -8608,6 +8696,42 @@ int func_002C44F0(p0, p1) int p0; int p1; {
         }
     }
     return (int)v0;
+}
+
+int func_002C5E80(p0) int p0; {
+    int v0;
+    int v1;
+    int v6;
+    int v4;
+    int v5;
+    int v3;
+    int v2;
+    int tmp0;
+    v0 = p0;
+    func_00228350((v0 + 200));
+    v1 = 0;
+    v2 = v0;
+    do {
+        func_00206730((v2 + 12144));
+        v1 = (v1 + 1);
+        v2 = (v2 + 4);
+    } while ((v1 < 2));
+    v3 = 0;
+    v4 = v0;
+    do {
+        func_00206730((v4 + 12120));
+        v3 = (v3 + 1);
+        v4 = (v4 + 4);
+    } while ((v3 < 3));
+    v5 = 0;
+    v6 = v0;
+    do {
+        func_00206730((v6 + 12132));
+        v6 = (v6 + 4);
+        v5 = (v5 + 1);
+    } while ((v5 < 3));
+    tmp0 = func_00206730((v0 + 12152));
+    return tmp0;
 }
 
 void func_002C9320(char *p0) {
@@ -16388,6 +16512,23 @@ void func_0041D820(char *p0, float f0, float f1) {
     if (v0 < f1) {
         *(float *)(p0 + 0) = f1;
     }
+}
+
+int func_0041E120(int p0, float f0) {
+    char *v0;
+    float v1;
+    float v2;
+    int v3;
+    v0 = (char *)p0;
+    v1 = f0;
+    v2 = func_0041E060();
+    if (*(float *)(v0 + 20) <= ((10.0f + v2) + v1)) {
+        v3 = 1;
+        *(float *)(v0 + 20) = (v2 + v1);
+    } else {
+        v3 = 0;
+    }
+    return v3;
 }
 
 void func_0041E680(p0) int p0; {

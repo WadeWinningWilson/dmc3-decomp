@@ -3918,6 +3918,19 @@ public:
     virtual void d8();
     virtual int m(int);
 };
+class V2C_2_iii {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual int m(int, int);
+};
 class V2E8_0_i {
 public:
     virtual void d0();
@@ -15844,6 +15857,65 @@ public:
     virtual void d54();
     virtual int m(char *, char *, int, int);
 };
+class VE4_4_ppiiv {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void m(char *, char *, int, int);
+};
 class VE4_5_ppiipi {
 public:
     virtual void d0();
@@ -25628,6 +25700,66 @@ int func_00462DF0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int 
     *(int *)(p0 + 212) = 0;
     *(float *)(p0 + 256) = 10.0f;
     return tmp2;
+}
+
+int func_00462EA0(char *p0, int p1) {
+    int v0;
+    char *v1;
+    int v2;
+    int tmp0;
+    int tmp13;
+    int tmp17;
+    int tmp21;
+    v0 = *(int *)(p0 + 212);
+    v1 = p0;
+    if (v0 != 4) {
+        tmp0 = 3;
+        if (v0 != tmp0) {
+            switch (v0) {
+            case 0:
+                __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"((v1 + 224)), "r"((*(int *)(v1 + 16) + 32)) : "memory");
+                if (*(float *)(v1 + 256) < 0.0f) {
+                    *(int *)(v1 + 212) = 1;
+                }
+                *(float *)(v1 + 256) = (*(float *)(v1 + 256) - *(float *)(v1 + 176));
+                break;
+            case 1:
+                ((VE4_4_ppiiv *)p0)->m((v1 + 224), (v1 + 240), (*(int *)(v1 + 16) + 32), (*(int *)(v1 + 16) + 48));
+                v2 = ((V30_0_i *)*(char **)(v1 + 168))->m();
+                if (v2 != 0) {
+                    *(char *)(v1 + 205) = 0;
+                    *(char *)(v1 + 207) = 4;
+                    ((V1C_1_iv *)*(char **)(v1 + 168))->m(13);
+                    ((V44_0_v *)*(char **)(v1 + 168))->m();
+                    v2 = func_00330BD0(D_01DFABA0, 39, (*(int *)(v1 + 16) + 16), 8, 0);
+                    *(int *)(v1 + 212) = 2;
+                }
+                break;
+            case 2:
+                tmp13 = ((V2C_0_i *)*(char **)(v1 + 168))->m();
+                if (tmp13 != 0) {
+                    ((V1C_1_iv *)*(char **)(v1 + 168))->m(23);
+                    *(int *)(v1 + 212) = 3;
+                }
+                v2 = ((V24_0_i *)*(char **)(v1 + 168))->m();
+                break;
+            }
+        } else {
+            tmp17 = ((V2C_2_iii *)*(char **)(v1 + 168))->m(p1, v0);
+            if (tmp17 != 0) {
+                ((V1C_1_iv *)*(char **)(v1 + 168))->m(6);
+                *(int *)(v1 + 212) = 4;
+            }
+            v2 = ((V24_0_i *)*(char **)(v1 + 168))->m();
+        }
+    } else {
+        tmp21 = ((V2C_2_iii *)*(char **)(v1 + 168))->m(p1, v0);
+        if (tmp21 != 0) {
+            ((VEC_1_iv *)v1)->m(14);
+        }
+        v2 = ((V24_0_i *)*(char **)(v1 + 168))->m();
+    }
+    return v2;
 }
 
 int func_004632C0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
