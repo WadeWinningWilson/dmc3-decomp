@@ -102,6 +102,8 @@ void func_002D9300(char *, int);
 int func_002E2BD0(char *);
 int func_002F2AA0(void);
 int func_002F7C10(int, int);
+int func_002FC2B0(char *);
+int func_002FC4F0(char *);
 int func_0030E440(char *, int);
 void func_00312870(void);
 void func_0031E570(char *);
@@ -181,6 +183,7 @@ int func_004B6500(char *);
 int func_004B67D0(char *);
 int func_004B6830(char *);
 int func_004B7190(char *, int);
+int func_004B9130(char *, int);
 int func_004BB330(char *);
 int func_004BB530(char *);
 int func_004BBED0(void);
@@ -16721,6 +16724,33 @@ int func_002F77B0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int 
     return v1;
 }
 
+int func_002FC220(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    int v2;
+    char *v0;
+    int v1;
+    int tmp0;
+    v0 = p0;
+    if (*(unsigned char *)(p0 + 2080) != 0) {
+        v2 = func_001AD100();
+        v1 = *(unsigned char *)(v0 + 4);
+        tmp0 = 2;
+        if (tmp0 != v1) {
+            switch (v1) {
+            case 0:
+                v2 = func_002FC2B0(v0);
+                break;
+            case 1:
+                v2 = ((V130_0_i *)v0)->m();
+                *(char *)(v0 + 4) = (*(unsigned char *)(v0 + 4) + 1);
+                break;
+            }
+        } else {
+            v2 = func_002FC4F0(v0);
+        }
+    }
+    return v2;
+}
+
 int func_002FE180(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     char *v0;
     int v1;
@@ -20307,6 +20337,40 @@ int func_00383BA0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v1;
 }
 
+int func_00384900(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    char *v0;
+    int v3;
+    int v6;
+    int v5;
+    int v2;
+    char *v1;
+    int v4;
+    v0 = (char *)p0;
+    ((VD0_0_v *)(v0 + 512))->m();
+    ((V14_0_v *)(v0 + 2048))->m();
+    v3 = 0;
+    v1 = v0;
+    do {
+        v5 = func_00286040((v1 + 2208));
+        v2 = *(int *)(v1 + 2208);
+        if (v2 != 0) {
+            v5 = func_001AD140(v2);
+        }
+        v3 = (v3 + 1);
+        v1 = (v1 + 4);
+    } while ((v3 < 4));
+    if ((0 < *(int *)(v0 + 300))) {
+        v6 = 0;
+        v4 = (int)v0;
+        do {
+            v5 = func_0013D5D0((v4 + 304));
+            v6 = (v6 + 1);
+            v4 = (v4 + 16);
+        } while ((v6 < *(int *)(v0 + 300)));
+    }
+    return v5;
+}
+
 int func_00386C70(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     char *v0;
     int v1;
@@ -22321,6 +22385,27 @@ void func_00435720(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int
         }
         break;
     }
+}
+
+int func_004357B0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    int v2;
+    char *v1;
+    int v0;
+    v0 = *(unsigned char *)(p0 + 18367);
+    v1 = p0;
+    switch (v0) {
+    case 0:
+        *(char *)(v1 + 18367) = (v0 + 1);
+        v2 = ((V2FC_1_ii *)p0)->m(129);
+        break;
+    case 1:
+        v2 = ((V2E8_1_ii *)p0)->m(v0);
+        if (v2 == 144) {
+            v2 = ((V2F4_1_ii *)v1)->m(23);
+        }
+        break;
+    }
+    return v2;
 }
 
 void func_00435840(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
@@ -24921,6 +25006,46 @@ int func_00476E20(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
         }
     } else {
         v2 = func_00477600(v0);
+    }
+    return v2;
+}
+
+int func_00478940(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    char *v0;
+    int v1;
+    int v2;
+    int v3;
+    int v4;
+    char *v5;
+    int v6;
+    v0 = (char *)p0;
+    if (*(unsigned char *)((char *)p0 + 38793) != 0) {
+        v1 = (int)(v0 + 0x96c0);
+        v2 = ((VCC_1_ii *)(v0 + 128))->m(v1);
+        if (*(unsigned char *)(v0 + 38815) == 1) {
+            v2 = ((VCC_1_ii *)(v0 + 1664))->m(v1);
+        }
+        if (*(unsigned char *)(v0 + 38822) == 1) {
+            v2 = ((VCC_1_ii *)(v0 + 3200))->m(v1);
+        }
+        if (*(unsigned char *)(v0 + 38829) == 1) {
+            v3 = 0;
+            v4 = (int)v0;
+            v5 = v0;
+            v6 = (int)(v0 + 38720);
+            do {
+                if (*(unsigned char *)((char *)v4 + 38830) == 1) {
+                    v2 = ((VCC_1_ii *)(v5 + 4736))->m(v6);
+                }
+                v3 = (v3 + 1);
+                v4 = (v4 + 6);
+                v5 = (v5 + 1536);
+            } while ((v3 < 20));
+            if (*(unsigned char *)(v0 + 38950) == 1) {
+                ((VCC_1_iv *)(v0 + 36992))->m(v6);
+                v2 = ((VCC_1_ii *)(v0 + 0x8a80))->m(v6);
+            }
+        }
     }
     return v2;
 }
@@ -27913,6 +28038,24 @@ void func_004B6DE0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int
     }
 }
 
+int func_004B8B70(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    int v0;
+    char *v1;
+    int v2;
+    v0 = *(unsigned char *)(p0 + 4);
+    v1 = p0;
+    switch (v0) {
+    case 0:
+        v2 = ((V130_1_ii *)p0)->m(v0);
+        *(char *)(v1 + 4) = (*(unsigned char *)(v1 + 4) + 1);
+        break;
+    case 1:
+        v2 = func_004B9130(p0, v0);
+        break;
+    }
+    return v2;
+}
+
 int func_004BAEF0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     char *v0;
     int v1;
@@ -28093,6 +28236,27 @@ void func_004C8920(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int
     }
 }
 
+int func_004C90E0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    char *v1;
+    int v2;
+    int v0;
+    v0 = *(unsigned char *)(p0 + 45400);
+    v1 = p0;
+    switch (v0) {
+    case 0:
+        *(char *)(v1 + 45400) = (v0 + 1);
+        v2 = ((V300_1_ii *)p0)->m(82);
+        break;
+    case 1:
+        v2 = ((V2EC_0_i *)p0)->m();
+        if (119 == v2) {
+            v2 = ((V2F8_1_ii *)v1)->m(23);
+        }
+        break;
+    }
+    return v2;
+}
+
 int func_004CFCE0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     char *v0;
     int v1;
@@ -28120,6 +28284,28 @@ int func_004CFCE0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
             v2 = (v2 + 1);
             v3 = (v3 + 16);
         } while ((v2 < *(int *)(v0 + 468)));
+    }
+    return v1;
+}
+
+int func_004D4090(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    int v1;
+    int v0;
+    int tmp0;
+    if (*(unsigned char *)(p0 + 333) != 3) {
+        v0 = *(unsigned char *)(p0 + 45770);
+        tmp0 = 2;
+        if (v0 != tmp0) {
+            switch (v0) {
+            case 0:
+                break;
+            case 1:
+                v1 = ((V2F8_1_ii *)p0)->m(52);
+                break;
+            }
+        } else {
+            v1 = ((V2F8_1_ii *)p0)->m(53);
+        }
     }
     return v1;
 }

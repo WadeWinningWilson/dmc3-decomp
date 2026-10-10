@@ -26,6 +26,7 @@ extern char D_00594BA8[];
 extern char D_00595BA0[];
 extern char D_005964E8[];
 extern char D_00596730[];
+extern char D_00596938[];
 extern char D_00596D20[];
 extern char D_00596D58[];
 extern char D_00596D98[];
@@ -204,6 +205,7 @@ void func_00170C60();
 void func_00172DA0();
 int func_00173A78();
 char *func_00173FF8();
+void func_00175408();
 int func_00175590();
 void func_001755F0();
 void func_00175618();
@@ -230,7 +232,6 @@ void func_0017C780();
 void func_0017C7F0();
 void func_0017C8A0();
 void func_0017D348();
-void func_0017D378();
 void func_0017D420();
 void func_0017DF80();
 int func_0017E010();
@@ -1256,6 +1257,22 @@ void func_00176008(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p
     }
 }
 
+int func_00176550(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    int v1;
+    int v0;
+    int tmp0;
+    tmp0 = func_00175E88();
+    v0 = p0;
+    v1 = p1;
+    if (tmp0 == 0) {
+        func_001798E8(D_00596938);
+        return 0;
+    } else {
+        func_00175408(v0, v1);
+        return;
+    }
+}
+
 int func_00176F90(char *p0, char *p1) {
     int tmp0;
     tmp0 = *(int *)(p0 + 48);
@@ -1830,10 +1847,6 @@ int func_0017C860(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
         v3 = 0;
     }
     return v3;
-}
-
-void func_0017D360(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
-    func_0017D378(p0, p1, p2, 1);
 }
 
 int func_0017DF28(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
