@@ -1984,7 +1984,7 @@ def write(path, funcs, externs):
         for fn, rt in c.items():
             if rt != "void":
                 want.setdefault(fn, rt)
-    fixed, drt = [], {}
+    fixed, drt, fparams = [], {}, {}
     for name, code, c in funcs:
         m = re.match(r"(void|int|float|char \*) ?func_", code)
         rt = m.group(1) if m else None
@@ -1993,6 +1993,9 @@ def write(path, funcs, externs):
             rt = want[name]
         if rt:
             drt[name] = rt
+        hm_ = re.match(r"[\w *]*?func_[0-9A-F]{8}\(([^)]*)\) \{", code)
+        if hm_ and "float" in hm_.group(1):
+            fparams[name] = hm_.group(1)  # a prototyped definition: declare it the same way
         fixed.append((name, code, c))
     funcs = [(n, code, {fn: drt.get(fn, rt) for fn, rt in c.items()}) for n, code, c in fixed]
     used = {s for _, code, _ in funcs for s in re.findall(r"\bD_[0-9A-F]{8}\b", code)}
@@ -2008,7 +2011,8 @@ def write(path, funcs, externs):
             sig = META.get(name, {}).get("callsig", {}).get(fn)
             if sig and "float" in sig:
                 fsig.setdefault(fn, sig)
-    decl += [(f"{rt} {fn}({', '.join(fsig[fn])});" if fn in fsig else f"{rt} {fn}();").replace("* ", "*")
+    decl += [(f"{rt} {fn}({fparams[fn]});" if fn in fparams else
+              f"{rt} {fn}({', '.join(fsig[fn])});" if fn in fsig else f"{rt} {fn}();").replace("* ", "*")
              for fn, rt in sorted(protos.items())]
     if any("(Q *)" in c for _, c, _ in funcs):
         decl.insert(0, Q_DEF)
