@@ -287,6 +287,37 @@ def ternaries(lines, rng, rate=0.5):
     return out
 
 
+
+def mul_form(e):
+    """(base, k) when e is base * k written as shifts/multiplies, else None."""
+    m = re.fullmatch(r"\((.+) \* (\d+)\)", e)
+    if m:
+        return m.group(1), int(m.group(2))
+    m = re.fullmatch(r"\((.+) << (\d+)\)", e)
+    if m and int(m.group(2)) < 31:
+        return m.group(1), 1 << int(m.group(2))
+    return None
+
+
+def fold_mul(op, x, y):
+    """MW strength-reduces x * k into shifts and adds; map them back to a multiply."""
+    for a_, b_, sign in ((x, y, 1), (y, x, 1 if op == "addu" else None)):
+        if sign is None:
+            continue
+        mf = mul_form(a_)
+        if mf and mf[0] == b_:
+            k = mf[1] + 1 if op == "addu" else mf[1] - 1
+            return f"({b_} * {k})"
+        mb = mul_form(b_) if op == "addu" else None
+        if mf and mb and mf[0] == mb[0]:
+            return f"({mf[0]} * {mf[1] + mb[1]})"
+    if op == "subu":
+        mf, mb = mul_form(x), mul_form(y)
+        if mf and mb and mf[0] == mb[0] and mf[1] > mb[1]:
+            return f"({mf[0]} * {mf[1] - mb[1]})"
+    return None
+
+
 def translate(name, raw, externs, opts=None):
     opts = opts or {}
     import random
@@ -635,6 +666,18 @@ def translate(name, raw, externs, opts=None):
                 if mm:
                     based.add(mm.group(2))
 
+    # does the value reaching each `jr $ra` have other readers? then it is a temporary
+    ret_uses = [(k, pos) for k in range(n) if term[k][0] == "ret"
+                for pos, rd, _, _ in pos_of[k] if RETREG in rd and pos == len(bseq(k)[0])]
+    other_use = {}
+    for (k_, pos_, r_), ds_ in useweb.items():
+        if r_ == RETREG and (k_, pos_) not in ret_uses:
+            for d_ in ds_:
+                other_use[d_] = True
+    ret_is_temp = bool(ret_uses) and all(
+        any(other_use.get(d_) for d_ in useweb.get((k_, p_, RETREG), [])) or not useweb.get((k_, p_, RETREG))
+        for k_, p_ in ret_uses)
+
     def defweb(k, pos, r):
         d = (k, pos, r)
         return find(d) if d in parent else None
@@ -932,6 +975,10 @@ def translate(name, raw, externs, opts=None):
                   if op != "addu" and tx == "char *":
                       x, tx = ival(a[1])
                   sym = {"addu": "+", "subu": "-", "and": "&", "or": "|", "xor": "^"}[op]
+                  folded = fold_mul(op, x, y) if op in ("addu", "subu") and tx != "char *" and not coin(0.2) else None
+                  if folded:
+                      define(a[0], folded, "int", a[1] in memdep or a[2] in memdep)
+                      continue
                   if op != "subu" and (coin() if rng is not None else opts.get("rev")):
                       x, y = y, x  # commutative: the other operand order
                   define(a[0], f"({x} {sym} {y})", tx if tx == "char *" else "int", a[1] in memdep or a[2] in memdep)
@@ -941,8 +988,10 @@ def translate(name, raw, externs, opts=None):
                   define(a[0], f"({x} {sym} {num(a[2])})", "int", a[1] in memdep)
               elif op in ("sll", "sra", "srl"):
                   x, _ = ival(a[1])
+                  mf = mul_form(x) if op == "sll" else None
                   e = f"((unsigned int){x} >> {num(a[2])})" if op == "srl" else \
-                      f"({x} {'<<' if op == 'sll' else '>>'} {num(a[2])})"
+                      (f"({mf[0]} * {mf[1] << num(a[2])})" if mf and "*" in x and not coin(0.2) else
+                       f"({x} {'<<' if op == 'sll' else '>>'} {num(a[2])})")
                   define(a[0], e, "int", a[1] in memdep)
               elif op in ("slt", "sltu", "slti", "sltiu"):
                   x, _ = ival(a[1])
@@ -1320,7 +1369,8 @@ def translate(name, raw, externs, opts=None):
     if not rets:
         raise Fail
     rtype = "void"
-    if all(r is not None for r in rets):
+    void_ = ret_is_temp and (opts.get("new") if rng is None else coin())
+    if all(r is not None for r in rets) and not void_:
         rtype = "float" if fret else "int"
     else:
         out = [l.replace("return r_v0;", "return;") for l in out]
