@@ -99,6 +99,17 @@ def regs_of(op, a):
         return set(), set()
     if op == "mtc1":
         return {a[0]}, {a[1]}
+    if op in ("movn", "movz"):
+        return {a[0], a[1], a[2]}, {a[0]}
+    if op in ("mult", "mult1", "multu", "multu1"):
+        rd = {a[0]} if len(a) == 3 and a[0] != "$zero" else set()
+        return set(a[-2:]), rd | {"LO", "HI"}
+    if op in ("div", "div1", "divu", "divu1"):
+        return set(a[-2:]) - {"$zero"}, {"LO", "HI"}
+    if op in ("mflo", "mflo1"):
+        return {"LO"}, {a[0]}
+    if op in ("mfhi", "mfhi1"):
+        return {"HI"}, {a[0]}
     if op == "lui":
         return set(), {a[0]}
     if a:
@@ -108,6 +119,20 @@ def regs_of(op, a):
 
 def prepare(ins):
     """[(addr, text)] -> list of instructions with delay slots resolved and the frame removed."""
+    clean, j = [], 0
+    while j < len(ins):
+        a0_, t0_ = ins[j]
+        mm = re.fullmatch(r"(bnez \$\w+|bne \$\w+, \$zero), \.L([0-9A-F]{8})", t0_)
+        if mm and j + 3 < len(ins) and ins[j + 2][1].startswith("break") and int(mm.group(2), 16) == ins[j + 3][0]:
+            if ins[j + 1][1] != "nop":
+                clean.append(ins[j + 1])
+            j += 3
+            continue
+        clean.append(ins[j])
+        j += 1
+    ins = clean
+    if any(t.startswith("break") for _, t in ins):
+        raise Fail
     targets = {int(t, 16) for _, t in ins for t in re.findall(r"\.L([0-9A-F]{8})", t)}
     seq = []
     i = 0
@@ -163,20 +188,17 @@ def prepare(ins):
 def blocks_of(seq):
     """Basic blocks: list of (start addr, [instr]); terminators last."""
     targets = {int(t, 16) for _, t in seq for t in re.findall(r"\.L([0-9A-F]{8})", t)}
-    leaders, prev_term = set(), True
+    blocks, cur, prev_term, prev_addr = [], None, True, None
     for addr, t in seq:
-        op, _ = split(t)
-        if prev_term or addr in targets:
-            leaders.add(addr)
-        prev_term = bool(re.match(r"(b\w*|j|jr)$", op)) and op != "break"
-    blocks, cur = [], None
-    for addr, t in seq:
-        if addr in leaders and (cur is None or cur[0] != addr or cur[1]):
-            if cur is None or cur[1] or cur[0] != addr:
-                cur = [addr, []]
-                blocks.append(cur)
+        op, _ = split(t.split(" || ")[0])
+        # a block starts after a jump, or at the FIRST instruction carrying a target address
+        # (a delay slot moved before its jump shares the jump's address)
+        if cur is None or prev_term or (addr in targets and addr != prev_addr):
+            cur = [addr, []]
+            blocks.append(cur)
         cur[1].append(t)
-    # a label inside a block (from a duplicated delay slot) is fine: leaders split by address
+        prev_term = bool(re.match(r"(b\w*|j|jr)$", op)) and op != "break"
+        prev_addr = addr
     return [(a, b) for a, b in blocks]
 
 
@@ -481,7 +503,7 @@ def translate(name, raw, externs, opts=None):
             if r == "$zero":
                 return "0", "int"
             if r in regs:
-                if types[r] == "hi" or types[r].startswith("sh32"):
+                if types[r] in ("hi", "fbits", "fint") or types[r].startswith("sh32"):
                     raise Fail
                 return regs[r], types[r]
             raise Fail
@@ -733,7 +755,7 @@ def translate(name, raw, externs, opts=None):
                   mm = re.fullmatch(r"\((0x[0-9A-F]+) >> 16\)", a[1])
                   kk = (int(mm.group(1), 16) >> 16) if mm else num(a[1])
                   define(a[0], f"{(kk << 16) & 0xFFFFFFFF:#x}", "int")
-              elif op == "mtc1":
+              elif op == "mtc1" and re.fullmatch(r"0|0x[0-9a-f]+", val(a[0])[0]):
                   e, _ = val(a[0])
                   if e == "0":
                       define(a[1], "0.0f", "float")
@@ -754,6 +776,67 @@ def translate(name, raw, externs, opts=None):
                           (0, "dsrl32"): "unsigned int"}[(sh, op)]
                   x = regs[a[1]]
                   define(a[0], f"({cast}){x}", "int", False)
+              elif op == "daddiu" and len(a) == 3 and re.fullmatch(NUM, a[2]):
+                  e, tt = val(a[1])
+                  kk = num(a[2])
+                  define(a[0], str(kk) if e == "0" else f"({e} + {kk})", tt, a[1] in memdep)
+              elif op == "dsubu" and len(a) == 3:
+                  x, _ = ival(a[1])
+                  y, _ = ival(a[2])
+                  define(a[0], "0" if (x, y) == ("0", "0") else f"({x} - {y})" if x != "0" else f"-{y}", "int",
+                         a[1] in memdep or a[2] in memdep)
+              elif op in ("sllv", "srav", "srlv"):
+                  x, _ = ival(a[1])
+                  y, _ = ival(a[2])
+                  e = f"((unsigned int){x} >> {y})" if op == "srlv" else \
+                      f"({x} {'<<' if op == 'sllv' else '>>'} {y})"
+                  define(a[0], e, "int", a[1] in memdep or a[2] in memdep)
+              elif op == "not":
+                  x, _ = ival(a[1])
+                  define(a[0], f"~{x}", "int", a[1] in memdep)
+              elif op == "negu":
+                  x, _ = ival(a[1])
+                  define(a[0], f"-{x}", "int", a[1] in memdep)
+              elif op in ("movn", "movz"):
+                  x, tx = val(a[1])
+                  c_, _ = ival(a[2])
+                  old, to = val(a[0])
+                  test = f"{c_} != 0" if op == "movn" else f"{c_} == 0"
+                  define(a[0], f"({test} ? {x} : {old})", tx if tx == to else "int",
+                         a[1] in memdep or a[2] in memdep)
+              elif op == "mtc1" and not re.fullmatch(r"0|0x[0-9a-f]+", val(a[0])[0]):
+                  x, _ = ival(a[0])
+                  regs[a[1]], types[a[1]] = x, "fbits"
+              elif op == "cvt.s.w":
+                  if types.get(a[1]) != "fbits":
+                      raise Fail
+                  define(a[0], f"(float){regs[a[1]]}", "float", False)
+              elif op == "cvt.w.s":
+                  x, _ = val(a[1])
+                  regs[a[0]], types[a[0]] = f"(int){x}", "fint"
+              elif op == "mfc1":
+                  if types.get(a[1]) != "fint":
+                      raise Fail
+                  define(a[0], regs[a[1]], "int", False)
+              elif op in ("mult", "mult1", "multu", "multu1"):
+                  x, _ = ival(a[-2])
+                  y, _ = ival(a[-1])
+                  regs["LO"], types["LO"] = f"({x} * {y})", "int"
+                  regs.pop("HI", None)
+                  if len(a) == 3 and a[0] != "$zero":
+                      define(a[0], f"({x} * {y})", "int", a[-2] in memdep or a[-1] in memdep)
+              elif op in ("div", "div1", "divu", "divu1"):
+                  x, _ = ival(a[-2])
+                  y, _ = ival(a[-1])
+                  if op.startswith("divu"):
+                      x, y = f"(unsigned int){x}", f"(unsigned int){y}"
+                  regs["LO"], types["LO"] = f"({x} / {y})", "int"
+                  regs["HI"], types["HI"] = f"({x} % {y})", "int"
+              elif op in ("mflo", "mflo1", "mfhi", "mfhi1"):
+                  src_ = "LO" if op.startswith("mflo") else "HI"
+                  if src_ not in regs:
+                      raise Fail  # e.g. the high half of a multiply (division by a constant)
+                  define(a[0], regs[src_], "int", False)
               elif op in ("add.s", "sub.s", "mul.s", "div.s"):
                   x, _ = val(a[1])
                   y, _ = val(a[2])
@@ -1025,8 +1108,6 @@ def main():
         has_vcall = any(t.startswith("jalr") for _, t in raw)
         if not has_branch and not has_vcall:
             continue  # branch-free, call-free-of-virtuals functions belong to gen_leaf
-        if any(re.match(r"(mult\w*|div\w*|break)\b", t) for _, t in raw):
-            continue
         work.append((name, A, raw, has_vcall))
     addr = {n: A for n, A, _, _ in work}
     externs, matched = {}, {"c": {}, "cpp": {}}
@@ -1053,6 +1134,13 @@ def main():
         tmpfile = ROOT / ("scratch/flow_pass.cpp" if kind == "cpp" else "scratch/flow_pass.c")
         keep = compile_ok(tmpfile, keep, externs, kind)
         ok = check(tmpfile, {n: addr[n] for n, _, _ in keep})
+        # keep each pass's candidates for diagnosis (scratch/ is git-ignored)
+        npass = OPTIONS.index((opts, kind))
+        (ROOT / f"scratch/flow_pass{npass}{tmpfile.suffix}").write_text(tmpfile.read_text())
+        (ROOT / f"scratch/flow_pass{npass}.addr").write_text(
+            "\n".join(f"{n} {addr[n]:#x} {'ok' if n in ok else 'no'}" for n, _, _ in keep))
+        import shutil
+        shutil.copy(ROOT / f"scratch/{tmpfile.stem}.o", ROOT / f"scratch/flow_pass{npass}.o")
         for f in keep:
             if f[0] in ok:
                 matched[kind][f[0]] = f
