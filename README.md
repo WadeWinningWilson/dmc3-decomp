@@ -48,44 +48,92 @@ What is in the executable
 Dependencies
 ------------
 
-- [Python](https://www.python.org/downloads/) 3.10+ with `pip install -r requirements.txt`
-  (splat, spimdisasm, pycdlib).
-- [Docker](https://www.docker.com/) (Docker Desktop on Windows/macOS). The build runs GNU MIPS
-  binutils and [wibo](https://github.com/decompals/wibo) (which runs the Windows-only Metrowerks
-  compilers) in a small Ubuntu image.
-- Optional: [objdiff](https://github.com/encounter/objdiff) and
-  [Ghidra](https://github.com/NationalSecurityAgency/ghidra) with
-  [Emotion Engine: Reloaded](https://github.com/chaoticgd/ghidra-emotionengine-reloaded).
+The compilers are 32-bit Windows programs and the linker is GNU MIPS binutils, so the build runs
+them inside a small Ubuntu Docker image on every OS, with
+[wibo](https://github.com/decompals/wibo) (a minimal 32-bit Windows binary wrapper) for the
+compilers. `configure.py` builds the image and downloads wibo and the compilers automatically.
+
+### Windows
+
+- Install [Python](https://www.python.org/downloads/) 3.10+ and add it to `%PATH%`.
+  - Also available from the [Windows Store](https://apps.microsoft.com/store/search?publisher=Python%20Software%20Foundation).
+- Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and start it.
+- In the repository: `pip install -r requirements.txt`
+- WSL and msys2 are **not** required. Git Bash works for the shell snippets in the docs.
+
+### macOS
+
+- Install Python 3.10+ (e.g. `brew install python`) and
+  [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+- `pip3 install -r requirements.txt`
+- On Apple silicon, Docker runs the x86-64 build image under emulation, which is slower but works.
+
+### Linux
+
+- Install Python 3.10+ and [Docker Engine](https://docs.docker.com/engine/install/), and let your
+  user run `docker` (the `docker` group).
+- `pip install -r requirements.txt`
 
 Building
 --------
 
-1. Clone the repository:
-   ```sh
-   git clone <this repository>
-   ```
-2. Copy the game executable `SLUS_209.64` from your disc into `orig/SLUS_209.64/`.
-   Alternatively, put your disc image (`.iso`) there, and the executable is extracted from it.
-3. Configure. This verifies your copy, downloads the compilers, starts the build container and
-   disassembles the executable:
-   ```sh
-   python configure.py
-   ```
-   For the Japanese version, use `--version SLPM_658.80`.
-4. Build and verify:
-   ```sh
-   python tools/build.py us
-   ```
-   It ends with `SLUS_209.64: OK sha1 d08b525b…` when the rebuilt executable is identical.
+- Clone the repository:
+  ```sh
+  git clone https://github.com/WadeWinningWilson/dmc3-decomp.git
+  ```
+- Copy your game's disc image (`.iso`) into `orig/SLUS_209.64/`, or just the executable
+  `SLUS_209.64` from the root of the disc.
+  - After the first `configure.py`, the disc image can be deleted to save space; only the
+    extracted executable is needed.
+- Configure. This checks your copy against the supported SHA-1, downloads the compilers, starts
+  the build container and disassembles the executable with splat:
+  ```sh
+  python configure.py
+  ```
+  To use a version other than `SLUS_209.64` (USA), specify `--version SLPM_658.80` (JPN).
+- Build:
+  ```sh
+  python tools/build.py us
+  ```
+  It ends with `SLUS_209.64: OK sha1 d08b525b…` when the rebuilt executable is byte-identical,
+  and prints the progress.
 
 Diffing
 -------
 
-- **One function:** `python -I tools/try.py <source> <function>` compiles one source file and
-  diffs a function against the original, instruction by instruction (`-v` shows every line).
-- **Variants:** `tools/variants.py` brute-forces alternative versions of a snippet (for
-  example statement orders) and keeps the best.
-- objdiff integration (per-file target objects) is planned.
+objdiff integration is planned. Until then, the project's own tools cover the same loop:
+
+- **One function:** `python -I tools/try.py <source> <function> [-v]` compiles one source file
+  and diffs the function against the original, instruction by instruction. Relocated operands
+  are masked, so it shows real code differences.
+- **Whole build:** `python tools/build.py us` links everything and reports the first differing
+  address if anything is off. `build/us/SLUS_209.64.map` maps addresses back to functions.
+- **Variants:** `python -I tools/variants.py <source> <function> <variants file>` tries
+  alternative versions of a snippet (e.g. statement orders) and keeps the best.
+- **What is left:** `python -I tools/remaining.py 0x<start> 0x<end>` lists functions still in asm.
+
+Setting up Ghidra
+-----------------
+
+Ghidra is a tool that automatically decompiles code. Its output is not accurate enough to paste
+into this project, but it helps a lot with understanding functions. There is no shared Ghidra
+server for this project yet, so you set up a local one:
+
+- Install a **JDK 21** (e.g. [Temurin](https://adoptium.net/temurin/releases/)).
+- Download [Ghidra 12.0.4](https://github.com/NationalSecurityAgency/ghidra/releases).
+- Install the [Emotion Engine: Reloaded](https://github.com/chaoticgd/ghidra-emotionengine-reloaded/releases)
+  extension built for your Ghidra version (`File -> Install Extensions...`, then restart).
+  Stock Ghidra has no R5900 (PS2 EE) language, and without it `lq`/`sq`, MMI and VU0
+  instructions decode wrongly.
+- Create a project and import `orig/SLUS_209.64/SLUS_209.64` with the language
+  `r5900:LE:32:default`, then run auto-analysis (about 5 minutes).
+- Keep `config/SLUS_209.64/symbols.txt` (names already identified) and
+  `config/SLUS_209.64/rtti.txt` (class names and vtables) open alongside; an import script for
+  Ghidra is planned.
+
+Tips for this binary are in [docs/research/DMC3_GHIDRA_SETUP.md](docs/research/DMC3_GHIDRA_SETUP.md):
+`undefined8` arguments are usually 64-bit-passed ints (EE ABI), sign-extended constants are
+normal, and `short` often should be `unsigned short` (check for `lhu`).
 
 Project layout
 --------------
@@ -105,8 +153,15 @@ docs/               decompiling guide, coding guidelines, research notes
 Contributing
 ------------
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), [docs/decompiling.md](docs/decompiling.md) and
-[docs/coding_guidelines.md](docs/coding_guidelines.md). To claim an issue, comment `/assign` on it.
+If you have the requirements set up and want to help, see the
+[decompiling guide](docs/decompiling.md) for how the work is done and the
+[coding guidelines](docs/coding_guidelines.md) for style; [CONTRIBUTING.md](CONTRIBUTING.md) has
+the ground rules. To claim an issue, comment `/assign` on it.
+
+Anyone can open a pull request. A pull request must keep `python tools/build.py us`
+byte-identical (CI only checks that everything compiles, since it has no game files). Code
+pasted straight from Ghidra will be sent back for cleanup: it must read like something a
+programmer would have written.
 
 **About AI assistance:** much of the current code was written with an AI assistant (Claude),
 and `src/game/auto/` is entirely machine-generated. Everything in `src/` is checked
