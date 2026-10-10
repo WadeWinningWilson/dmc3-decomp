@@ -113,6 +113,13 @@ and `src/game/auto/` is entirely machine-generated. Everything in `src/` is chec
 byte-for-byte against the original by the build; nothing is accepted on trust. Names and
 readability are still being cleaned up, and human review is welcome.
 
+License
+-------
+
+The source code, tools and documentation in this repository are dedicated to the public domain
+under [CC0 1.0](LICENSE). This covers this project's own work only: *Devil May Cry 3* and all of
+its code and assets remain the property of Capcom, and none of them are included here.
+
 Related projects
 ----------------
 
