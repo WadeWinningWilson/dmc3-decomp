@@ -133,47 +133,47 @@ int func_00195EA0();
 void func_001AAAD0();
 int func_001B0EE0();
 
-void func_00100218(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00100218() {
     func_00116E48();
 }
 
-int func_00100230(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100230() {
     int tmp0;
     tmp0 = func_00111BE8(&D_005BB880, 2);
     D_005BE080 = tmp0;
     return 1;
 }
 
-int func_00100260(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100260(p0, p1) int p0; int p1; {
     func_00112488(D_005BE080, p0, p1);
     return p1;
 }
 
-int func_00100310(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100310() {
     int tmp0;
     tmp0 = func_00120438();
     return (tmp0 < 0);
 }
 
-int func_00100330(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100330() {
     int tmp0;
     tmp0 = func_00120438();
     return ((0 < tmp0) ^ 1);
 }
 
-int func_00100360(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100360() {
     int tmp0;
     tmp0 = func_00120438();
     return (0 < tmp0);
 }
 
-int func_00100380(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100380() {
     int tmp0;
     tmp0 = func_00120438();
     return ((tmp0 < 0) ^ 1);
 }
 
-int func_00100820(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100820(p0, p1) int p0; int p1; {
     char *v0;
     v0 = (char *)p0;
     if (v0 != 0) {
@@ -185,7 +185,7 @@ int func_00100820(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return (int)v0;
 }
 
-int func_00100870(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00100870(p0, p1) int p0; int p1; {
     char *v0;
     int v1;
     int v2;
@@ -203,7 +203,7 @@ int func_00100870(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return (int)v0;
 }
 
-int func_00100C20(int p0, int p1, char *p2) {
+int func_00100C20(p0, p1, p2) int p0; int p1; char *p2; {
     *(int *)(p2 + 0) = *(int *)D_005BE3C8;
     *(int *)(p2 + 4) = p1;
     *(int *)(p2 + 8) = p0;
@@ -267,7 +267,7 @@ int func_00100DA0(char *p0, char *p1) {
     }
 }
 
-int func_00101590(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00101590(p0, p1) int p0; int p1; {
     char *v0;
     int v1;
     int v2;
@@ -285,7 +285,7 @@ int func_00101590(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return (int)v0;
 }
 
-int func_0010BEB0(char *p0, int p1, int p2, int p3) {
+int func_0010BEB0(p0, p1, p2, p3) char *p0; int p1; int p2; int p3; {
     char *tmp0;
     tmp0 = *(char **)(p0 + 64);
     *(int *)(*(char **)(p0 + 64) + 180) = p3;
@@ -294,39 +294,39 @@ int func_0010BEB0(char *p0, int p1, int p2, int p3) {
     return (int)tmp0;
 }
 
-void func_0010C140(char *p0, int p1, int p2) {
+void func_0010C140(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 12) = p1;
     *(int *)(p0 + 4) = p2;
     *(int *)(p0 + 0) = p1;
     *(int *)(p0 + 8) = p1;
 }
 
-void func_0010C700(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0010C700(p0) char *p0; {
     *(int *)(p0 + 2144) = 0;
     func_00108018(1);
 }
 
-void func_0010C8B8(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0010C8B8(p0) int p0; {
     func_0010F9C0(D_0058D508, p0);
 }
 
-void func_0010D1C8(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0010D1C8(p0) int p0; {
     func_0010C900(p0, D_0058D578);
 }
 
-void func_0010D1D8(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0010D1D8(p0) int p0; {
     func_0010C900(p0, D_0058D5A8);
 }
 
-void func_0010D1E8(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0010D1E8(p0) int p0; {
     func_0010C900(p0, D_0058D5C0);
 }
 
-void func_0010D1F8(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0010D1F8(p0) int p0; {
     func_0010C900(p0, D_0058D5F8);
 }
 
-int func_0010D208(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0010D208(p0) char *p0; {
     p0 = *(char **)(p0 + 64);
     p0 = (p0 + 104);
     func_0010D348(p0);
@@ -339,11 +339,11 @@ int func_0010FA50(char *p0) {
     return *(int *)(p0 + 0);
 }
 
-void func_00116D88(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00116D88() {
     func_00116208();
 }
 
-int func_001309B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_001309B0() {
     int v0;
     char *v1;
     int tmp0;
@@ -366,19 +366,19 @@ int func_001309B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return tmp1;
 }
 
-int func_00131600(char *p0, int p1) {
+int func_00131600(p0, p1) char *p0; int p1; {
     *(int *)(p0 + 8) = 0;
     *(int *)(p0 + 12) = (p1 | 0x51000000);
     return (int)(p0 + 16);
 }
 
-int func_00131620(char *p0, int p1) {
+int func_00131620(p0, p1) char *p0; int p1; {
     *(int *)(p0 + 8) = 0x11000000;
     *(int *)(p0 + 12) = (p1 | 0x51000000);
     return (int)(p0 + 16);
 }
 
-void func_00131640(void) {
+void func_00131640() {
     __asm__ volatile("vmr32.xyzw $vf1, $vf0\n\tvmr32.xyzw $vf2, $vf1\n\tvmr32.xyzw $vf3, $vf2" : :  : "memory");
 }
 
@@ -398,7 +398,7 @@ void func_001318E0(char *p0, char *p1, char *p2) {
     __asm__ volatile("lqc2 $vf8, 0x0(%0)\n\tlqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x10(%1)\n\tlqc2 $vf6, 0x20(%1)\n\tlqc2 $vf7, 0x30(%1)\n\tvmulx.xyzw $vf4, $vf4, $vf8x\n\tvmuly.xyzw $vf5, $vf5, $vf8y\n\tvmulz.xyzw $vf6, $vf6, $vf8z\n\tsqc2 $vf4, 0x0(%2)\n\tsqc2 $vf5, 0x10(%2)\n\tsqc2 $vf6, 0x20(%2)\n\tsqc2 $vf7, 0x30(%2)" : : "r"(p2), "r"(p1), "r"(p0) : "memory");
 }
 
-int func_00131920(int p0, char *p1, char *p2, char *p3, int p4, int p5, int p6, int p7) {
+int func_00131920(p0, p1, p2, p3) int p0; char *p1; char *p2; char *p3; {
     char stk[0x20] __attribute__((aligned(16)));
     int tmp0;
     __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyz $vf7, $vf4, $vf5\n\tvmul.xyz $vf8, $vf7, $vf7\n\tvaddy.x $vf8, $vf8, $vf8y\n\tvaddz.x $vf8, $vf8, $vf8z\n\tvrsqrt $Q, $vf0w, $vf8x\n\tvmove.w $vf7, $vf0\n\tlqc2 $vf6, 0x0(%2)\n\tvwaitq\n\tvmulq.xyz $vf7, $vf7, $Q\n\tvopmula.xyz $ACC, $vf7, $vf6\n\tvopmsub.xyz $vf9, $vf6, $vf7\n\tvopmula.xyz $ACC, $vf7, $vf9\n\tvopmsub.xyz $vf8, $vf9, $vf7\n\tsqc2 $vf8, 0x0(%3)\n\tsqc2 $vf7, 0x0(%4)" : : "r"(p2), "r"(p1), "r"(p3), "r"(((stk + -16) + 32)), "r"(((stk + -16) + 16)) : "memory");
@@ -406,14 +406,14 @@ int func_00131920(int p0, char *p1, char *p2, char *p3, int p4, int p5, int p6, 
     return tmp0;
 }
 
-int func_00131B60(int p0) {
+int func_00131B60(p0) int p0; {
     if (p0 < 0) {
         p0 = -p0;
     }
     return p0;
 }
 
-void func_00131B90(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00131B90() {
     func_0011DC10();
 }
 
@@ -437,7 +437,7 @@ void func_00132600(char *p0, char *p1, char *p2) {
     __asm__ volatile("lqc2 $vf8, 0x0(%0)\n\tlqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x10(%1)\n\tlqc2 $vf6, 0x20(%1)\n\tvmove.w $vf9, $vf8\n\tvmulax.xyzw $ACC, $vf4, $vf8x\n\tvmadday.xyzw $ACC, $vf5, $vf8y\n\tvmaddz.xyz $vf9, $vf6, $vf8z\n\tsqc2 $vf9, 0x0(%2)" : : "r"(p2), "r"(p1), "r"(p0) : "memory");
 }
 
-int func_00134070(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00134070(p0) int p0; {
     int tmp0;
     int tmp6;
     tmp0 = func_00102B48();
@@ -447,20 +447,20 @@ int func_00134070(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return tmp6;
 }
 
-void func_001347C0(void) {
+void func_001347C0() {
     *(char *)(D_005BE0D8 + 7) = 1;
 }
 
-void func_001347D0(void) {
+void func_001347D0() {
     *(char *)(D_005BE0D8 + 7) = 0;
 }
 
-void func_00134910(int p0, int p1) {
+void func_00134910(p0, p1) int p0; int p1; {
     *(short *)(D_005BE0D8 + 38) = p0;
     *(short *)(D_005BE0D8 + 40) = p1;
 }
 
-int func_00134970(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00134970(p0, p1) int p0; int p1; {
     int v0;
     int tmp0;
     if (*(signed char *)(D_005BE0D8 + 6) == 2) {
@@ -472,99 +472,99 @@ int func_00134970(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     }
 }
 
-void func_001350E0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001350E0(p0, p1, p2, p3) int p0; int p1; int p2; int p3; {
     func_00134DE0(p1, p2, p3);
 }
 
-void func_00138110(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138110() {
     func_00134E40(D_005C8800);
 }
 
-void func_00138120(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138120(p0) int p0; {
     func_001350F0(D_005C8800, p0);
 }
 
-void func_00138130(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138130(p0) int p0; {
     func_001351D0(D_005C8800, p0);
 }
 
-void func_00138140(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138140(p0) int p0; {
     func_00135220(D_005C8800, p0);
 }
 
-void func_00138150(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138150(p0) int p0; {
     func_00135240(D_005C8800, p0);
 }
 
-void func_00138160(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138160(p0) int p0; {
     func_001354F0(D_005C8800, p0);
 }
 
-void func_00138170(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138170(p0) int p0; {
     func_001359A0(D_005C8800, p0);
 }
 
-void func_00138180(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138180(p0) int p0; {
     func_00135F40(D_005C8800, p0);
 }
 
-void func_00138190(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138190(p0) int p0; {
     func_001363F0(D_005C8800, p0);
 }
 
-void func_001381A0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001381A0(p0) int p0; {
     func_001369C0(D_005C8800, p0);
 }
 
-void func_001381B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001381B0(p0) int p0; {
     func_00136A70(D_005C8800, p0);
 }
 
-void func_001381C0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001381C0(p0) int p0; {
     func_00136B10(D_005C8800, p0);
 }
 
-void func_001381D0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001381D0(p0) int p0; {
     func_00136B30(D_005C8800, p0);
 }
 
-void func_001381E0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001381E0(p0) int p0; {
     func_00136B50(D_005C8800, p0);
 }
 
-void func_001381F0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001381F0(p0) int p0; {
     func_00136BC0(D_005C8800, p0);
 }
 
-void func_001382C0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001382C0(p0) int p0; {
     func_00136C30(D_005C8800, p0);
 }
 
-void func_001382D0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001382D0(p0) int p0; {
     func_00136E80(D_005C8800, p0);
 }
 
-void func_001382E0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001382E0(p0) int p0; {
     func_00137670(D_005C8800, p0);
 }
 
-void func_001382F0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_001382F0(p0) int p0; {
     func_00137770(D_005C8800, p0);
 }
 
-void func_00138300(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138300(p0) int p0; {
     func_00137850(D_005C8800, p0);
 }
 
-void func_00138310(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138310(p0) int p0; {
     func_00137AF0(D_005C8800, p0);
 }
 
-void func_00138320(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_00138320(p0) int p0; {
     func_00137F60(D_005C8800, p0);
 }
 
-void func_00138330(void) {
+void func_00138330() {
     *(short *)D_005D0810 = 64;
 }
 
@@ -577,7 +577,7 @@ void func_00138440(char *p0, float f0) {
     *(float *)(p0 + 8) = f0;
 }
 
-int func_00138460(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00138460(p0, p1) int p0; int p1; {
     int v0;
     v0 = p0;
     if (v0 != 0) {
@@ -588,7 +588,7 @@ int func_00138460(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v0;
 }
 
-int func_001384B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_001384B0(p0, p1) int p0; int p1; {
     int v0;
     v0 = p0;
     if (v0 != 0) {
@@ -599,7 +599,7 @@ int func_001384B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v0;
 }
 
-int func_00138500(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00138500() {
     int tmp0;
     int tmp1;
     int tmp2;
@@ -672,7 +672,7 @@ int func_00138500(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return tmp18;
 }
 
-int func_001394A0(int p0, char *p1, char *p2) {
+int func_001394A0(p0, p1, p2) int p0; char *p1; char *p2; {
     int v0;
     char *v1;
     v0 = (((unsigned int)*(int *)(p2 + 4) >> 20) & 4095);
@@ -688,7 +688,7 @@ int func_001394A0(int p0, char *p1, char *p2) {
     return (int)p1;
 }
 
-int func_0013B6B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013B6B0(p0, p1, p2, p3) int p0; int p1; int p2; int p3; {
     int v0;
     int v1;
     int v2;
@@ -714,7 +714,7 @@ int func_0013B6B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v2;
 }
 
-int func_0013B740(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013B740(p0, p1) int p0; int p1; {
     int v0;
     int v1;
     char *v2;
@@ -734,7 +734,7 @@ int func_0013B740(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v3;
 }
 
-int func_0013B8B0(char *p0, int p1) {
+int func_0013B8B0(p0, p1) char *p0; int p1; {
     int v0;
     int v1;
     int v2;
@@ -784,7 +784,7 @@ int func_0013BF60(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v2;
 }
 
-int func_0013C530(int p0) {
+int func_0013C530(p0) int p0; {
     int v0;
     v0 = ((unsigned int)p0 >> 6);
     if ((p0 & 63) != 0) {
@@ -793,11 +793,11 @@ int func_0013C530(int p0) {
     return v0;
 }
 
-void func_0013CCE0(void) {
+void func_0013CCE0() {
     *(char *)(D_005BE0D8 + 20) = 0;
 }
 
-int func_0013CD90(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013CD90() {
     int tmp1;
     *(int *)0x10000010 = 139;
     *(int *)0x10000000 = 0;
@@ -807,18 +807,18 @@ int func_0013CD90(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return tmp1;
 }
 
-void func_0013CDD0(int p0) {
+void func_0013CDD0(p0) int p0; {
     *(char *)(D_005BE0D8 + 19) = p0;
 }
 
-int func_0013CDE0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013CDE0() {
     int tmp0;
     func_001AAAD0(D_00662370);
     tmp0 = func_0013CE10();
     return tmp0;
 }
 
-int func_0013CE10(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013CE10() {
     int v0;
     int v1;
     int tmp0;
@@ -839,7 +839,7 @@ int func_0013CE10(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v0;
 }
 
-int func_0013CEA0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013CEA0(p0, p1) int p0; int p1; {
     int v0;
     v0 = p0;
     if (v0 != 0) {
@@ -891,7 +891,7 @@ int func_0013CF50(char *p0) {
     }
 }
 
-void func_0013D640(char *p0, char *p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0013D640(p0, p1) char *p0; char *p1; {
     *(int *)(p0 + 0) = *(int *)(p1 + 0);
     *(int *)(p0 + 4) = *(int *)(p1 + 4);
     *(int *)(p0 + 8) = *(int *)(p1 + 8);
@@ -911,7 +911,7 @@ int func_0013D670(char *p0) {
     return v1;
 }
 
-int func_0013D6C0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013D6C0(p0) int p0; {
     int v0;
     char *v1;
     int v2;
@@ -929,7 +929,7 @@ int func_0013D6C0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return (int)v1;
 }
 
-int func_0013D840(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013D840(p0, p1) int p0; int p1; {
     int v0;
     int v1;
     int v2;
@@ -945,7 +945,7 @@ int func_0013D840(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v0;
 }
 
-int func_0013D8B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013D8B0(p0) int p0; {
     int v2;
     int v0;
     int v1;
@@ -959,7 +959,7 @@ int func_0013D8B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v1;
 }
 
-int func_0013D900(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013D900(p0) int p0; {
     int v0;
     int v1;
     int v2;
@@ -973,7 +973,7 @@ int func_0013D900(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v2;
 }
 
-int func_0013D950(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013D950(p0) int p0; {
     int v0;
     int v1;
     int v2;
@@ -987,7 +987,7 @@ int func_0013D950(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v2;
 }
 
-int func_0013DA10(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013DA10(p0, p1) int p0; int p1; {
     int v0;
     int v1;
     int v2;
@@ -1003,7 +1003,7 @@ int func_0013DA10(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v3;
 }
 
-int func_0013DA70(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013DA70(p0) int p0; {
     int v0;
     int v1;
     int v2;
@@ -1017,19 +1017,19 @@ int func_0013DA70(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v2;
 }
 
-void func_0013DCF0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0013DCF0(p0) int p0; {
     func_00150318(*(int *)((char *)p0 + 197092));
 }
 
-void func_0013DD00(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+void func_0013DD00(p0) int p0; {
     func_00150348(*(int *)((char *)p0 + 197092));
 }
 
-void func_0013DDB0(int p0, int p1) {
+void func_0013DDB0(p0, p1) int p0; int p1; {
     *(int *)((char *)p0 + 197356) = p1;
 }
 
-int func_0013DFB0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_0013DFB0(p0, p1) int p0; int p1; {
     int v0;
     v0 = p0;
     if (v0 != 0) {
@@ -1040,7 +1040,7 @@ int func_0013DFB0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
     return v0;
 }
 
-void func_0013E020(char *p0, int p1, int p2) {
+void func_0013E020(p0, p1, p2) char *p0; int p1; int p2; {
     *(char *)(p0 + 0) = 2;
     *(int *)(p0 + 12) = *(int *)(p0 + 20);
     *(int *)(p0 + 16) = p2;
@@ -1048,7 +1048,7 @@ void func_0013E020(char *p0, int p1, int p2) {
     *(int *)(p0 + 4) = p1;
 }
 
-void func_0013E040(char *p0, int p1, int p2) {
+void func_0013E040(p0, p1, p2) char *p0; int p1; int p2; {
     *(char *)(p0 + 0) = 1;
     if (p2 != 0) {
         *(int *)(p0 + 12) = 0;
@@ -1086,67 +1086,67 @@ void func_0013E390(char *p0) {
     *(int *)(p0 + 32) = 0;
 }
 
-void func_00141948(char *p0, int p1, int p2) {
+void func_00141948(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 124) = p2;
     *(int *)(p0 + 120) = p1;
 }
 
-void func_00141958(char *p0, int p1, int p2) {
+void func_00141958(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 132) = p2;
     *(int *)(p0 + 128) = p1;
 }
 
-void func_00141E08(char *p0, int p1, int p2) {
+void func_00141E08(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 256) = p2;
     *(int *)(p0 + 252) = p1;
 }
 
-int func_00146A10(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+int func_00146A10() {
     func_00146858();
     return 0;
 }
 
-void func_0014A918(char *p0, int p1, int p2) {
+void func_0014A918(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 84) = p2;
     *(int *)(p0 + 80) = p1;
 }
 
-void func_0014A928(char *p0, int p1, int p2) {
+void func_0014A928(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 76) = p2;
     *(int *)(p0 + 72) = p1;
 }
 
-void func_0014B3C0(char *p0, int p1, int p2) {
+void func_0014B3C0(p0, p1, p2) char *p0; int p1; int p2; {
     *(short *)(p0 + 6) = p2;
     *(short *)(p0 + 4) = p1;
 }
 
-void func_0014B3D0(char *p0, int p1, int p2) {
+void func_0014B3D0(p0, p1, p2) char *p0; int p1; int p2; {
     *(short *)(p0 + 10) = p2;
     *(short *)(p0 + 8) = p1;
 }
 
-void func_0014B548(char *p0, int p1, int p2) {
+void func_0014B548(p0, p1, p2) char *p0; int p1; int p2; {
     *(short *)(p0 + 6) = p2;
     *(short *)(p0 + 4) = p1;
 }
 
-void func_0014B5B0(char *p0, int p1, int p2) {
+void func_0014B5B0(p0, p1, p2) char *p0; int p1; int p2; {
     *(short *)(p0 + 10) = p2;
     *(short *)(p0 + 8) = p1;
 }
 
-void func_0014CE40(char *p0, int p1) {
+void func_0014CE40(p0, p1) char *p0; int p1; {
     *(int *)(p0 + 96) = p1;
     *(int *)(p0 + 60) = p1;
 }
 
-void func_0014DA60(char *p0, int p1, int p2) {
+void func_0014DA60(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 60) = p2;
     *(int *)(p0 + 56) = p1;
 }
 
-void func_00152518(char *p0, int p1, int p2, int p3) {
+void func_00152518(p0, p1, p2, p3) char *p0; int p1; int p2; int p3; {
     *(short *)(p0 + 56) = p3;
     *(short *)(p0 + 52) = p1;
     *(short *)(p0 + 54) = p2;
@@ -1164,17 +1164,17 @@ void func_00156858(char *p0) {
     *(int *)(p0 + 40) = 0;
 }
 
-void func_00156A70(char *p0, int p1, int p2) {
+void func_00156A70(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 36) = p2;
     *(int *)(p0 + 32) = p1;
 }
 
-void func_00156A80(char *p0, int p1, int p2) {
+void func_00156A80(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 44) = p2;
     *(int *)(p0 + 40) = p1;
 }
 
-void func_0015F458(char *p0, int p1, int p2) {
+void func_0015F458(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 60) = p2;
     *(int *)(p0 + 56) = p1;
 }
@@ -1193,7 +1193,7 @@ void func_0016CB80(char *p0) {
     *(int *)(p0 + 4) = 0;
 }
 
-void func_0016CCB0(char *p0, int p1, int p2) {
+void func_0016CCB0(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 4) = p2;
     *(int *)(p0 + 0) = p1;
 }
@@ -1223,7 +1223,7 @@ void func_00174B88(char *p0) {
     *(int *)(p0 + 128) = 0;
 }
 
-void func_00176FA0(char *p0, int p1, int p2, int p3) {
+void func_00176FA0(p0, p1, p2, p3) char *p0; int p1; int p2; int p3; {
     *(int *)(p0 + 8) = p3;
     *(int *)(p0 + 0) = p1;
     *(int *)(p0 + 4) = p2;
@@ -1261,12 +1261,12 @@ void func_00180168(char *p0) {
     *(int *)(p0 + 12) = 0;
 }
 
-void func_001802C8(char *p0, int p1, int p2) {
+void func_001802C8(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 4) = p2;
     *(int *)(p0 + 0) = p1;
 }
 
-void func_00181F98(void) {
+void func_00181F98() {
 }
 
 void func_0018BC98(char *p0) {
@@ -1277,7 +1277,7 @@ void func_0018BC98(char *p0) {
     *(int *)(p0 + 12) = 0;
 }
 
-void func_0018D5D8(char *p0, int p1) {
+void func_0018D5D8(p0, p1) char *p0; int p1; {
     *(int *)(p0 + 0) = 0;
     *(int *)(p0 + 8) = p1;
     *(int *)(p0 + 4) = 0;
@@ -1295,18 +1295,18 @@ void func_0018D858(char *p0) {
     *(short *)(p0 + 28) = 0;
 }
 
-void func_0018DD68(char *p0, int p1, int p2) {
+void func_0018DD68(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 328) = p2;
     *(int *)(p0 + 324) = p1;
 }
 
-int func_0018F950(char *p0, int p1, int p2) {
+int func_0018F950(p0, p1, p2) char *p0; int p1; int p2; {
     p0 = (p0 + (p1 * 68));
     *(int *)(p0 + 7976) = p2;
     return (p1 * 68);
 }
 
-void func_00190910(char *p0, int p1, int p2, int p3, int p4) {
+void func_00190910(p0, p1, p2, p3, p4) char *p0; int p1; int p2; int p3; int p4; {
     *(int *)(p0 + 12) = p4;
     *(int *)(p0 + 0) = p1;
     *(int *)(p0 + 4) = p2;
@@ -1326,7 +1326,7 @@ void func_00190EB8(char *p0) {
     *(int *)(p0 + 8) = 0;
 }
 
-void func_001931C0(char *p0, int p1, int p2) {
+void func_001931C0(p0, p1, p2) char *p0; int p1; int p2; {
     *(int *)(p0 + 16) = p2;
     *(int *)(p0 + 12) = p1;
 }

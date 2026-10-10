@@ -1921,7 +1921,22 @@ def translate(name, raw, externs, opts=None):
         out = ternaries(out, rng)
     if stack:
         decl = [f"    char stk[{stack[1]:#x}] __attribute__((aligned(16)));"] + decl
-    lines = [f"{rtype} {name}({', '.join(plist) or 'void'}) {{"] + decl + [f"    {l}" for l in locs] + out + ["}"]
+    text_ = "\n".join(decl + locs + out)
+    used_ = lambda x: re.search(rf"\b{x.split()[-1].lstrip('*')}\b", text_)
+    ip_ = [x for x in plist if not x.startswith("float ")]
+    fp_ = [x for x in plist if x.startswith("float ")]
+    while ip_ and not used_(ip_[-1]):
+        ip_.pop()
+    while fp_ and not used_(fp_[-1]):
+        fp_.pop()
+    if not opts.get("cpp") and not fp_:
+        # K&R definition: no prototype, so same-file callers with other argument counts compile
+        names_ = ", ".join(x.split()[-1].lstrip("*") for x in ip_)
+        kr_ = "".join(f" {x};" for x in ip_)
+        head_ = f"{rtype} {name}({names_}){kr_} {{"
+    else:
+        head_ = f"{rtype} {name}({', '.join(ip_ + fp_) or 'void'}) {{"
+    lines = [head_] + decl + [f"    {l}" for l in locs] + out + ["}"]
     externs.update(local_ext)
     return "\n".join(lines).replace("char * ", "char *"), calls, {"callsig": callsig, "vclasses": vclasses}
 
@@ -2082,8 +2097,18 @@ def load_previous(path, kind, externs):
         classes[m.group(1)] = (8 + 4 * body.count("virtual void d"), () if args in ("", "void") else
                                tuple(a.strip() for a in args.split(",")), mm.group(1).strip())
     out = {}
-    for m in re.finditer(r"^(\w[\w *]*? (func_[0-9A-F]{8})\([^)]*\) \{\n.*?^\})", text, re.M | re.S):
+    for m in re.finditer(r"^(\w[\w *]*? (func_[0-9A-F]{8})\([^)]*\)[^{}\n]* \{\n.*?^\})", text, re.M | re.S):
         code, name = m.group(1), m.group(2)
+        hm = re.match(r"(\w[\w *]*? func_[0-9A-F]{8})\(([^)]*)\) \{\n", code)
+        if kind == "c" and hm and "float" not in hm.group(2) and hm.group(2) not in ("", "void") and \
+                "int p" in hm.group(2) or (kind == "c" and hm and hm.group(2) == "void"):
+            # an older ANSI header: rewrite as K&R with the unused trailing parameters dropped
+            rest_ = code[hm.end():]
+            ps_ = [x.strip() for x in hm.group(2).split(",")] if hm.group(2) != "void" else []
+            while ps_ and not re.search(rf"\b{ps_[-1].split()[-1].lstrip('*')}\b", rest_):
+                ps_.pop()
+            names_ = ", ".join(x.split()[-1].lstrip("*") for x in ps_)
+            code = f"{hm.group(1)}({names_}){''.join(f' {x};' for x in ps_)} {{\n" + rest_
         calls = {c: rts.get(c, "int") for c in set(re.findall(r"\b(func_[0-9A-F]{8})\b", code)) - {name}}
         META[name] = {"callsig": dict(sigs), "vclasses": {c: classes[c] for c in classes
                                                           if re.search(rf"\b{c}\b", code)}}
@@ -2095,7 +2120,7 @@ def main():
     taken = set()
     for p in (ROOT / "src").rglob("*.c*"):
         if p not in (OUT, OUT_CPP):
-            taken |= {int(x, 16) for x in re.findall(r"\bfunc_([0-9A-F]{8})\s*\([^;{}\n]*\)\s*\{", p.read_text())}
+            taken |= {int(x, 16) for x in re.findall(r"\bfunc_([0-9A-F]{8})\s*\([^;{}\n]*\)[^{}\n]*\{", p.read_text())}
     taken |= {int(m, 16) for m in re.findall(r"=\s*0x([0-9A-Fa-f]+);",
                                              "".join(f.read_text() for f in (ROOT / "config/SLUS_209.64").glob("symbols*.txt")))}
     src = (ROOT / "asm/us/text.s").read_text()
