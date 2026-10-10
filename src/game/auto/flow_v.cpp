@@ -177,6 +177,7 @@ int func_00332AE0(int, char *, float, float);
 void func_00333170(char *);
 int func_003331E0(int);
 int func_0033A660(int, int);
+int func_0033BFC0(char *);
 void func_0034B8C0(char *, char *, int);
 int func_0034BBE0(int, char *);
 float func_0034C190(float, float, float);
@@ -21311,6 +21312,24 @@ int func_0033B4A0(int p0) {
         } while ((v2 < *(int *)(v0 + 468)));
     }
     return v1;
+}
+
+int func_0033BBD0(char *p0) {
+    int v0;
+    char *v1;
+    int v2;
+    v0 = *(unsigned char *)(p0 + 4);
+    v1 = p0;
+    switch (v0) {
+    case 0:
+        ((V130_1_iv *)p0)->m(v0);
+        *(char *)(v1 + 4) = (*(unsigned char *)(v1 + 4) + 1);
+        /* fall through */
+    case 1:
+        v2 = func_0033BFC0(v1);
+        break;
+    }
+    return v2;
 }
 
 int func_0034A190(char *p0) {

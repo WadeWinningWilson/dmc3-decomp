@@ -1631,7 +1631,7 @@ def translate(name, raw, externs, opts=None):
         if y != "0" and coin(0.3):
             x, o, y = y, {"==": "==", "!=": "!=", "<": ">", ">": "<", "<=": ">=", ">=": "<="}[o], x
         if y == "0" and o in ("!=", "==") and re.fullmatch(r"\(.*(==|<|<=|>|>=|!=).*\)", x):
-            if o == "==" and (opts.get("negcmp") if rng is None else coin(0.5)):
+            if o == "==" and (opts.get("negcmp", True) if rng is None else coin(0.8)):
                 mm_ = re.fullmatch(r"\((.+) (<|>|<=|>=|==|!=) (.+)\)", x)
                 if mm_ and mm_.group(1).count("(") == mm_.group(1).count(")"):
                     return f"{mm_.group(1)} {NEG[mm_.group(2)]} {mm_.group(3)}"
