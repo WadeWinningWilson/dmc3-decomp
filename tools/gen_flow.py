@@ -1826,6 +1826,10 @@ def translate(name, raw, externs, opts=None):
         raise Fail
     rtype = "void"
     void_ = ret_is_temp and (opts.get("new") if rng is None else coin())
+    # a returned variable that is never assigned: the source function returns nothing
+    if rets and all(r is not None for r in rets) and any(
+            re.fullmatch(r"(?:v|tmp)\d+", r) and not any(re.match(rf"\s*{r} = ", l) for l in out) for r in rets):
+        void_ = True
     if all(r is not None for r in rets) and not void_:
         rtype = "float" if fret else "int"
     else:
@@ -1949,6 +1953,7 @@ BEST_OPTS = {}  # the translation options that scored it
 LAST_SCORE = {}  # ratio of the most recent check of each function
 DECL = {}  # function -> (best declaration order, its ratio) for hill climbing
 BEST_CODE = {}  # function -> ((name, code, calls), ratio, meta) of its best variant
+PREV = {}  # functions kept from earlier output files
 CUR_OPTS = [{}]
 
 
@@ -2112,6 +2117,7 @@ def main():
         for kind, path in (("c", OUT),) + ((("cpp", OUT_CPP),) if not GCC else ()):
             prev = {n: f for n, f in load_previous(path, kind, externs).items() if n in addr}
             matched[kind].update(prev)
+            PREV.update(prev)
             print(f"kept {len(prev)} earlier matches from {path.name}", flush=True)
     for opts, kind in OPTIONS:
         if GCC and kind == "cpp":
@@ -2237,6 +2243,18 @@ def main():
             ok = check(path, {n: addr[n] for n, _, _ in final})
             if len(ok) == len(final):
                 break
+            bad = {f[0] for f in final if f[0] not in ok}
+            old_bad = bad & set(PREV)
+            if old_bad:
+                # an earlier match broke: drop the new functions it calls or that call it,
+                # or every new function when none is related, before giving up an old one
+                new_ = {f[0] for f in final if f[0] not in PREV}
+                rel = {f[0] for f in final if f[0] in new_ and (old_bad & set(f[2]))} | \
+                      {c for f in final if f[0] in old_bad for c in f[2] if c in new_}
+                drop = (rel or new_) | (bad - set(PREV))
+                if drop:
+                    final = [f for f in final if f[0] not in drop]
+                    continue
             final = [f for f in final if f[0] in ok]
         print(f"{path.name}: {len(final)} functions")
 

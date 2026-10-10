@@ -26055,6 +26055,37 @@ int func_004686E0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int 
     return tmp1;
 }
 
+int func_00468F70(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7, float f0, float f1, float f2, float f3) {
+    int v3;
+    char *v0;
+    int v2;
+    int v1;
+    float tmp1;
+    int tmp5;
+    v0 = p0;
+    v1 = *(int *)(p0 + 212);
+    switch (v1) {
+    case 0:
+        tmp1 = ((V28_0_f *)*(char **)(v0 + 168))->m();
+        v2 = 2;
+        if (tmp1 >= *(float *)(v0 + 260)) {
+            *(char *)(v0 + 207) = v2;
+            ((V1C_1_iv *)*(char **)(v0 + 168))->m(20);
+            *(int *)(v0 + 212) = 1;
+        }
+        v3 = ((V24_0_i *)*(char **)(v0 + 168))->m();
+        break;
+    case 1:
+        tmp5 = ((V2C_0_i *)*(char **)(v0 + 168))->m();
+        if (tmp5 != 0) {
+            ((VEC_1_iv *)v0)->m(14);
+        }
+        v3 = ((V24_0_i *)*(char **)(v0 + 168))->m();
+        break;
+    }
+    return v3;
+}
+
 int func_004691A0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     int tmp5;
     *(char *)(p0 + 205) = 0;

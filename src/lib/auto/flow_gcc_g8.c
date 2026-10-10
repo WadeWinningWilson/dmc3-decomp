@@ -138,6 +138,7 @@ void func_00152528();
 int func_00152668();
 int func_00153820();
 void func_00155AD8();
+void func_00155B08();
 void func_00155B48();
 void func_00155BB0();
 void func_00155C30();
@@ -943,6 +944,10 @@ void func_001574B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p
 
 void func_00158830(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     func_00155C30();
+}
+
+void func_00158848(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    func_00155B08();
 }
 
 void func_00158860(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
