@@ -2060,6 +2060,11 @@ def main():
     # final files: re-verify everything together (a callee in the same file can change a caller)
     for kind, path in (("c", OUT),) + ((("cpp", OUT_CPP),) if not GCC else ()):
         path.parent.mkdir(parents=True, exist_ok=True)
+        if not matched[kind]:
+            if path.exists():
+                path.unlink()  # no empty generated files
+            print(f"{path.name}: 0 functions")
+            continue
         final = [matched[kind][n] for n in sorted(matched[kind], key=lambda n: addr[n])]
         while True:
             final = compile_ok(path, final, externs, kind)
