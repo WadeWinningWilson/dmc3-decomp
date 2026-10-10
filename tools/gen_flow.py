@@ -165,8 +165,23 @@ def prepare(ins):
     frame = re.compile(r"addiu \$sp, \$sp, -?0x[0-9A-F]+|(sd|ld) \$ra, 0x[0-9A-F]+\(\$sp\)|"
                        r"(sq|lq) \$(s[0-7]|fp), 0x[0-9A-F]+\(\$sp\)|(swc1|lwc1) \$f(2[0-9]|3[01]), 0x[0-9A-F]+\(\$sp\)")
     out = [(a, t) for a, t in seq if t != "nop" and not frame.fullmatch(t)]
+    global STACK
+    STACK = None
     if any("$sp" in t for _, t in out):
-        raise Fail
+        fsz = [num(m.group(1)) for _, t in seq for m in [re.fullmatch(r"addiu \$sp, \$sp, -(0x[0-9A-F]+)", t)] if m]
+        saves = []
+        for _, t in seq:
+            m = re.fullmatch(r"(sd|sq|swc1) \$\w+, (0x[0-9A-F]+)\(\$sp\)", t)
+            if m and frame.fullmatch(t):
+                saves.append(num(m.group(2)) + {"sd": 8, "sq": 16, "swc1": 4}[m.group(1)])
+        offs = [num(m.group(1)) for _, t in out for m in re.finditer(r"(-?0x[0-9A-F]+|\d+)\(\$sp\)", t)]
+        offs += [num(m.group(1)) for _, t in out for m in [re.fullmatch(r"addiu \$\w+, \$sp, (0x[0-9A-F]+)", t)] if m]
+        if not fsz or not offs:
+            raise Fail
+        base = (max(saves, default=0) + 15) & ~15
+        if min(offs) < base or any(re.match(r"(addiu|daddu|addu) \$sp", t) for _, t in out):
+            raise Fail
+        STACK = (base, fsz[0] - base)
     # a branch may target a nop or a frame instruction that was just dropped:
     # retarget it to the next instruction that is kept (all original addresses, in order)
     kept = sorted({a for a, _ in out})
@@ -205,6 +220,7 @@ def blocks_of(seq):
 def translate(name, raw, externs, opts=None):
     opts = opts or {}
     seq, _, _ = prepare(raw)
+    stack = STACK
     if not seq or len(seq) > MAX_INS:
         raise Fail
     bl = blocks_of(seq)
@@ -246,6 +262,18 @@ def translate(name, raw, externs, opts=None):
             succ[k], term[k] = [nxt], ("fall",)
     n = len(bl)
     EXIT = n
+    def exit_path(b, seen=None):
+        seen = seen or set()
+        while b is not None and b < n and b not in seen:
+            seen.add(b)
+            if term[b][0] in ("ret", "tail"):
+                return True
+            if term[b][0] in ("fall", "goto") and len(succ[b]) == 1:
+                b = succ[b][0]
+                continue
+            return False
+        return False
+
     latch_of = {L: h for h, (L, _) in loops.items()}
     exit_of = {}
     for h, (L, kind) in loops.items():
@@ -257,7 +285,7 @@ def translate(name, raw, externs, opts=None):
         # every edge out of the body must go to the exit; no edge may enter the body from outside
         for k2 in range(h, L + 1):
             for s2 in succ[k2]:
-                if s2 > L and s2 != exit_of[h]:
+                if s2 > L and s2 != exit_of[h] and not exit_path(s2):
                     raise Fail
                 if s2 < h:
                     raise Fail
@@ -502,6 +530,8 @@ def translate(name, raw, externs, opts=None):
         def val(r):
             if r == "$zero":
                 return "0", "int"
+            if r == "$sp" and stack:
+                return f"(stk + {-stack[0]})", "char *"
             if r in regs:
                 if types[r] in ("hi", "fbits", "fint") or types[r].startswith("sh32"):
                     raise Fail
@@ -951,21 +981,29 @@ def translate(name, raw, externs, opts=None):
             fall, taken = succ[k]
             if ctx:
                 h, L, X = ctx
-                if taken == X or taken == L and k != L:
-                    if taken == L and len(bl[L][1]) > 1:
-                        raise Fail  # `continue` would skip the latch's statements
-                    out.append(ind + f"if ({cstr(cond, False)}) {'break' if taken == X else 'continue'};")
+                if taken == X:
+                    out.append(ind + f"if ({cstr(cond, False)}) break;")
                     k = fall
                     continue
                 if fall == X:
                     out.append(ind + f"if ({cstr(cond, True)}) break;")
                     k = taken
                     continue
+                if taken > L and taken != X and exit_path(taken):
+                    out.append(ind + f"if ({cstr(cond, False)}) {{")
+                    emit(taken, EXIT, ind + "    ", None, active)
+                    out.append(ind + "}")
+                    k = fall
+                    continue
+                if fall > L and fall != X and exit_path(fall):
+                    out.append(ind + f"if ({cstr(cond, True)}) {{")
+                    emit(fall, EXIT, ind + "    ", None, active)
+                    out.append(ind + "}")
+                    k = taken
+                    continue
             j = ipdom(k)
-            if ctx and not (j <= ctx[1] or j == ctx[2]):
-                raise Fail
-            if ctx and j == ctx[2]:
-                j = ctx[1]
+            if ctx and (j > ctx[1] or j == EXIT):
+                j = ctx[1]  # inside a loop every region ends at the latch at the latest
             if taken == j:
                 out.append(ind + f"if ({cstr(cond, True)}) {{")
                 emit(fall, j, ind + "    ", ctx, active)
@@ -1041,6 +1079,8 @@ def translate(name, raw, externs, opts=None):
                     out = [re.sub(rf"^(\s*{v} = )\({re.escape(nt)}\)", r"\1", l) for l in out]
     decl = [f"    {vtype[v]} {v};" for w, v in sorted(webvar.items(), key=lambda x: x[1])
             if not re.fullmatch(r"[pf]\d", v)]
+    if stack:
+        decl = [f"    char stk[{stack[1]:#x}] __attribute__((aligned(16)));"] + decl
     lines = [f"{rtype} {name}({', '.join(plist) or 'void'}) {{"] + decl + [f"    {l}" for l in locs] + out + ["}"]
     externs.update(local_ext)
     return "\n".join(lines).replace("char * ", "char *"), calls, {"callsig": callsig, "vclasses": vclasses}
@@ -1102,9 +1142,7 @@ CPP_HDR = ("/* AUTO-GENERATED by tools/gen_flow.py: functions that make C++ virt
            " * are synthetic: each has one method at the vtable slot a call site uses. */")
 
 # translation variants, tried in order on what is still unmatched: (options, output kind)
-OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"compound": True}, "c"), ({"compound": True, "coalesce": True}, "c"),
-           ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp"),
-           ({"cpp": True, "compound": True}, "cpp"), ({"cpp": True, "compound": True, "coalesce": True}, "cpp")]
+OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp")]
 OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
 META = {}
 

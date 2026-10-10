@@ -14,7 +14,6 @@ int func_0024BFA0(int, int);
 int func_0024C0B0(char *);
 int func_0024E800(char *);
 int func_002A6C10(char *, char *, char *);
-void func_002C31A0(char *, char *, int);
 void func_002D9300(char *, int);
 int func_0034BBE0(int, char *);
 int func_0037E850(int, int);
@@ -1455,6 +1454,26 @@ public:
     virtual void d15();
     virtual void m(int, int);
 };
+class V48_2_ipv {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void m(int, char *);
+};
 class V4C_0_i {
 public:
     virtual void d0();
@@ -1904,6 +1923,59 @@ public:
     virtual void d47();
     virtual void d48();
     virtual int m(int);
+};
+class VCC_1_pi {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual int m(char *);
 };
 class VC_0_i {
 public:
@@ -2401,24 +2473,13 @@ int func_00252B10(char *p0, int p1, int p2, int p3) {
     return v1;
 }
 
-int func_002A6FE0(char *p0, int p1, int p2, int p3) {
-    char *tmp2;
-    float tmp7;
-    float tmp8;
-    int tmp9;
-    *(char *)(p0 + 144) = 2;
-    *(int *)(p0 + 160) = p1;
-    tmp2 = (*(char **)(p0 + 160) + 64);
-    func_002C31A0((p0 + 176), (*(char **)(p0 + 160) + 64), *(unsigned char *)(*(char **)(p0 + 160) + 1088));
-    func_002C31A0((p0 + 2304), (tmp2 + 384), *(unsigned char *)(tmp2 + 1024));
-    func_002C31A0((p0 + 4432), (tmp2 + 1040), *(unsigned char *)(tmp2 + 2064));
-    func_002C31A0((p0 + 6560), (tmp2 + 1424), *(unsigned char *)(tmp2 + 2064));
-    tmp7 = ((V18_0_f *)p0)->m();
-    *(float *)(p0 + 32) = tmp7;
-    tmp8 = ((V1C_0_f *)p0)->m();
-    *(float *)(p0 + 36) = tmp8;
-    tmp9 = func_002A6C10(p0, (p0 + 112), (p0 + 128));
-    return tmp9;
+int func_00285010(char *p0, int p1, int p2, int p3) {
+    char stk[0x40] __attribute__((aligned(16)));
+    int tmp0;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(((stk + -16) + 16)) : "memory");
+    p0 = (p0 + 576);
+    tmp0 = ((VCC_1_pi *)p0)->m(((stk + -16) + 16));
+    return tmp0;
 }
 
 int func_002A70A0(char *p0, int p1, int p2, int p3) {
@@ -3106,6 +3167,22 @@ int func_0036AC00(char *p0, int p1, int p2, int p3) {
     return tmp4;
 }
 
+int func_0036ADB0(char *p0, int p1, int p2, int p3) {
+    char stk[0x10] __attribute__((aligned(16)));
+    int tmp6;
+    *(char *)(p0 + 205) = 0;
+    *(char *)(p0 + 206) = 4;
+    *(char *)(p0 + 207) = 0;
+    ((V18_1_iv *)*(char **)(p0 + 168))->m(87);
+    ((V48_2_iiv *)*(char **)(p0 + 168))->m(902, (*(int *)(p0 + 16) + 16));
+    *(int *)((stk + -32) + 32) = 0x42ae0000;
+    *(int *)((stk + -32) + 36) = 0x41c80000;
+    ((V48_2_ipv *)*(char **)(p0 + 168))->m(3000, ((stk + -32) + 32));
+    tmp6 = ((V40_0_i *)*(char **)(p0 + 168))->m();
+    *(int *)(p0 + 212) = 0;
+    return tmp6;
+}
+
 int func_0036B220(char *p0, int p1, int p2, int p3) {
     int tmp1;
     *(char *)(p0 + 205) = 0;
@@ -3342,18 +3419,18 @@ int func_003D4610(char *p0, int p1, int p2, int p3) {
     v0 = p0;
     v1 = *(char **)(p0 + 1728);
     if (v1 != 0) {
-        v3 = ((VD0_0_i *)v1)->m();
+        v2 = ((VD0_0_i *)v1)->m();
     }
-    v2 = 0;
+    v3 = 0;
     if ((0 < *(int *)(v0 + 220))) {
         v4 = (int)v0;
         do {
-            v3 = func_0013D5D0((v4 + 224));
-            v2 = (v2 + 1);
+            v2 = func_0013D5D0((v4 + 224));
+            v3 = (v3 + 1);
             v4 = (v4 + 16);
-        } while ((v2 < *(int *)(v0 + 220)));
+        } while ((v3 < *(int *)(v0 + 220)));
     }
-    return v3;
+    return v2;
 }
 
 int func_003D8FD0(char *p0, int p1, int p2, int p3) {
@@ -3987,6 +4064,22 @@ int func_0046B5C0(char *p0, int p1, int p2, int p3) {
     return tmp4;
 }
 
+int func_0046B740(char *p0, int p1, int p2, int p3) {
+    char stk[0x10] __attribute__((aligned(16)));
+    int tmp6;
+    *(char *)(p0 + 205) = 0;
+    *(char *)(p0 + 206) = 4;
+    *(char *)(p0 + 207) = 0;
+    ((V18_1_iv *)*(char **)(p0 + 168))->m(87);
+    ((V48_2_iiv *)*(char **)(p0 + 168))->m(902, (*(int *)(p0 + 16) + 16));
+    *(int *)((stk + -32) + 32) = 0x42ae0000;
+    *(int *)((stk + -32) + 36) = 0x41c80000;
+    ((V48_2_ipv *)*(char **)(p0 + 168))->m(3000, ((stk + -32) + 32));
+    tmp6 = ((V40_0_i *)*(char **)(p0 + 168))->m();
+    *(int *)(p0 + 212) = 0;
+    return tmp6;
+}
+
 int func_0046BB70(char *p0, int p1, int p2, int p3) {
     int tmp1;
     *(char *)(p0 + 205) = 0;
@@ -4025,6 +4118,15 @@ int func_0046E350(char *p0, int p1, int p2, int p3) {
     tmp1 = ((V18_1_ii *)*(char **)(p0 + 168))->m(102);
     *(int *)(p0 + 212) = 0;
     return tmp1;
+}
+
+int func_0047D490(char *p0, int p1, int p2, int p3) {
+    char stk[0x40] __attribute__((aligned(16)));
+    int tmp0;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(((stk + -16) + 16)) : "memory");
+    p0 = (p0 + 2624);
+    tmp0 = ((VCC_1_pi *)p0)->m(((stk + -16) + 16));
+    return tmp0;
 }
 
 int func_0049DC10(char *p0, int p1, int p2, int p3) {
@@ -4384,6 +4486,22 @@ int func_004A7DC0(char *p0, int p1, int p2, int p3) {
     return tmp4;
 }
 
+int func_004A7F40(char *p0, int p1, int p2, int p3) {
+    char stk[0x10] __attribute__((aligned(16)));
+    int tmp6;
+    *(char *)(p0 + 205) = 0;
+    *(char *)(p0 + 206) = 4;
+    *(char *)(p0 + 207) = 0;
+    ((V18_1_iv *)*(char **)(p0 + 168))->m(87);
+    ((V48_2_iiv *)*(char **)(p0 + 168))->m(902, (*(int *)(p0 + 16) + 16));
+    *(int *)((stk + -32) + 32) = 0x42ae0000;
+    *(int *)((stk + -32) + 36) = 0x41c80000;
+    ((V48_2_ipv *)*(char **)(p0 + 168))->m(3000, ((stk + -32) + 32));
+    tmp6 = ((V40_0_i *)*(char **)(p0 + 168))->m();
+    *(int *)(p0 + 212) = 0;
+    return tmp6;
+}
+
 int func_004A8370(char *p0, int p1, int p2, int p3) {
     int tmp1;
     *(char *)(p0 + 205) = 0;
@@ -4427,6 +4545,15 @@ int func_004A9690(char *p0, int p1, int p2, int p3) {
     tmp10 = ((V48_2_iii *)*(char **)(p0 + 168))->m(2005, (*(int *)(p0 + 16) + 16));
     *(int *)(p0 + 212) = 10;
     return tmp10;
+}
+
+int func_004E0700(char *p0, int p1, int p2, int p3) {
+    char stk[0x40] __attribute__((aligned(16)));
+    int tmp0;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(((stk + -16) + 16)) : "memory");
+    p0 = (p0 + 384);
+    tmp0 = ((VCC_1_pi *)p0)->m(((stk + -16) + 16));
+    return tmp0;
 }
 
 }
