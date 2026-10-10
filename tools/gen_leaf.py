@@ -1,15 +1,18 @@
-"""Generate C for short branch-free leaf functions in the MW game code.
+"""Generate C for short branch-free functions in the MW game code.
 
-Covers functions of at most MAX_INS instructions with no branches, calls or
-stack frame, built from loads, stores, constants and simple integer/float
-arithmetic. The asm is translated symbolically: argument registers become
-parameters (`char *` when used as a base address), each store becomes an
-assignment, and $v0/$f0 at `jr $ra` becomes the return value. Loads are copied
-into locals before any later store, so memory order is kept.
+Covers functions of at most MAX_INS instructions with no branches and no stack
+frame, built from loads, stores, constants, simple integer/float arithmetic
+and global data accesses, ending in `jr $ra` (leaf) or `j func` (tail call).
+The asm is translated symbolically: argument registers become parameters
+(`char *` when used as a base address), each store becomes an assignment,
+$v0/$f0 at `jr $ra` becomes the return value, and a tail call becomes a call
+with the argument registers it sets. Loads are copied into locals before any
+later store, so memory order is kept. Globals become `extern char D_x[];`
+(absolute addressing) or `extern <type> D_x;` ($gp-relative small data).
 
 Every candidate is compiled and kept ONLY if byte-identical:
-src/game/auto/leaf2.c. Names stay func_XXXXXXXX and the types are offset-based
-placeholders, like tools/gen_trivial.py.
+src/game/auto/leaf2.c (leaves) and src/game/auto/tail.c (tail calls). Names
+stay func_XXXXXXXX; types are offset-based placeholders.
 
 usage: python -I tools/gen_leaf.py
 """
@@ -17,13 +20,16 @@ import contextlib
 import importlib.util
 import io
 import re
+import struct
 import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "src/game/auto/leaf2.c"
+OUT_LEAF = ROOT / "src/game/auto/leaf2.c"
+OUT_TAIL = ROOT / "src/game/auto/tail.c"
+OUT_CALLS = ROOT / "src/game/auto/calls.c"
 LO, HI = 0x195158, 0x50FE28
-MAX_INS = 10
+MAX_INS = 12
 CC = ("MWCIncludes=. wibo tools/compilers/mwcps2-3.0b52-030722/mwccps2.exe -c -O3,p "
       "-fl divbyzerocheck -inline depth=8 -nostdinc")
 
@@ -36,6 +42,7 @@ LOADS = {"lb": "signed char", "lbu": "unsigned char", "lh": "short", "lhu": "uns
 STORES = {"sb": "char", "sh": "short", "sw": "int", "swc1": "float"}
 ARGS = ["$a0", "$a1", "$a2", "$a3"]
 FARGS = ["$f12", "$f13", "$f14", "$f15"]
+NUM = r"-?0x[0-9A-F]+|-?\d+"
 
 
 def num(s):
@@ -49,41 +56,58 @@ class Fail(Exception):
     pass
 
 
-def translate(name, ins):
-    """C source for one function, or raise Fail."""
-    body = [i for i in ins if i != "nop"]
+def translate(name, ins, externs):
+    """(C source, callee or None). `externs` {sym: decl} is shared by a whole file."""
+    # put every delay slot (nops included) before its jump, then drop the nops
+    seq, i = list(ins), 0
+    while i < len(seq) - 1:
+        if re.match(r"(jal|j|jr)\b", seq[i]):
+            seq[i], seq[i + 1] = seq[i + 1], seq[i]
+            i += 1
+        i += 1
+    body = [x for x in seq if x != "nop"]
+    # stack frame: drop the prologue/epilogue (saved $ra/$sN/$fN), refuse other stack use
+    frame = [x for x in body if re.fullmatch(r"addiu \$sp, \$sp, -?0x[0-9A-F]+|(sd|ld) \$ra, 0x[0-9A-F]+\(\$sp\)|"
+                                            r"(sq|lq) \$s[0-7], 0x[0-9A-F]+\(\$sp\)|(swc1|lwc1) \$f(2[0-9]|3[01]), 0x[0-9A-F]+\(\$sp\)", x)]
+    body = [x for x in body if x not in frame]
+    if any("$sp" in x for x in body):
+        raise Fail
     if not body or len(body) > MAX_INS:
         raise Fail
-    # move the jr's delay slot before it
-    j = next((k for k, i in enumerate(body) if i == "jr $ra"), None)
-    if j is None or j not in (len(body) - 1, len(body) - 2):
+    if not (body[-1] == "jr $ra" or re.fullmatch(r"j func_[0-9A-F]{8}", body[-1])):
         raise Fail
-    if j == len(body) - 2:
-        body[j], body[j + 1] = body[j + 1], body[j]
+    if any(x == "jr $ra" or re.fullmatch(r"j\b.*", x) for x in body[:-1]):
+        raise Fail
+    term = body[-1]
+    callee = term[2:] if term.startswith("j ") else None
     body = body[:-1]
     ops = []
     for i in body:
         m = re.match(r"(\w+(?:\.\w+)?)\s*(.*)", i)
-        args = [a.strip() for a in m.group(2).split(",")] if m.group(2) else []
-        ops.append((m.group(1), args))
+        ops.append((m.group(1), [a.strip() for a in m.group(2).split(",")] if m.group(2) else []))
 
-    # pre-pass: which registers are used as a base address
     based = set()
     for op, a in ops:
         if op in LOADS or op in STORES:
-            mm = re.fullmatch(r"(-?0x[0-9A-F]+|-?\d+)\((\$\w+)\)", a[1])
-            if not mm:
-                raise Fail
-            based.add(mm.group(2))
-    regs, types = {}, {}       # reg -> C expression, C type
-    params = {}                # arg reg -> type
-    stmts, locs = [], []
-    memdep = set()             # regs whose expression reads memory
+            mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", a[1])
+            if mm:
+                based.add(mm.group(2))
+    regs, types = {}, {}
+    params, stmts, locs, memdep = {}, [], [], set()
+    local_ext = {}
+    calls = {}  # callee -> return type used
 
-    def val(r, want=None):
+    def need(sym, decl):
+        if externs.get(sym, decl) != decl or local_ext.get(sym, decl) != decl:
+            raise Fail
+        local_ext[sym] = decl
+
+    def val(r):
         if r == "$zero":
             return "0", "int"
         if r in regs:
+            if types[r] == "hi":
+                raise Fail
             return regs[r], types[r]
         if r in ARGS:
             t = "char *" if r in based else "int"
@@ -104,40 +128,115 @@ def translate(name, ins):
 
     def flush():
         for r in sorted(memdep):
-            name_ = f"t{len(locs)}"
-            locs.append(f"{types[r]} {name_};")
-            stmts.append(f"{name_} = {regs[r]};")
-            regs[r] = name_
+            nm = f"t{len(locs)}"
+            locs.append(f"{types[r]} {nm};")
+            stmts.append(f"{nm} = {regs[r]};")
+            regs[r] = nm
         memdep.clear()
 
-    for op, a in ops:
-        if op in LOADS:
-            off, base = re.fullmatch(r"(-?0x[0-9A-F]+|-?\d+)\((\$\w+)\)", a[1]).groups()
-            be, bt = val(base)
+    def lvalue(arg, t):
+        """C lvalue for a memory operand of type t."""
+        mm = re.fullmatch(rf"({NUM})\((\$\w+)\)", arg)
+        if mm:
+            be, bt = val(mm.group(2))
             if bt != "char *":
                 raise Fail
+            return f"*({t} *)({be} + {num(mm.group(1))})"
+        mm = re.fullmatch(r"%lo\((D_[0-9A-F]{8})\)\((\$\w+)\)", arg)
+        if mm and regs.get(mm.group(2)) == mm.group(1) and types[mm.group(2)] == "hi":
+            need(mm.group(1), f"extern char {mm.group(1)}[];")
+            return f"*({t} *){mm.group(1)}"
+        mm = re.fullmatch(r"%gp_rel\((D_[0-9A-F]{8})\)\(\$gp\)", arg)
+        if mm:
+            need(mm.group(1), f"extern {t} {mm.group(1)};")
+            return mm.group(1)
+        raise Fail
+
+    # which call results are read later (v0/f0 read before being rewritten)
+    used_after = {}
+    for idx, (op, a) in enumerate(ops):
+        if op == "jal":
+            for r in ("$v0", "$f0"):
+                for op2, a2 in ops[idx + 1:]:
+                    reads = a2[1:] if op2 not in STORES else a2
+                    if any(r == x or f"({r})" in x for x in reads):
+                        used_after[(idx, r)] = True
+                        break
+                    if a2 and a2[0] == r and op2 not in STORES:
+                        break
+            if "$v0" in [x for x in [a[0]] if False]:
+                pass
+    if any(op == "jal" for op, _ in ops) and not frame:
+        raise Fail
+    written = set()
+    for idx, (op, a) in enumerate(ops):
+        if op == "jal":
+            fn = a[0]
+            if not re.fullmatch(r"func_[0-9A-F]{8}", fn):
+                raise Fail
+            n = max((ARGS.index(r) + 1 for r in written if r in ARGS), default=0)
+            cargs = [val(ARGS[i])[0] for i in range(n)]
+            flush()
+            call = f"{fn}({', '.join(cargs)})"
+            for r in list(regs):  # caller-saved registers die
+                if not re.fullmatch(r"\$s[0-7]|\$f(2[0-9]|3[01])", r):
+                    del regs[r]
+                    types.pop(r, None)
+            written.clear()
+            if used_after.get((idx, "$f0")):
+                rt = "float"
+                nm = f"t{len(locs)}"
+                locs.append(f"float {nm};")
+                stmts.append(f"{nm} = {call};")
+                define("$f0", nm, "float")
+            elif used_after.get((idx, "$v0")):
+                rt = "char *" if "$v0" in based else "int"
+                nm = f"t{len(locs)}"
+                locs.append(f"{rt} {nm};")
+                stmts.append(f"{nm} = {call};")
+                define("$v0", nm, rt)
+            else:
+                rt = "void"
+                stmts.append(f"{call};")
+            calls[fn] = calls.get(fn, rt) if calls.get(fn, rt) == rt else None
+            if calls[fn] is None:
+                raise Fail
+            continue
+        if a and op not in STORES:
+            written.add(a[0])
+        if op in LOADS:
             t = LOADS[op]
             if op == "lw" and a[0] in based:
                 t = "char *"
-            define(a[0], f"*({t} *)({be} + {num(off)})", t, mem=True)
+            define(a[0], lvalue(a[1], t), t, mem=True)
         elif op in STORES:
-            off, base = re.fullmatch(r"(-?0x[0-9A-F]+|-?\d+)\((\$\w+)\)", a[1]).groups()
             ve, vt = val(a[0])
-            be, bt = val(base)
-            if bt != "char *":
-                raise Fail
+            t = "char *" if (op == "sw" and vt == "char *") else STORES[op]
+            lv = lvalue(a[1], t)
             flush()
-            st = "char *" if (op == "sw" and vt == "char *") else STORES[op]
-            stmts.append(f"*({st} *)({be} + {num(off)}) = {ve};")
-        elif op == "addiu" and len(a) == 3 and re.fullmatch(r"-?0x[0-9A-F]+|-?\d+", a[2]):
+            stmts.append(f"{lv} = {ve};")
+        elif op == "lui" and re.fullmatch(r"%hi\(D_[0-9A-F]{8}\)", a[1]):
+            define(a[0], a[1][4:-1], "hi")
+        elif op == "addiu" and len(a) == 3 and re.fullmatch(r"%lo\(D_[0-9A-F]{8}\)", a[2]):
+            sym = a[2][4:-1]
+            if regs.get(a[1]) != sym or types.get(a[1]) != "hi":
+                raise Fail
+            need(sym, f"extern char {sym}[];")
+            define(a[0], sym, "char *")
+        elif op == "addiu" and len(a) == 3 and a[1] == "$gp" and re.fullmatch(r"%gp_rel\(D_[0-9A-F]{8}\)", a[2]):
+            sym = a[2][8:-1]
+            need(sym, f"extern char {sym};")
+            define(a[0], f"&{sym}", "char *")
+        elif op == "addiu" and len(a) == 3 and re.fullmatch(NUM, a[2]):
             e, t = val(a[1])
             k = num(a[2])
             define(a[0], str(k) if e == "0" else f"({e} + {k})", t, a[1] in memdep)
-        elif op == "daddu" and a[2] == "$zero":
+        elif op == "daddu" and len(a) == 3 and a[2] == "$zero":
             e, t = val(a[1])
             define(a[0], e, t, a[1] in memdep)
         elif op in ("addu", "subu", "and", "or", "xor") and len(a) == 3:
-            x, tx = val(a[1]); y, ty = ival(a[2])
+            x, tx = val(a[1])
+            y, ty = ival(a[2])
             if op != "addu" and tx == "char *":
                 x, tx = ival(a[1])
             sym = {"addu": "+", "subu": "-", "and": "&", "or": "|", "xor": "^"}[op]
@@ -157,28 +256,27 @@ def translate(name, ins):
             y = ival(a[2])[0] if op in ("slt", "sltu") else str(num(a[2]))
             if op == "sltiu" and y == "1":
                 e = f"({x} == 0)"
-            elif op.startswith("sltu") or op == "sltiu":
+            elif op in ("sltu", "sltiu"):
                 e = f"((unsigned int){x} < (unsigned int){y})"
             else:
                 e = f"({x} < {y})"
             define(a[0], e, "int", a[1] in memdep or (len(a) > 2 and a[2] in memdep))
         elif op == "lui" and re.fullmatch(r"0x[0-9A-F]+|\d+|\(0x[0-9A-F]+ >> 16\)", a[1]):
-            v = a[1]
-            mm = re.fullmatch(r"\((0x[0-9A-F]+) >> 16\)", v)
-            k = (int(mm.group(1), 16) >> 16) if mm else num(v)
+            mm = re.fullmatch(r"\((0x[0-9A-F]+) >> 16\)", a[1])
+            k = (int(mm.group(1), 16) >> 16) if mm else num(a[1])
             define(a[0], f"{(k << 16) & 0xFFFFFFFF:#x}", "int")
         elif op == "mtc1":
             e, t = val(a[0])
             if e == "0":
                 define(a[1], "0.0f", "float")
             elif re.fullmatch(r"0x[0-9a-f]+", e):
-                import struct
                 f = struct.unpack("<f", struct.pack("<I", int(e, 16)))[0]
                 define(a[1], repr(float(f)) + "f", "float")
             else:
                 raise Fail
         elif op in ("add.s", "sub.s", "mul.s", "div.s"):
-            x, _ = val(a[1]); y, _ = val(a[2])
+            x, _ = val(a[1])
+            y, _ = val(a[2])
             sym = {"add.s": "+", "sub.s": "-", "mul.s": "*", "div.s": "/"}[op]
             define(a[0], f"({x} {sym} {y})", "float", a[1] in memdep or a[2] in memdep)
         elif op in ("mov.s", "neg.s", "abs.s"):
@@ -187,67 +285,118 @@ def translate(name, ins):
                    "float", a[1] in memdep)
         else:
             raise Fail
+
     ret, rtype = None, "void"
-    if "$v0" in regs:
+    if callee:
+        if "$v0" in regs or "$f0" in regs or any(r in regs for r in FARGS):
+            raise Fail
+        n = max((ARGS.index(r) + 1 for r in regs if r in ARGS), default=0)
+        cargs = [val(ARGS[i])[0] for i in range(n)]
+        stmts.append(f"{callee}({', '.join(cargs)});")
+    elif "$v0" in regs:
         ret, rtype = regs["$v0"], types["$v0"]
     elif "$f0" in regs:
         ret, rtype = regs["$f0"], "float"
+    if rtype == "hi":
+        raise Fail
     order = sorted(params, key=lambda r: (r in FARGS, (ARGS + FARGS).index(r)))
-    # keep positional slots for unused leading integer args
     ints = [r for r in order if r in ARGS]
     plist = []
     if ints:
-        for k in range(ARGS.index(ints[-1]) + 1):
-            r = ARGS[k]
-            plist.append(f"{params.get(r, 'int')} p{k}")
+        for i in range(ARGS.index(ints[-1]) + 1):
+            plist.append(f"{params.get(ARGS[i], 'int')} p{i}")
     plist += [f"float f{FARGS.index(r)}" for r in order if r in FARGS]
     lines = [f"{rtype} {name}({', '.join(plist) or 'void'}) {{"]
     lines += [f"    {l}" for l in locs] + [f"    {s}" for s in stmts]
     if ret is not None:
         lines.append(f"    return {ret};")
     lines.append("}")
-    return "\n".join(lines).replace("char * ", "char *")
+    externs.update(local_ext)
+    return "\n".join(lines).replace("char * ", "char *"), callee, calls
+
+
+def check(path, cands):
+    """Compile `path`; return the names among `cands` {name: addr} that match."""
+    obj = f"scratch/{path.stem}.o"
+    r = subprocess.run(["docker", "exec", "-w", "/w", "dmc3b", "sh", "-c",
+                        f"{CC} -o {obj} {path.relative_to(ROOT).as_posix()}"], capture_output=True, text=True)
+    if r.returncode:
+        raise SystemExit(r.stdout[-4000:] + r.stderr[-2000:])
+    ok = set()
+    for n, A in cands.items():
+        with contextlib.redirect_stdout(io.StringIO()):
+            try:
+                if fd.main(str(ROOT / "orig/SLUS_209.64/SLUS_209.64"), str(ROOT / obj), n, hex(A)) == 0:
+                    ok.add(n)
+            except (SystemExit, Exception):
+                pass
+    return ok
+
+
+def write(path, hdr, funcs, externs, callees):
+    """funcs: (name, code, callee) where callee is a tail-call name or {callee: return type}."""
+    used = {s for _, code, _ in funcs for s in re.findall(r"\bD_[0-9A-F]{8}\b", code)}
+    decl = [externs[s] for s in sorted(used)]
+    protos = {}
+    for _, _, c in funcs:
+        for fn, rt in (c.items() if isinstance(c, dict) else ([(c, "void")] if c else [])):
+            protos.setdefault(fn, rt)
+    decl += [f"{rt} {fn}();".replace("* ", "*") for fn, rt in sorted(protos.items())]
+    path.write_text(hdr + "\n".join(decl) + ("\n\n" if decl else "\n") + "\n\n".join(c for _, c, _ in funcs) + "\n")
 
 
 def main():
     taken = set()
     for p in (ROOT / "src").rglob("*.c*"):
-        if p != OUT:
+        if p not in (OUT_LEAF, OUT_TAIL, OUT_CALLS):
             taken |= {int(x, 16) for x in re.findall(r"\bfunc_([0-9A-F]{8})\s*\([^;{}\n]*\)\s*\{", p.read_text())}
     taken |= {int(m, 16) for m in re.findall(r"=\s*0x([0-9A-Fa-f]+);",
                                              "".join(f.read_text() for f in (ROOT / "config/SLUS_209.64").glob("symbols*.txt")))}
     src = (ROOT / "asm/us/text.s").read_text()
-    cands = {}
+    externs = {}
+    leaf, tail, nonleaf, addr = [], [], [], {}
     for name, a, body in re.findall(r"^glabel (func_([0-9A-F]+))\n(.*?)^endlabel", src, re.M | re.S):
         A = int(a, 16)
         if not (LO <= A < HI) or A in taken:
             continue
         ins = [re.sub(r"\s+", " ", l.split("*/", 1)[1].strip()) for l in body.splitlines() if "*/" in l]
-        if any(re.match(r"(j|jal|jalr|b\w*|lq|sq|sd|ld|mult\w*|div\w*)\b", i) and i != "jr $ra" for i in ins):
+        if any(re.match(r"(jalr|b\w*|mult\w*|div\w*)\b", i) for i in ins):
+            continue
+        if any(re.match(r"j\b", i) and not re.fullmatch(r"j func_[0-9A-F]{8}", i) for i in ins):
             continue
         try:
-            cands[name] = (A, translate(name, ins))
-        except (Fail, ValueError, KeyError, AttributeError):
-            pass
-    hdr = ("/* AUTO-GENERATED by tools/gen_leaf.py: short branch-free leaf functions, translated\n"
-           " * from the original asm and verified byte-for-byte (only matches are kept).\n"
-           " * Types are offset-based placeholders; move functions to their real TUs. */\n")
-    OUT.write_text(hdr + "\n\n".join(c for _, c in cands.values()) + "\n")
-    obj = "scratch/leaf2.o"
-    r = subprocess.run(["docker", "exec", "-w", "/w", "dmc3b", "sh", "-c",
-                        f"{CC} -o {obj} {OUT.relative_to(ROOT).as_posix()}"], capture_output=True, text=True)
-    if r.returncode:
-        raise SystemExit(r.stdout[-4000:] + r.stderr[-2000:])
-    ok = []
-    for n, (A, code) in cands.items():
-        with contextlib.redirect_stdout(io.StringIO()):
-            try:
-                if fd.main(str(ROOT / "orig/SLUS_209.64/SLUS_209.64"), str(ROOT / obj), n, hex(A)) == 0:
-                    ok.append(code)
-            except (SystemExit, Exception):
-                pass
-    OUT.write_text(hdr + "\n" + "\n\n".join(ok) + "\n")
-    print(f"leaf functions: {len(ok)} match of {len(cands)} candidates")
+            code, callee, calls = translate(name, ins, externs)
+        except (Fail, ValueError, KeyError, AttributeError, IndexError):
+            continue
+        addr[name] = A
+        if calls:
+            nonleaf.append((name, code, calls))
+        else:
+            (tail if callee else leaf).append((name, code, callee))
+    # a tail call to a function defined in the same file could be inlined: drop such callers
+    tail_defs = {n for n, _, _ in tail}
+    tail = [t for t in tail if t[2] not in tail_defs]
+    # same for calls; and one return type per callee in the file
+    call_defs = {n for n, _, _ in nonleaf}
+    seen, kept_calls = {}, []
+    for n, code, calls in nonleaf:
+        if any(c in call_defs for c in calls) or any(seen.get(c, rt) != rt for c, rt in calls.items()):
+            continue
+        seen.update(calls)
+        kept_calls.append((n, code, calls))
+    nonleaf = kept_calls
+    hdr = ("/* AUTO-GENERATED by tools/gen_leaf.py: short branch-free functions translated from the\n"
+           " * original asm and verified byte-for-byte (only matches are kept). Types are\n"
+           " * offset-based placeholders; move functions to their real TUs as they are identified. */\n")
+    total = 0
+    for path, funcs in ((OUT_LEAF, leaf), (OUT_TAIL, tail), (OUT_CALLS, nonleaf)):
+        write(path, hdr, funcs, externs, None)
+        ok = check(path, {n: addr[n] for n, _, _ in funcs})
+        kept = [f for f in funcs if f[0] in ok]
+        write(path, hdr, kept, externs, None)
+        print(f"{path.name}: {len(kept)} match of {len(funcs)} candidates")
+        total += len(kept)
+    print(f"total {total}")
 
 
 if __name__ == "__main__":

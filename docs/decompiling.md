@@ -25,7 +25,8 @@ the address in brackets is an example.
    `config/SLUS_209.64/symbols.txt` (e.g. `Save__8CMcAppliFi = 0x4EFDF0;`). Plain C functions can
    keep the `func_XXXXXXXX` name.
 3. Diff: `python -I tools/try.py src/game/mc/mcappli.cpp Save__8CMcAppliFi -v`. Relocated fields
-   are masked, so `try.py` checks instructions, not addresses.
+   are masked, so `try.py` checks instructions, not data addresses; calls to `func_XXXXXXXX` names
+   are checked against the original targets.
 4. When it matches, run `python tools/build.py us`. The full link catches what one-function diffs
    cannot: wrong data addresses, jump-table case groupings, wrong vtable layouts.
 5. When the remaining differences are only statement order or similar, brute-force them with
@@ -148,7 +149,7 @@ per-file "matching" switch; the per-file progress is in `build/us/progress.json`
 | Tool | Output |
 |---|---|
 | `tools/gen_trivial.py` | two-instruction functions (getters, setters, forwarders) |
-| `tools/gen_leaf.py` | short branch-free leaf functions (loads, stores, arithmetic), translated from asm |
+| `tools/gen_leaf.py` | short branch-free functions translated from asm: leaves, tail calls, straight-line calls, global data |
 | `tools/gen_dtors.py` | empty-body deleting destructors |
 | `tools/gen_cwork_dtors.py` | destructors of single-inheritance `CWork` chains, from RTTI + asm |
 | `tools/gen_class_dtors.py` | destructors that call their parent's (single or multiple inheritance) |

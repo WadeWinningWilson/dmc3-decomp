@@ -7,6 +7,7 @@ objdiff remains the project-wide comparison tool once target objects exist.
 usage: python -I tools/funcdiff.py <orig.elf> <compiled.o> <symbol> <vaddr>
 exit 0 = match
 """
+import re
 import struct
 import sys
 
@@ -67,6 +68,10 @@ def main(orig, obj, symbol, vaddr):
         t = struct.unpack_from("<I", target, i * 4)[0]
         m, rtype, rname = masks.get(i * 4, (0, None, ""))
         ok = (c & ~m) == (t & ~m)
+        # a call to a func_XXXXXXXX name must also hit the original's target
+        # (call order mistakes are otherwise invisible until the full link)
+        if ok and rtype == 4 and (fm := re.fullmatch(r"func_([0-9A-F]{8})", rname)):
+            ok = ((t & 0x3FFFFFF) << 2) | ((vaddr + i * 4) & 0xF0000000) == int(fm.group(1), 16)
         bad += not ok
         ci = rabbitizer.Instruction(c, vaddr + i * 4, rabbitizer.InstrCategory.R5900).disassemble()
         ti = rabbitizer.Instruction(t, vaddr + i * 4, rabbitizer.InstrCategory.R5900).disassemble()
