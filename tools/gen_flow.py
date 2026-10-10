@@ -487,6 +487,47 @@ def ternaries(lines, rng, rate=0.5):
 
 
 
+def mutate(code, rng):
+    """One random source-level mutation of a generated function."""
+    lines = code.split("\n")
+    decl = [i for i, l in enumerate(lines) if re.fullmatch(r"    [\w ]+\*? (?:v|tmp)\d+;", l)]
+    body = [i for i in range(1, len(lines) - 1) if i not in decl and not lines[i].startswith("    char stk[")]
+    kind = rng.choice(["decl", "comm", "comm", "stmt"])
+    if kind == "decl" and len(decl) >= 2:
+        i, j = rng.sample(decl, 2)
+        lines[i], lines[j] = lines[j], lines[i]
+        return "\n".join(lines)
+    if kind == "stmt" and body:
+        new = reorder([lines[i] for i in body], rng, rate=0.3)
+        for i, l in zip(body, new):
+            lines[i] = l
+        return "\n".join(lines)
+    # commutative operands of one parenthesised expression
+    spots = []
+    for li in body:
+        l = lines[li]
+        for st in [m.start() for m in re.finditer(r"\(", l)]:
+            depth = 0
+            for en in range(st, len(l)):
+                depth += l[en] == "("
+                depth -= l[en] == ")"
+                if depth == 0:
+                    break
+            sub = l[st:en + 1]
+            for op in ("+", "*", "&", "|", "^", "==", "!=", "<", ">"):
+                sp = top_split(sub, op)
+                if sp and not sp[0].startswith(("char", "int", "float", "unsigned", "signed", "short", "Q")):
+                    spots.append((li, st, en, sp, op))
+                    break
+    if not spots:
+        return code
+    li, st, en, (a_, b_), op = rng.choice(spots)
+    nop = {"<": ">", ">": "<"}.get(op, op)
+    l = lines[li]
+    lines[li] = l[:st] + f"({b_} {nop} {a_})" + l[en + 1:]
+    return "\n".join(lines)
+
+
 def top_xor(e):
     """(a, b) when e is the expression (a ^ b) split at its top level, else None."""
     if not (e.startswith("(") and e.endswith(")")):
@@ -1907,6 +1948,7 @@ SCORES = {}  # best instruction-match ratio seen per function
 BEST_OPTS = {}  # the translation options that scored it
 LAST_SCORE = {}  # ratio of the most recent check of each function
 DECL = {}  # function -> (best declaration order, its ratio) for hill climbing
+BEST_CODE = {}  # function -> ((name, code, calls), ratio, meta) of its best variant
 CUR_OPTS = [{}]
 
 
@@ -2107,6 +2149,8 @@ def main():
         for f in keep:
             if f[0] in ok:
                 matched[kind][f[0]] = f
+            elif LAST_SCORE.get(f[0], 0.0) > BEST_CODE.get(f[0], (None, -1.0))[1]:
+                BEST_CODE[f[0]] = (f, LAST_SCORE[f[0]], META[f[0]])
         print(f"pass {opts}: {len(ok)} match of {len(keep)} candidates ({fails} not translatable)", flush=True)
     # permutation rounds: near misses get seeded variants (variable merging, operand
     # orders), batched into one compile per round and kind
@@ -2121,8 +2165,15 @@ def main():
                 raw, has_vcall = by_name[name]
                 if has_vcall != (kind == "cpp"):
                     continue
-                # odd rounds: the best pass's translation, hill climbing over declaration orders
-                if rnd % 2:
+                # rounds cycle: seeded variants, declaration hill climbing, text mutations
+                if rnd % 3 == 2:
+                    if name not in BEST_CODE:
+                        continue
+                    (bn_, bc_, bcalls_), _, bmeta_ = BEST_CODE[name]
+                    META[name] = bmeta_
+                    funcs.append((name, mutate(bc_, random.Random(f"{SALT}:{name}:{rnd}")), bcalls_))
+                    continue
+                if rnd % 3 == 1:
                     if name not in DECL:
                         try:
                             c0_ = translate(name, raw, externs, dict(BEST_OPTS.get(name, {})))[0]
@@ -2164,7 +2215,9 @@ def main():
                 if f[0] in ok:
                     matched[kind][f[0]] = f
                     near.discard(f[0])
-                if rnd % 2 and f[0] in DECL and LAST_SCORE.get(f[0], 0.0) > DECL[f[0]][1]:
+                if f[0] in near and LAST_SCORE.get(f[0], 0.0) > BEST_CODE.get(f[0], (None, -1.0))[1]:
+                    BEST_CODE[f[0]] = (f, LAST_SCORE[f[0]], META[f[0]])
+                if rnd % 3 == 1 and f[0] in DECL and LAST_SCORE.get(f[0], 0.0) > DECL[f[0]][1]:
                     # keep the improving swap
                     names_ = re.findall(r"^    (?:[\w ]+\*?) ((?:v|tmp)\d+);$", f[1], re.M)
                     DECL[f[0]] = (names_, LAST_SCORE[f[0]])
