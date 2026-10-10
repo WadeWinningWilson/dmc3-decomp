@@ -549,7 +549,6 @@ void func_0017C5B8();
 void func_0017C638();
 void func_0017C750();
 void func_0017CD98();
-void func_0017D360();
 void func_0017D378();
 void func_0017D450();
 int func_0017D898();
@@ -3377,6 +3376,19 @@ int func_001594B8(void) {
     return 2048;
 }
 
+int func_001594C0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7, float f0, float f1, float f2, float f3) {
+    int v1;
+    char *v0;
+    v0 = (char *)p0;
+    if (v0 == 0) {
+        func_00158910(p0, D_005933C0);
+        v1 = 0;
+    } else {
+        v1 = (*(signed char *)(v0 + 2) != 1) ? 0 : (*(int *)(v0 + 40) << 11);
+    }
+    return v1;
+}
+
 int func_00159870(int p0) {
     return ((((p0 << 24) >> 24) ^ 92) != 0 ? ((p0 << 24) >> 24) : 47);
 }
@@ -5526,6 +5538,28 @@ int func_00177818(char *p0) {
     return (*(int *)(p0 + 12) == 2);
 }
 
+void func_00177990(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7, float f0, float f1, float f2, float f3) {
+    char *v2;
+    char *v0;
+    int v1;
+    v0 = (char *)p0;
+    v1 = *(int *)(v0 + 400);
+    v2 = (v0 + 424);
+    if (v1 != 0) {
+        v2 = *(char **)(v2 + 0);
+        v1 = 1;
+        if ((int)v2 != v1) {
+            func_00177A30();
+            func_00177BE0(v0);
+            return;
+        } else {
+            return;
+        }
+    } else {
+        return;
+    }
+}
+
 void func_001779E8(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     char *v0;
     int v1;
@@ -6120,6 +6154,10 @@ void func_0017D348(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p
     func_0017D378(p0, p1, p2, 0);
 }
 
+void func_0017D360(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
+    func_0017D378(p0, p1, p2, 1);
+}
+
 void func_0017D420(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
     func_0017D450(p0, p1, p2, 0);
 }
@@ -6174,12 +6212,6 @@ int func_0017DF80(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7
 int func_0017E010(char *p0, int p1) {
     p0 = (p0 + (p1 * 116));
     return *(int *)(p0 + 4880);
-}
-
-int func_0017E070(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {
-    char stk[0x20] __attribute__((aligned(16)));
-    func_0017D360(p0, p1, (stk + 0));
-    return (*(int *)((stk + 0) + 4) + *(int *)((stk + 0) + 12));
 }
 
 int func_0017E2B0(int p0, int p1, int p2, int p3, int p4, int p5, int p6, int p7) {

@@ -65,6 +65,7 @@ LOADS["lq"], STORES["sq"] = "Q", "Q"
 Q_DEF = "typedef struct { int w[4]; } __attribute__((aligned(16))) Q;"
 ARGS = ["$a0", "$a1", "$a2", "$a3", "$t0", "$t1", "$t2", "$t3"]  # EABI: 8 integer argument registers
 FARGS = ["$f12", "$f13", "$f14", "$f15"]
+CFARGS = ["$f12", "$f13", "$f14", "$f15", "$f16", "$f17", "$f18", "$f19"]  # EABI float arguments
 NUM = r"-?0x[0-9A-F]+|-?\d+|\(0x[0-9A-F]+ & 0xFFFF\)"
 COND1 = {"beqz": "==", "bnez": "!=", "blez": "<=", "bgtz": ">", "bltz": "<", "bgez": ">="}
 NEG = {"==": "!=", "!=": "==", "<": ">=", ">=": "<", ">": "<=", "<=": ">"}
@@ -118,10 +119,12 @@ def regs_of(op, a):
             elif re.fullmatch(r"\$(a[0-3]|v[01]|t\d|s[0-7])", x):
                 rd.add(x)
         return rd, set()
+    if op == "cvtu":
+        return {a[1]}, {a[0]}
     if op == "jal":
-        return set(ARGS), {"$v0", "$f0"}
+        return set(ARGS) | set(CFARGS), {"$v0", "$f0"}
     if op == "jalr":
-        return set(ARGS) | {"$t9"}, {"$v0", "$f0"}
+        return set(ARGS) | set(CFARGS) | {"$t9"}, {"$v0", "$f0"}
     if op in ("beq", "bne"):
         return {a[0], a[1]}, set()
     if op in COND1:
@@ -195,8 +198,64 @@ def dead_at(ins, addr, regs_, depth=0):
     return False
 
 
+def fold_cvtu(ins):
+    """[(addr, text)] with MW's float -> unsigned int expansions replaced by `cvtu`."""
+    out, i = [], 0
+    texts = [t for _, t in ins]
+    while i < len(ins):
+        t = texts[i]
+        m = re.fullmatch(r"c\.le\.s (\$f\d+), (\$f\d+)", t)
+        if m and i + 1 < len(ins) and texts[i + 1].startswith("bc1t .L"):
+            fa, fb = m.groups()
+            l1 = int(texts[i + 1][7:], 16)
+            s0 = texts[i + 2] if i + 2 < len(ins) else "nop"  # bc1t slot: runs on both paths
+            j = i + 3
+            pat = []
+            while j < len(ins) and len(pat) < 4:
+                if texts[j] != "nop" or len(pat) == 3:
+                    pat.append(j)
+                j += 1
+            # pat: cvt.w.s, mfc1, b .L2, slot
+            ok = len(pat) == 4 and texts[pat[0]] == f"cvt.w.s {fb}, {fb}"
+            md = re.fullmatch(rf"mfc1 (\$\w+), \{fb}", texts[pat[1]]) if ok else None
+            mb = re.fullmatch(r"b \.L([0-9A-F]{8})", texts[pat[2]]) if md else None
+            if mb and pat[3] + 1 < len(ins) and ins[pat[3] + 1][0] == l1 and                     not (s0 != "nop" and (regs_of(*split(s0))[1] & {md.group(1), fb} or fb in regs_of(*split(s0))[0])):
+                d, l2, slot = md.group(1), int(mb.group(1), 16), texts[pat[3]]
+                k = pat[3] + 1
+                body = []
+                while k < len(ins) and ins[k][0] != l2:
+                    if texts[k] != "nop":
+                        body.append(texts[k])
+                    k += 1
+                y = re.fullmatch(r"lui (\$\w+), \(0x80000000 >> 16\)", body[1]) if len(body) >= 5 else None
+                want = [f"sub.s {fb}, {fb}, {fa}", None, f"cvt.w.s {fb}, {fb}", f"mfc1 {d}, {fb}",
+                        f"or {d}, {d}, {y.group(1)}" if y else None]
+                tail = body[5:]
+                refs = sum(x.count(f".L{l1:08X}") for x in texts)
+                if y and body[:1] + body[2:5] == [want[0]] + want[2:] and refs == 1 and \
+                        tail in ([], [slot]) and (slot == "nop" or tail == [slot]) and k < len(ins):
+                    # drop the 2^31 constant load feeding the compare when it is right before it
+                    while out and out[-1][1] == "nop":
+                        out.pop()
+                    if out and re.fullmatch(rf"mtc1 \$\w+, \{fa}", out[-1][1]):
+                        x_ = out[-1][1].split()[1].rstrip(",")
+                        out.pop()
+                        if out and out[-1][1] == f"lui {x_}, (0x4F000000 >> 16)":
+                            out.pop()
+                    if s0 != "nop":
+                        out.append((ins[i + 2][0], s0))
+                    out.append((ins[i][0] + 1, f"cvtu {d}, {fb}"))
+                    if slot != "nop":
+                        out.append((ins[pat[3]][0], slot))
+                    i = k
+                    continue
+        out.append(ins[i])
+        i += 1
+    return out
+
+
 def prepare(ins, sink=False):
-    ins = [(a, fix_word(t)) for a, t in ins]
+    ins = fold_cvtu([(a, fix_word(t)) for a, t in ins])
     """[(addr, text)] -> list of instructions with delay slots resolved and the frame removed."""
     clean, j = [], 0
     while j < len(ins):
@@ -886,6 +945,16 @@ def translate(name, raw, externs, opts=None):
                 return False
         return True
 
+    def fargcount(written, at):
+        got = {r for r in written if r in CFARGS}
+        for r_ in CFARGS:
+            if any(isinstance(d_[0], int) for d_ in useweb.get((at[0], at[1], r_), [])):
+                got.add(r_)
+        n_ = 0
+        while n_ < len(CFARGS) and CFARGS[n_] in got:
+            n_ += 1
+        return n_
+
     def argcount(written, at):
         """Arguments of a call: registers written in this block or set in an earlier one
         (reaching definitions), $t0-$t3 only after all of $a0-$a3."""
@@ -936,6 +1005,13 @@ def translate(name, raw, externs, opts=None):
         for r, c_ in inconst[k].items():
             regs[r], types[r] = c_, "int"
         cur = [0]
+
+        def hi_reaches(r, sym):
+            """Every definition of r reaching here is `lui r, %hi(sym)` (e.g. from a delay slot)."""
+            ds_ = useweb.get((k, cur[0], r))
+            return bool(ds_) and all(
+                isinstance(d_[0], int) and d_[1] < len(bseq(d_[0])[0]) and
+                bseq(d_[0])[0][d_[1]] == ("lui", [r, f"%hi({sym})"]) for d_ in ds_)
 
         def val(r):
             if r == "$zero":
@@ -1012,7 +1088,8 @@ def translate(name, raw, externs, opts=None):
                     be = f"(char *){be}"
                 return f"*({t} *)({be} + {off_})"
             mm = re.fullmatch(r"%lo\((D_[0-9A-F]{8})\)\((\$\w+)\)", arg)
-            if mm and regs.get(mm.group(2)) == mm.group(1) and types.get(mm.group(2)) == "hi":
+            if mm and (regs.get(mm.group(2)) == mm.group(1) and types.get(mm.group(2)) == "hi" or
+                       hi_reaches(mm.group(2), mm.group(1))):
                 need(mm.group(1), f"extern char {mm.group(1)}[];")
                 return f"*({t} *){mm.group(1)}"
             mm = re.fullmatch(r"%gp_rel\((D_[0-9A-F]{8})\)\(\$gp\)", arg)
@@ -1070,6 +1147,7 @@ def translate(name, raw, externs, opts=None):
                   continue
               if op in ("jal", "jalr"):
                   nargs = argcount(written, (k, cur[0]))
+                  nfargs = fargcount(written, (k, cur[0]))
                   fptr = None
                   if op == "jalr" and not (a == ["$t9"] and types.get("$t9") == "vslot"):
                       # a C function pointer: ((RT (*)(args))expr)(args)
@@ -1092,6 +1170,7 @@ def translate(name, raw, externs, opts=None):
                       if not re.fullmatch(r"func_[0-9A-F]{8}", fn):
                           raise Fail
                       cv = [val(ARGS[i]) for i in range(nargs)]
+                  cv = cv + [val(CFARGS[i]) for i in range(nfargs)]
                   cargs = [e for e, _ in cv]
                   sig = tuple("char *" if t_ == "char *" else ("float" if t_ == "float" else "int") for _, t_ in cv)
                   if opts.get("cpp") and (opts.get("narrow") if rng is None else coin(0.3)):
@@ -1408,6 +1487,9 @@ def translate(name, raw, externs, opts=None):
                   y, _ = val(a[2])
                   sym = {"add.s": "+", "sub.s": "-", "mul.s": "*", "div.s": "/"}[op]
                   define(a[0], f"({x} {sym} {y})", "float", a[1] in memdep or a[2] in memdep)
+              elif op == "cvtu":
+                  x, _ = val(a[1])
+                  define(a[0], f"(unsigned int){x}", "int", a[1] in memdep)
               elif op in ("mov.s", "neg.s", "abs.s"):
                   x, _ = val(a[1])
                   define(a[0], {"mov.s": x, "neg.s": f"-{x}", "abs.s": f"__builtin_fabsf({x})"}[op],
@@ -1819,7 +1901,15 @@ def write(path, funcs, externs):
     for _, _, c in funcs:
         for fn, rt in c.items():
             protos.setdefault(fn, rt)
-    decl += [f"{rt} {fn}();".replace("* ", "*") for fn, rt in sorted(protos.items())]
+    # a callee taking floats needs a prototype (unprototyped calls promote float to double)
+    fsig = {}
+    for name, _, c in funcs:
+        for fn in c:
+            sig = META.get(name, {}).get("callsig", {}).get(fn)
+            if sig and "float" in sig:
+                fsig.setdefault(fn, sig)
+    decl += [(f"{rt} {fn}({', '.join(fsig[fn])});" if fn in fsig else f"{rt} {fn}();").replace("* ", "*")
+             for fn, rt in sorted(protos.items())]
     if any("(Q *)" in c for _, c, _ in funcs):
         decl.insert(0, Q_DEF)
     hdr = ("/* AUTO-GENERATED by tools/gen_flow.py: small functions with forward branches, translated\n"
