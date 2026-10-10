@@ -1079,7 +1079,7 @@ def translate(name, raw, externs, opts=None):
         def tmp(t, e):
             nm = f"tmp{ntemp[0]}"
             ntemp[0] += 1
-            locs.append(f"{t} {nm};")
+            locs.append(f"{'int' if t in ('fint', 'fbits', 'hi') else t} {nm};")
             stmts.append(f"{nm} = {e};")
             return nm
 
@@ -2111,7 +2111,8 @@ def compile_ok(path, funcs, externs, kind):
         funcs = [f for f in funcs if f[0] not in bad]
         DROPPED[0] += len(bad)
         if os.environ.get("GEN_SHOW_ERRORS"):
-            (ROOT / "scratch/err_src.txt").write_text("\n".join(text))
+            if not (ROOT / "scratch/err_src.txt").exists():  # the first failing attempt
+                (ROOT / "scratch/err_src.txt").write_text("\n".join(text))
             with open(ROOT / "scratch/err_out.txt", "a") as fh_:
                 fh_.write(r.stdout + r.stderr)
             print("compile errors:", sorted(bad)[:5], "; ".join([x.strip("# ") for x in re.findall(r"Error:[^\n]*\n([^\n]*)", r.stdout + r.stderr)][:40]))
