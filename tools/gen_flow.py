@@ -806,12 +806,29 @@ def translate(name, raw, externs, opts=None):
     vtypes = {}
     locs, calls, local_ext = [], {}, {}
 
+    uses_of = {}
+    for (k_, p_, r_), ds_ in useweb.items():
+        for d_ in ds_:
+            uses_of.setdefault(d_, []).append((k_, p_))
+
+    def call_only(d):
+        """True when every reader of definition d is a call (it is then an argument)."""
+        for k_, p_ in uses_of.get(d, []):
+            body_ = bseq(k_)[0]
+            if p_ >= len(body_) or body_[p_][0] not in ("jal", "jalr"):
+                return False
+        return True
+
     def argcount(written, at):
         """Arguments of a call: registers written in this block or set in an earlier one
         (reaching definitions), $t0-$t3 only after all of $a0-$a3."""
         got = {r for r in written if r in ARGS}
+        strict_ = opts.get("argstrict") if rng is None else coin(0.3)
         for r_ in ARGS:
-            if any(isinstance(d_[0], int) for d_ in useweb.get((at[0], at[1], r_), [])):
+            ds_ = [d_ for d_ in useweb.get((at[0], at[1], r_), []) if isinstance(d_[0], int)]
+            if ds_ and strict_ and any(not call_only(d_) for d_ in ds_):
+                continue  # the value is also read by something else (e.g. a switch test)
+            if ds_:
                 got.add(r_)
         n_ = 0
         for i_, r_ in enumerate(ARGS):
@@ -1101,11 +1118,27 @@ def translate(name, raw, externs, opts=None):
                       ve = f"(int){ve}"
                   lv = lvalue(a[1], tt)
                   flush()
-                  mm_ = re.fullmatch(r"\((.+) ([-+*/&|^]|<<|>>) (.+)\)", ve) if opts.get("compound") else None
-                  if mm_ and mm_.group(1) == lv:
-                      stmts.append(f"{lv} {mm_.group(2)}= {mm_.group(3)};")
+                  cop_ = None
+                  if opts.get("compound") if rng is None else coin(0.3):
+                      for o_ in ("+", "-", "*", "/", "&", "|", "^", "<<", ">>"):
+                          sp_ = top_split(ve, o_)
+                          if sp_ and sp_[0] == lv:
+                              cop_ = (o_, sp_[1])
+                              break
+                  if cop_:
+                      stmts.append(f"{lv} {cop_[0]}= {cop_[1]};")
                   else:
                       stmts.append(f"{lv} = {ve};")
+                  if st.get("fcmp") and (opts.get("fwd") if rng is None else coin(0.3)) and tt == "float":
+                      # x -= y; if (x < 0): the test reads the stored field
+                      fx_, fo_, fy_ = st["fcmp"]
+                      st["fcmp"] = (lv if fx_ == ve else fx_, fo_, lv if fy_ == ve else fy_)
+                  if (opts.get("fwd") if rng is None else coin(0.3)) and tt in ("int", "float") and \
+                          vt == tt and a[0] in regs and regs[a[0]] == ve and re.search(r" [-+*/&|^] ", ve) and \
+                          re.match(r"\$(v[01]|a[0-3]|t\d|f\d+)$", a[0]) and defweb(k, cur[0], a[0]) not in webvar:
+                      # the stored field, not a recomputation, is what the source reads next
+                      regs[a[0]] = lv
+                      memdep.add(a[0])
               elif op in FCMP:
                   x, _ = val(a[0])
                   y, _ = val(a[1])
@@ -1731,7 +1764,10 @@ OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": 
            ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True}, "c"),
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True}, "cpp"),
            ({"new": True, "intbase": True, "early": True, "sink": True, "arr": True, "sw2": True}, "c"),
-           ({"cpp": True, "new": True, "intbase": True, "early": True, "sink": True, "arr": True, "sw2": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
+           ({"cpp": True, "new": True, "intbase": True, "early": True, "sink": True, "arr": True, "sw2": True}, "cpp"),
+           ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "fwd": True, "compound": True}, "c"),
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "fwd": True, "compound": True}, "cpp"),
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "argstrict": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
 OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
 META = {}
