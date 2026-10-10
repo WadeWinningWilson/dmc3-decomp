@@ -935,8 +935,21 @@ def translate(name, raw, externs, opts=None):
                       for r_ in list(regs):
                           regs[r_] = regs[r_].replace(f"{{VCLS:{slot}:{'/'.join(sig)}:RT}}", cls)
                       continue
-                  if calls.get(fn, rt) != rt:
-                      raise Fail
+                  prev = calls.get(fn, rt)
+                  if prev != rt:
+                      # one declaration for every call: an ignored result is fine, a pointer is cast
+                      if rt == "void":
+                          rt = prev
+                      elif prev == "void":
+                          pass
+                      elif {prev, rt} == {"int", "char *"} and not opts.get("cpp"):
+                          cast_ = f"({rt}){call}"
+                          for r_ in list(regs):
+                              regs[r_] = regs[r_].replace(call, cast_)
+                          stmts[-1:] = [x_.replace(call, cast_) for x_ in stmts[-1:]]
+                          rt = prev
+                      else:
+                          raise Fail
                   calls[fn] = rt
                   continue
               if op == "lw" and a[0] == "$t9":
