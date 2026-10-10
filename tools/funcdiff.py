@@ -18,6 +18,7 @@ from elftools.elf.relocation import RelocationSection
 from elftools.elf.sections import SymbolTableSection
 
 # R_MIPS_26=4, HI16=5, LO16=6, GPREL16=7, LITERAL=8, GOT16=9, GPREL32=12, MW-specific >= 200
+GP = 0x5C3870  # USA $gp (tools/build.py)
 MASKS = {4: 0x03FFFFFF, 5: 0xFFFF, 6: 0xFFFF, 7: 0xFFFF, 8: 0xFFFF}
 
 
@@ -95,6 +96,13 @@ def main(orig, obj, symbol, vaddr):
         # (call order mistakes are otherwise invisible until the full link)
         if ok and rtype == 4 and (fm := re.fullmatch(r"func_([0-9A-F]{8})", rname)):
             ok = ((t & 0x3FFFFFF) << 2) | ((vaddr + i * 4) & 0xF0000000) == int(fm.group(1), 16)
+        # data references to D_XXXXXXXX must resolve to the original's address too (low half for
+        # %lo, the $gp offset for gp-relative); otherwise swapped globals look like a match
+        if ok and rtype in (6, 7) and (dm := re.fullmatch(r"D_([0-9A-F]{8})", rname)):
+            addend = c & 0xFFFF
+            addend -= 0x10000 if addend & 0x8000 else 0
+            want = int(dm.group(1), 16) + addend - (GP if rtype == 7 else 0)
+            ok = (want & 0xFFFF) == (t & 0xFFFF)
         bad += not ok
         ci = rabbitizer.Instruction(c, vaddr + i * 4, rabbitizer.InstrCategory.R5900).disassemble()
         ti = rabbitizer.Instruction(t, vaddr + i * 4, rabbitizer.InstrCategory.R5900).disassemble()

@@ -4162,43 +4162,6 @@ int func_002AD000(int p0, int p1, int p2, int p3) {
     return v4;
 }
 
-int func_002C4BA0(char *p0, int p1, int p2, int p3) {
-    int v1;
-    int v0;
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
-    float tmp4;
-    int tmp6;
-    tmp0 = *(float *)D_00562414;
-    tmp1 = *(float *)D_00562410;
-    tmp2 = *(float *)D_0056240C;
-    tmp3 = *(float *)D_00562408;
-    tmp4 = *(float *)D_00562404;
-    *(float *)D_005623C0 = *(float *)D_00562400;
-    *(float *)D_005623C4 = tmp4;
-    *(float *)D_005623C8 = tmp3;
-    *(float *)D_005623CC = tmp2;
-    *(float *)D_005623D0 = tmp1;
-    *(float *)D_005623D4 = tmp0;
-    v0 = *(unsigned char *)(p0 + 4);
-    tmp6 = 3;
-    if (v0 != tmp6) {
-        switch (v0) {
-        case 0:
-            v1 = ((V130_0_i *)p0)->m();
-            break;
-        case 1:
-            v1 = func_002C5F40();
-            break;
-        case 2:
-            v1 = func_002C6790();
-            break;
-        }
-    }
-    return v1;
-}
 
 int func_002C4C80(int p0, int p1, int p2, int p3) {
     char *v0;
