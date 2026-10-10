@@ -266,6 +266,25 @@ def reorder(lines, rng, rate=0.35):
     return walk(lines)
 
 
+
+def ternaries(lines, rng, rate=0.5):
+    """if (c) { v = A; } else { v = B; }  ->  v = c ? A : B;  (seeded)."""
+    out, i = [], 0
+    while i < len(lines):
+        if i + 4 < len(lines):
+            m0 = re.fullmatch(r"(\s*)if \((.*)\) \{", lines[i])
+            m1 = re.fullmatch(r"\s*(\w+) = (.*);", lines[i + 1])
+            m3 = re.fullmatch(r"\s*(\w+) = (.*);", lines[i + 3])
+            if m0 and m1 and m3 and lines[i + 2].strip() == "} else {" and lines[i + 4].strip() == "}" \
+                    and m1.group(1) == m3.group(1) and rng.random() < rate:
+                out.append(f"{m0.group(1)}{m1.group(1)} = ({m0.group(2)}) ? {m1.group(2)} : {m3.group(2)};")
+                i += 5
+                continue
+        out.append(lines[i])
+        i += 1
+    return out
+
+
 def translate(name, raw, externs, opts=None):
     opts = opts or {}
     import random
@@ -999,6 +1018,10 @@ def translate(name, raw, externs, opts=None):
         if y != "0" and coin(0.3):
             x, o, y = y, {"==": "==", "!=": "!=", "<": ">", ">": "<", "<=": ">=", ">=": "<="}[o], x
         if y == "0" and o in ("!=", "==") and re.fullmatch(r"\(.*(==|<|<=|>|>=|!=).*\)", x):
+            if o == "==" and coin(0.5):
+                mm_ = re.fullmatch(r"\((.+) (<|>|<=|>=|==|!=) (.+)\)", x)
+                if mm_ and mm_.group(1).count("(") == mm_.group(1).count(")"):
+                    return f"{mm_.group(1)} {NEG[mm_.group(2)]} {mm_.group(3)}"
             return x if o == "!=" else f"!{x}"
         return f"{x} {o} {y}"
 
@@ -1144,6 +1167,8 @@ def translate(name, raw, externs, opts=None):
         rng.shuffle(decl)  # MW's register allocation follows declaration order
     if rng is not None and coin(0.6):
         out = reorder(out, rng)
+    if rng is not None and coin(0.4):
+        out = ternaries(out, rng)
     if stack:
         decl = [f"    char stk[{stack[1]:#x}] __attribute__((aligned(16)));"] + decl
     lines = [f"{rtype} {name}({', '.join(plist) or 'void'}) {{"] + decl + [f"    {l}" for l in locs] + out + ["}"]
