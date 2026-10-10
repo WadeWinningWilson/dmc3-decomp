@@ -36,7 +36,7 @@ GCC_FLAGS = os.environ.get("GEN_GCC_FLAGS", "-O2 -G0")
 SCR = "gflow" if GCC else "flow"  # scratch file prefix (a GCC run can go alongside an MW run)
 if GCC:
     LO, HI = 0x100000, 0x195158
-    OUT = ROOT / "src/lib/auto/flow_gcc.c"
+    OUT = ROOT / os.environ.get("GEN_GCC_OUT", "src/lib/auto/flow_gcc.c")
 CC = ("MWCIncludes=. wibo tools/compilers/mwcps2-3.0b52-030722/mwccps2.exe -c -O3,p "
       "-fl divbyzerocheck -inline depth=8 -nostdinc")
 
@@ -196,6 +196,24 @@ def prepare(ins, sink=False):
     ins = clean
     if any(t.startswith("break") for _, t in ins):
         raise Fail
+    at_ = {a: t for a, t in ins}
+    likely = []
+    for j, (a, t) in enumerate(ins):
+        mm = re.match(r"(beq|bne|blez|bgtz|bltz|bgez|beqz|bnez|bc1t|bc1f)l (.*)\.L([0-9A-F]{8})$", t)
+        if not mm or j + 1 >= len(ins):
+            continue
+        tgt, d = int(mm.group(3), 16), ins[j + 1][1]
+        if d == "nop":
+            likely.append((j, f"{mm.group(1)} {mm.group(2)}.L{tgt:08X}", None))
+        elif at_.get(tgt - 4) == d:
+            # `bxxl L+4` with the instruction at L in its slot is a plain branch to L
+            likely.append((j, f"{mm.group(1)} {mm.group(2)}.L{tgt - 4:08X}", "nop"))
+        else:
+            raise Fail  # a branch-likely slot that does something else
+    for j, t, d in likely:
+        ins[j] = (ins[j][0], t)
+        if d:
+            ins[j + 1] = (ins[j + 1][0], d)
     targets = {int(t, 16) for _, t in ins for t in re.findall(r"\.L([0-9A-F]{8})", t)}
     seq = []
     later_ = {}
@@ -262,10 +280,19 @@ def prepare(ins, sink=False):
         offs += [num(m.group(1)) for _, t in out for m in [re.fullmatch(r"addiu \$\w+, \$sp, (0x[0-9A-F]+)", t)] if m]
         if not fsz or not offs:
             raise Fail
-        base = (max(saves, default=0) + 15) & ~15
-        if min(offs) < base or any(re.match(r"(addiu|daddu|addu) \$sp", t) for _, t in out):
-            raise Fail
-        STACK = (base, fsz[0] - base)
+        if GCC:
+            # GCC: locals at the bottom of the frame, register saves above them
+            starts = [num(m.group(2)) for _, t in seq
+                      for m in [re.fullmatch(r"(sd|sq|swc1) \$\w+, (0x[0-9A-F]+)\(\$sp\)", t)] if m and frame.fullmatch(t)]
+            top = min(starts, default=fsz[0])
+            if min(offs) < 0 or max(offs) >= top or any(re.match(r"(addiu|daddu|addu) \$sp", t) for _, t in out):
+                raise Fail
+            STACK = (0, top)
+        else:
+            base = (max(saves, default=0) + 15) & ~15
+            if min(offs) < base or any(re.match(r"(addiu|daddu|addu) \$sp", t) for _, t in out):
+                raise Fail
+            STACK = (base, fsz[0] - base)
     # a branch may target a nop or a frame instruction that was just dropped:
     # retarget it to the next instruction that is kept (all original addresses, in order)
     kept = sorted({a for a, _ in out})
@@ -1603,6 +1630,8 @@ def translate(name, raw, externs, opts=None):
             k = j
 
     emit(0, EXIT, "    ")
+    if not rets and any(term[k_][0] == "tail" for k_ in range(n)):
+        rets = [None]  # every exit is a tail call: a void function
     if not rets:
         raise Fail
     rtype = "void"
