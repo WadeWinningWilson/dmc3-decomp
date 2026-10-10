@@ -17,6 +17,7 @@ import contextlib
 import importlib.util
 import io
 import os
+import random
 import re
 import struct
 import subprocess
@@ -899,7 +900,8 @@ def translate(name, raw, externs, opts=None):
 
     def vclass(slot, sig, rt):
         """Name of a synthetic class whose virtual method m(sig) -> rt sits at vtable byte `slot`."""
-        name_ = f"V{slot:X}_{len(sig)}_" + "".join("p" if x == "char *" else "f" if x == "float" else "i" for x in sig) + \
+        name_ = f"V{slot:X}_{len(sig)}_" + "".join({"char *": "p", "float": "f", "unsigned char": "h", "signed char": "c", "short": "s",
+                                         "unsigned short": "t"}.get(x, "i") for x in sig) + \
             {"void": "v", "int": "i", "char *": "p", "float": "f"}[rt]
         vclasses[name_] = (slot, sig, rt)
         return name_
@@ -1084,6 +1086,12 @@ def translate(name, raw, externs, opts=None):
                       cv = [val(ARGS[i]) for i in range(nargs)]
                   cargs = [e for e, _ in cv]
                   sig = tuple("char *" if t_ == "char *" else ("float" if t_ == "float" else "int") for _, t_ in cv)
+                  if opts.get("cpp") and (opts.get("narrow") if rng is None else coin(0.3)):
+                      # a directly loaded byte/halfword argument: the parameter has that type
+                      # (MW orders the argument loads by parameter type)
+                      sig = tuple(mm_.group(1) if (mm_ := re.match(
+                          r"\*\((unsigned char|signed char|short|unsigned short) \*\)", e_)) and t_ == "int" else t_
+                          for e_, t_ in zip(cargs, sig))
                   flush()
                   if fptr is not None:
                       call = f"((FPRT (*)({', '.join(sig) or 'void'})){fptr})({', '.join(cargs)})"
@@ -1750,6 +1758,10 @@ def translate(name, raw, externs, opts=None):
             if not re.fullmatch(r"[pf]\d", v)]
     if rng is not None and coin(0.7):
         rng.shuffle(decl)  # MW's register allocation follows declaration order
+    elif "declorder" in opts:
+        # an explicit order (hill climbing over declaration orders): names first, others after
+        order_ = {v_: i_ for i_, v_ in enumerate(opts["declorder"])}
+        decl.sort(key=lambda d_: order_.get(d_.rstrip(";").split()[-1], len(order_)))
     elif "declseed" in opts:
         random.Random(opts["declseed"]).shuffle(decl)  # only the declaration order varies
     if rng is not None and coin(0.6):
@@ -1777,6 +1789,7 @@ def check(path, cands):
         m = re.search(r"(\d+)/(\d+) instructions", buf.getvalue())
         if m:
             sc = int(m.group(1)) / max(int(m.group(2)), 1)
+            LAST_SCORE[n] = sc
             if sc > SCORES.get(n, -1.0):
                 SCORES[n] = sc
                 if CUR_OPTS[0] is not None:
@@ -1786,6 +1799,8 @@ def check(path, cands):
 
 SCORES = {}  # best instruction-match ratio seen per function
 BEST_OPTS = {}  # the translation options that scored it
+LAST_SCORE = {}  # ratio of the most recent check of each function
+DECL = {}  # function -> (best declaration order, its ratio) for hill climbing
 CUR_OPTS = [{}]
 
 
@@ -1845,7 +1860,8 @@ OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": 
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "fwd": True, "compound": True}, "cpp"),
            ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "argstrict": True}, "cpp"),
            ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "c"),
-           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "negcmp": True}, "cpp"),
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True, "narrow": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
 OUT_CPP = ROOT / ("src/lib/auto/flow_mw_v.cpp" if MWLIB else "src/game/auto/flow_v.cpp")
 META = {}
@@ -1952,9 +1968,25 @@ def main():
                 raw, has_vcall = by_name[name]
                 if has_vcall != (kind == "cpp"):
                     continue
-                # odd rounds: the best pass's translation with only the declarations reordered
-                o_ = (dict(BEST_OPTS.get(name, {}), declseed=f"{name}:{rnd}") if rnd % 2 else
-                      {"seed": f"{name}:{rnd}", "cpp": kind == "cpp"})
+                # odd rounds: the best pass's translation, hill climbing over declaration orders
+                if rnd % 2:
+                    if name not in DECL:
+                        try:
+                            c0_ = translate(name, raw, externs, dict(BEST_OPTS.get(name, {})))[0]
+                        except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError, RecursionError):
+                            continue
+                        names_ = re.findall(r"^    (?:[\w ]+\*?) ((?:v|tmp)\d+);$", c0_, re.M)
+                        DECL[name] = (names_, SCORES.get(name, 0.0))
+                    order_, _ = DECL[name]
+                    if len(order_) < 2:
+                        continue
+                    r_ = random.Random(f"{name}:{rnd}")
+                    i_, j_ = r_.sample(range(len(order_)), 2)
+                    prop_ = list(order_)
+                    prop_[i_], prop_[j_] = prop_[j_], prop_[i_]
+                    o_ = dict(BEST_OPTS.get(name, {}), declorder=prop_)
+                else:
+                    o_ = {"seed": f"{name}:{rnd}", "cpp": kind == "cpp"}
                 try:
                     code, calls, meta = translate(name, raw, externs, o_)
                 except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError, RecursionError):
@@ -1979,6 +2011,10 @@ def main():
                 if f[0] in ok:
                     matched[kind][f[0]] = f
                     near.discard(f[0])
+                if rnd % 2 and f[0] in DECL and LAST_SCORE.get(f[0], 0.0) > DECL[f[0]][1]:
+                    # keep the improving swap
+                    names_ = re.findall(r"^    (?:[\w ]+\*?) ((?:v|tmp)\d+);$", f[1], re.M)
+                    DECL[f[0]] = (names_, LAST_SCORE[f[0]])
             got += len(ok)
         print(f"permute round {rnd + 1}/{rounds}: {got} new matches, {len(near)} near misses left", flush=True)
     # final files: re-verify everything together (a callee in the same file can change a caller)

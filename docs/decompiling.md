@@ -144,13 +144,16 @@ per-file "matching" switch; the per-file progress is in `build/us/progress.json`
 
 ## Generated code
 
-`src/game/auto/` is written by tools and kept only where it matches byte-for-byte:
+`src/game/auto/` and `src/lib/auto/` are written by tools and kept only where they match
+byte-for-byte:
 
 | Tool | Output |
 |---|---|
 | `tools/gen_trivial.py` | two-instruction functions (getters, setters, forwarders) |
 | `tools/gen_leaf.py` | short branch-free functions translated from asm: leaves, tail calls, straight-line calls, global data, VU0 runs as `__asm__` |
 | `tools/gen_flow.py` | functions with branches and loops (also branch-free leftovers), structured with post-dominators; variables per register web; C++ virtual calls through synthetic classes (`flow_v.cpp`); stack locals as one aligned buffer; optional permutation rounds for near misses (declaration order, statement order, operand order, variable merging) |
+| `GEN_GCC=ee-gcc2.96 tools/gen_flow.py` | the same for the library code below `0x195158`, compiled with ee-gcc (`src/lib/auto/flow_gcc.c`; `GEN_GCC_FLAGS="-O2 -G8" GEN_GCC_OUT=...` for the gp-relative units). Run it before the next one |
+| `GEN_MWLIB=1 tools/gen_flow.py` | MW-built code in the library range: C++ runtime and Capcom libraries (`src/lib/auto/flow_mw.c`) |
 | `tools/gen_dtors.py` | empty-body deleting destructors |
 | `tools/gen_cwork_dtors.py` | destructors of single-inheritance `CWork` chains, from RTTI + asm |
 | `tools/gen_class_dtors.py` | destructors that call their parent's (single or multiple inheritance) |

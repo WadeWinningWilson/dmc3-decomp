@@ -31,8 +31,8 @@ of `.text`, as on decomp.dev.
 
 | Measure | USA |
 |---|---|
-| Code | **7.51%** (game code 7.68%, libraries 6.51%) |
-| Functions | 5,819 / 14,634 (39.76%) |
+| Code | **7.47%** (game code 7.63%, libraries 6.51%) |
+| Functions | 5,820 / 14,634 (39.77%) |
 
 The function count runs well ahead of code size: many matched functions are small (accessors,
 destructors, forwarders), while the large gameplay functions are mostly still assembly.
@@ -145,7 +145,8 @@ config/<VERSION>/   splat.yaml, symbols.txt (names → addresses), rtti.txt, mai
 orig/<VERSION>/     your game executable (git-ignored)
 asm/                splat output (generated, git-ignored)
 src/                decompiled C/C++ (first line `// cc: <compiler> <flags>` overrides the default)
-  game/auto/        generated code (trivial functions and destructors), byte-verified
+  game/auto/        generated game code (MW), byte-verified
+  lib/auto/         generated library code (ee-gcc SDK/middleware, MW runtime), byte-verified
 include/            shared headers (include/game/work.h: CWork, the root of most game objects)
 nonmatch/           work-in-progress functions that do not match yet
 tools/              build.py, try.py, generators, splat/objdiff helpers, Docker image
@@ -166,7 +167,7 @@ pasted straight from Ghidra will be sent back for cleanup: it must read like som
 programmer would have written.
 
 **About AI assistance:** much of the current code was written with an AI assistant (Claude),
-and `src/game/auto/` is entirely machine-generated. Everything in `src/` is checked
+and `src/game/auto/` and `src/lib/auto/` are entirely machine-generated. Everything in `src/` is checked
 byte-for-byte against the original by the build; nothing is accepted on trust. Names and
 readability are still being cleaned up, and human review is welcome.
 
