@@ -47,6 +47,8 @@ spec.loader.exec_module(fd)
 LOADS = {"lb": "signed char", "lbu": "unsigned char", "lh": "short", "lhu": "unsigned short",
          "lw": "int", "lwc1": "float"}
 STORES = {"sb": "char", "sh": "short", "sw": "int", "swc1": "float"}
+if GCC:
+    LOADS["ld"], STORES["sd"] = "long", "long"  # ee-gcc: long is 64 bits
 ARGS = ["$a0", "$a1", "$a2", "$a3", "$t0", "$t1", "$t2", "$t3"]  # EABI: 8 integer argument registers
 FARGS = ["$f12", "$f13", "$f14", "$f15"]
 NUM = r"-?0x[0-9A-F]+|-?\d+|\(0x[0-9A-F]+ & 0xFFFF\)"
@@ -205,14 +207,21 @@ def prepare(ins, sink=False):
         tgt, d = int(mm.group(3), 16), ins[j + 1][1]
         if d == "nop":
             likely.append((j, f"{mm.group(1)} {mm.group(2)}.L{tgt:08X}", None))
+        elif tgt - 4 == ins[j + 1][0]:
+            # `bxxl past-the-slot`: the slot runs only when taken -> if (cond) { slot }
+            inv = {"beq": "bne", "bne": "beq", "blez": "bgtz", "bgtz": "blez", "bltz": "bgez", "bgez": "bltz",
+                   "beqz": "bnez", "bnez": "beqz", "bc1t": "bc1f", "bc1f": "bc1t"}[mm.group(1)]
+            likely.append((j, f"{inv} {mm.group(2)}.L{tgt:08X}", "SKIP"))
         elif at_.get(tgt - 4) == d:
             # `bxxl L+4` with the instruction at L in its slot is a plain branch to L
             likely.append((j, f"{mm.group(1)} {mm.group(2)}.L{tgt - 4:08X}", "nop"))
         else:
             raise Fail  # a branch-likely slot that does something else
-    for j, t, d in likely:
+    for j, t, d in reversed(likely):
         ins[j] = (ins[j][0], t)
-        if d:
+        if d == "SKIP":
+            ins.insert(j + 1, (ins[j][0] + 2, "nop"))  # a fresh (empty) delay slot
+        elif d:
             ins[j + 1] = (ins[j + 1][0], d)
     targets = {int(t, 16) for _, t in ins for t in re.findall(r"\.L([0-9A-F]{8})", t)}
     seq = []
