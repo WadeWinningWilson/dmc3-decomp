@@ -304,6 +304,21 @@ def ternaries(lines, rng, rate=0.5):
 
 
 
+def top_xor(e):
+    """(a, b) when e is the expression (a ^ b) split at its top level, else None."""
+    if not (e.startswith("(") and e.endswith(")")):
+        return None
+    depth = 0
+    for i, ch in enumerate(e[1:-1], 1):
+        depth += ch == "("
+        depth -= ch == ")"
+        if depth < 0:
+            return None
+        if depth == 0 and e.startswith(" ^ ", i):
+            return e[1:i], e[i + 3:-1]
+    return None
+
+
 def mul_form(e):
     """(base, k) when e is base * k written as shifts/multiplies, else None."""
     m = re.fullmatch(r"\((.+) \* (\d+)\)", e)
@@ -1064,7 +1079,11 @@ def translate(name, raw, externs, opts=None):
                   x, _ = ival(a[1])
                   y = ival(a[2])[0] if op in ("slt", "sltu") else str(num(a[2]))
                   if op == "sltiu" and y == "1":
-                      e = f"({x} == 0)"
+                      xo = top_xor(x)
+                      e = f"({xo[0]} == {xo[1]})" if xo and not coin(0.15) else f"({x} == 0)"
+                  elif op == "sltu" and x == "0":
+                      xo = top_xor(y)
+                      e = f"({xo[0]} != {xo[1]})" if xo and not coin(0.15) else f"({y} != 0)"
                   elif op in ("sltu", "sltiu"):
                       e = f"((unsigned int){x} < (unsigned int){y})"
                   else:
@@ -1500,6 +1519,8 @@ def translate(name, raw, externs, opts=None):
             if not re.fullmatch(r"[pf]\d", v)]
     if rng is not None and coin(0.7):
         rng.shuffle(decl)  # MW's register allocation follows declaration order
+    elif "declseed" in opts:
+        random.Random(opts["declseed"]).shuffle(decl)  # only the declaration order varies
     if rng is not None and coin(0.6):
         out = reorder(out, rng)
     if rng is not None and coin(0.4):
@@ -1524,11 +1545,17 @@ def check(path, cands):
                 pass
         m = re.search(r"(\d+)/(\d+) instructions", buf.getvalue())
         if m:
-            SCORES[n] = max(SCORES.get(n, 0.0), int(m.group(1)) / max(int(m.group(2)), 1))
+            sc = int(m.group(1)) / max(int(m.group(2)), 1)
+            if sc > SCORES.get(n, -1.0):
+                SCORES[n] = sc
+                if CUR_OPTS[0] is not None:
+                    BEST_OPTS[n] = CUR_OPTS[0]
     return ok
 
 
 SCORES = {}  # best instruction-match ratio seen per function
+BEST_OPTS = {}  # the translation options that scored it
+CUR_OPTS = [{}]
 
 
 def write(path, funcs, externs):
@@ -1650,6 +1677,7 @@ def main():
             keep.append(f)
         tmpfile = ROOT / ("scratch/flow_pass.cpp" if kind == "cpp" else "scratch/flow_pass.c")
         keep = compile_ok(tmpfile, keep, externs, kind)
+        CUR_OPTS[0] = opts
         ok = check(tmpfile, {n: addr[n] for n, _, _ in keep})
         # keep each pass's candidates for diagnosis (scratch/ is git-ignored)
         npass = OPTIONS.index((opts, kind))
@@ -1675,9 +1703,11 @@ def main():
                 raw, has_vcall = by_name[name]
                 if has_vcall != (kind == "cpp"):
                     continue
+                # odd rounds: the best pass's translation with only the declarations reordered
+                o_ = (dict(BEST_OPTS.get(name, {}), declseed=f"{name}:{rnd}") if rnd % 2 else
+                      {"seed": f"{name}:{rnd}", "cpp": kind == "cpp"})
                 try:
-                    code, calls, meta = translate(name, raw, externs,
-                                                  {"seed": f"{name}:{rnd}", "cpp": kind == "cpp"})
+                    code, calls, meta = translate(name, raw, externs, o_)
                 except (Fail, ValueError, KeyError, AttributeError, IndexError, TypeError):
                     continue
                 META[name] = meta
@@ -1694,6 +1724,7 @@ def main():
                 continue
             tmpfile = ROOT / ("scratch/flow_perm.cpp" if kind == "cpp" else "scratch/flow_perm.c")
             keep = compile_ok(tmpfile, keep, externs, kind)
+            CUR_OPTS[0] = None  # a seeded variant cannot be reproduced from options alone
             ok = check(tmpfile, {n: addr[n] for n, _, _ in keep})
             for f in keep:
                 if f[0] in ok:
