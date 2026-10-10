@@ -36,6 +36,9 @@ GCC = os.environ.get("GEN_GCC")
 GCC_FLAGS = os.environ.get("GEN_GCC_FLAGS", "-O2 -G0")
 # GEN_MWLIB=1: MW-built code in the library range (Capcom libraries, C runtime)
 MWLIB = os.environ.get("GEN_MWLIB") and not GCC
+# callers of functions defined in the same file: allowed (MW -O3,p and gcc -O2 do not inline or
+# use the callee's register usage for global functions); GEN_STRICT_DEFS=1 restores the old rule
+STRICT_DEFS = os.environ.get("GEN_STRICT_DEFS") is not None
 SCR = "gflow" if GCC else ("mflow" if MWLIB else "flow")  # scratch prefix: runs can go side by side
 if MWLIB:
     LO, HI = 0x100000, 0x195158
@@ -1896,6 +1899,38 @@ def compile_ok(path, funcs, externs, kind):
     raise SystemExit("too many compile errors")
 
 
+def load_previous(path, kind, externs):
+    """{name: (name, code, calls)} of the functions in an earlier output file; fills externs
+    and META so the file can be rewritten as it was."""
+    if not path.exists():
+        return {}
+    text = path.read_text()
+    for m in re.finditer(r"^(extern [^;\n]*\b(D_[0-9A-F]{8})\b[^;\n]*;)$", text, re.M):
+        externs.setdefault(m.group(2), m.group(1))
+    rts, sigs = {}, {}
+    for m in re.finditer(r"^(\w[\w ]*?\**) ?(func_[0-9A-F]{8})\(([^)]*)\);$", text, re.M):
+        rts[m.group(2)] = m.group(1).strip()
+        args = m.group(3).strip()
+        sigs[m.group(2)] = () if args in ("", "void") else tuple(a.strip() for a in args.split(","))
+    classes = {}
+    for m in re.finditer(r"^class (\w+) \{\npublic:\n(.*?)^\};", text, re.M | re.S):
+        body = m.group(2)
+        mm = re.search(r"virtual ([\w ]+?\**) ?m\(([^)]*)\);", body)
+        if not mm:
+            continue
+        args = mm.group(2).strip()
+        classes[m.group(1)] = (8 + 4 * body.count("virtual void d"), () if args in ("", "void") else
+                               tuple(a.strip() for a in args.split(",")), mm.group(1).strip())
+    out = {}
+    for m in re.finditer(r"^(\w[\w *]*? (func_[0-9A-F]{8})\([^)]*\) \{\n.*?^\})", text, re.M | re.S):
+        code, name = m.group(1), m.group(2)
+        calls = {c: rts.get(c, "int") for c in set(re.findall(r"\b(func_[0-9A-F]{8})\b", code)) - {name}}
+        META[name] = {"callsig": dict(sigs), "vclasses": {c: classes[c] for c in classes
+                                                          if re.search(rf"\b{c}\b", code)}}
+        out[name] = (name, code, calls)
+    return out
+
+
 def main():
     taken = set()
     for p in (ROOT / "src").rglob("*.c*"):
@@ -1918,6 +1953,11 @@ def main():
         work.append((name, A, raw, has_vcall))
     addr = {n: A for n, A, _, _ in work}
     externs, matched = {}, {"c": {}, "cpp": {}}
+    if os.environ.get("GEN_FRESH") is None:
+        for kind, path in (("c", OUT),) + ((("cpp", OUT_CPP),) if not GCC else ()):
+            prev = {n: f for n, f in load_previous(path, kind, externs).items() if n in addr}
+            matched[kind].update(prev)
+            print(f"kept {len(prev)} earlier matches from {path.name}", flush=True)
     for opts, kind in OPTIONS:
         if GCC and kind == "cpp":
             continue  # the library code is C
@@ -1936,7 +1976,7 @@ def main():
         seen = {c: rt for d in matched.values() for _, _, cl in d.values() for c, rt in cl.items()}
         keep = []
         for f in funcs:
-            if any(c in defs for c in f[2]) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
+            if (STRICT_DEFS and any(c in defs for c in f[2])) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
                 continue
             seen.update(f[2])
             keep.append(f)
@@ -1997,7 +2037,7 @@ def main():
             seen = {c: rt for d in matched.values() for _, _, cl in d.values() for c, rt in cl.items()}
             keep = []
             for f in funcs:
-                if any(c in defs for c in f[2]) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
+                if (STRICT_DEFS and any(c in defs for c in f[2])) or any(seen.get(c, rt) != rt for c, rt in f[2].items()):
                     continue
                 seen.update(f[2])
                 keep.append(f)
