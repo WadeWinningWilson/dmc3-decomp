@@ -1729,7 +1729,9 @@ OPTIONS = [({}, "c"), ({"coalesce": True}, "c"), ({"new": True}, "c"), ({"new": 
            ({"cpp": True}, "cpp"), ({"cpp": True, "coalesce": True}, "cpp"), ({"cpp": True, "new": True}, "cpp"), ({"cpp": True, "new": True, "intbase": True}, "cpp"),
            ({"new": True, "intbase": True, "early": True}, "c"), ({"new": True, "intbase": True, "early": True, "arr": True}, "c"),
            ({"new": True, "intbase": True, "early": True, "sink": True, "sw2": True}, "c"),
-           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
+           ({"cpp": True, "new": True, "early": True, "sink": True, "sw2": True}, "cpp"),
+           ({"new": True, "intbase": True, "early": True, "sink": True, "arr": True, "sw2": True}, "c"),
+           ({"cpp": True, "new": True, "intbase": True, "early": True, "sink": True, "arr": True, "sw2": True}, "cpp"), ({"cpp": True, "new": True, "early": True}, "cpp")]
 # "new": switch statements, float returns, constant literals across blocks, char-typed daddiu
 OUT_CPP = ROOT / "src/game/auto/flow_v.cpp"
 META = {}
