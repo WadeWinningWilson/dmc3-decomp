@@ -90,7 +90,11 @@ void func_00240520(char *, int);
 void func_002405C0(char *, int);
 int func_0024BFA0(int, int);
 int func_0024C0B0(char *);
+void func_0024DBA0(char *);
+void func_0024E440(void);
 int func_0024E780(char *, int, int);
+void func_0024E7E0(char *);
+int func_0024E9B0(char *);
 int func_00286040(char *);
 int func_00286FD0(int, int);
 void func_0028B610(char *);
@@ -7783,6 +7787,22 @@ public:
     virtual void d10();
     virtual void d11();
     virtual int m(void);
+};
+class V38_1_if {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual float m(int);
 };
 class V3B0_0_i {
 public:
@@ -16671,6 +16691,28 @@ int func_0023BC10(char *p0) {
     ((VC_2_iiv *)(v1 + 2112))->m(10, 1);
     *(int *)(v1 + 2208) = 0;
     return (int)v1;
+}
+
+int func_0024DA80(char *p0, int p1, int p2) {
+    float tmp2;
+    float tmp5;
+    int tmp6;
+    *(int *)(p0 + 48) = p1;
+    *(int *)(p0 + 52) = p2;
+    *(short *)(p0 + 76) = -1;
+    *(char *)(p0 + 78) = -1;
+    *(char *)(p0 + 79) = -1;
+    *(unsigned char *)(p0 + 80) = 255;
+    *(int *)(p0 + 152) = 0;
+    func_0024E440();
+    func_0024E7E0(p0);
+    func_0024DBA0(p0);
+    tmp2 = ((V28_1_if *)*(char **)(p0 + 68))->m(*(int *)(p0 + 56));
+    *(float *)(p0 + 40) = tmp2;
+    tmp5 = ((V38_1_if *)*(char **)(p0 + 68))->m(*(int *)(p0 + 56));
+    *(float *)(p0 + 44) = tmp5;
+    tmp6 = func_0024E9B0(p0);
+    return tmp6;
 }
 
 int func_0024FF40(char *p0) {

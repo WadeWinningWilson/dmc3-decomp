@@ -1329,6 +1329,9 @@ def translate(name, raw, externs, opts=None):
               elif op in STORES:
                   ve, vt = val(a[0])
                   tt = "char *" if (op == "sw" and vt == "char *") else STORES[op]
+                  if re.fullmatch(r"\d+", ve) and (op == "sb" and 128 <= int(ve) <= 255 or
+                                                   op == "sh" and 32768 <= int(ve) <= 65535):
+                      tt = "unsigned " + tt  # MW's char is signed: 128 would load as -128
                   if vt == "char *" and tt != "char *":
                       ve = f"(int){ve}"
                   lv = lvalue(a[1], tt)
@@ -2100,11 +2103,10 @@ def load_previous(path, kind, externs):
     for m in re.finditer(r"^(\w[\w *]*? (func_[0-9A-F]{8})\([^)]*\)[^{}\n]* \{\n.*?^\})", text, re.M | re.S):
         code, name = m.group(1), m.group(2)
         hm = re.match(r"(\w[\w *]*? func_[0-9A-F]{8})\(([^)]*)\) \{\n", code)
-        if kind == "c" and hm and "float" not in hm.group(2) and hm.group(2) not in ("", "void") and \
-                "int p" in hm.group(2) or (kind == "c" and hm and hm.group(2) == "void"):
+        if kind == "c" and hm and "float" not in hm.group(2):
             # an older ANSI header: rewrite as K&R with the unused trailing parameters dropped
             rest_ = code[hm.end():]
-            ps_ = [x.strip() for x in hm.group(2).split(",")] if hm.group(2) != "void" else []
+            ps_ = [x.strip() for x in hm.group(2).split(",")] if hm.group(2) not in ("void", "") else []
             while ps_ and not re.search(rf"\b{ps_[-1].split()[-1].lstrip('*')}\b", rest_):
                 ps_.pop()
             names_ = ", ".join(x.split()[-1].lstrip("*") for x in ps_)

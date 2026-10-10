@@ -985,7 +985,7 @@ void func_00150AC0(p0) char *p0; {
     }
 }
 
-int func_001524C8(char *p0, char *p1, char *p2) {
+int func_001524C8(p0, p1, p2) char *p0; char *p1; char *p2; {
     unsigned short tmp3;
     *(short *)(p0 + 40) = *(unsigned short *)(p1 + 0);
     *(short *)(p0 + 42) = *(unsigned short *)(p2 + 0);
@@ -1487,7 +1487,7 @@ void func_00176A00(p0, p1) int p0; int p1; {
     }
 }
 
-int func_00176F90(char *p0, char *p1) {
+int func_00176F90(p0, p1) char *p0; char *p1; {
     int tmp0;
     tmp0 = *(int *)(p0 + 48);
     *(int *)(p1 + 76) = *(int *)(p0 + 48);
@@ -2215,7 +2215,7 @@ void func_0017EC08(p0, p1, p2) int p0; int p1; int p2; {
     func_0017F8A0(p2);
 }
 
-int func_0017FEC0(char *p0) {
+int func_0017FEC0(p0) char *p0; {
     char *tmp0;
     int tmp3;
     tmp0 = (p0 + 152);
@@ -2568,7 +2568,7 @@ void func_0018CEC0() {
     func_0018AC80();
 }
 
-int func_0018DF30(char *p0, char *p1, char *p2) {
+int func_0018DF30(p0, p1, p2) char *p0; char *p1; char *p2; {
     p0 = (p0 + 3368);
     *(int *)(p1 + 0) = *(int *)(p0 + 652);
     *(int *)(p2 + 0) = *(int *)(p0 + 656);
