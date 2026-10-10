@@ -93,3 +93,17 @@ library signatures can be shared with other PS2 decomps.
 ## 5. Untouched references
 Your own copies go in `orig/<version>/` (git-ignored) and are never edited. Builds write to
 `build/`. ISOs are extracted to `iso/` and are not in version control.
+
+## Added 2026-10-10: EU retail and Korea
+
+| Release | Executable | SYSTEM.CNF | Size | SHA-1 |
+|---|---|---|---|---|
+| Europe *Dante's Awakening* retail | `SLES_530.38` | VER 1.01, PAL | 4,982,704 | `1313d2a2ab7161993f81982907319ea3dc7a6725` |
+| Korea | `SLKA_252.65` | VER 1.02, NTSC | 4,970,160 | `e7fb8684fc69e973fb5ac6d27332f608560a0a72` |
+
+The EU retail executable is **not** byte-identical to the EU beta/debug build (`f3a3517c…`) or to
+USA. Measured against USA with addresses masked (6-instruction windows, functions of 6+
+instructions): JP keeps 98.7% of USA's code unchanged, Korea 98.1%, EU retail 97.5%, EU beta
+97.6%. They are rebuilds of the same codebase; matched USA code should carry over with a small
+number of per-version differences.
+

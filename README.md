@@ -18,8 +18,10 @@ Supported versions
 | Version | Executable | Status |
 |---|---|---|
 | **USA** (SLUS-20964) | `SLUS_209.64`, sha1 `d08b525b…` | **primary target** |
-| Japan (SLPM-65880) | `SLPM_658.80`, sha1 `cf33e667…` | relinks byte-identically from asm; near-identical to USA |
-| Europe *Dante's Awakening*, Korea, Special Edition | — | not yet |
+| Japan (SLPM-65880) | `SLPM_658.80`, sha1 `cf33e667…` | relinks byte-identically from asm; 98.7% of the code is unchanged from USA |
+| Korea (SLKA-25265) | `SLKA_252.65`, sha1 `e7fb8684…` | identified; 98.1% unchanged from USA; build config not yet added |
+| Europe *Dante's Awakening* (SLES-53038) | `SLES_530.38`, sha1 `1313d2a2…` | identified; 97.5% unchanged from USA (PAL, five-language rebuild); build config not yet added |
+| Europe beta/debug (2005-01-11/12) | `SLES_530.38`, sha1 `f3a3517c…` | reference only |
 
 Progress
 --------
@@ -29,8 +31,8 @@ of `.text`, as on decomp.dev.
 
 | Measure | USA |
 |---|---|
-| Code | **2.78%** (game code 3.25%, libraries 0.01%) |
-| Functions | 3,193 / 14,634 (21.82%) |
+| Code | **2.93%** (game code 3.42%, libraries 0.01%) |
+| Functions | 3,284 / 14,634 (22.44%) |
 
 The function count runs well ahead of code size: many matched functions are small (accessors,
 destructors, forwarders), while the large gameplay functions are mostly still assembly.

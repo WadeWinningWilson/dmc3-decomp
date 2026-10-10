@@ -120,7 +120,7 @@ def translate(name, ins, externs):
 
     def ival(r):
         e, t = val(r)
-        return (f"(int){e}" if t == "char *" else e), t
+        return (f"(int){e}", "int") if t == "char *" else (e, t)
 
     def define(r, e, t, mem=False):
         regs[r], types[r] = e, t

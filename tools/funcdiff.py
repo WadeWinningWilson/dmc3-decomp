@@ -7,6 +7,7 @@ objdiff remains the project-wide comparison tool once target objects exist.
 usage: python -I tools/funcdiff.py <orig.elf> <compiled.o> <symbol> <vaddr>
 exit 0 = match
 """
+import os
 import re
 import struct
 import sys
@@ -20,41 +21,63 @@ from elftools.elf.sections import SymbolTableSection
 MASKS = {4: 0x03FFFFFF, 5: 0xFFFF, 6: 0xFFFF, 7: 0xFFFF, 8: 0xFFFF}
 
 
+_targets, _objects = {}, {}  # caches keyed by path, invalidated by mtime (generators call main() a lot)
+
+
 def load_target(elf_path, vaddr, size):
-    with open(elf_path, "rb") as fh:
-        elf = ELFFile(fh)
-        for seg in elf.iter_segments():
-            lo = seg.header.p_vaddr
-            if lo <= vaddr < lo + seg.header.p_filesz:
-                return seg.data()[vaddr - lo: vaddr - lo + size]
+    key = (str(elf_path), os.path.getmtime(elf_path), os.path.getsize(elf_path))
+    if key not in _targets:
+        with open(elf_path, "rb") as fh:
+            elf = ELFFile(fh)
+            _targets[key] = [(seg.header.p_vaddr, seg.header.p_filesz, seg.data()) for seg in elf.iter_segments()]
+    for lo, filesz, data in _targets[key]:
+        if lo <= vaddr < lo + filesz:
+            return data[vaddr - lo: vaddr - lo + size]
     raise SystemExit(f"{vaddr:#x} not in any segment")
 
 
+def _parse_object(o_path):
+    """{function name: (code, masks)} for every function symbol of an object."""
+    funcs = {}
+    with open(o_path, "rb") as fh:
+        elf = ELFFile(fh)
+        symtab = next(s for s in elf.iter_sections() if isinstance(s, SymbolTableSection))
+        relocs = {}
+        for rs in elf.iter_sections():
+            # compare indices: MW emits one .text per function, and pyelftools
+            # returns a fresh Section object per get_section() call
+            if isinstance(rs, RelocationSection):
+                rsym = elf.get_section(rs["sh_link"])
+                relocs.setdefault(rs["sh_info"], []).extend(
+                    (r["r_offset"], r["r_info_type"], rsym.get_symbol(r["r_info_sym"]).name)
+                    for r in rs.iter_relocations())
+        data = {}
+        for sym in symtab.iter_symbols():
+            if sym["st_info"]["type"] != "STT_FUNC" or not isinstance(sym["st_shndx"], int):
+                continue
+            shndx = sym["st_shndx"]
+            if shndx not in data:
+                data[shndx] = elf.get_section(shndx).data()
+            start, size = sym["st_value"], sym["st_size"]
+            masks = {}
+            for off, t, name in relocs.get(shndx, []):
+                if start <= off < start + size:
+                    masks[off - start] = (MASKS.get(t, 0xFFFF), t, name)
+            funcs.setdefault(sym.name, (data[shndx][start:start + size], masks))
+    return funcs
+
+
 def load_compiled(o_path, symbol):
-    fh = open(o_path, "rb")
-    elf = ELFFile(fh)
-    symtab = next(s for s in elf.iter_sections() if isinstance(s, SymbolTableSection))
+    key = (str(o_path), os.path.getmtime(o_path), os.path.getsize(o_path))
+    if key not in _objects:
+        _objects.clear()
+        _objects[key] = _parse_object(o_path)
+    funcs = _objects[key]
     # exact name, or a C++ mangled name (MW uses cfront-style "name__F<args>")
-    sym = next((s for s in symtab.iter_symbols() if s.name == symbol), None) or next(
-        (s for s in symtab.iter_symbols() if s.name.startswith(symbol + "__")), None)
-    if sym is None:
-        names = [s.name for s in symtab.iter_symbols() if s["st_info"]["type"] == "STT_FUNC"]
-        raise SystemExit(f"symbol {symbol} not found; functions: {names}")
-    sec = elf.get_section(sym["st_shndx"])
-    start, size = sym["st_value"], sym["st_size"]
-    code = sec.data()[start:start + size]
-    masks = {}
-    for rs in elf.iter_sections():
-        # compare indices: MW emits one .text per function, and pyelftools
-        # returns a fresh Section object per get_section() call
-        if isinstance(rs, RelocationSection) and rs["sh_info"] == sym["st_shndx"]:
-            rsym = elf.get_section(rs["sh_link"])
-            for r in rs.iter_relocations():
-                off = r["r_offset"] - start
-                if 0 <= off < size:
-                    t = r["r_info_type"]
-                    masks[off] = (MASKS.get(t, 0xFFFF), t, rsym.get_symbol(r["r_info_sym"]).name)
-    return code, masks
+    name = symbol if symbol in funcs else next((n for n in funcs if n.startswith(symbol + "__")), None)
+    if name is None:
+        raise SystemExit(f"symbol {symbol} not found; functions: {list(funcs)}")
+    return funcs[name]
 
 
 def main(orig, obj, symbol, vaddr):
