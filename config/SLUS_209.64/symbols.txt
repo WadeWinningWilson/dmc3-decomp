@@ -1,0 +1,60 @@
+// MW C++ runtime (identified from ctor/dtor call shapes in matched code)
+__destroy_arr = 0x1003E0;
+__construct_array = 0x100450;
+__dl__FPv = 0x100580; // operator delete(void*)
+// movie module (src/game/movie/movie.cpp)
+__dt__10CUnk1AA7F0Fv = 0x1AA7F0;
+__ct__9CMovieSysFv = 0x1AAB60;
+__dt__9CMovieSysFv = 0x1AABB0;
+Setup__9CMovieSysFi = 0x1AAC20;
+__ct__6CMovieFv = 0x1AACE0;
+__ct__6CLib10Fv = 0x1AAD30; // inline, emitted here
+__dt__6CMovieFv = 0x1AAD60;
+Clear__6CMovieFv = 0x1AADD0;
+Term__6CMovieFv = 0x1AB140;
+SetUnk14__6CMovieFi = 0x1AB200;
+Stop__6CMovieFv = 0x1AB390;
+SetVolume__6CMovieFi = 0x1AB3E0;
+SetMaxVolume__6CMovieFi = 0x1AB470;
+// Capcom library block (still asm)
+__dt__6CLib10Fv = 0x13D240;
+Reset__6CLib10Fv = 0x13D5D0;
+Init__6CLib10Fv = 0x13D6A0;
+Alloc__6CLib10Fii = 0x1B0FD0;
+Play__6CMovieFUci = 0x1AB220;
+BuildPacket__6CMovieFi = 0x1AB680;
+Update__6CMovieFv = 0x1AB4D0;
+UploadFrame__6CMovieFPv = 0x1AB860;
+Open__6CMovieFP10MovieEntryiUcUc = 0x1AAE30;
+// save system: CMcAppli (src/game/mc/mcappli.cpp)
+Init__8CMcAppliFi = 0x4EF480;
+Term__8CMcAppliFv = 0x4EF4C0;
+Sub5B0__8CMcAppliFv = 0x4EF5B0;
+Sub610__8CMcAppliFv = 0x4EF610;
+Sub7A0__8CMcAppliFv = 0x4EF7A0;
+Sub900__8CMcAppliFv = 0x4EF900;
+SubA90__8CMcAppliFv = 0x4EFA90;
+SubBA0__8CMcAppliFv = 0x4EFBA0;
+SubBE0__8CMcAppliFv = 0x4EFBE0;
+IsIdle__8CMcAppliFv = 0x4F0BA0;
+SetMode__8CMcAppliFi = 0x4F0BD0;
+Load__8CMcAppliFi = 0x4F0670;
+Save__8CMcAppliFi = 0x4EFDF0;
+NextMode__8CMcAppliFPi = 0x4F09F0;
+Update__8CMcAppliFv = 0x4F0C60;
+LoadHeader__8CMcAppliFv = 0x4F0560;
+MsgF1010__8CMcAppliFi = 0x4F1010;
+UpdateSave__8CMcAppliFv = 0x4F1160;
+UpdateLoad__8CMcAppliFv = 0x4F1600;
+Boot__8CMcAppliFv = 0x4F1980;
+__dt__8CMcAppliFv = 0x4F2030;
+__vt__8CMcAppli = 0x5BA478;
+SaveMenu__8CMcAppliFv = 0x4F1AB0;
+LoadMenu__8CMcAppliFv = 0x4F1D30;
+SubE80__8CMcAppliFi = 0x4F1E80;
+// CWork (task object root) and the memory card UI (src/game/ui/uid_memorycard.cpp)
+__vt__5CWork = 0x5A6F50;
+__dt__10CUnk2791E0Fv = 0x2791E0;
+__vt__14CUIDMemoryCard = 0x5BA060;
+__dt__14CUIDMemoryCardFv = 0x4E3970;
+__dt__5CWorkFv = 0x1AD090;

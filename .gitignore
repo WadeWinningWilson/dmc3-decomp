@@ -1,0 +1,38 @@
+# ---- Game files: NEVER commit (copyrighted). Supply your own copy in orig/<VERSION>/.
+orig/*/*
+!orig/*/.gitkeep
+*.iso
+*.bin
+*.zip
+*.7z
+*.elf
+iso/
+baseline/
+Early Debug Release/
+Europe Release/
+Japan Release/
+Korean Release/
+USA Release/
+assets/
+
+# ---- Generated from the game by configure.py (splat) / the build
+asm/
+build/
+config/*/undefined_*_auto.txt
+objdiff.json
+*.o
+*.map
+
+# ---- Downloaded tools
+tools/compilers/
+tools/wibo/
+tools/objdiff/
+tools/docker/wibo
+
+# ---- Local / scratch
+scratch/
+.venv/
+__pycache__/
+.claude/
+.mcp.json
+*.log

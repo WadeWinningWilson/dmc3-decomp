@@ -1,0 +1,2 @@
+# splat runs with NO symbols so the generated asm keeps func_/D_ names that
+# tools/build.py cuts and aliases; real names live in symbols.txt.

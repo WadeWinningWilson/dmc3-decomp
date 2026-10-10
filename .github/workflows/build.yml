@@ -1,0 +1,25 @@
+name: Build
+
+# The game executable is not (and must not be) in the repository, so CI cannot
+# check the SHA-1. It checks that every source file compiles with the original
+# compilers and that every compiled function has an address in config/.
+# The byte-identical check runs locally: python tools/build.py us
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Python requirements
+        run: pip install -r requirements.txt
+      - name: Fetch compilers and start the build container
+        run: python configure.py --tools-only
+      - name: Compile all sources
+        run: python tools/build.py us --compile-only

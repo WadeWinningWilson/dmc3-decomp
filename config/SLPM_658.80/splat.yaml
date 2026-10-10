@@ -1,0 +1,61 @@
+# Devil May Cry 3 (Japan) retail, SLPM-65880, SYSTEM.CNF VER 1.02
+# Stand-in target until the user's USA (SLUS-20964) dump is supplied.
+# Layout derived in DMC3_BINARY_BASELINE.md; boundaries are coarse (one
+# subsegment per region) and will be refined as TU boundaries are found.
+name: Devil May Cry 3 (Japan)
+sha1: cf33e667f576d7f6eda654763579f0a3cd812d70
+options:
+  basename: SLPM_658.80
+  target_path: orig/SLPM_658.80/SLPM_658.80
+  elf_path: build/jp/SLPM_658.80
+  base_path: ../..
+  platform: ps2
+  compiler: MWCCPS2
+
+  gp_value: 0x5C2F70
+
+  asm_path: asm/jp
+  asset_path: assets/jp
+  src_path: src
+  build_path: build/jp
+  ld_script_path: build/jp/SLPM_658.80.ld
+  symbol_addrs_path:
+    - config/SLPM_658.80/splat_symbols.txt
+  undefined_funcs_auto_path: config/SLPM_658.80/undefined_funcs_auto.txt
+  undefined_syms_auto_path: config/SLPM_658.80/undefined_syms_auto.txt
+
+  find_file_boundaries: True
+  o_as_suffix: True
+  use_legacy_include_asm: False
+  migrate_rodata_to_functions: True
+  string_encoding: EUC-JP
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  create_asm_dependencies: True
+  named_regs_for_c_funcs: False
+  ld_generate_symbol_per_data_segment: True
+  section_order: [".text", ".data", ".rodata", ".sdata", ".sbss", ".bss"]
+  ld_bss_is_noload: True
+
+segments:
+  - name: elf_header
+    type: databin
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x80
+    vram: 0x100000
+    bss_size: 0x183E780     # memsz 0x1CFBF00 - filesz 0x4BD780
+    subsegments:
+      - [0x80, asm, text]             # 0x100000-0x50F714 main .text (~9.4k funcs)
+      - [0x40F800, data, data]        # 0x50F780 .vutext (VU microcode) then rodata/data
+      - [0x4A5700, asm, sinit]        # 0x5A5680 44 C++ __sinit_* static initializers
+      - [0x4A6620, data, ctors_data]  # 0x5A65A0 .ctors table, vtables, .sdata
+      - { start: 0x4BD800, type: bss, vram: 0x5BD780 }
+
+  - name: elf_footer
+    type: databin
+    start: 0x4BD800
+
+  - [0x4BD9B0]

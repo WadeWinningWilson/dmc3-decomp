@@ -1,0 +1,61 @@
+# Devil May Cry 3: Dante's Awakening (USA) retail, SLUS-20964, SYSTEM.CNF VER 1.01
+# PRIMARY decomp target.
+# Layout derived in DMC3_BINARY_BASELINE.md; boundaries are coarse (one
+# subsegment per region) and will be refined as TU boundaries are found.
+name: Devil May Cry 3 - Dante's Awakening (USA)
+sha1: d08b525bac178360846b21f0f396283c671706d9
+options:
+  basename: SLUS_209.64
+  target_path: orig/SLUS_209.64/SLUS_209.64
+  elf_path: build/us/SLUS_209.64
+  base_path: ../..
+  platform: ps2
+  compiler: MWCCPS2
+
+  gp_value: 0x5C3870
+
+  asm_path: asm/us
+  asset_path: assets/us
+  src_path: src
+  build_path: build/us
+  ld_script_path: build/us/SLUS_209.64.ld
+  symbol_addrs_path:
+    - config/SLUS_209.64/splat_symbols.txt
+  undefined_funcs_auto_path: config/SLUS_209.64/undefined_funcs_auto.txt
+  undefined_syms_auto_path: config/SLUS_209.64/undefined_syms_auto.txt
+
+  find_file_boundaries: True
+  o_as_suffix: True
+  use_legacy_include_asm: False
+  migrate_rodata_to_functions: True
+  string_encoding: EUC-JP
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+  create_asm_dependencies: True
+  named_regs_for_c_funcs: False
+  ld_generate_symbol_per_data_segment: True
+  section_order: [".text", ".data", ".rodata", ".sdata", ".sbss", ".bss"]
+  ld_bss_is_noload: True
+
+segments:
+  - name: elf_header
+    type: databin
+    start: 0x0
+
+  - name: main
+    type: code
+    start: 0x80
+    vram: 0x100000
+    bss_size: 0x183E780     # memsz 0x1CFC800 - filesz 0x4BE080
+    subsegments:
+      - [0x80, asm, text]             # 0x100000-0x50FF08 main .text
+      - [0x410000, data, data]        # 0x50FF80 .vutext (VU microcode) then rodata/data
+      - [0x4A6000, asm, sinit]        # 0x5A5F80 44 C++ __sinit_* static initializers
+      - [0x4A6EF0, data, ctors_data]  # 0x5A6E70 .ctors table, vtables, .sdata
+      - { start: 0x4BE100, type: bss, vram: 0x5BE080 }
+
+  - name: elf_footer
+    type: databin
+    start: 0x4BE100
+
+  - [0x4BE2B0]
