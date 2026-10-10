@@ -2109,6 +2109,17 @@ def load_previous(path, kind, externs):
                 ps_.pop()
             names_ = ", ".join(x.split()[-1].lstrip("*") for x in ps_)
             code = f"{hm.group(1)}({names_}){''.join(f' {x};' for x in ps_)} {{\n" + rest_
+        if kind == "cpp" and hm and hm.group(2) not in ("", "void"):
+            # C++ keeps ANSI headers; drop unused trailing integer parameters
+            rest_ = code[hm.end():]
+            ps_ = [x.strip() for x in hm.group(2).split(",")]
+            fl_ = [x for x in ps_ if x.startswith("float ")]
+            in_ = [x for x in ps_ if not x.startswith("float ")]
+            while in_ and not re.search(rf"\b{in_[-1].split()[-1].lstrip('*')}\b", rest_):
+                in_.pop()
+            while fl_ and not re.search(rf"\b{fl_[-1].split()[-1]}\b", rest_):
+                fl_.pop()
+            code = f"{hm.group(1)}({', '.join(in_ + fl_) or 'void'}) {{\n" + rest_
         calls = {c: rts.get(c, "int") for c in set(re.findall(r"\b(func_[0-9A-F]{8})\b", code)) - {name}}
         META[name] = {"callsig": dict(sigs), "vclasses": {c: classes[c] for c in classes
                                                           if re.search(rf"\b{c}\b", code)}}
