@@ -117,3 +117,131 @@ void func_003D0B20(char *p, int k) {
         break;
     }
 }
+
+/* Calls func_00210660 for every flagged record of the 200-entry table (see func_00215A00). */
+void func_00210660(Rec48 *);
+
+void func_00213C40(Rec48Table *t) {
+    int i;
+    for (i = 0; i < 200; i++) {
+        if (t->e[i].flag == 1) {
+            func_00210660(&t->e[i]);
+        }
+    }
+}
+
+/* How many of three thresholds f exceeds, capped at 2 (char counters use daddiu). */
+extern float D_005623B0[3];
+
+unsigned char func_002C6CF0(float f) {
+    unsigned char n = 0;
+    int i;
+    for (i = 0; i < 3; i++) {
+        if (f > D_005623B0[i]) {
+            n++;
+        }
+    }
+    if (n >= 3) {
+        n = 2;
+    }
+    return n;
+}
+
+/* State 1 or 2 -> 3, with two floats from small data. */
+extern float D_005BDBC8, D_005BDBC4;
+
+void func_0046F350(unsigned char *p) {
+    unsigned char ok = 1;
+    if ((unsigned int)(p[1] - 1) > 1) {
+        ok = 0;
+    }
+    if (ok) {
+        p[1] = 3;
+        *(float *)(p + 4) = D_005BDBC8;
+        p[35] = 0;
+        *(float *)(p + 8) = D_005BDBC4;
+        p[32] = 1;
+    }
+}
+
+/* Creates the object at +0x748 and links it back. */
+char *func_00207480(int, int, int, int);
+
+void func_004E2690(char *p) {
+    char *o;
+    *(char **)(p + 0x748) = func_00207480(3, 0x2D6, 0, 16);
+    o = *(char **)(p + 0x748);
+    if (o != 0) {
+        *(char **)(o + 0x90) = p + 0x6C0;
+        o[0x9A] = 0;
+        *(*(char **)(p + 0x748) + 0x3A) = 1;
+    }
+}
+
+/* Resets every 303-entry record in state 4 and notifies its sub-object. */
+typedef struct Ent32 {
+    char a;
+    unsigned char state;
+    char pad[14];
+    char sub[16];
+} Ent32;
+
+extern Ent32 D_00666750[303];
+void func_0013D5D0(void *);
+
+void func_001AEE60(void) {
+    int i;
+    for (i = 0; i < 303; i++) {
+        if (D_00666750[i].state == 4) {
+            D_00666750[i].state = 0;
+            func_0013D5D0(D_00666750[i].sub);
+        }
+    }
+}
+
+/* True when the 16-bit angle difference is within a quarter turn. */
+short func_002DAA60(char *);
+
+int func_002DAA00(char *p) {
+    short d = *(short *)(p + 0x90) - func_002DAA60(p);
+    if (d <= 0x3FFF && d > -0x4000) {
+        return 1;
+    }
+    return 0;
+}
+
+/* Counted arrays of 16-byte entries (the count is the first entry's head word). */
+typedef struct Ent16 {
+    int head;
+    char sub[12];
+} Ent16;
+
+void func_0022F8C0(Ent16 *e) {
+    int i;
+    for (i = 0; i < e[0].head; i++) {
+        func_0013D5D0(e[i].sub);
+    }
+}
+
+void func_00230000(Ent16 *e) {
+    int i;
+    for (i = 0; i < e[0].head; i++) {
+        func_0013D5D0(e[i].sub);
+    }
+}
+
+/* Runs three update steps, then reports whether both byte pairs differ. */
+void func_00509A10(char *);
+void func_00509FA0(char *);
+void func_0050A210(char *);
+
+int func_00509AA0(char *p) {
+    func_00509A10(p);
+    *(int *)(p + 0x18) = 0;
+    func_00509FA0(p);
+    func_0050A210(p);
+    if (p[0x68] != p[0x69] && p[0x6A] != p[0x6B]) {
+        return 1;
+    }
+    return 0;
+}
