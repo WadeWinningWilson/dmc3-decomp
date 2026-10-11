@@ -1000,3 +1000,36 @@ extern "C" void func_0049FE40(char *p) {
     (*(Anim4 **)(p + 0xA8))->m48(0x27, *(char **)(p + 0x10) + 0x10);
     *(int *)(p + 0x110) = 0;
 }
+
+extern "C" void func_003EEEF0(char *p) {
+    ((Obj2F8 *)p)->m2F8(0x2D);
+    p[0x3434] = 0;
+    p[0x3435] = 3;
+    p[0x3436] = 2;
+    if (2.3283064e-10f * mt_rand() > 0.5f) {
+        func_003E6750(p, 0xE, 0, 0);
+    } else {
+        func_003E6750(p, 0xF, 0, 0);
+    }
+}
+
+extern "C" void func_0035FF90(char *p) {
+    p[0xCD] = 1;
+    p[0xCE] = 3;
+    p[0xCF] = 6;
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m1C(8);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m1C(8);
+        break;
+    }
+    (*(Anim4 **)(p + 0xA8))->m40();
+    __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0\n\tsqc2 $vf20, 0x0(%0)" : : "r"(p + 0xE0) : "memory");
+    __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0\n\tsqc2 $vf20, 0x0(%0)" : : "r"(p + 0xF0) : "memory");
+    *(float *)(p + 0xE4) = 0.0f;
+    *(float *)(p + 0xF4) = -1.0f;
+    *(int *)(p + 0xD4) = 0;
+    *(float *)(p + 0x100) = 10.0f;
+}

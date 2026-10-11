@@ -408,3 +408,19 @@ void func_003EDEF0(char *p) {
         return;
     }
 }
+
+float func_0034C160(float, float, float);
+
+void func_0050E000(char *p) {
+    float v2;
+    float v = func_0034C160(*(float *)(p + 0x470), 30.0f, 0.5f * *(float *)(p + 0x10));
+    *(float *)(p + 0x470) = v;
+    v2 = v * v;
+    *(float *)(p + 0x54) += v2 * *(float *)(p + 0x10);
+    *(float *)(p + 0x46C) -= *(float *)(p + 0x10);
+    if (*(float *)(p + 0x46C) < 0.0f) {
+        p[5] = 1;
+        *(float *)(p + 0x46C) = 15.0f + mt_rand() % 15;
+        *(int *)(p + 0x470) = 0;
+    }
+}

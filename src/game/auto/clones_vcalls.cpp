@@ -641,6 +641,10 @@ void func_003E6750(char *, int, int, int);
 
 
 
+
+
+
+
 extern "C" {
 extern "C" void func_00465AA0(char *p) {
     short d;
@@ -1064,5 +1068,26 @@ extern "C" void func_004A6EB0(char *p) {
     *(int *)(p + 0xD4) = 0;
     (*(Anim4 **)(p + 0xA8))->m48(6, *(char **)(p + 0x10) + 0x10);
     (*(Anim4 **)(p + 0xA8))->m48(0x384, *(char **)(p + 0x10) + 0x10);
+}
+
+extern "C" void func_00462220(char *p) {
+    p[0xCD] = 1;
+    p[0xCE] = 3;
+    p[0xCF] = 6;
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m1C(8);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m1C(8);
+        break;
+    }
+    (*(Anim4 **)(p + 0xA8))->m40();
+    __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0\n\tsqc2 $vf20, 0x0(%0)" : : "r"(p + 0xE0) : "memory");
+    __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0\n\tsqc2 $vf20, 0x0(%0)" : : "r"(p + 0xF0) : "memory");
+    *(float *)(p + 0xE4) = 0.0f;
+    *(float *)(p + 0xF4) = -1.0f;
+    *(int *)(p + 0xD4) = 0;
+    *(float *)(p + 0x100) = 10.0f;
 }
 }
