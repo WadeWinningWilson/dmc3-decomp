@@ -2053,12 +2053,15 @@ def write(path, funcs, externs):
         for fn, rt in c.items():
             protos.setdefault(fn, rt)
     # a callee taking floats needs a prototype (unprototyped calls promote float to double)
-    fsig = {}
+    fsig, allsig = {}, {}
     for name, _, c in funcs:
         for fn in c:
             sig = META.get(name, {}).get("callsig", {}).get(fn)
+            allsig.setdefault(fn, set()).add(sig)
             if sig and any(x in ("float", "unsigned char", "signed char", "short", "unsigned short") for x in sig):
                 fsig.setdefault(fn, sig)
+    # a typed prototype only when every caller here agrees (else calls fail to compile one by one)
+    fsig = {fn: sg for fn, sg in fsig.items() if len(allsig[fn]) == 1}
     decl += [(f"{rt} {fn}({fparams[fn]});" if fn in fparams else
               f"{rt} {fn}({', '.join(fsig[fn])});" if fn in fsig else f"{rt} {fn}();").replace("* ", "*")
              for fn, rt in sorted(protos.items())]
