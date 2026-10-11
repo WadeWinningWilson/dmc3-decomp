@@ -513,3 +513,104 @@ void func_0023A710(char *p, int k) {
     func_00247760(p + 0x45C0);
     func_002D8F40(*(int *)(p + 0x2058), *(unsigned char *)(p + 0x5BE2));
 }
+
+/* Bytes of a w x h image in a GS pixel format (PSMCT32/24/16, PSMT8, PSMT4). A small
+ * switch: MW's compare chain runs in reverse source order. */
+int func_00196A20(int w, int h, int psm) {
+    switch (psm) {
+    case 2:
+        return w * h * 2;
+    case 1:
+        return w * h * 3;
+    case 0:
+        return w * h * 4;
+    case 0x14:
+        return (unsigned int)(w * h) >> 1;
+    case 0x13:
+        return w * h;
+    }
+    return 0;
+}
+
+/* Resets the slot table (16 slots, -1 = free). */
+void func_002F9880(char *);
+void func_002FA510(void);
+void func_002FA7A0(char *);
+void func_002FB0B0(void);
+
+extern struct {
+    unsigned char on;
+    char pad[3];
+    int count;
+    int slot[16];
+} D_01DF8ED0;
+
+int func_002F91E0(char *p) {
+    unsigned int i;
+    func_002F9880(p);
+    func_002FA510();
+    func_002FA7A0(p);
+    func_002FB0B0();
+    D_01DF8ED0.count = 0;
+    D_01DF8ED0.on = 1;
+    for (i = 0; i < 16; i++) {
+        D_01DF8ED0.slot[i] = -1;
+    }
+    return 0;
+}
+
+/* The text helper with the id as a parameter (negative = none). */
+void func_0050D9B0(char *p, int id) {
+    int x, y;
+    unsigned int w;
+    if (id < 0) {
+        return;
+    }
+    w = func_003101B0(D_01DFA340, id, 0);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, id, x, y, 0x585858, 0, 0xFFFFF2, 1);
+}
+
+/* Acts on the state of the sub-object at +0xDF0 (1 or 2). */
+int func_0024E780(char *, int, int);
+void func_0024E7B0(char *, int, int);
+void func_0033A660(char *, int);
+
+void func_0033A580(char *p) {
+    if ((unsigned char)func_0024E780(p + 0xDF0, 0, 1) == 1) {
+        func_0024E7B0(p + 0xDF0, 0, 1);
+        func_0033A660(p, 0);
+    } else if ((unsigned char)func_0024E780(p + 0xDF0, 0, 1) == 2) {
+        func_0024E7B0(p + 0xDF0, 0, 1);
+        func_0033A660(p, 1);
+    }
+}
+
+/* Counts down 16 timers; parallel arrays in one struct share MW's induction pointer. */
+typedef struct Timers28C {
+    char pad0[0x28];
+    unsigned char busy[16];
+    float timer[16];
+    int x78;
+    int obj[16];
+} Timers28C;
+
+void func_0028C790(Timers28C *, int);
+
+void func_0028C630(Timers28C *p, float dt) {
+    int i;
+    for (i = 0; i < 16; i++) {
+        if (p->obj[i] != 0 && p->busy[i] == 0) {
+            if (p->timer[i] <= 0.0f) {
+                func_0028C790(p, i);
+            } else {
+                p->timer[i] -= dt;
+            }
+        }
+    }
+}
