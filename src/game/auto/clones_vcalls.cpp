@@ -76,7 +76,7 @@ public:
     virtual void d52();
     virtual void d53();
     virtual void d54();
-    virtual void d55();
+    virtual int mE4(char *, char *, char *, char *);
     virtual void d56();
     virtual void mEC(int);
 };
@@ -1286,6 +1286,15 @@ public:
 /* Hop: rises on frame 9, falls under gravity until landing, then plays the landing. */
 
 
+
+static inline short deg2ang(float d) {
+    return 0.5f + 65536.0f * d / 360.0f;
+}
+
+/* Starts a leap: plays the jump animation with its effects and sets the launch velocity from
+ * the facing angle. */
+
+
 extern "C" {
 extern "C" void func_00465AA0(char *p) {
     short d;
@@ -2279,5 +2288,36 @@ extern "C" void func_004A31A0(char *p) {
         }
         (*(Anim4 **)(p + 0xA8))->m24();
     }
+}
+
+extern "C" void func_004A9D50(char *p) {
+    float vy;
+    float vz;
+    p[0xCD] = 1;
+    p[0xCE] = 3;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m1C(0x10);
+    (*(Anim4 **)(p + 0xA8))->m48(0x385, *(char **)(p + 0x10) + 0x10);
+    (*(Anim4 **)(p + 0xA8))->m48(0x3E0, *(char **)(p + 0x10) + 0x10);
+    (*(Anim4 **)(p + 0xA8))->m48(0x7D5, *(char **)(p + 0x10) + 0x10);
+    *(int *)(p + 0xD4) = 0;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    *(short *)(*(char **)(p + 0x10) + 0x50) = *(short *)(p + 0x30);
+    *(float *)(p + 0xE0) = 0.0f;
+    *(float *)(p + 0xE4) = 15.0f;
+    *(float *)(p + 0xE8) = -10.0f;
+    *(float *)(p + 0xEC) = 1.0f;
+    *(float *)(p + 0xF0) = 0.0f;
+    *(float *)(p + 0xF4) = -0.54f;
+    *(float *)(p + 0xF8) = 0.0f;
+    *(float *)(p + 0xFC) = 1.0f;
+    vy = *(float *)(p + 0x74) * func_00131BA0((short)(unsigned short)deg2ang(*(float *)(p + 0x4C)));
+    vz = *(float *)(p + 0x74) * func_00131C20((short)(unsigned short)deg2ang(*(float *)(p + 0x4C)));
+    *(float *)(p + 0xE0) = 0.0f;
+    *(float *)(p + 0xE4) = vy;
+    *(float *)(p + 0xE8) = -vz;
+    *(float *)(p + 0xEC) = 1.0f;
+    ((ObjV *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
 }
 }
