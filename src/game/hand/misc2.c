@@ -147,3 +147,29 @@ int func_001EBB30(int a, int b, int c) {
     func_001AAAF0(D_00662370);
     return size;
 }
+
+/* Fades a blend factor to 1 and builds the colour/position vectors from it. */
+void func_00133450(char *, float *, float *);
+void func_003F2F60(char *);
+void func_003F0460(char *);
+void func_003EFCE0(char *p) {
+    float v[4];
+    float w[4];
+    *(float *)(p + 0x3A8C) += 0.05f * *(float *)(p + 0x10);
+    if (*(float *)(p + 0x3A8C) > 1.0f) {
+        *(float *)(p + 0x3A8C) = 1.0f;
+    }
+    v[0] = *(float *)(p + 0x3AC0) * (1.0f - *(float *)(p + 0x3A8C));
+    v[1] = *(float *)(p + 0x3A8C) + *(float *)(p + 0x3AC4) * (1.0f - *(float *)(p + 0x3A8C));
+    v[2] = *(float *)(p + 0x3AC8) * (1.0f - *(float *)(p + 0x3A8C));
+    v[3] = 0.0f;
+    w[0] = *(float *)(p + 0x700);
+    w[1] = *(float *)(p + 0x704);
+    w[2] = *(float *)(p + 0x708);
+    w[3] = 0.0f;
+    func_00133450(p + 0x6E0, v, w);
+    func_003F2F60(p);
+    if (func_0024E800(p + 0x1FD0)) {
+        func_003F0460(p);
+    }
+}
