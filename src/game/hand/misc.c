@@ -21,7 +21,8 @@ typedef struct Rec48 {
 
 typedef struct Rec48Table {
     char pad[56];
-    Rec48 e[1];
+    Rec48 e[200];
+    short n; /* records in use */
 } Rec48Table;
 
 Rec48 *func_00215A00(Rec48Table *t, short i) {
@@ -244,4 +245,119 @@ int func_00509AA0(char *p) {
         return 1;
     }
     return 0;
+}
+
+void func_002107A0(Rec48 *);
+
+void func_00213710(Rec48Table *t) {
+    int i;
+    for (i = 0; i < t->n; i++) {
+        if (t->e[i].flag == 1) {
+            func_002107A0(&t->e[i]);
+        }
+    }
+}
+
+/* Looks up entry a (stride 0x80) and hands it to func_002E2870. */
+int func_001B0FD0(char *, int, int);
+void func_002E2870(char *, int, int, int);
+
+int func_002E2800(char *p, int a, int b) {
+    int r = func_001B0FD0(p + 0x34, a << 7, 1);
+    if (r) {
+        func_002E2870(p, r, a, b);
+        return 1;
+    }
+    return 0;
+}
+
+/* Integrates a velocity into a position and clamps it; reports the sign change. */
+unsigned char func_004B8610(char *p) {
+    unsigned char r = 0;
+    float v;
+    *(float *)(p + 0x54) += *(float *)(p + 0x64);
+    v = *(float *)(p + 0x64) + *(float *)(p + 0x74);
+    if (v < 0.0f && !(*(float *)(p + 0x64) < 0.0f)) {
+        r = 1;
+    }
+    if (v < 0.0f && v < *(float *)(p + 0xA44)) {
+        v = *(float *)(p + 0xA44);
+    }
+    *(float *)(p + 0x64) = v;
+    return r;
+}
+
+/* func_004B8610 with a timestep (+0x10) and the limit at +0x21A4. */
+unsigned char func_003B51C0(char *p) {
+    unsigned char r = 0;
+    float v;
+    *(float *)(p + 0x54) += *(float *)(p + 0x64) * *(float *)(p + 0x10);
+    v = *(float *)(p + 0x64) + *(float *)(p + 0x74) * *(float *)(p + 0x10);
+    if (v < 0.0f && !(*(float *)(p + 0x64) < 0.0f)) {
+        r = 1;
+    }
+    if (v < 0.0f && v < *(float *)(p + 0x21A4)) {
+        v = *(float *)(p + 0x21A4);
+    }
+    *(float *)(p + 0x64) = v;
+    return r;
+}
+
+/* Struct fields, not pointer arithmetic: MW recomputes &p->pos after each call
+ * (it would keep p + 0x50 in a saved register). */
+typedef struct Obj4377 {
+    char pad0[0x50];
+    float pos[4];
+    char pad1[0x47E0 - 0x60];
+    int x47E0;
+    char pad2[0x4859 - 0x47E4];
+    unsigned char sel;
+    char pad3[4];
+    unsigned char busy;
+} Obj4377;
+
+void func_004377A0(Obj4377 *, float *, unsigned char *);
+void func_004376E0(Obj4377 *, float *, int, unsigned char);
+float func_001324B0(float *, float *);
+
+int func_00437B60(Obj4377 *p) {
+    float buf[4];
+    if (p->busy == 1) {
+        return 0;
+    }
+    func_004377A0(p, p->pos, &p->sel);
+    func_004376E0(p, buf, p->x47E0, p->sel);
+    if (func_001324B0(buf, p->pos) <= 200.0f) {
+        return 1;
+    }
+    return 0;
+}
+
+/* Draw text 0x3106 / 0x3107 centred, its y depending on the layout flag. */
+extern char D_01DFA340[];
+unsigned int func_003101B0(char *, int, int);
+void func_0030FD40(char *, int, int, int, int, int, int, int);
+
+void func_0041D570(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3106, 16);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3106, x, y, 0x585858, 16, 0xFFFFF2, 1);
+}
+
+void func_0044BFA0(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3107, 16);
+    x = 256 - (w >> 17);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3107, x, y, 0x585858, 16, 0xFFFFF2, 1);
 }
