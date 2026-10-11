@@ -1462,3 +1462,32 @@ extern "C" void func_00360590(char *p) {
         break;
     }
 }
+
+extern "C" float D_005731F0[];
+extern "C" float D_005731D0[];
+extern "C" void func_003EAF00(char *);
+
+static inline int dist_level(char *p) {
+    int l = ((Sub130 *)(p + 0x130))->m7C() / 300.0f;
+    if (l > 3) {
+        l = 3;
+    }
+    if (*(unsigned char *)(p + 0x1BD)) {
+        l = 4;
+    }
+    return l;
+}
+
+extern "C" void func_003EA030(char *p) {
+    float r;
+    ((Obj2F8 *)p)->m2F8(1);
+    if (*(int *)(p + 0x1F94) != 0) {
+        func_003E6750(p, 0, 0, 0);
+    }
+    r = 2.3283064e-10f * mt_rand();
+    *(float *)(p + 0x3A8C) = (2.0f * r - 1.0f) * D_005731F0[dist_level(p)];
+    *(float *)(p + 0x3A8C) += D_005731D0[dist_level(p)];
+    if (*(float *)(p + 0x357C) < 0.70700002f) {
+        func_003EAF00(p);
+    }
+}
