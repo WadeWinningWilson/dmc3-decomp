@@ -175,3 +175,42 @@ void func_001A4350(Obj1A4 *p, unsigned int i, int a, int b) {
         func_001A49D0(e, *(int *)(e->items + k * 0x150 + 8), a, b);
     }
 }
+
+/* Pushes flagged entries up along their velocity once the player is above them. */
+extern char D_01CAFF0C[];
+void func_00105300(float *, char *);
+
+typedef struct Blk40 {
+    float a[4];
+    float v[4];
+    float b[4];
+    float pos[4];
+} Blk40;
+
+typedef struct O37E1 {
+    char pad0[0x69F8];
+    char *arr[10];
+    Blk40 blk[17];
+    char pad1[0x6E78 - 0x6A20 - 17 * 0x40];
+    int n;
+    char pad2[0x6F5C - 0x6E7C];
+    char *obj[10];
+    char pad3[0x7805 - 0x6F84];
+    unsigned char flag;
+} O37E1;
+
+void func_0037E150(O37E1 *p) {
+    char *o = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    int i;
+    p->flag = 0;
+    for (i = 0; i < p->n; i++) {
+        func_00105300(p->blk[i].a, p->arr[i] + 0x1240);
+        if (p->obj[i] != 0 && (*(int *)(p->obj[i] + 8) & 0x1000) &&
+            !(*(float *)(o + 0x54) <= p->blk[i].pos[1])) {
+            p->flag = 1;
+            p->blk[i].pos[0] += 25.0f * p->blk[i].v[0];
+            p->blk[i].pos[1] += 25.0f * p->blk[i].v[1];
+            p->blk[i].pos[2] += 25.0f * p->blk[i].v[2];
+        }
+    }
+}
