@@ -838,3 +838,56 @@ void func_002E0A60(unsigned char *p) {
         break;
     }
 }
+
+typedef struct Rec0B40 {
+    unsigned char active;
+    char pad0[0xAFF];
+    float pos[4];
+    float rot[4];
+    char pad1[0x14];
+    unsigned char alpha;
+    char pad2[0xB];
+} Rec0B40;
+typedef struct RecTbl {
+    char pad[0x100];
+    Rec0B40 e[1];
+} RecTbl;
+extern char D_0056A110[];
+
+void func_00401C90(RecTbl *q, unsigned char i) {
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(q->e[i].pos), "r"(D_0056A110 + i * 80) : "memory");
+    q->e[i].pos[3] = 1.0f;
+    q->e[i].rot[0] = 0.0f;
+    q->e[i].rot[1] = 0.0f;
+    q->e[i].rot[2] = 0.0f;
+    q->e[i].rot[3] = 1.0f;
+    q->e[i].alpha = 0x40;
+    q->e[i].active = 0;
+}
+
+typedef struct RecA0 {
+    unsigned char active;
+    char pad0[0x4F];
+    float pos[4];
+    float dir[4];
+    char pad1[0x10];
+    float rot[4];
+    char pad2[0x10];
+} RecA0;
+typedef struct RecA0Tbl {
+    char pad[0xE0];
+    RecA0 e[1];
+} RecA0Tbl;
+extern char D_00581AD0[];
+
+void func_0047CCF0(RecA0Tbl *q, unsigned char i) {
+    q->e[i].active = 0;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(q->e[i].pos), "r"(D_00581AD0 + i * 48) : "memory");
+    q->e[i].pos[3] = 1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(q->e[i].dir), "r"(D_00581AD0 + i * 48 + 32) : "memory");
+    q->e[i].dir[3] = 1.0f;
+    q->e[i].rot[0] = 0.0f;
+    q->e[i].rot[1] = 0.0f;
+    q->e[i].rot[2] = 0.0f;
+    q->e[i].rot[3] = 1.0f;
+}
