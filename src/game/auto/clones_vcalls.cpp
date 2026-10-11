@@ -404,7 +404,7 @@ public:
     virtual void m24();
     virtual float m28();
     virtual int m2C();
-    virtual void d10();
+    virtual int m30();
     virtual void d11();
     virtual void d12();
     virtual void d13();
@@ -1281,6 +1281,9 @@ public:
 
 /* Turn toward the target (+-0x100 per frame); between animation frames 25 and 30 also snap
  * up to 15 degrees. */
+
+
+/* Hop: rises on frame 9, falls under gravity until landing, then plays the landing. */
 
 
 extern "C" {
@@ -2168,5 +2171,113 @@ extern "C" void func_004A19F0(char *p) {
         ((ObjV *)p)->mEC(0xE);
     }
     (*(Anim4 **)(p + 0xA8))->m24();
+}
+
+extern "C" void func_00466990(char *p) {
+    if (*(int *)(p + 0xD4) != 3) {
+        switch (*(int *)(p + 0xD4)) {
+        case 0:
+            if ((*(Anim4 **)(p + 0xA8))->m28() >= 10.0f) {
+                p[0xCD] = 1;
+                (*(Anim4 **)(p + 0xA8))->m18(0x38);
+                *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x24) = 33.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x28) = 8.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x2C) = 1.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x34) = -1.5f;
+                *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x3C) = 1.0f;
+                *(int *)(p + 0xD4) = 1;
+            }
+            break;
+        case 1:
+            *(float *)(*(char **)(p + 0x10) + 0x20) += *(float *)(*(char **)(p + 0x10) + 0x30);
+            *(float *)(*(char **)(p + 0x10) + 0x24) += *(float *)(*(char **)(p + 0x10) + 0x34);
+            *(float *)(*(char **)(p + 0x10) + 0x28) += *(float *)(*(char **)(p + 0x10) + 0x38);
+            if (*(float *)(*(char **)(p + 0x10) + 0x24) < 0.0f && (*(Anim4 **)(p + 0xA8))->m30()) {
+                p[0xCD] = 0;
+                (*(Anim4 **)(p + 0xA8))->m18(0x39);
+                *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x24) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x28) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x2C) = 1.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x34) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x3C) = 1.0f;
+                *(int *)(p + 0xD4) = 2;
+            }
+            break;
+        case 2:
+            if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+                p[0xCD] = 0;
+                ((ObjV *)p)->mEC(0xE);
+            }
+            break;
+        }
+    } else {
+        if ((*(Anim4 **)(p + 0xA8))->m28() >= 3.0f && (*(Anim4 **)(p + 0xA8))->m28() <= 28.0f) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) += 1310.0f * *(float *)(p + 0xB0);
+        }
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+    }
+}
+
+extern "C" void func_004A31A0(char *p) {
+    if (*(int *)(p + 0xD4) != 3) {
+        switch (*(int *)(p + 0xD4)) {
+        case 0:
+            if ((*(Anim4 **)(p + 0xA8))->m28() >= 9.0f) {
+                p[0xCD] = 1;
+                (*(Anim4 **)(p + 0xA8))->m18(0x38);
+                *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x24) = 33.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x28) = 8.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x2C) = 1.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x34) = -1.5f;
+                *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x3C) = 1.0f;
+                *(int *)(p + 0xD4) = 1;
+            }
+            break;
+        case 1:
+            *(float *)(*(char **)(p + 0x10) + 0x20) += *(float *)(*(char **)(p + 0x10) + 0x30);
+            *(float *)(*(char **)(p + 0x10) + 0x24) += *(float *)(*(char **)(p + 0x10) + 0x34);
+            *(float *)(*(char **)(p + 0x10) + 0x28) += *(float *)(*(char **)(p + 0x10) + 0x38);
+            if (*(float *)(*(char **)(p + 0x10) + 0x24) < 0.0f && (*(Anim4 **)(p + 0xA8))->m30()) {
+                p[0xCD] = 0;
+                (*(Anim4 **)(p + 0xA8))->m18(0x39);
+                *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x24) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x28) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x2C) = 1.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x34) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+                *(float *)(*(char **)(p + 0x10) + 0x3C) = 1.0f;
+                *(int *)(p + 0xD4) = 2;
+            }
+            break;
+        case 2:
+            if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+                p[0xCD] = 0;
+                ((ObjV *)p)->mEC(0xE);
+            }
+            break;
+        }
+    } else {
+        if ((*(Anim4 **)(p + 0xA8))->m28() >= 3.0f && (*(Anim4 **)(p + 0xA8))->m28() <= 28.0f) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) += 1310.0f * *(float *)(p + 0xB0);
+        }
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+    }
 }
 }
