@@ -227,12 +227,14 @@ public:
     virtual void d22();
     virtual void d23();
     virtual void d24();
-    virtual void d25();
+    virtual void m6C();
     virtual void d26();
     virtual void d27();
     virtual void d28();
     virtual float m7C();
     virtual int m80(float);
+    virtual void d31();
+    virtual int m88();
 };
 
 extern "C" int func_004F2190(char *, int, int, int, char *, int, int);
@@ -1272,6 +1274,7 @@ public:
     virtual void m2F8(int);
     virtual void m2FC(int);
     virtual void m300(int);
+    virtual void m304(int);
 };
 
 extern "C" int func_004D1EF0(char *);
@@ -1670,4 +1673,142 @@ extern "C" void func_0042F020(char *p) {
     *(float *)(p + 0x464) = 100.0f;
     *(int *)(p + 0x468) = 0;
     p[4] = 1;
+}
+
+extern "C" float D_005BDDB8;
+extern "C" char D_0058AAA0[];
+extern "C" int func_004D2610(char *, int);
+extern "C" void func_004D1AF0(char *, char *, int);
+extern "C" void func_004CBBE0(char *, float);
+
+extern "C" void func_004C47D0(char *p) {
+    switch (*(unsigned char *)(p + 0xB158)) {
+    case 0:
+        (*(unsigned char *)(p + 0xB158))++;
+        ((ObjB *)p)->m300(1);
+        *(float *)(p + 0xB178) = D_005BDDB8;
+        break;
+    case 1:
+        if ((unsigned char)func_004D2610(p, 1) == 1) {
+            func_004CBD90(p);
+            break;
+        }
+        func_004D1AF0(p, D_0058AAA0, 0);
+        if (((Sub130 *)(p + 0x130))->m88()) {
+            func_004CBBE0(p, 3.0f);
+        }
+        if ((unsigned char)func_0024E800(*(char **)(p + 0xAB00)) == 1) {
+            ((ObjB *)p)->m300(1);
+        }
+        *(float *)(p + 0xB178) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0xB178) < 0.0f) {
+            ((ObjB *)p)->m2F8(0x17);
+        }
+        break;
+    }
+}
+
+class ObjCC {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual int mCC(int);
+};
+
+extern "C" void func_003196C0(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    if (*(unsigned char *)(p + 0x28A0) == 0) {
+        ((ObjCC *)(p + 0x4A00))->mCC(*(int *)(*(char **)(p + 0x138C) + 0x104));
+        return;
+    }
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    switch (*(signed char *)(p + 0x28A8)) {
+    case 1:
+        ((ObjCC *)(p + *(int *)(p + 0x7AA0) * 1536 + 0x4A00))->mCC((int)m);
+        break;
+    case 0:
+        if (*(int *)(p + 0x2898) & 2) {
+            ((ObjCC *)(p + *(int *)(p + 0x7A78) * 1536 + 0x4A00))->mCC(*(int *)(((char **)(p + 0x13B8))[*(int *)(p + 0x7A74)] + 0x104));
+        } else {
+            ((ObjCC *)(p + *(int *)(p + 0x7A84) * 1536 + 0x4A00))->mCC(*(int *)(((char **)(p + 0x138C))[*(int *)(p + 0x7A74)] + 0x104));
+        }
+        ((ObjCC *)(p + *(int *)(p + 0x7A90) * 1536 + 0x4A00))->mCC((int)m);
+        break;
+    }
+}
+
+extern "C" int func_0033A660(char *, int);
+extern "C" void func_00335EF0(char *, int);
+extern "C" float func_00132470(char *, char *);
+
+/* Moves 300 units out from the body along the facing, easing over 30 frames. */
+extern "C" void func_00337D50(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    func_0033A660(p, 1);
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        (*(unsigned char *)(p + 5))++;
+        p[6] = 0;
+    case 1:
+        ((Sub130 *)(p + 0x130))->m6C();
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(v), "r"(p + 0x50), "r"(p + 0x150) : "memory");
+        v[1] = 0.0f;
+        func_00132540(v, (char *)v, 300.0f);
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(p + 0x1330), "r"(p + 0x150), "r"(v) : "memory");
+        func_00335EF0(p, 0x400);
+        *(float *)(p + 0x50) += *(float *)(p + 0x10) * ((*(float *)(p + 0x1330) - *(float *)(p + 0x50)) / 30.0f);
+        *(float *)(p + 0x54) += *(float *)(p + 0x10) * ((*(float *)(p + 0x1334) - *(float *)(p + 0x54)) / 30.0f);
+        *(float *)(p + 0x58) += *(float *)(p + 0x10) * ((*(float *)(p + 0x1338) - *(float *)(p + 0x58)) / 30.0f);
+        if (func_00132470(p + 0x50, p + 0x1330) < 30.0f) {
+            ((ObjB *)p)->m304(0x20);
+        }
+        break;
+    }
 }
