@@ -2046,3 +2046,37 @@ extern "C" int func_0033ADA0(char *p, char *a, char *b) {
     }
     return r;
 }
+
+/* Turn toward the target (+-0x100 per frame); between animation frames 25 and 30 also snap
+ * up to 15 degrees. */
+extern "C" void func_003635A0(char *p) {
+    short d;
+    float lim;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+    if (d > 0x100) {
+        d = 0x100;
+    }
+    if (d < -0x100) {
+        d = -0x100;
+    }
+    *(short *)(*(char **)(p + 0x10) + 0x50) += d * *(float *)(p + 0xB0);
+    if ((*(Anim4 **)(p + 0xA8))->m28() >= 25.0f && (*(Anim4 **)(p + 0xA8))->m28() <= 30.0f) {
+        ((ObjV *)p)->m6C();
+        ((ObjV *)p)->m70();
+        d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d > lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) += lim;
+        }
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d < -lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) -= lim;
+        }
+    }
+    if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+        ((ObjV *)p)->mEC(0xE);
+    }
+    (*(Anim4 **)(p + 0xA8))->m24();
+}
