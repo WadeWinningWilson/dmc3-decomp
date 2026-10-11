@@ -1,5 +1,7 @@
 /* Hand-matched functions (sixth file: its callee declarations differ from the others). */
 
+#include "game/mt_rand.h"
+
 extern char D_00666710[];
 extern char D_0066671A[];
 extern char D_01DFC180[];
@@ -162,3 +164,96 @@ int func_00455B90(char *p) {
     return 0;
 }
 
+
+void func_002EF940(int, char *);
+
+/* Wanders inside the 500..4500 square; leaving it (or the timer / distance) ends the state. */
+typedef struct Walker { char pad[0x50]; char pos[0x10]; } Walker;
+
+void func_003DC500(Walker *q) {
+    unsigned char *p = (unsigned char *)q;
+    unsigned char out = 0;
+    float x;
+    switch (p[5]) {
+    case 0:
+        p[5]++;
+        func_0034BA60(0x4D, q->pos, 0x35, 0, 1);
+        if (mt_rand() & 1) {
+            func_0034BA60(0x4E, q->pos, 0x35, 0, 1);
+        }
+    case 1:
+        *(float *)(p + 0x54) = 110.0f;
+        x = *(float *)(p + 0x50) + *(float *)(p + 0x60) * *(float *)(p + 0x10);
+        if (500.0f < x && x < 4500.0f) {
+            *(float *)(p + 0x50) = x;
+        } else {
+            out = 1;
+        }
+        x = *(float *)(p + 0x58) + *(float *)(p + 0x68) * *(float *)(p + 0x10);
+        if (500.0f < x && x < 4500.0f) {
+            *(float *)(p + 0x58) = x;
+        } else {
+            out = 1;
+        }
+        if (out == 0) {
+            *(float *)(p + 0xEC4) -= *(float *)(p + 0x10);
+            if (*(float *)(p + 0xEC4) < 0.0f) {
+                p[0xF05] = 1;
+            }
+            if (*(float *)(p + 0xEE4) < 200.0f) {
+                p[0xF05] = 1;
+            }
+        } else {
+            p[0xF0B] = 1;
+        }
+        break;
+    }
+    func_002EF940(*(int *)D_01CAFF0C, (char *)p + 0xAF0);
+}
+
+typedef struct PickRow {
+    signed char id0[8];
+    float w0[8];
+    signed char id1[8];
+    float w1[8];
+} PickRow;
+extern PickRow D_0056E190[][3];
+void func_003ACB40(unsigned char *);
+
+/* Picks the next attack (weights in percent) for the current level and difficulty. */
+void func_003AC910(unsigned char *p) {
+    unsigned char ok = 1;
+    float r = mt_rand() % 100;
+    float acc = 0.0f;
+    int i;
+    for (i = 0; i < 8; i++) {
+        if (p[0x4E1E] == 0) {
+            PickRow *row = &D_0056E190[p[0x4E17]][p[0x4E18]];
+            acc += row->w0[i];
+            if (!(acc <= r)) {
+                p[0x4E1A] = row->id0[i];
+                if (*(signed char *)(p + 0x4E1A) == -1) {
+                    p[0x4E1A] = 0;
+                    ok = 0;
+                }
+                break;
+            }
+        } else {
+            acc += D_0056E190[p[0x4E17]][p[0x4E18]].w1[i];
+            if (!(acc <= r)) {
+                p[0x4E1A] = D_0056E190[p[0x4E17]][p[0x4E18]].id1[i];
+                if (*(signed char *)(p + 0x4E1A) == -1) {
+                    p[0x4E1A] = 0;
+                    ok = 0;
+                }
+                break;
+            }
+        }
+    }
+    if (ok == 1) {
+        p[0x4E1B] = 0;
+        func_003ACB40(p);
+    } else {
+        func_003ACB40(p);
+    }
+}
