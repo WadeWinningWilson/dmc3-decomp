@@ -627,9 +627,9 @@ public:
     virtual void d22();
     virtual void d23();
     virtual void d24();
-    virtual void d25();
+    virtual void m6C();
     virtual void d26();
-    virtual void d27();
+    virtual void m74();
     virtual void d28();
     virtual float m7C();
     virtual int m80(float);
@@ -2190,4 +2190,53 @@ extern "C" void func_00362130(char *p) {
 
 extern "C" void func_0035A670(char *p) {
     (*(Anim4 **)(p + 0xA8))->m48(0x138A, *(char **)(p + 0x10) + 0x10);
+}
+
+/* Like func_00321980, but the list is chosen by `which` and then by distance thresholds. */
+extern "C" int func_00321B10(char *p, unsigned char which) {
+    char **lst;
+    char *e;
+    float *t;
+    float f;
+    int k;
+    char *w;
+    float r;
+    float acc;
+    ((Anim4 *)p)->m6C();
+    ((Anim4 *)p)->m74();
+    switch (which) {
+    case 0:
+        lst = *(char ***)(*(char **)(p + 8) + 0);
+        break;
+    case 1:
+        lst = *(char ***)(*(char **)(p + 8) + 4);
+        break;
+    }
+    t = *(float **)(*(char **)(p + 8) + 0xC);
+    e = *lst++;
+    while (*t > 0.0f) {
+        if (!(*t <= *(float *)(p + 0x34))) {
+            break;
+        }
+        t++;
+        e = *lst++;
+    }
+    f = ((Anim4 *)p)->m7C();
+    if (*(unsigned char *)(p + 0x8D)) {
+        f = 1199.0f;
+    }
+    k = ((Anim4 *)p)->m80(f);
+    if (*(unsigned char *)(p + 0x8D)) {
+        k++;
+    }
+    w = ((char **)e)[k];
+    r = 99.0f * (2.3283064e-10f * mt_rand());
+    acc = 0.0f;
+    for (;; w += 8) {
+        acc += *(float *)(w + 4);
+        if (!(acc > r)) {
+            continue;
+        }
+        return *(int *)w;
+    }
 }
