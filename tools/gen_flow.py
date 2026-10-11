@@ -2142,7 +2142,7 @@ def compile_ok(path, funcs, externs, kind):
     cc = CC + (" -lang c++ -Cpp_exceptions off" if kind == "cpp" else "")
     if GCC:
         cc = f"sh tools/eegcc.sh {GCC} scratch/{path.stem}.o {path.relative_to(ROOT).as_posix()} {GCC_FLAGS}"
-    for _ in range(400):
+    for it_ in range(3000):
         (write_cpp if kind == "cpp" else write)(path, funcs, externs)
         r = subprocess.run(["docker", "exec", "-w", "/w", "dmc3b", "sh", "-c",
                             cc if GCC else f"{cc} -o scratch/{path.stem}.o {path.relative_to(ROOT).as_posix()}"],
@@ -2154,16 +2154,27 @@ def compile_ok(path, funcs, externs, kind):
         bad_lines |= {int(m.group(1)) for m in re.finditer(r"\.c:(\d+): (?!warning)", r.stdout + r.stderr)}
         text = path.read_text().split("\n")
         bad = set()
+        names_ = {f[0] for f in funcs}
         for ln in bad_lines:
+            line_ = text[min(ln, len(text)) - 1]
+            mp = re.match(r"\w[\w *]*[ *](func_[0-9A-F]{8})\(.*\);$", line_)
+            if mp:
+                # an error on a declaration: its definition here, or else its callers
+                x_ = mp.group(1)
+                bad |= {x_} if x_ in names_ else {f[0] for f in funcs if x_ in f[2]}
+                continue
             for j in range(min(ln, len(text)) - 1, -1, -1):
-                mm = re.match(r"\w[\w *]* (func_[0-9A-F]{8})\(", text[j])
-                if mm:
+                mm = re.match(r"\w[\w *]*[ *](func_[0-9A-F]{8})\(", text[j])
+                if mm and not text[j].rstrip().endswith(";"):
                     bad.add(mm.group(1))
                     break
+        bad &= names_
         if not bad:
             raise SystemExit(r.stdout[-3000:])
         funcs = [f for f in funcs if f[0] not in bad]
         DROPPED[0] += len(bad)
+        if it_ and it_ % 50 == 0:
+            print(f"  compile_ok: attempt {it_}, {len(funcs)} functions left, dropped {sorted(bad)[:3]}", flush=True)
         if os.environ.get("GEN_SHOW_ERRORS"):
             if not (ROOT / "scratch/err_src.txt").exists():  # the first failing attempt
                 (ROOT / "scratch/err_src.txt").write_text("\n".join(text))
@@ -2196,9 +2207,9 @@ def load_previous(path, kind, externs):
         classes[m.group(1)] = (8 + 4 * body.count("virtual void d"), () if args in ("", "void") else
                                tuple(a.strip() for a in args.split(",")), mm.group(1).strip())
     out = {}
-    for m in re.finditer(r"^(\w[\w *]*? (func_[0-9A-F]{8})\([^)]*\)[^{}\n]* \{\n.*?^\})", text, re.M | re.S):
+    for m in re.finditer(r"^(\w[\w *]*?[ *](func_[0-9A-F]{8})\([^)]*\)[^{}\n]* \{\n.*?^\})", text, re.M | re.S):
         code, name = m.group(1), m.group(2)
-        hm = re.match(r"(\w[\w *]*? func_[0-9A-F]{8})\(([^)]*)\) \{\n", code)
+        hm = re.match(r"(\w[\w *]*?[ *]func_[0-9A-F]{8})\(([^)]*)\) \{\n", code)
         if kind == "c" and hm and "float" not in hm.group(2):
             # an older ANSI header: rewrite as K&R with the unused trailing parameters dropped
             rest_ = code[hm.end():]
