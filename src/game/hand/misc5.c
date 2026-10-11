@@ -891,3 +891,15 @@ void func_0047CCF0(RecA0Tbl *q, unsigned char i) {
     q->e[i].rot[2] = 0.0f;
     q->e[i].rot[3] = 1.0f;
 }
+
+typedef struct InputTbl {
+    char pad[0x5D];
+    unsigned char st[1][5];
+} InputTbl;
+
+int func_0024E780(InputTbl *p, int a, int b) {
+    if (b >= 5) {
+        return 0;
+    }
+    return p->st[a][b];
+}
