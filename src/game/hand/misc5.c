@@ -907,3 +907,71 @@ int func_0024E780(InputTbl *p, int a, int b) {
 void func_00481C60(int a, int b, int c, char *pos) {
     func_003305E0(D_01DFABA0, 8, 0x6C, pos, 0x28, 0, 0);
 }
+
+void func_00482580(char *p) {
+    if (*(unsigned char *)(p + 0x284) == 0) {
+        return;
+    }
+    switch (*(signed char *)(p + 0x28A)) {
+    case 0:
+        if (mt_rand() & 1) {
+            func_003305E0(D_01DFABA0, 8, 0x6F, p + 0x50, 0x28, 0, 0);
+        } else {
+            func_003305E0(D_01DFABA0, 8, 0x70, p + 0x50, 0x28, 0, 0);
+        }
+        *(float *)(p + 0x2B4) = 60.0f;
+        (*(signed char *)(p + 0x28A))++;
+        break;
+    case 1:
+        *(float *)(p + 0x2B4) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0x2B4) < 0.0f) {
+            if (mt_rand() & 1) {
+                func_003305E0(D_01DFABA0, 8, 0x6D, p + 0x50, 0x28, 0, 0);
+            } else {
+                func_003305E0(D_01DFABA0, 8, 0x6E, p + 0x50, 0x28, 0, 0);
+            }
+            p[0x284] = 0;
+        }
+        break;
+    }
+}
+
+int func_0038F490(char *);
+void func_0038F830(char *);
+
+void func_0041F600(char *p) {
+    char *b;
+    *(int *)(p + 0x42C) |= 0x2000;
+    *(int *)(p + 0x42C) |= 0x10000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_0038F300(p, -1);
+        func_0038F360((unsigned char *)p);
+        *(float *)(p + 0x60) = 0.0f;
+        *(float *)(p + 0x64) = 0.0f;
+        *(float *)(p + 0x68) = -2.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+        p[6] = 1;
+    case 1:
+        func_0041DAB0(p + 0x50, p + 0x90, func_0038F490(p));
+        b = p;
+        if (p) {
+            b += 0x40;
+        }
+        func_0041D6E0(b, p + 0x60, 1, *(float *)(p + 0x10));
+        if ((unsigned char)func_0041D6B0(p + 0x428, *(float *)(p + 0x10)) == 1) {
+            func_0038F830(p);
+            p[6] = 0;
+        }
+        break;
+    }
+    if (*(unsigned char *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x284A) == 0x11 &&
+        func_0041DB20(p + 0x50) < 500.0f) {
+        *(int *)(p + 0x42C) |= 0x4000;
+        if (100.0f * (2.3283064e-10f * mt_rand()) < 50.0f) {
+            func_0038F2C0(p, 2);
+        } else {
+            func_0038F2C0(p, 3);
+        }
+    }
+}
