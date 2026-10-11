@@ -376,3 +376,63 @@ int func_0027A900(char *p, int a, int id, int b) {
     p[0xA] = 1;
     return 1;
 }
+
+void func_00199730(char *, char *, char *, int);
+void func_00199720(char *, char *, int);
+
+int func_002794A0(char *p, int a, int id, int b) {
+    char *src;
+    unsigned short fl;
+    int n;
+    char *buf;
+    switch (*(unsigned char *)(p + 8)) {
+    case 0:
+        src = func_00286610(D_00645EB0, id, b);
+        if (src != 0) {
+            *(int *)(p + 0xC) = id;
+        } else {
+            p[8] = 1;
+        }
+        break;
+    case 1:
+        break;
+    }
+    fl = 0;
+    switch (*(unsigned char *)(p + 8)) {
+    case 0:
+        break;
+    case 1:
+        fl |= 1;
+        break;
+    }
+    switch (*(unsigned char *)(p + 9)) {
+    case 0:
+        break;
+    case 1:
+        fl |= 2;
+        break;
+    }
+    func_00198450(p + 0x40, a, id, fl);
+    n = func_001A4F90(p + 0x40);
+    if (n <= 0) {
+        return 0;
+    }
+    buf = func_001B0FD0(p + 0x14, n, -2);
+    if (buf == 0) {
+        return 0;
+    }
+    func_00130990(buf, n >> 2);
+    switch (*(unsigned char *)(p + 8)) {
+    case 0:
+        func_00199730(p + 0x40, buf, src, 0);
+        break;
+    case 1:
+        func_00199720(p + 0x40, buf, 0);
+        break;
+    }
+    if (func_001A5B30(p + 0x40, n) != 0) {
+        return 0;
+    }
+    p[0xA] = 1;
+    return 1;
+}
