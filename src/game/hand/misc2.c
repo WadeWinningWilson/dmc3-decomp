@@ -173,3 +173,36 @@ void func_003EFCE0(char *p) {
         func_003F0460(p);
     }
 }
+
+/* Aims at the target selected by +0xBA0/+0xBA4 (VU0 vector difference), then refreshes. */
+float func_00132470(char *, float *); void func_0030CCD0(char *);
+void func_0030CBD0(char *p) {
+    float v[4];
+    char *a;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        a = *(char **)(p + 0xD0);
+        if (a) {
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0xB00), "r"(*(char **)(((char **)(a + 0x4F4))[*(int *)(p + 0xBA0)] + 0x104) + 0x30) : "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(*(char **)(((char **)(a + 0x4F4))[*(int *)(p + 0xBA4)] + 0x104) + 0x30) : "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(p + 0xF0), "r"(p + 0xB00), "r"(v) : "memory");
+        } else {
+            *(float *)(p + 0xF0) = 0.0f;
+            *(float *)(p + 0xF4) = 1.0f;
+            *(float *)(p + 0xF8) = 0.0f;
+            *(float *)(p + 0xFC) = 1.0f;
+        }
+        {
+            float f = func_00132470(p + 0xB00, v);
+            *(float *)(p + 0xE0) = 1.0f;
+            *(float *)(p + 0xE4) = 1.0f;
+            *(float *)(p + 0xE8) = f;
+            *(float *)(p + 0xEC) = 1.0f;
+        }
+        break;
+    case 1:
+    case 2:
+        break;
+    }
+    func_0030CCD0(p);
+}

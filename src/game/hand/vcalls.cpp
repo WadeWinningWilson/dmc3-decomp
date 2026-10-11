@@ -196,3 +196,59 @@ extern "C" void func_00365A30(char *p) {
     }
     (*(Anim **)(p + 0xA8))->m24();
 }
+
+/* Emits two effects for every active entry pair (sub-object at +0x130 gives the rate). */
+class Sub130 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual float m7C();
+    virtual int m80(float);
+};
+
+extern "C" int func_004F2190(char *, int, int, int, char *, int, int);
+extern "C" void func_0037BC90(char *, int);
+struct O37E { char pad[0x69F8]; char *arr[1]; };
+extern "C" void func_0037E590(char *p) {
+    float f;
+    int i;
+    int n;
+    f = ((Sub130 *)(p + 0x130))->m7C();
+    n = ((Sub130 *)(p + 0x130))->m80(f);
+    if (*(int *)(p + 0x6E4C) != 0) {
+        return;
+    }
+    for (i = 0; i < *(int *)(p + 0x6E78); i += 2) {
+        if (*(int *)(((O37E *)p)->arr[i] + 0x144C) > 0) {
+            func_0037BC90(p, func_004F2190(p + 0x710, *(int *)(p + 0x750), i, 0, p, *(int *)(p + 0x77CC), n));
+            func_0037BC90(p, func_004F2190(p + 0x710, *(int *)(p + 0x750), i, 1, p, *(int *)(p + 0x77CC), n));
+        }
+    }
+}
