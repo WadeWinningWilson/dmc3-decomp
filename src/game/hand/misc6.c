@@ -133,3 +133,32 @@ void func_00299A60(char *p) {
         func_002965E0(p, 0xFFFF);
     }
 }
+
+float func_00131B50(float);
+
+int func_002DAB50(char *p, float y, float lim) {
+    return func_00131B50(*(float *)(p + 0x54) - y) <= lim;
+}
+
+int func_00400230(char *p, char *e) {
+    if (e[2] == 0 && *(float *)(e + 0xC) >= 60.0f) {
+        return 1;
+    }
+    return 0;
+}
+
+void func_0034BA60(int, char *, signed char, int, int);
+
+void func_0048AB30(char *p) {
+    func_0034BA60(0x18, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+    p[0x448] = 1;
+}
+
+int func_00455B90(char *p) {
+    char *pl = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    if (pl != 0 && *(signed char *)(p + 0x644) == *(signed char *)(pl + 0x3D49)) {
+        return 1;
+    }
+    return 0;
+}
+
