@@ -1295,6 +1295,8 @@ static inline short deg2ang(float d) {
  * the facing angle. */
 
 
+
+
 extern "C" {
 extern "C" void func_00465AA0(char *p) {
     short d;
@@ -2319,5 +2321,173 @@ extern "C" void func_004A9D50(char *p) {
     *(float *)(p + 0xE8) = -vz;
     *(float *)(p + 0xEC) = 1.0f;
     ((ObjV *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+}
+
+extern "C" void func_00366E80(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x2E);
+}
+
+extern "C" void func_00369320(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x44);
+}
+
+extern "C" void func_003693C0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x45);
+}
+
+extern "C" void func_00369460(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x46);
+}
+
+extern "C" void func_00369500(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x47);
+}
+
+extern "C" void func_0036B860(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x55);
+}
+
+extern "C" void func_0036B900(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x56);
+}
+
+extern "C" void func_003CE5A0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x1);
+}
+
+extern "C" void func_00466200(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x35);
+}
+
+extern "C" void func_00467BC0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x2E);
+}
+
+extern "C" void func_00469E60(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x44);
+}
+
+extern "C" void func_00469F00(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x45);
+}
+
+extern "C" void func_00469FA0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x46);
+}
+
+extern "C" void func_0046A040(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x47);
+}
+
+extern "C" void func_0046C130(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x55);
+}
+
+extern "C" void func_0046C1D0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x56);
+}
+
+extern "C" void func_004A2A90(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x35);
+}
+
+extern "C" void func_004A43D0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x2E);
+}
+
+extern "C" void func_004A6670(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x44);
+}
+
+extern "C" void func_004A6710(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x45);
+}
+
+extern "C" void func_004A67B0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x46);
+}
+
+extern "C" void func_004A6850(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x47);
+}
+
+extern "C" void func_004A8930(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x55);
+}
+
+extern "C" void func_004A89D0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x56);
 }
 }

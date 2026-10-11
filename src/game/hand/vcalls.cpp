@@ -2173,3 +2173,10 @@ extern "C" void func_0036C960(char *p) {
     *(float *)(p + 0xEC) = 1.0f;
     ((ObjV *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
 }
+
+extern "C" void func_003650F0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x35);
+}
