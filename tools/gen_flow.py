@@ -181,6 +181,10 @@ def fold_mtrand(raw):
                   and not any(re.fullmatch(r"lui \$at, .*", t2) for _, t2 in raw[i + 1:i + 2])), None)
         if s is None:
             return raw
+        # the block may start in a delay slot (the scheduler hoists its harmless `lui $at` there):
+        # the slot becomes a nop and the call goes after it
+        in_slot = s > 0 and re.match(r"(b\w*|j|jal|jalr|jr) ", raw[s - 1][1] + " ") is not None \
+            and not raw[s - 1][1].startswith("break")
         mt, keep, out = set(), [], None
         idx = base = None
         e = None
@@ -276,9 +280,11 @@ def fold_mtrand(raw):
                 return raw  # a `before` instruction needs this result
         new = [t for _, t in before] + [f"jal {MT_FN}", "nop", f"daddu {out}, $v0, $zero"] + [t for _, t in after]
         addrs = sorted(window)
+        if in_slot:
+            new = ["nop"] + new
         if len(new) > len(addrs):
             return raw
-        addrs = addrs[len(addrs) - len(new):]
+        addrs = ([addrs[0]] + addrs[len(addrs) - len(new) + 1:]) if in_slot else addrs[len(addrs) - len(new):]
         tail_ = raw[e + 1:]
         if out in ARGS:
             # the draw held in an argument register would read as an extra argument of the next

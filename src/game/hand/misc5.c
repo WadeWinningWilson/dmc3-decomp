@@ -515,3 +515,48 @@ void func_004BD640(char *p) {
     }
     func_004BE330(p);
 }
+
+typedef struct ZoneSel {
+    float weight[4];
+    unsigned short id;
+    char pad[2];
+} ZoneSel;
+typedef struct Zone {
+    ZoneSel *sel;
+    short ang;
+    short range;
+    float dist;
+} Zone;
+extern Zone *D_0056C574[];
+int func_0034B800(char *, char *, short, short, float);
+void func_003FA3F0(unsigned char *, int);
+
+/* In the first zone the player stands in, picks the next state with the zone's weights. */
+typedef struct Enemy239 { char pad[0x50]; char pos[0x40]; short ang; } Enemy239;
+
+void func_004239B0(Enemy239 *q) {
+    unsigned char *p = (unsigned char *)q;
+    Zone *z;
+    ZoneSel *e;
+    float r;
+    float acc;
+    for (z = D_0056C574[p[5] * 13]; z->sel != 0; z++) {
+        if ((unsigned char)func_0034B800(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, q->pos,
+                                         q->ang + z->ang, z->range, z->dist) == 1) {
+            e = z->sel;
+            r = 100.0f * (2.3283064e-10f * mt_rand());
+            acc = 0.0f;
+            for (;; e++) {
+                acc += e->weight[p[0x3AB]];
+                if (!(r < acc)) {
+                    continue;
+                }
+                if (e->id == p[5]) {
+                    return;
+                }
+                func_003FA3F0(p, e->id);
+                return;
+            }
+        }
+    }
+}
