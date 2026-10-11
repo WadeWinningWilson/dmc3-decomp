@@ -361,3 +361,100 @@ void func_0044BFA0(void) {
     }
     func_0030FD40(D_01DFA340, 0x3107, x, y, 0x585858, 16, 0xFFFFF2, 1);
 }
+
+/* The same helper for other text ids. */
+void func_00417BA0(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3107, 16);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3107, x, y, 0x585858, 16, 0xFFFFF2, 1);
+}
+
+void func_0047F8C0(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3106, 16);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3106, x, y, 0x585858, 16, 0xFFFFF2, 1);
+}
+
+void func_00490DD0(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3106, 16);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3106, x, y, 0x585858, 16, 0xFFFFF2, 1);
+}
+
+void func_004B6040(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3107, 16);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3107, x, y, 0x585858, 16, 0xFFFFF2, 1);
+}
+
+void func_00504F40(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3108, 16);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3108, x, y, 0x585858, 16, 0xFFFFF2, 1);
+}
+
+void func_004E26F0(char *p) {
+    char *o;
+    *(char **)(p + 0x74C) = func_00207480(3, 0x2D7, 0, 16);
+    o = *(char **)(p + 0x74C);
+    if (o != 0) {
+        *(char **)(o + 0x90) = p + 0x700;
+        o[0x9A] = 0;
+        *(*(char **)(p + 0x74C) + 0x3A) = 1;
+    }
+}
+
+/* Updates each of the four attached items. */
+typedef struct Obj28B {
+    char pad[0xE8];
+    int item[4];
+} Obj28B;
+
+void func_0028BCE0(Obj28B *, int, int, float);
+
+void func_0028BC60(Obj28B *p, int a, float f) {
+    unsigned int i;
+    for (i = 0; i < 4; i++) {
+        if (p->item[i]) {
+            func_0028BCE0(p, a, p->item[i], f);
+        }
+    }
+}
+
+/* Steps an angle by a rate * dt, then moves along it (short += float). */
+float func_00131BA0(int);
+
+void func_003C0110(char *p, int a, float f) {
+    *(short *)(p + 0x1664) += a * *(float *)(p + 0x10);
+    *(float *)(p + 0x54) += *(float *)(p + 0x10) * (f * func_00131BA0(*(short *)(p + 0x1664)));
+}
