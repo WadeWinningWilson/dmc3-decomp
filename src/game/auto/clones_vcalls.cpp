@@ -2073,4 +2073,100 @@ extern "C" void func_004A1770(char *p) {
     }
     (*(Anim4 **)(p + 0xA8))->m24();
 }
+
+extern "C" void func_00363AA0(char *p) {
+    short d;
+    float lim;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+    if (d > 0x100) {
+        d = 0x100;
+    }
+    if (d < -0x100) {
+        d = -0x100;
+    }
+    *(short *)(*(char **)(p + 0x10) + 0x50) += d * *(float *)(p + 0xB0);
+    if ((*(Anim4 **)(p + 0xA8))->m28() >= 35.0f && (*(Anim4 **)(p + 0xA8))->m28() <= 40.0f) {
+        ((ObjV *)p)->m6C();
+        ((ObjV *)p)->m70();
+        d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d > lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) += lim;
+        }
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d < -lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) -= lim;
+        }
+    }
+    if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+        ((ObjV *)p)->mEC(0xE);
+    }
+    (*(Anim4 **)(p + 0xA8))->m24();
+}
+
+extern "C" void func_004650E0(char *p) {
+    short d;
+    float lim;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+    if (d > 0x100) {
+        d = 0x100;
+    }
+    if (d < -0x100) {
+        d = -0x100;
+    }
+    *(short *)(*(char **)(p + 0x10) + 0x50) += d * *(float *)(p + 0xB0);
+    if ((*(Anim4 **)(p + 0xA8))->m28() >= 35.0f && (*(Anim4 **)(p + 0xA8))->m28() <= 40.0f) {
+        ((ObjV *)p)->m6C();
+        ((ObjV *)p)->m70();
+        d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d > lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) += lim;
+        }
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d < -lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) -= lim;
+        }
+    }
+    if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+        ((ObjV *)p)->mEC(0xE);
+    }
+    (*(Anim4 **)(p + 0xA8))->m24();
+}
+
+extern "C" void func_004A19F0(char *p) {
+    short d;
+    float lim;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+    if (d > 0x100) {
+        d = 0x100;
+    }
+    if (d < -0x100) {
+        d = -0x100;
+    }
+    *(short *)(*(char **)(p + 0x10) + 0x50) += d * *(float *)(p + 0xB0);
+    if ((*(Anim4 **)(p + 0xA8))->m28() >= 35.0f && (*(Anim4 **)(p + 0xA8))->m28() <= 40.0f) {
+        ((ObjV *)p)->m6C();
+        ((ObjV *)p)->m70();
+        d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d > lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) += lim;
+        }
+        lim = 2731.0f * *(float *)(p + 0xB0);
+        if (d < -lim) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) -= lim;
+        }
+    }
+    if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+        ((ObjV *)p)->mEC(0xE);
+    }
+    (*(Anim4 **)(p + 0xA8))->m24();
+}
 }

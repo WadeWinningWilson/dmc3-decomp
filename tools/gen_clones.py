@@ -14,6 +14,7 @@ import contextlib
 import importlib.util
 import io
 import re
+import struct
 import subprocess
 import sys
 from pathlib import Path
@@ -68,6 +69,12 @@ def substitute(code, pairs):
         va, vb = as_int(a), as_int(b)
         if va is None or vb is None:
             continue
+        if va > 0xFFFF and not va & 0xFFFF and vb > 0xFFFF and not vb & 0xFFFF:
+            # the high half of a float constant (`lui r, (0x41C80000 >> 16)`): the source has a
+            # float literal; low halves (ori) of the same constant come as their own pair
+            fa, fb = (struct.unpack("<f", struct.pack("<I", v & 0xFFFFFFFF))[0] for v in (va, vb))
+            for lit_a, lit_b in ((repr(fa) + "f", repr(fb) + "f"), (f"{fa:g}f", f"{fb:g}f")):
+                code = re.sub(rf"(?<![\w.]){re.escape(lit_a)}", lit_b, code)
         reps = {str(va): str(vb), f"{va:#x}": f"{vb:#x}", f"0x{va:X}": f"0x{vb:X}"}
         if va < 0:
             reps[f"-{-va:#x}"] = f"-{-vb:#x}" if vb < 0 else f"{vb:#x}"
