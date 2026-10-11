@@ -588,3 +588,83 @@ void func_003DCF70(unsigned char *p) {
         break;
     }
 }
+
+void func_0041D800(char *, float, float);
+void func_0048AFC0(char *, int);
+int func_0048B150(char *);
+void func_0041D6E0(char *, char *, int, float);
+void func_0048C070(char *);
+
+void func_00423240(char *p) {
+    char *b;
+    *(int *)(p + 0x45C) |= 0x10000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_0048AFC0(p, -1);
+        *(float *)(p + 0x60) = 5.0f * (2.3283064e-10f * mt_rand() - 0.5f);
+        *(float *)(p + 0x64) = 0.5f;
+        *(float *)(p + 0x68) = -12.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+        *(float *)(p + 0x70) = 0.0f;
+        *(float *)(p + 0x74) = 0.0f;
+        *(float *)(p + 0x78) = 1.0f;
+        *(float *)(p + 0x7C) = 1.0f;
+        *(float *)(p + 0x458) = 30.0f;
+        p[6] = 1;
+    case 1:
+        func_0041DAB0(p + 0x50, p + 0x90, func_0048B150(p));
+        func_0041D800(p + 0x68, *(float *)(p + 0x78) * *(float *)(p + 0x10), 0.0f);
+        b = p;
+        if (p) {
+            b += 0x40;
+        }
+        func_0041D6E0(b, p + 0x60, 1, *(float *)(p + 0x10));
+        if ((unsigned char)func_0041D6B0(p + 0x458, *(float *)(p + 0x10)) == 1) {
+            func_0048C070(p);
+        }
+        break;
+    }
+}
+
+int func_003BA680(char *p, unsigned char reset) {
+    char *o;
+    if (reset == 1) {
+        p[0x1B7] = 0;
+        if (*(char **)(p + 0x214) != 0) {
+            (*(char **)(p + 0x214))[0x3A] = 1;
+            func_001AD140(*(char **)(p + 0x214));
+            *(char **)(p + 0x214) = 0;
+        }
+        if (*(char **)(p + 0x218) != 0) {
+            (*(char **)(p + 0x218))[0x3A] = 1;
+            func_001AD140(*(char **)(p + 0x218));
+            *(char **)(p + 0x218) = 0;
+        }
+        if (*(char **)(p + 0x21C) != 0) {
+            (*(char **)(p + 0x21C))[0x3A] = 1;
+            func_001AD140(*(char **)(p + 0x21C));
+            *(char **)(p + 0x21C) = 0;
+        }
+    }
+    if (*(char **)(p + 0x210) != 0) {
+        return 1;
+    }
+    switch (mt_rand() % 3) {
+    case 0:
+        *(char **)(p + 0x210) = func_00207480(0, 0xCB, 0, 16);
+        break;
+    case 1:
+        *(char **)(p + 0x210) = func_00207480(0, 0xFB, 0, 16);
+        break;
+    case 2:
+        *(char **)(p + 0x210) = func_00207480(0, 0xEB, 0, 16);
+        break;
+    }
+    o = *(char **)(p + 0x210);
+    if (o == 0) {
+        return 0;
+    }
+    *(char **)(o + 0x90) = p + 0x250;
+    o[0x9A] = 0;
+    return 1;
+}
