@@ -485,3 +485,62 @@ extern "C" void func_003BFD20(char *p) {
         break;
     }
 }
+
+/* Turn-toward with a +-0x200 limit that also stops the animation on its event. */
+class Anim2 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void m24();
+    virtual void d8();
+    virtual int m2C();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void m44();
+};
+
+extern "C" void func_0035E2B0(char *p) {
+    short d;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+    if (d > 0x200) {
+        d = 0x200;
+    }
+    if (d < -0x200) {
+        d = -0x200;
+    }
+    *(short *)(*(char **)(p + 0x10) + 0x50) += d * *(float *)(p + 0xB0);
+    if ((*(Anim2 **)(p + 0xA8))->m2C()) {
+        (*(Anim2 **)(p + 0xA8))->m44();
+        ((ObjV *)p)->mEC(0xE);
+    }
+    (*(Anim2 **)(p + 0xA8))->m24();
+}
+
+extern "C" void func_0049BA90(char *p) {
+    short d;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+    if (d > 0x200) {
+        d = 0x200;
+    }
+    if (d < -0x200) {
+        d = -0x200;
+    }
+    *(short *)(*(char **)(p + 0x10) + 0x50) += d * *(float *)(p + 0xB0);
+    if ((*(Anim2 **)(p + 0xA8))->m2C()) {
+        (*(Anim2 **)(p + 0xA8))->m44();
+        ((ObjV *)p)->mEC(0xE);
+    }
+    (*(Anim2 **)(p + 0xA8))->m24();
+}
