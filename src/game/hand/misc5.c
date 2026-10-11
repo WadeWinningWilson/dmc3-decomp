@@ -560,3 +560,31 @@ void func_004239B0(Enemy239 *q) {
         }
     }
 }
+
+void func_002F2D30(char *, unsigned char *);
+
+void func_003DCF70(unsigned char *p) {
+    switch (p[5]) {
+    case 0:
+        if (*(char **)(*(char **)D_01CAFF0C + 0x20) != 0) {
+            func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), p);
+        }
+        *(float *)(p + 0xEC4) = mt_rand() % 5;
+        p[5]++;
+        break;
+    case 1:
+        *(float *)(p + 0xEC4) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0xEC4) < 0.0f) {
+            func_00207470(3, 0x397, (char *)p + 0x9A0);
+            *(float *)(p + 0xEC4) = 5.0f;
+            p[5]++;
+        }
+        break;
+    case 2:
+        *(float *)(p + 0xEC4) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0xEC4) < 0.0f) {
+            p[4]++;
+        }
+        break;
+    }
+}

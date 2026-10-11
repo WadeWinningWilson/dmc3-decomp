@@ -2282,7 +2282,8 @@ def write_cpp(path, funcs, externs):
         # declaration takes them all and the call code is the same for integer arguments
         if len(ss) > 1 and fn not in defined and not any("float" in x for sg in ss for x in sg):
             protos[fn] = (protos[fn][0], ("...",))
-    out = [CPP_HDR] + ([Q_DEF] if any("(Q *)" in c for _, c, _ in funcs) else []) + ['extern "C" {']
+    out = [CPP_HDR] + ([Q_DEF] if any("(Q *)" in c for _, c, _ in funcs) else []) + \
+        (['#include "game/mt_rand.h"'] if any("mt_rand()" in c for _, c, _ in funcs) else []) + ['extern "C" {']
     out += [externs[s] for s in sorted(used)]
     for fn, (rt, sig) in sorted(protos.items()):
         out.append(f"{rt} {fn}({', '.join(sig) or 'void'});".replace("* ", "*"))
