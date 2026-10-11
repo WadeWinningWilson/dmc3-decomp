@@ -93,3 +93,57 @@ void func_00317740(char *p, int k) {
     *(float *)(p + 0x8C) = 1.0f;
     func_0024BF20(p);
 }
+
+/* Tries three float pairs (one per case) until func_002F0C10 accepts one. */
+int func_002F0C10(char *, int, int, int, float, float);
+int func_0023F670(char *p, int x, int y) {
+    unsigned int i;
+    float a, b;
+    int r;
+    for (i = 0; i < 3; i++) {
+        switch (i) {
+        case 0:
+            a = *(float *)(*(char **)(p + 0x283C) + 0xC4);
+            b = *(float *)(*(char **)(p + 0x283C) + 0xC8);
+            break;
+        case 1:
+            a = *(float *)(*(char **)(p + 0x283C) + 0xCC);
+            b = *(float *)(*(char **)(p + 0x283C) + 0xD0);
+            break;
+        case 2:
+            a = *(float *)(*(char **)(p + 0x283C) + 0xD4);
+            b = *(float *)(*(char **)(p + 0x283C) + 0xD8);
+            break;
+        }
+        r = func_002F0C10(p + 0x2B58, x, y, *(unsigned char *)(p + 0xD4), a, b);
+        if (r) {
+            return r;
+        }
+    }
+    return 0;
+}
+
+/* Size of a host file: builds the path, flips '/' to backslashes, open + seek end + close. */
+extern char D_00540D50[]; extern char D_005BBA30[8]; extern char D_005BBA38[8]; extern char D_00662370[];
+void func_0012ACE8(char *, char *, char *, int, int, char *); unsigned int func_0012B400(char *);
+void func_001AAAE0(char *); void func_001AAAF0(char *); int func_00111BE8(char *, int); int func_00111FF0(int, int, int); void func_00111E70(int);
+int func_001EBB30(int a, int b, int c) {
+    char buf[256];
+    unsigned int i;
+    int fd, size;
+    func_0012ACE8(buf, D_00540D50, D_005BBA30, c, b, D_005BBA38);
+    for (i = 0; i < func_0012B400(buf); i++) {
+        if (buf[i] == '/') {
+            buf[i] = 0x5C; /* backslash */
+        }
+    }
+    func_001AAAE0(D_00662370);
+    fd = func_00111BE8(buf, 1);
+    if (fd < 0) {
+        return 0;
+    }
+    size = func_00111FF0(fd, 0, 2);
+    func_00111E70(fd);
+    func_001AAAF0(D_00662370);
+    return size;
+}
