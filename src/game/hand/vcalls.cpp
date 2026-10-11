@@ -597,3 +597,119 @@ extern "C" void func_00365790(char *p) {
         break;
     }
 }
+
+class Anim4 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void m18(int);
+    virtual void m1C(int);
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void m40();
+    virtual void m44();
+};
+
+/* Random idle pose. */
+extern "C" void func_0035E190(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 3;
+    p[0xCF] = 2;
+    (*(Anim4 **)(p + 0xA8))->m40();
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m1C(0);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m1C(1);
+        break;
+    }
+}
+
+/* Starts animation 0xB with a random 30..120 frame timer. */
+extern "C" void func_00364510(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 1;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0xB);
+    *(float *)(p + 0x100) = 60.0f * (0.5f + 1.5f * (2.3283064e-10f * mt_rand()));
+}
+
+extern "C" void func_0035E3D0(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 3;
+    p[0xCF] = 2;
+    (*(Anim4 **)(p + 0xA8))->m40();
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m1C(2);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m1C(2);
+        break;
+    }
+}
+
+/* Starts animation 0x3E with a random 45..90 frame timer. */
+extern "C" void func_00368060(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 4;
+    (*(Anim4 **)(p + 0xA8))->m18(0x3E);
+    (*(Anim4 **)(p + 0xA8))->m44();
+    *(int *)(p + 0xD4) = 0;
+    *(float *)(p + 0x104) = 45.0f + 45.0f * (2.3283064e-10f * mt_rand());
+}
+
+extern "C" void func_00460560(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 3;
+    p[0xCF] = 2;
+    (*(Anim4 **)(p + 0xA8))->m40();
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m1C(0);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m1C(1);
+        break;
+    }
+    *(int *)(p + 0xD4) = 0;
+}
+
+extern "C" void func_003CDF30(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0);
+    switch (mt_rand() & 1) {
+    case 0:
+        p[0x10C] = 0;
+        break;
+    case 1:
+        p[0x10C] = 1;
+        break;
+    }
+}
+
+extern "C" void func_00364750(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 1;
+    p[0xCF] = 0;
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m18(0xC);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m18(0xF);
+        break;
+    }
+}

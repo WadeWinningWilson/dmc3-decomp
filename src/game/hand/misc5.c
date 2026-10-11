@@ -278,3 +278,29 @@ void func_00312870(char *p) {
     *(float *)(p + 0xD64) = 5.0f;
     func_00312980(p);
 }
+
+typedef struct Rng2C {
+    float base[4];
+    float range[4];
+    char pad[0xC];
+} Rng2C;
+extern Rng2C D_0056C010[];
+
+/* A random value in [base, base + range) from the row of the current state. */
+void func_0038F360(unsigned char *p) {
+    Rng2C *t = &D_0056C010[p[5]];
+    *(float *)(p + 0x428) = t->base[p[0x41B]] + t->range[p[0x41B]] * (2.3283064e-10f * mt_rand());
+}
+
+void func_003DB330(unsigned char *);
+
+void func_003DB220(unsigned char *p) {
+    if (p[0xEFD] == 5) {
+        return;
+    }
+    p[0xEFD] = 5;
+    p[5] = 0;
+    func_003DB330(p);
+    *(float *)(p + 0xEC4) += mt_rand() % 60;
+    p[0x1E1] = 1;
+}
