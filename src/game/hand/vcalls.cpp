@@ -608,7 +608,7 @@ public:
     virtual void m1C(int);
     virtual void d6();
     virtual void m24();
-    virtual void d8();
+    virtual float m28();
     virtual int m2C();
     virtual void d10();
     virtual void d11();
@@ -1433,5 +1433,32 @@ extern "C" void func_0037A080(char *p) {
                 func_001AD140(*(char **)(p + i * 4 + 0x6640));
             }
         }
+    }
+}
+
+extern "C" void func_00360590(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            (*(Anim4 **)(p + 0xA8))->m1C(0x17);
+            (*(Anim4 **)(p + 0xA8))->m44();
+            *(int *)(p + 0xD4) = 1;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * (2.3283064e-10f * mt_rand());
+        }
+        break;
+    case 1:
+        if (!((*(Anim4 **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            p[0xCF] = 2;
+            (*(Anim4 **)(p + 0xA8))->m1C(6);
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
     }
 }

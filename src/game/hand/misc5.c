@@ -56,6 +56,7 @@ int func_00486220(char *p, float *out) {
     float best[4] __attribute__((aligned(16)));
     unsigned int n = func_002EFB20(*(int *)D_01CAFF0C);
     float d;
+    float q;
     float min;
     unsigned int i;
     char *o;
@@ -687,4 +688,41 @@ int func_0019E2D0(char *p) {
         return 1;
     }
     return 0;
+}
+
+unsigned int func_002F3020(char *, int);
+float func_0041DB20(char *);
+unsigned int func_002F2FC0(char *, int);
+
+static inline unsigned char has_8000(char *p) {
+    return (*(int *)(p + 0x42C) & 0x8000) != 0;
+}
+
+int func_0038F630(char *p) {
+    float d;
+    float q;
+    if (*(int *)(p + 0x110) & 1) {
+        return 0;
+    }
+    if (has_8000(p) == 1) {
+        return 0;
+    }
+    d = func_0041DB20(p + 0x50);
+    if (d < 1000.0f) {
+        d = 1000.0f;
+    }
+    q = 1000000.0f / (d * d);
+    if ((unsigned char)func_0041D6B0(p + 0x454, q * *(float *)(p + 0x10)) == 0) {
+        return 0;
+    }
+    if (func_002F2FC0(*(char **)(*(char **)D_01CAFF0C + 0x20), 0x80000000)) {
+        return 0;
+    }
+    if (!(func_002F3020(*(char **)(*(char **)D_01CAFF0C + 0x20), *(signed char *)(p + 0x46)) < *(unsigned char *)(p + 0x461))) {
+        return 0;
+    }
+    if (100.0f * (2.3283064e-10f * mt_rand()) > 75.0f) {
+        return 0;
+    }
+    return *(int *)(p + 0x45C) > 0;
 }

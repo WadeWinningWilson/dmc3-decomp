@@ -1,5 +1,7 @@
 /* Hand-matched functions (third file: its callee declarations differ from misc.c/misc2.c). */
 
+#include "game/mt_rand.h"
+
 extern char D_01CAFF0C[];
 extern float D_00569370[];
 int func_003ACB40(char *);
@@ -288,4 +290,36 @@ void func_003A5B10(unsigned char *p) {
     }
     func_002EF940(*(int *)D_01CAFF0C, (char *)p + 0x5080);
     *(short *)(p + 0x90) = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, (char *)p + 0x50);
+}
+
+extern float D_005656A0[];
+extern char D_005BE1A8[8];
+void func_002D6F20(char *, int);
+void func_001ACC30(int, int, int, int, int);
+void func_0036DF10(char *, int, int, int, int, int);
+int func_002075D0(int, int, int, int, int);
+
+void func_002D56B0(O2D3 *q) {
+    unsigned char *p = (unsigned char *)q;
+    switch (p[5]) {
+    case 0:
+        p[5]++;
+        func_0031E570((char *)p + 0x1D0);
+        if (100.0f * (2.3283064e-10f * mt_rand()) < D_005656A0[*(int *)(p + 0x38F8)]) {
+            func_002D6F20((char *)p, 2);
+        }
+    case 1:
+        if ((unsigned char)func_0024E780(q->sub, 0, 1) == 1) {
+            func_001ACC30(D_005BE09C, 2, 0x1E, 0x3C, 0);
+            func_0036DF10(D_005BE1A8, 0, 1, 0x40, 0x3C, 0);
+            *(int *)(p + 0x3918) = func_002075D0(3, 0x143, *(int *)(*(char **)(p + 0x6C8) + 0x104), 1, 0x10);
+            p[5]++;
+        }
+        break;
+    case 2:
+        if ((unsigned char)func_0024E800(q->sub) == 1) {
+            func_002D2270((char *)p, D_005BCD60[p[0x38D0]]);
+        }
+        break;
+    }
 }

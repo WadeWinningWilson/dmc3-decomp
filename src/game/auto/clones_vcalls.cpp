@@ -400,7 +400,7 @@ public:
     virtual void m1C(int);
     virtual void d6();
     virtual void m24();
-    virtual void d8();
+    virtual float m28();
     virtual int m2C();
     virtual void d10();
     virtual void d11();
@@ -856,13 +856,33 @@ public:
     virtual void d186();
     virtual void d187();
     virtual void m2F8(int);
-    virtual void d189();
+    virtual void m2FC(int);
     virtual void m300(int);
 };
 
 extern "C" int func_004D1EF0(char *);
 
 
+
+
+
+
+
+extern "C" signed char D_00566330[][7][5];
+extern "C" void func_0037C0C0(char *, int);
+
+/* Picks a random entry (terminated by -1) of the row for the current state and level. */
+
+
+extern "C" int func_003F3830(char *);
+extern "C" int func_0024E800(char *);
+
+
+
+extern "C" void func_0034BA60(int, char *, int, int, int);
+extern "C" void func_00104C00(char *, int, char *);
+extern "C" void func_0037E850(char *, int);
+extern "C" void func_001AD140(char *);
 
 
 
@@ -1356,6 +1376,141 @@ extern "C" void func_004A7000(char *p) {
         (*(Anim4 **)(p + 0xA8))->m24();
         break;
     case 1:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+extern "C" void func_00360890(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            (*(Anim4 **)(p + 0xA8))->m1C(0x18);
+            (*(Anim4 **)(p + 0xA8))->m44();
+            *(int *)(p + 0xD4) = 1;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * (2.3283064e-10f * mt_rand());
+        }
+        break;
+    case 1:
+        if (!((*(Anim4 **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            p[0xCF] = 2;
+            (*(Anim4 **)(p + 0xA8))->m1C(5);
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+extern "C" void func_004627D0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            (*(Anim4 **)(p + 0xA8))->m1C(0x17);
+            (*(Anim4 **)(p + 0xA8))->m44();
+            *(int *)(p + 0xD4) = 1;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * (2.3283064e-10f * mt_rand());
+        }
+        break;
+    case 1:
+        if (!((*(Anim4 **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            p[0xCF] = 2;
+            (*(Anim4 **)(p + 0xA8))->m1C(6);
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+extern "C" void func_00462AD0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            (*(Anim4 **)(p + 0xA8))->m1C(0x18);
+            (*(Anim4 **)(p + 0xA8))->m44();
+            *(int *)(p + 0xD4) = 1;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * (2.3283064e-10f * mt_rand());
+        }
+        break;
+    case 1:
+        if (!((*(Anim4 **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            p[0xCF] = 2;
+            (*(Anim4 **)(p + 0xA8))->m1C(5);
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+extern "C" void func_0049E9F0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            (*(Anim4 **)(p + 0xA8))->m1C(0x17);
+            (*(Anim4 **)(p + 0xA8))->m44();
+            *(int *)(p + 0xD4) = 1;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * (2.3283064e-10f * mt_rand());
+        }
+        break;
+    case 1:
+        if (!((*(Anim4 **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            p[0xCF] = 2;
+            (*(Anim4 **)(p + 0xA8))->m1C(6);
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+extern "C" void func_0049ECF0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            (*(Anim4 **)(p + 0xA8))->m1C(0x18);
+            (*(Anim4 **)(p + 0xA8))->m44();
+            *(int *)(p + 0xD4) = 1;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * (2.3283064e-10f * mt_rand());
+        }
+        break;
+    case 1:
+        if (!((*(Anim4 **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            p[0xCF] = 2;
+            (*(Anim4 **)(p + 0xA8))->m1C(5);
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    case 2:
         if ((*(Anim4 **)(p + 0xA8))->m2C()) {
             ((ObjV *)p)->mEC(0xE);
         }
