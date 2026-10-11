@@ -1,5 +1,7 @@
 /* Hand-matched functions (fifth file: its callee declarations differ from the others). */
 
+#include "game/mt_rand.h"
+
 extern char D_00666750[];
 extern char D_00547340[];
 void func_001AD100(void);
@@ -153,4 +155,126 @@ int func_0024D6B0(unsigned char *p, unsigned char *n) {
         return 1;
     }
     return 0;
+}
+
+char *func_00207480(int, int, int, int);
+
+int func_004580B0(char *p) {
+    char *o;
+    switch (mt_rand() % 3) {
+    case 0:
+        *(char **)(p + 0x504) = func_00207480(0, 0xCB, 0, 16);
+        break;
+    case 1:
+        *(char **)(p + 0x504) = func_00207480(0, 0xFB, 0, 16);
+        break;
+    case 2:
+        *(char **)(p + 0x504) = func_00207480(0, 0xEB, 0, 16);
+        break;
+    }
+    o = *(char **)(p + 0x504);
+    if (o == 0) {
+        return 0;
+    }
+    *(char **)(o + 0x90) = p + 0x440;
+    o[0x9A] = 0;
+    return 1;
+}
+
+extern int D_005BE1AC;
+void func_00376E40(void);
+void func_00376B80(char *, int);
+void func_0041DAB0(char *, char *, int);
+void func_0041D6E0(char *, char *, int, float);
+int func_0041D6B0(char *, float);
+void func_00376B40(char *, int);
+
+void func_004B0CC0(unsigned char *p) {
+    char *b;
+    D_005BE1AC |= 0x80000000;
+    func_00376E40();
+    *(int *)(p + 0x8FC) |= 0x400000;
+    switch (p[6]) {
+    case 0:
+        func_00376B80((char *)p, -1);
+        *(float *)(p + 0x60) = 0.0f;
+        *(float *)(p + 0x64) = 0.0f;
+        *(float *)(p + 0x68) = 50.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+        *(float *)(p + 0x8F8) = 45.0f;
+        p[6] = 1;
+    case 1:
+        if (p[0x8EB] >= 2) {
+            func_0041DAB0((char *)p + 0x50, (char *)p + 0x90, 255.0f * *(float *)(p + 0x10));
+        } else if (p[0x8EB] == 1) {
+            func_0041DAB0((char *)p + 0x50, (char *)p + 0x90, 127.0f * *(float *)(p + 0x10));
+        }
+        b = (char *)p;
+        if (p) {
+            b += 0x40;
+        }
+        func_0041D6E0(b, (char *)p + 0x60, 1, *(float *)(p + 0x10));
+        if ((unsigned char)func_0041D6B0((char *)p + 0x8F8, *(float *)(p + 0x10)) == 1) {
+            func_00376B40((char *)p, 8);
+            return;
+        }
+        break;
+    }
+}
+
+/* A coin flip. */
+void func_003A5C70(unsigned char *p) {
+    p[0x4E1F] = mt_rand() & 1;
+}
+
+extern float D_0056ECB0[];
+
+void func_003C61D0(unsigned char *p) {
+    p[0x1CE1] = 0;
+    p[0x1CE2] = 0;
+    *(short *)(p + 0x1CE4) = 0;
+    *(float *)(p + 0x1CD0) = D_0056ECB0[p[0x15D0] * 6 + p[0x15D1] * 2];
+    *(float *)(p + 0x1CD4) = 0.0f;
+    p[0x1CE3] = mt_rand() & 1;
+}
+
+void func_00239420(char *);
+void func_002391E0(char *);
+
+void func_002390D0(char *p, char k) {
+    p[0x18FF8] = k;
+    if (mt_rand() & 1) {
+        *(int *)(p + 0x18F98) = 1;
+    } else {
+        *(int *)(p + 0x18F98) = 0;
+    }
+    if (*(int *)(p + 0x18F98)) {
+        func_00239420(p);
+    } else {
+        func_002391E0(p);
+    }
+}
+
+extern char D_01DFABA0[];
+void func_003305E0(char *, int, int, char *, int, int, int);
+
+void func_00482470(char *p) {
+    *(float *)(p + 0x2B0) -= *(float *)(p + 0x10);
+    if (*(float *)(p + 0x2B0) < 0.0f) {
+        *(float *)(p + 0x2B0) = 30.0f;
+        func_003305E0(D_01DFABA0, 8, (mt_rand() & 3) + 0x67, p + 0x50, 0x28, 0, 0);
+    }
+}
+
+void func_00312980(char *);
+
+void func_00312870(char *p) {
+    float t = mt_rand() % 300 + 60;
+    *(float *)(p + 0xD58) = t;
+    *(float *)(p + 0xD54) = t;
+    *(float *)(p + 0xD5C) = 0.0f;
+    *(float *)(p + 0xD60) = 1.0f;
+    p[0xD68] = 0;
+    *(float *)(p + 0xD64) = 5.0f;
+    func_00312980(p);
 }

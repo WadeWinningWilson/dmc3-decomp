@@ -257,3 +257,35 @@ void func_002D5170(O2D3 *q) {
         func_00207480(3, 0x317, (char *)p + 0x1EF0, 16);
     }
 }
+
+extern float D_005695B0[];
+void func_003A5C70(unsigned char *);
+void func_003A5D20(unsigned char *, int);
+
+void func_003A5B10(unsigned char *p) {
+    *(float *)(p + 0x4BE0) += *(float *)(p + 0x10);
+    switch (p[6]) {
+    case 0:
+        p[6]++;
+        func_003A5C70(p);
+    case 1:
+        if (*(float *)(p + 0x4BE0) > D_005695B0[p[0x4E17] * 12 + p[0x4E18] * 4]) {
+            *(float *)(p + 0x4E08) = 40.0f;
+            p[6]++;
+        }
+        func_003A5D20(p, 0);
+        break;
+    case 2:
+        *(float *)(p + 0x4E08) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0x4E08) < 0.0f) {
+            p[0x4E15] = 1;
+        }
+        func_003A5D20(p, 1);
+        if (p[0x4E15] == 1 && (unsigned char)func_003ACB40((char *)p) == 1) {
+            p[0x4E15] = 0;
+        }
+        break;
+    }
+    func_002EF940(*(int *)D_01CAFF0C, (char *)p + 0x5080);
+    *(short *)(p + 0x90) = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, (char *)p + 0x50);
+}

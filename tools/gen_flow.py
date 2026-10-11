@@ -49,7 +49,7 @@ if GCC:
     LO, HI = 0x100000, 0x195158
     OUT = ROOT / os.environ.get("GEN_GCC_OUT", "src/lib/auto/flow_gcc.c")
 CC = ("MWCIncludes=. wibo tools/compilers/mwcps2-3.0b52-030722/mwccps2.exe -c -O3,p "
-      "-fl divbyzerocheck -inline depth=8 -nostdinc")
+      "-fl divbyzerocheck -inline depth=8 -nostdinc -Iinclude")
 
 spec = importlib.util.spec_from_file_location("funcdiff", ROOT / "tools/funcdiff.py")
 fd = importlib.util.module_from_spec(spec)
@@ -165,6 +165,156 @@ def fix_word(t):
 STORE_OPS = ("sb", "sh", "sw", "sd", "sq", "swc1", "sqc2", "swl", "swr", "sdl", "sdr")
 
 
+MT_FN = "func_FFFFFFF0"  # stands for the inlined Mersenne-Twister draw (include/game/mt_rand.h)
+
+
+def fold_mtrand(raw):
+    """Replace each inlined mt_rand() block by a call `jal MT_FN` whose result lands in the
+    block's output register; the unrelated instructions the scheduler mixed in are kept."""
+    CALLEE = re.compile(r"\$(s[0-7]|fp|f2[0-9]|f3[01]|sp|zero|gp)$")
+    raw = [(a_, fix_word(t_)) for a_, t_ in raw]
+    if any(t_.startswith(".word") for _, t_ in raw):
+        return raw
+    while True:
+        s = next((i for i, (_, t) in enumerate(raw) if t == "lui $at, %hi(D_01DF8810)" and any(
+                  re.fullmatch(r"lw \$\w+, %lo\(D_01DF8810\)\(\$at\)", t2) for _, t2 in raw[i + 1:i + 24])
+                  and not any(re.fullmatch(r"lui \$at, .*", t2) for _, t2 in raw[i + 1:i + 2])), None)
+        if s is None:
+            return raw
+        mt, keep, out = set(), [], None
+        idx = base = None
+        e = None
+        for j in range(s, min(len(raw), s + 80)):
+            t = raw[j][1]
+            op, a = split(t)
+            rd, wr = regs_of(op, a)
+            m_ = True
+            if (t == "lui $at, %hi(D_01DF8810)" or re.fullmatch(r"(lw|sw) \$\w+, %lo\(D_01DF8810\)\(\$at\)", t)
+                    or re.fullmatch(r"lui \$\w+, %hi\(D_01DF7E50\)", t) or t == "jal func_00207A90"
+                    or re.fullmatch(r"addiu \$\w+, \$\w+, %lo\(D_01DF7E50\)", t)
+                    or re.fullmatch(r"lui \$\w+, \((0x9D2C5680|0xEFC60000) >> 16\)", t)
+                    or re.fullmatch(r"ori \$\w+, \$\w+, \(0x9D2C5680 & 0xFFFF\)", t)):
+                if op == "lw":
+                    idx = a[0]
+                if op == "addiu":
+                    base = a[0]
+                if op == "sw" and a[0] not in mt:
+                    m_ = False
+            elif re.fullmatch(r"sltiu (\$\w+), \1, 0x270", t) or (op == "bnez" and a[0] in mt):
+                pass
+            elif op in ("addiu", "sll", "addu", "lw", "srl", "xor", "and") and rd and rd <= mt and (
+                    op != "addiu" or a[2] == "0x1"):
+                pass
+            else:
+                m_ = False
+            if m_:
+                mt |= wr
+                if op == "jal":
+                    mt -= {"$v0", "$f0"}
+            else:
+                if rd & mt and not (op == "jal"):
+                    return raw  # a foreign instruction reads an intermediate value
+                mt -= wr
+                keep.append(raw[j])
+            if op == "xor" and a[0] == a[1] and raw[j - 1][1] == f"srl {a[2]}, {a[0]}, 18":
+                e, out = j, a[0]
+                break
+        if e is None:
+            return raw
+        window = {a_ for a_, _ in raw[s:e + 1]}
+        for k, (_, t) in enumerate(raw):
+            if s <= k <= e:
+                continue
+            for tg in re.findall(r"\.L([0-9A-F]{8})", t):
+                if raw[s][0] < int(tg, 16) <= raw[e][0]:
+                    return raw
+        pos_ = {id(x): k for k, x in enumerate(raw)}
+
+        def live_out(r, k0):
+            """Is the value r gets at raw[k0] still read after the block (the call clobbers it)?"""
+            for k, (_, t2) in enumerate(raw[k0 + 1:], k0 + 1):
+                o2, a2 = split(t2)
+                rd2, wr2 = regs_of(o2, a2)
+                if k > e and r in rd2:
+                    return True
+                if r in wr2 or (k == e and r == out):
+                    return False
+            return r in ("$v0", "$f0")
+        info = []
+        for x in keep:
+            o2, a2 = split(x[1])
+            info.append(regs_of(o2, a2))
+        is_after = [bool(wr2) and not all(CALLEE.search(r) for r in wr2) and any(live_out(r, pos_[id(x)]) for r in wr2)
+                    for x, (rd2, wr2) in zip(keep, info)]
+        changed = True
+        while changed:  # what an `after` instruction reads from a foreign one moves after too
+            changed = False
+            for k, (rd2, wr2) in enumerate(info):
+                if not is_after[k]:
+                    continue
+                for r in rd2:
+                    if CALLEE.search(r):
+                        continue
+                    src_ = next((k2 for k2 in range(k - 1, -1, -1) if r in info[k2][1]), None)
+                    if src_ is not None and not is_after[src_]:
+                        is_after[src_] = changed = True
+            for k, (rd2, wr2) in enumerate(info):  # and what reads an `after` result
+                if not is_after[k] and any(is_after[k2] and info[k2][1] & rd2 for k2 in range(k)):
+                    is_after[k] = changed = True
+        before = [x for x, f_ in zip(keep, is_after) if not f_]
+        after = [x for x, f_ in zip(keep, is_after) if f_]
+        for k, (rd2, wr2) in enumerate(info):
+            if not is_after[k]:
+                continue
+            for r in rd2 - {"$zero"}:
+                if CALLEE.search(r):
+                    continue
+                src_ = next((k2 for k2 in range(k - 1, -1, -1) if r in info[k2][1]), None)
+                if src_ is None or not is_after[src_]:
+                    return raw  # would read a register the call clobbers
+            if any(not is_after[k2] and info[k2][0] & wr2 for k2 in range(k + 1, len(keep))):
+                return raw  # a `before` instruction needs this result
+        new = [t for _, t in before] + [f"jal {MT_FN}", "nop", f"daddu {out}, $v0, $zero"] + [t for _, t in after]
+        addrs = sorted(window)
+        if len(new) > len(addrs):
+            return raw
+        addrs = addrs[len(addrs) - len(new):]
+        tail_ = raw[e + 1:]
+        if out in ARGS:
+            # the draw held in an argument register would read as an extra argument of the next
+            # call: give it a free temporary until the register is written again
+            used_ = {x for _, t2 in raw for x in re.findall(r"\$\w+", t2)}
+            free_ = next((x for x in ("$t4", "$t5", "$t6", "$t7", "$t8") if x not in used_), None)
+            if free_ is None:
+                return raw
+            new = [t2.replace(f"daddu {out}, $v0", f"daddu {free_}, $v0") for t2 in new]
+            pat_ = re.compile(re.escape(out) + r"(?!\w)")
+            for k, (a2_, t2) in enumerate(tail_):
+                o2, a2 = split(t2)
+                rd2, wr2 = regs_of(o2, a2)
+                if out in rd2 and o2 not in ("jal", "jalr"):
+                    if out in wr2:  # read and rewritten: rename only the sources
+                        t2 = f"{o2} {a2[0]}, " + pat_.sub(free_, ", ".join(a2[1:]))
+                    else:
+                        t2 = pat_.sub(free_, t2)
+                    tail_[k] = (a2_, t2)
+                if out in wr2 or o2 in ("jal", "jalr", "jr"):
+                    break
+        raw = raw[:s] + list(zip(addrs, new)) + tail_
+
+
+def mt_call(code):
+    """`func_FFFFFFF0(...)` -> `mt_rand()`."""
+    while (i := code.find(MT_FN + "(")) >= 0:
+        k, d = i + len(MT_FN) + 1, 1
+        while d:
+            d += {"(": 1, ")": -1}.get(code[k], 0)
+            k += 1
+        code = code[:i] + "mt_rand()" + code[k:]
+    return code
+
+
+
 def dead_at(ins, addr, regs_, depth=0):
     """True when none of regs_ is read on the path from addr before being written
     (following unconditional branches; any other control flow counts as a read)."""
@@ -204,6 +354,31 @@ def fold_cvtu(ins):
     texts = [t for _, t in ins]
     while i < len(ins):
         t = texts[i]
+        # unsigned int -> float: bltz R, A / srl T, R, 1 / mtc1 R, F / b B / cvt.s.w F, F /
+        # A: andi U, R, 1 / or T, T, U / mtc1 T, F / cvt.s.w F, F / add.s F, F, F / B:
+        mu = re.fullmatch(r"bltz (\$\w+), \.L([0-9A-F]{8})", t)
+        if mu and i + 4 < len(ins):
+            r_, la = mu.group(1), int(mu.group(2), 16)
+            ms = re.fullmatch(rf"srl (\$\w+), \{r_}, 1", texts[i + 1])
+            mm = re.fullmatch(rf"mtc1 \{r_}, (\$f\d+)", texts[i + 2])
+            mb = re.fullmatch(r"b \.L([0-9A-F]{8})", texts[i + 3])
+            if ms and mm and mb and texts[i + 4] == f"cvt.s.w {mm.group(1)}, {mm.group(1)}" and \
+                    i + 5 < len(ins) and ins[i + 5][0] == la:
+                tq, fq, lb = ms.group(1), mm.group(1), int(mb.group(1), 16)
+                rest = []
+                k = i + 5
+                while k < len(ins) and ins[k][0] != lb:
+                    if texts[k] != "nop":
+                        rest.append(texts[k])
+                    k += 1
+                mu2 = re.fullmatch(rf"andi (\$\w+), \{r_}, 0x1", rest[0]) if rest else None
+                if mu2 and k < len(ins) and rest[1:] == [f"or {tq}, {tq}, {mu2.group(1)}", f"mtc1 {tq}, {fq}",
+                                                          f"cvt.s.w {fq}, {fq}", f"add.s {fq}, {fq}, {fq}"] and \
+                        sum(x.count(f".L{la:08X}") for x in texts) == 1 and \
+                        sum(x.count(f".L{lb:08X}") for x in texts) == 1:
+                    out.append((ins[i][0], f"cvtuf {fq}, {r_}"))
+                    i = k
+                    continue
         m = re.fullmatch(r"c\.le\.s (\$f\d+), (\$f\d+)", t)
         if m and i + 1 < len(ins) and texts[i + 1].startswith("bc1t .L"):
             fa, fb = m.groups()
@@ -1577,6 +1752,9 @@ def translate(name, raw, externs, opts=None):
               elif op == "cvtu":
                   x, _ = val(a[1])
                   define(a[0], f"(unsigned int){x}", "int", a[1] in memdep)
+              elif op == "cvtuf":
+                  x, _ = ival(a[1])
+                  define(a[0], f"(float)(unsigned int){x}", "float", a[1] in memdep)
               elif op in ("mov.s", "neg.s", "abs.s"):
                   x, _ = val(a[1])
                   define(a[0], {"mov.s": x, "neg.s": f"-{x}", "abs.s": f"__builtin_fabsf({x})"}[op],
@@ -1989,7 +2167,11 @@ def translate(name, raw, externs, opts=None):
         head_ = f"{rtype} {name}({', '.join(ip_ + fp_) or 'void'}) {{"
     lines = [head_] + decl + [f"    {l}" for l in locs] + out + ["}"]
     externs.update(local_ext)
-    return "\n".join(lines).replace("char * ", "char *"), calls, {"callsig": callsig, "vclasses": vclasses}
+    code = "\n".join(lines).replace("char * ", "char *")
+    if MT_FN in calls:
+        code = mt_call(code)
+        calls = {c: r for c, r in calls.items() if c != MT_FN}
+    return code, calls, {"callsig": callsig, "vclasses": vclasses}
 
 
 def check(path, cands):
@@ -2072,6 +2254,8 @@ def write(path, funcs, externs):
            " * offset-based placeholders; move functions to their real TUs as they are identified. */\n")
     if GCC:
         hdr = f"// cc: {GCC} {GCC_FLAGS}\n" + hdr.replace("small functions", "library functions")
+    if any("mt_rand()" in c for _, c, _ in funcs):
+        decl.insert(0, '#include "game/mt_rand.h"\n')
     path.write_text(hdr + "\n".join(decl) + "\n\n" + "\n\n".join(c for _, c, _ in funcs) + "\n")
 
 
@@ -2236,6 +2420,10 @@ def load_previous(path, kind, externs):
     return out
 
 
+# GEN_ONLY=file: translate only the functions listed there (earlier matches are still kept)
+ONLY = set(open(os.environ["GEN_ONLY"]).read().split()) if os.environ.get("GEN_ONLY") else None
+
+
 def main():
     taken = set()
     for p in (ROOT / "src").rglob("*.c*"):
@@ -2258,6 +2446,8 @@ def main():
         jt9 = [i for i, (_, t) in enumerate(raw) if t == "jr $t9"]
         if jt9 and any(t != "nop" for _, t in raw[jt9[0] + 2:]):
             continue  # splat merged a tail-calling function with the next one
+        if not GCC:
+            raw = fold_mtrand(raw)
         work.append((name, A, raw, has_vcall))
     addr = {n: A for n, A, _, _ in work}
     externs, matched = {}, {"c": {}, "cpp": {}}
@@ -2272,7 +2462,7 @@ def main():
             continue  # the library code is C
         funcs, fails = [], 0
         for name, A, raw, has_vcall in work:
-            if name in matched["c"] or name in matched["cpp"] or has_vcall != (kind == "cpp"):
+            if name in matched["c"] or name in matched["cpp"] or has_vcall != (kind == "cpp") or (ONLY and name not in ONLY):
                 continue
             try:
                 code, calls, meta = translate(name, raw, externs, opts)

@@ -1,13 +1,15 @@
 /* Hand-matched C++ (virtual calls). The classes are synthetic: dummy virtuals put each method
  * at the vtable slot its call sites use (slot offset = 8 + 4 * index). */
 
+#include "game/mt_rand.h"
+
 class Anim {
 public:
     virtual void d0();
     virtual void d1();
     virtual void d2();
     virtual void d3();
-    virtual void d4();
+    virtual void m18(int);
     virtual void m1C(int);
     virtual void d6();
     virtual void m24();
@@ -543,4 +545,55 @@ extern "C" void func_0049BA90(char *p) {
         ((ObjV *)p)->mEC(0xE);
     }
     (*(Anim2 **)(p + 0xA8))->m24();
+}
+
+/* Turn-toward that fires event 0xE once the animation passes frame 30. */
+class Anim3 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void m24();
+    virtual float m28();
+};
+
+extern "C" void func_00460690(char *p) {
+    short d;
+    ((ObjV *)p)->m6C();
+    ((ObjV *)p)->m70();
+    d = ((ObjV *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+    if (d > 0x200) {
+        d = 0x200;
+    }
+    if (d < -0x200) {
+        d = -0x200;
+    }
+    *(short *)(*(char **)(p + 0x10) + 0x50) += d * *(float *)(p + 0xB0);
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim3 **)(p + 0xA8))->m28() >= 30.0f) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim3 **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+/* Picks one of two animations at random. */
+extern "C" void func_00365790(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim **)(p + 0xA8))->m18(0x26);
+        break;
+    case 1:
+        (*(Anim **)(p + 0xA8))->m18(0x27);
+        break;
+    }
 }
