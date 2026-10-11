@@ -820,3 +820,43 @@ void func_00299D20(unsigned char *p) {
         }
     }
 }
+
+/* Create-and-link with a position copy; the two-state updater with a base-class cast
+ * (null-checked `+ 0x40`); three angles to a rotation matrix. */
+void func_001AD140(char *);
+
+void func_0038F300(char *, int);
+void func_0041E120(char *, float);
+void func_0038F2C0(char *, int);
+
+void func_00421A40(char *p) {
+    *(int *)(p + 0x42C) |= 0x2000;
+    *(int *)(p + 0x42C) |= 0x8000;
+    *(int *)(p + 0x42C) |= 0x4000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_0038F300(p, -1);
+        p[6] = 1;
+    case 1:
+        {
+            char *b = p;
+            if (b) {
+                b += 0x40;
+            }
+            func_0041E120(b, 0.0f);
+        }
+        if (*(float *)(p + 0x448) <= 0.0f) {
+            func_0038F2C0(p, 0x12);
+        }
+        break;
+    }
+}
+
+void func_004B7D90(char *p) {
+    *(float *)(p + 0x80) = 6.283185f * (*(short *)(p + 0xAD4) / 65536.0f);
+    *(float *)(p + 0x84) = 6.283185f * (*(short *)(p + 0x90) / 65536.0f);
+    *(float *)(p + 0x88) = 6.283185f * (*(short *)(p + 0xAD6) / 65536.0f);
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(p + 0x170) : "memory");
+    func_00131760(p + 0x170, p + 0x170, p + 0x80);
+    __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(p + 0x170), "r"(p + 0x50) : "memory");
+}
