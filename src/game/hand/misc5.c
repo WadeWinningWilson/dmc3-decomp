@@ -726,3 +726,75 @@ int func_0038F630(char *p) {
     }
     return *(int *)(p + 0x45C) > 0;
 }
+
+void func_0038F300(char *, int);
+void func_0041DBA0(char *, char *);
+void func_0041D9E0(float *, float *, char *);
+void func_0038F2C0(char *, int);
+
+void func_0041FD00(char *p) {
+    float a[4] __attribute__((aligned(16)));
+    float b[4] __attribute__((aligned(16)));
+    *(int *)(p + 0x42C) &= ~0x2000;
+    *(int *)(p + 0x110) |= 1;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_0038F300(p, -1);
+        p[6] = 1;
+    case 1:
+        func_0041DBA0(p, p + 0x600);
+        if ((unsigned char)func_0024E800(p + 0xC20) == 1) {
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(a), "r"(*(char **)(*(char **)(p + 0x4E0) + 0x104) + 0x30) : "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(b), "r"(*(char **)(*(char **)(p + 0x4F0) + 0x104) + 0x30) : "memory");
+            func_0041D9E0(a, b, p + 0x80);
+            *(float *)(p + 0x84) += 6.2831850051879883f * ((100.0f * (2.3283064e-10f * mt_rand()) - 50.0f) / 360.0f);
+            *(short *)(p + 0x90) = 0.5f + 65536.0f * *(float *)(p + 0x84) / 6.2831850051879883f;
+            *(float *)(p + 0x80) = -0.6108652353286743f;
+            func_0038F2C0(p, 0xE);
+        }
+        break;
+    }
+}
+
+extern unsigned char D_00569230[];
+extern char D_00569120[];
+extern float D_00569280[];
+void func_003B9E90(char *, char *, unsigned char, float);
+
+static inline int state_is(unsigned char *o, int st) {
+    return o[0x1B5] == st;
+}
+
+/* Wakes up to the level's count of idle slot objects with random presets and staggered delays. */
+void func_003AB360(unsigned char *p) {
+    int i;
+    int cnt = 0;
+    float delay = 0.0f;
+    int k;
+    for (i = 0; i < 16; i++) {
+        switch (p[0x4E16]) {
+        case 0xB:
+            if (cnt < D_00569230[p[0x4E17] * 3 + p[0x4E18]]) {
+                if (p[0x4DF0 + i] == 1 && state_is(*(unsigned char **)(p + 0x4DB0 + i * 4), 0) == 1) {
+                    k = mt_rand() & 0xF;
+                    if (k == 0) {
+                        k++;
+                        if (k > 15) {
+                            k = 0;
+                        }
+                    }
+                    func_003B9E90(*(char **)(p + 0x4DB0 + i * 4), D_00569120 + k * 16, i, delay);
+                    cnt++;
+                    delay += D_00569280[p[0x4E17] * 3 + p[0x4E18]];
+                }
+            } else {
+                return;
+            }
+            break;
+        case 0xA:
+        case 0xC:
+        case 0xD:
+            break;
+        }
+    }
+}
