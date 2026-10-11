@@ -304,3 +304,54 @@ void func_003DB220(unsigned char *p) {
     *(float *)(p + 0xEC4) += mt_rand() % 60;
     p[0x1E1] = 1;
 }
+
+extern float D_005624D0[];
+extern float D_005624D4[];
+
+void func_002CB6B0(unsigned char *p) {
+    float range = D_005624D4[p[0x5C2] * 2] - D_005624D0[p[0x5C2] * 2];
+    *(float *)(p + 0x2F30) = D_005624D0[p[0x5C2] * 2] + range * (2.3283064e-10f * mt_rand());
+}
+
+int func_003A0800(unsigned char *);
+void func_003A07B0(unsigned char *);
+
+int func_0039FD40(unsigned char *p) {
+    if ((unsigned char)func_003A0800(p) == 1) {
+        func_003A07B0(p);
+        switch (p[0x2DD5]) {
+        case 1:
+            *(short *)(p + 0x2DDA) = 0x39;
+            return 1;
+        case 2:
+            *(short *)(p + 0x2DDA) = 0x3A;
+            return 1;
+        default:
+            if (mt_rand() & 4) {
+                *(short *)(p + 0x2DDA) = 0x39;
+                return 1;
+            }
+            *(short *)(p + 0x2DDA) = 0x3A;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int func_0050E790(char *);
+void func_001AD140(char *);
+void func_0050E5B0(char *);
+
+void func_0050DE10(char *p) {
+    if ((unsigned char)func_0050E790(p) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    *(short *)(p + 0x90) = *(short *)(*(char **)(p + 0x464) + 0x90);
+    *(float *)(p + 0x80) = -90.0f;
+    *(float *)(p + 0x88) = (float)(mt_rand() % 360) - 180.0f;
+    *(float *)(p + 0x46C) = 40.0f;
+    *(int *)(p + 0x470) = 0;
+    func_0050E5B0(p);
+    ((unsigned char *)p)[4]++;
+}

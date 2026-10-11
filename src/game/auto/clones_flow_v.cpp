@@ -20013,4 +20013,68 @@ int func_0049F0C0(char *p0, int p1) {
     }
     return v2;
 }
+
+int func_003A3520(char *p0) {
+    int func_003A47D0(char *, int);
+    int func_003A9E40(char *, int);
+    int v0;
+    int v1;
+    int tmp0;
+    v0 = *(unsigned char *)(p0 + 4);
+    tmp0 = 2;
+    if (tmp0 != v0) {
+        switch (v0) {
+        case 0:
+            v1 = ((V130_1_ii *)p0)->m(v0);
+            break;
+        case 1:
+            v1 = func_003A47D0(p0, v0);
+            break;
+        }
+    } else {
+        v1 = func_003A9E40(p0, v0);
+    }
+    return v1;
+}
+
+int func_003D9830(char *p0) {
+    int func_003D9FB0(char *, int);
+    int func_003DD390(char *, int);
+    int v0;
+    int v1;
+    int tmp0;
+    v0 = *(unsigned char *)(p0 + 4);
+    tmp0 = 2;
+    if (tmp0 != v0) {
+        switch (v0) {
+        case 0:
+            v1 = ((V130_1_ii *)p0)->m(v0);
+            break;
+        case 1:
+            v1 = func_003D9FB0(p0, v0);
+            break;
+        }
+    } else {
+        v1 = func_003DD390(p0, v0);
+    }
+    return v1;
+}
+
+int func_004BC330(char *p0) {
+    int func_004BC4A0(int);
+    int v1;
+    int v2;
+    int v0;
+    v0 = *(unsigned char *)(p0 + 4);
+    v1 = (int)p0;
+    switch (v0) {
+    case 0:
+        ((V130_0_v *)p0)->m();
+    case 1:
+        /* fall through */
+        v2 = func_004BC4A0(v1);
+        break;
+    }
+    return v2;
+}
 }

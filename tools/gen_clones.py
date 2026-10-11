@@ -117,6 +117,7 @@ def main():
     for n, ins in asm.items():
         groups[norm(ins)].append(n)
     per_file = collections.defaultdict(list)
+    file_decls = {}
     for members in groups.values():
         srcs = [n for n in members if n in defined and defined[n][0] is not None]
         todo = [n for n in members if n not in defined]
@@ -135,6 +136,18 @@ def main():
             if any(src_map.setdefault(a, b) != b for a, b in pairs):
                 continue
             new = substitute(code, pairs).replace(m_, u)
+            # a substituted symbol needs a declaration: the original's, renamed, at block scope
+            if f not in file_decls:
+                file_decls[f] = [l for l in HEADER.sub("", f.read_text(errors="replace")).splitlines()
+                                 if l.rstrip().endswith(";") and not l.startswith((" ", "\t", "//"))]
+            extra = []
+            for a, b in pairs:
+                if a.startswith(("func_", "D_")) and b.startswith(("func_", "D_")) and \
+                        not any(re.search(rf"\b{b}\b", l) for l in file_decls[f]):
+                    extra += [re.sub(rf"\b{a}\b", b, l).strip() for l in file_decls[f] if re.search(rf"\b{a}\b", l)]
+            if extra:
+                k_ = new.index("{\n") + 2
+                new = new[:k_] + "".join(f"    {l}\n" for l in dict.fromkeys(extra)) + new[k_:]
             per_file[f].append((u, new, code))
     total = 0
     for f, items in per_file.items():
