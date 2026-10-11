@@ -1491,3 +1491,183 @@ extern "C" void func_003EA030(char *p) {
         func_003EAF00(p);
     }
 }
+
+extern "C" float D_005BDF3C;
+extern "C" int func_004D1B90(char *, int);
+
+extern "C" void func_004D31D0(char *p, float dt) {
+    unsigned char ok;
+    if (*(unsigned char *)(p + 0xB2D3) == 1) {
+        return;
+    }
+    if (*(unsigned char *)(p + 0x14D) == 3) {
+        return;
+    }
+    ok = 1;
+    if ((unsigned int)(*(unsigned char *)(p + 0xB2C9) - 2) > 1) {
+        ok = 0;
+    }
+    if (ok == 1) {
+        *(float *)(p + 0xB2BC) += dt;
+        if (*(float *)(p + 0xB2BC) > D_005BDF3C) {
+            p[0xB2CC] = 1;
+            switch ((unsigned char)func_004D1B90(p, 1)) {
+            case 1:
+            case 2:
+                ((Obj2F8 *)p)->m2F8(50);
+                break;
+            case 0:
+                *(float *)(p + 0xB2BC) = D_005BDF3C - 1.0f;
+                p[0xB2CC] = 0;
+                break;
+            }
+        }
+    }
+}
+
+extern "C" float D_0058AD80[];
+
+extern "C" void func_004C89F0(char *p) {
+    unsigned char ok;
+    switch (*(unsigned char *)(p + 0xB158)) {
+    case 0:
+        (*(unsigned char *)(p + 0xB158))++;
+        ok = 1;
+        if ((unsigned int)(*(unsigned char *)(p + 0xB2C9) - 2) > 1) {
+            ok = 0;
+        }
+        if (ok == 1) {
+            p[0xB2CC] = 1;
+            if (*(unsigned char *)(p + 0xB2D3) == 1) {
+                p[0xB2D3] = 0;
+                *(float *)(p + 0xB2A8) = D_0058AD80[*(int *)(p + 0xB2C0)];
+            }
+        }
+        ((ObjB *)p)->m300(20);
+        break;
+    case 1:
+        if (((ObjB *)p)->m2EC() == 0x77) {
+            ((ObjB *)p)->m2F8(0x17);
+        }
+        break;
+    }
+}
+
+class Obj134 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual char *m134(int);
+};
+
+extern "C" void func_0041D840(char *, char *, float);
+extern "C" char *func_002D9F00(char *, int);
+extern "C" char D_01CAFF0C[];
+extern "C" char *func_00207480(int, int, int, int);
+
+static inline void vset(float *v, float x, float y, float z, float w) {
+    v[0] = x;
+    v[1] = y;
+    v[2] = z;
+    v[3] = w;
+}
+
+extern "C" void func_0042F020(char *p) {
+    char *o = (*(Obj134 **)(p + 0xD0))->m134(2);
+    char *b;
+    char *m;
+    p[0x44] = -1;
+    p[0x45] = 4;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x50), "r"(*(char **)(o + 0x104) + 0x30) : "memory");
+    vset((float *)(p + 0x80), 0.0f, 0.0f, 0.0f, 1.0f);
+    *(short *)(p + 0x90) = 0;
+    vset((float *)(p + 0x60), 0.0f, 0.0f, 10.0f, 1.0f);
+    b = p;
+    if (b) {
+        b += 0x40;
+    }
+    func_0041D840(b, p + 0x150, 1.0f);
+    m = func_002D9F00(*(char **)(*(char **)D_01CAFF0C + 0xC), 1);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x450), "r"(m + 0x30) : "memory");
+    *(char **)(p + 0x460) = func_00207480(3, 0x101, (int)(p + 0x190), 16);
+    if (*(char **)(p + 0x460) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    *(float *)(p + 0x464) = 100.0f;
+    *(int *)(p + 0x468) = 0;
+    p[4] = 1;
+}
