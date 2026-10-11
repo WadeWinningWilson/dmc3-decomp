@@ -614,3 +614,112 @@ void func_0028C630(Timers28C *p, float dt) {
         }
     }
 }
+
+/* Per-kind float query: four lookups keyed on +0x20. */
+extern char D_01DF6260[], D_01CB0A00[], D_01DF5E40[], D_01DF7210[];
+float func_001FF0F0(char *, int); float func_001F3B40(char *, int); float func_001FEE60(char *, int); float func_002068F0(char *, int);
+float func_0021B680(unsigned char *p) {
+    float r = 0.0f;
+    switch (p[0x20]) {
+    case 0:
+        r = func_001FF0F0(D_01DF6260, *(short *)(p + 0x52));
+        break;
+    case 1:
+        r = func_001F3B40(D_01CB0A00, *(short *)(p + 0x52));
+        break;
+    case 2:
+        r = func_001FEE60(D_01DF5E40, *(short *)(p + 0x52));
+        break;
+    case 3:
+        r = func_002068F0(D_01DF7210, *(short *)(p + 0x52));
+        break;
+    }
+    return r;
+}
+
+/* Two 16-bit angles to radians, then a rotation matrix (VU0) placed at +0x50. */
+void func_00131760(char *, char *, char *);
+void func_004D8120(char *p) {
+    *(float *)(p + 0x80) = 6.283185f * (*(short *)(p + 0x514) / 65536.0f);
+    *(float *)(p + 0x84) = 6.283185f * (*(short *)(p + 0x90) / 65536.0f);
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(p + 0x4B0) : "memory");
+    func_00131760(p + 0x4B0, p + 0x4B0, p + 0x80);
+    __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(p + 0x4B0), "r"(p + 0x50) : "memory");
+}
+
+/* Uploads 16 rows of a 0x400-wide image through the SDK. */
+int func_001B0E10(void); void func_00130990(int, int); void func_001038F8(char *, int, int, int, int, short, int, int);
+void func_0010DF60(int); void func_00103AE0(char *, int); void func_001035E0(int, int); void func_001B0E50(void);
+void func_00195EA0(void) {
+    char buf[96];
+    int h = func_001B0E10();
+    int i;
+    func_00130990(h, 0x10000);
+    for (i = 0; i < 16; i++) {
+        func_001038F8(buf, 0, 16, 0, 0, i * 64, 0x400, 0x40);
+        func_0010DF60(0);
+        func_00103AE0(buf, h);
+        func_001035E0(0, 0);
+    }
+    func_001B0E50();
+}
+
+/* func_004D8120 for a second object type; an object setup; 4 attachment slots; per-entry draw. */
+void func_00131760(char *, char *, char *);
+void func_004F8B00(char *p) {
+    *(float *)(p + 0x80) = 6.283185f * (*(short *)(p + 0x614) / 65536.0f);
+    *(float *)(p + 0x84) = 6.283185f * (*(short *)(p + 0x90) / 65536.0f);
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(p + 0x5B0) : "memory");
+    func_00131760(p + 0x5B0, p + 0x5B0, p + 0x80);
+    __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(p + 0x5B0), "r"(p + 0x50) : "memory");
+}
+void func_004E23D0(char *); void func_004E2690(char *); void func_004E2540(char *); float func_004504E0(int);
+void func_004E1E90(char *p) {
+    float f;
+    *(float *)(p + 0x660) = 1.0f;
+    *(float *)(p + 0x664) = 1.0f;
+    *(float *)(p + 0x668) = 3.0f;
+    *(float *)(p + 0x66C) = 1.0f;
+    if (*(unsigned char *)(p + 0x641) == 0) {
+        *(float *)(p + 0x648) = -60.0f;
+    } else {
+        *(float *)(p + 0x648) = 60.0f;
+    }
+    *(float *)(p + 0x644) = 5.0f;
+    func_004E23D0(p);
+    __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(p + 0x50), "r"(p + 0x680) : "memory");
+    func_004E2690(p);
+    func_004E2540(p);
+    f = func_004504E0(*(int *)(p + 0x744));
+    *(float *)(p + 0x64C) = f;
+    *(float *)(p + 0x650) = f;
+    (*(unsigned char *)(p + 4))++;
+}
+typedef struct O322 { char pad[0x444]; unsigned char state[4]; int obj[4]; } O322;
+void func_00206730(int *); int func_002077F0(int);
+void func_00322C50(O322 *p) {
+    int i;
+    for (i = 0; i < 4; i++) {
+        if (p->state[i] == 1) {
+            func_00206730(&p->obj[i]);
+            if (p->obj[i]) {
+                if ((unsigned char)func_002077F0(p->obj[i]) == 1) {
+                    p->state[i] = 0;
+                    p->obj[i] = 0;
+                }
+            } else {
+                p->state[i] = 0;
+            }
+        }
+    }
+}
+typedef struct E380 { char pad[0xE]; unsigned char k; char pad2[0x380 - 0xF]; } E380;
+typedef struct O1AA { char pad[0xA8]; unsigned short n; char pad2[0xBC - 0xAA]; E380 *ent; char pad3[0x108 - 0xC0]; char *tbl; } O1AA;
+void func_001AA2D0(E380 *, int, char *, int, int);
+void func_001AA690(O1AA *p, int a, int b, int c) {
+    int i;
+    if (a == 0) return;
+    for (i = 0; i < p->n; i++) {
+        func_001AA2D0(&p->ent[i], a, p->tbl + p->ent[i].k * 64, b, c);
+    }
+}
