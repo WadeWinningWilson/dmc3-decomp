@@ -903,3 +903,7 @@ int func_0024E780(InputTbl *p, int a, int b) {
     }
     return p->st[a][b];
 }
+
+void func_00481C60(int a, int b, int c, char *pos) {
+    func_003305E0(D_01DFABA0, 8, 0x6C, pos, 0x28, 0, 0);
+}

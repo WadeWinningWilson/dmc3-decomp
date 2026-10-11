@@ -2180,3 +2180,14 @@ extern "C" void func_003650F0(char *p) {
     p[0xCF] = 0;
     (*(Anim4 **)(p + 0xA8))->m18(0x35);
 }
+
+extern "C" void func_00362130(char *p) {
+    p[0xCD] = 0;
+    p[0xCE] = 4;
+    p[0xCF] = 0;
+    (*(Anim4 **)(p + 0xA8))->m18(0x2F);
+}
+
+extern "C" void func_0035A670(char *p) {
+    (*(Anim4 **)(p + 0xA8))->m48(0x138A, *(char **)(p + 0x10) + 0x10);
+}
