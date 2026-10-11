@@ -2449,7 +2449,9 @@ def main():
         raw = [(int(m.group(1), 16), re.sub(r"\s+", " ", m.group(2).strip()))
                for m in re.finditer(r"/\* [0-9A-F]+ ([0-9A-F]{8}) [0-9A-F]{8} \*/\s+(.*)", body)]
         has_branch = any(re.match(r"b\w*\b", t) and not t.startswith("break") for _, t in raw)
-        has_vcall = any(t.startswith("jalr") for _, t in raw)
+        # a virtual call, also as a tail call (`jr $t9` after loading the slot): C++ classes
+        has_vcall = any(t.startswith("jalr") for _, t in raw) or \
+            any(t == "jr $t9" for _, t in raw) and any(re.fullmatch(r"lw \$t9, 0x[0-9A-F]+\(\$t9\)", t) for _, t in raw)
         # branch-free functions that tools/gen_leaf.py already matched are excluded by `taken`;
         # the rest are tried here too (richer instruction set, webs, stack locals)
         jt9 = [i for i, (_, t) in enumerate(raw) if t == "jr $t9"]
