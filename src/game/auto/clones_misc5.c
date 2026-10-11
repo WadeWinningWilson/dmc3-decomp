@@ -168,6 +168,22 @@ typedef struct Enemy239 { char pad[0x50]; char pos[0x40]; short ang; } Enemy239;
 
 
 
+void func_002F2D30(char *, unsigned char *);
+
+
+
+void func_0041D800(char *, float, float);
+void func_0048AFC0(char *, int);
+int func_0048B150(char *);
+void func_0041D6E0(char *, char *, int, float);
+void func_0048C070(char *);
+
+
+
+
+
+
+
 void func_0048B020(unsigned char *p) {
     extern Rng2C D_0056DD10[];
     Rng2C *t = &D_0056DD10[p[5]];
@@ -256,4 +272,24 @@ void func_00426940(Enemy239 *q) {
             }
         }
     }
+}
+
+int func_0019E4C0(char *p) {
+    *(float *)(p + 0x48) -= *(float *)(p + 0x70);
+    if (*(float *)(p + 0x48) <= 0.0f) {
+        *(float *)(p + 0x48) = *(float *)(p + 0x54);
+        *(float *)(p + 0x18) += *(float *)(p + 0x28) * *(short *)(p + 0x5A);
+        if (*(int *)p & 2) {
+            *(float *)(p + 0x18) += *(float *)(p + 0x68) +
+                (*(float *)(p + 0x6C) - *(float *)(p + 0x68)) * (2.3283064e-10f * mt_rand());
+        }
+        if (*(float *)(p + 0x18) > 1.0f) {
+            *(float *)(p + 0x18) -= 1.0f;
+        } else if (*(float *)(p + 0x18) < 0.0f) {
+            *(float *)(p + 0x18) += 1.0f;
+        }
+        *(unsigned short *)(p + 0xE) = (unsigned int)(4096.0f * *(float *)(p + 0x18));
+        return 1;
+    }
+    return 0;
 }

@@ -668,3 +668,23 @@ int func_003BA680(char *p, unsigned char reset) {
     o[0x9A] = 0;
     return 1;
 }
+
+int func_0019E2D0(char *p) {
+    *(float *)(p + 0x40) -= *(float *)(p + 0x70);
+    if (*(float *)(p + 0x40) <= 0.0f) {
+        *(float *)(p + 0x40) = *(float *)(p + 0x50);
+        *(float *)(p + 0x10) += *(float *)(p + 0x20) * *(short *)(p + 0x58);
+        if (*(int *)p & 2) {
+            *(float *)(p + 0x10) += *(float *)(p + 0x60) +
+                (*(float *)(p + 0x64) - *(float *)(p + 0x60)) * (2.3283064e-10f * mt_rand());
+        }
+        if (*(float *)(p + 0x10) > 1.0f) {
+            *(float *)(p + 0x10) -= 1.0f;
+        } else if (*(float *)(p + 0x10) < 0.0f) {
+            *(float *)(p + 0x10) += 1.0f;
+        }
+        *(unsigned short *)(p + 0xC) = (unsigned int)(4096.0f * *(float *)(p + 0x10));
+        return 1;
+    }
+    return 0;
+}

@@ -1270,7 +1270,7 @@ public:
     virtual void d186();
     virtual void d187();
     virtual void m2F8(int);
-    virtual void d189();
+    virtual void m2FC(int);
     virtual void m300(int);
 };
 
@@ -1399,5 +1399,39 @@ extern "C" void func_003EED40(char *p) {
         p[0x3A81] = 1;
         *(float *)(p + 0x3A8C) = 300.0f + 200.0f * (2.3283064e-10f * mt_rand());
         func_003E6750(p, 0, 0, 0);
+    }
+}
+
+extern "C" void func_0034BA60(int, char *, int, int, int);
+extern "C" void func_00104C00(char *, int, char *);
+extern "C" void func_0037E850(char *, int);
+extern "C" void func_001AD140(char *);
+
+extern "C" void func_0037A080(char *p) {
+    int i;
+    *(float *)(p + 0x78D0) -= *(float *)(p + 0x10);
+    if (*(float *)(p + 0x78D0) < 0.0f) {
+        *(float *)(p + 0x78D0) = *(float *)(p + 0x78D4);
+        if (mt_rand() & 1) {
+            func_0034BA60(0x28, p + 0x6F0, 0x29, 0, 1);
+        } else {
+            func_0034BA60(0x29, p + 0x6F0, 0x29, 0, 1);
+        }
+    }
+    func_00104C00(p + 0x7880, *(int *)(*(char **)(p + 0x778) + 0x104), p + 0x7840);
+    for (i = 0; i < *(int *)(p + 0x6E80); i++) {
+        if (*(short *)(p + i * 2 + 0x6668) != 0) {
+            *(short *)(p + i * 2 + 0x6668) += 0x200;
+        }
+    }
+    *(float *)(p + 0x77E8) -= *(float *)(p + 0x10);
+    if (*(float *)(p + 0x77E8) < 0.0f) {
+        ((ObjB *)p)->m2FC(0xC);
+        func_0037E850(p, 5);
+        for (i = 1; i < *(int *)(p + 0x6E80); i++) {
+            if (*(char **)(p + i * 4 + 0x6640) != 0) {
+                func_001AD140(*(char **)(p + i * 4 + 0x6640));
+            }
+        }
     }
 }
