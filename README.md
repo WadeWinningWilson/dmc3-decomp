@@ -31,8 +31,8 @@ of `.text`, as on decomp.dev.
 
 | Measure | USA |
 |---|---|
-| Code | **12.45%** (game code 12.47%, libraries 12.38%) |
-| Functions | 7,308 / 14,722 (49.64%) |
+| Code | **12.50%** (game code 12.52%, libraries 12.38%) |
+| Functions | 7,313 / 14,722 (49.67%) |
 
 The function count runs well ahead of code size: many matched functions are small (accessors,
 destructors, forwarders), while the large gameplay functions are mostly still assembly.

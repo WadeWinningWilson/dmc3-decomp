@@ -607,9 +607,9 @@ public:
     virtual void m18(int);
     virtual void m1C(int);
     virtual void d6();
-    virtual void d7();
+    virtual void m24();
     virtual void d8();
-    virtual void d9();
+    virtual int m2C();
     virtual void d10();
     virtual void d11();
     virtual void d12();
@@ -1320,5 +1320,84 @@ extern "C" int func_00321980(char *p, int i) {
             continue;
         }
         return *(int *)e;
+    }
+}
+
+extern "C" void func_00369DD0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            switch (mt_rand() & 1) {
+            case 0:
+                (*(Anim4 **)(p + 0xA8))->m18(0x26);
+                break;
+            case 1:
+                (*(Anim4 **)(p + 0xA8))->m18(0x27);
+                break;
+            }
+            *(int *)(p + 0xD4) = 1;
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    case 1:
+        if ((*(Anim4 **)(p + 0xA8))->m2C()) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim4 **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+extern "C" signed char D_00566330[][7][5];
+extern "C" void func_0037C0C0(char *, int);
+
+/* Picks a random entry (terminated by -1) of the row for the current state and level. */
+extern "C" int func_0037BF20(char *p) {
+    int k = ((Sub130 *)(p + 0x130))->m80(((Sub130 *)(p + 0x130))->m7C());
+    int n;
+    signed char *e;
+    int v;
+    if (*(unsigned char *)(p + 0x1BD)) {
+        k = 6;
+    }
+    n = 0;
+    e = D_00566330[*(int *)(p + 0x77CC)][k];
+    for (;;) {
+        if (*e == -1) {
+            break;
+        }
+        n++;
+        e++;
+    }
+    v = D_00566330[*(int *)(p + 0x77CC)][k][mt_rand() % n];
+    if (v < 0 || v >= 13) {
+        v = 1;
+    }
+    func_0037C0C0(p, v);
+    return v;
+}
+
+extern "C" int func_003F3830(char *);
+extern "C" int func_0024E800(char *);
+
+extern "C" void func_003EED40(char *p) {
+    if (func_003F3830(p)) {
+        p[0x3435] = 2;
+        p[0x3437] = 2;
+        p[0x3438] = 2;
+    } else {
+        p[0x3435] = 0;
+        p[0x3437] = 0;
+        p[0x3438] = 0;
+    }
+    *(float *)(p + 0x710) -= 20.0f * *(float *)(p + 0x35B0);
+    *(float *)(p + 0x714) -= 20.0f * *(float *)(p + 0x35B4);
+    *(float *)(p + 0x718) -= 20.0f * *(float *)(p + 0x35B8);
+    if (func_0024E800(p + 0x1FD0)) {
+        ((Obj2F8 *)p)->m2F8(3);
+        p[0x3A80] = 0;
+        p[0x3A81] = 1;
+        *(float *)(p + 0x3A8C) = 300.0f + 200.0f * (2.3283064e-10f * mt_rand());
+        func_003E6750(p, 0, 0, 0);
     }
 }
