@@ -95,3 +95,83 @@ void func_0023A480(char *p, int k) {
         break;
     }
 }
+
+/* Two-state setup (offset table swap, reset vectors to (0,0,-1.8194,0)); per-entry scaled update. */
+void func_0024DA80(char *, int, int);
+void func_003A0CD0(char *, int);
+void func_003A0F20(char *);
+int func_0039DED0(char *);
+void func_003A0230(char *);
+
+void func_00394450(char *p) {
+    p[0x2DE8] = 0;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        if (*(short *)(p + 0x2DDC) != 0x5E) {
+            *(short *)(p + 0x2DDE) = *(short *)(p + 0x2DDC);
+            *(short *)(p + 0x2DDC) = 0x5E;
+            func_0024DA80(p + 0x29D0, 0, 0x5E);
+            func_0024DA80(p + 0x2AA0, 0, 0x5E);
+        }
+        (*(unsigned char *)(p + 5))++;
+        *(int *)(p + 0x60) = 0;
+        *(int *)(p + 0x64) = 0;
+        *(unsigned int *)(p + 0x68) = 0xBFE8E38E;
+        *(int *)(p + 0x6C) = 0;
+        *(int *)(p + 0x70) = 0;
+        *(int *)(p + 0x74) = 0;
+        *(int *)(p + 0x78) = 0;
+        *(int *)(p + 0x7C) = 0;
+        *(int *)(p + 0x2E00) = 0;
+        *(int *)(p + 0x2E04) = 0;
+        *(unsigned int *)(p + 0x2E08) = 0xBFE8E38E;
+        *(int *)(p + 0x2E0C) = 0;
+        p[0x2DE0] = 1;
+    case 1:
+        func_003A0CD0(p, 0x300);
+        func_003A0F20(p);
+        if ((unsigned char)func_0039DED0(p) == 1) {
+            func_003A0230(p);
+        }
+        break;
+    }
+}
+
+typedef struct Ent340 {
+    char pad[0xC];
+    unsigned char cnt;
+    char pad2[0x1C - 0xD];
+    char *items;
+    char pad3[0x340 - 0x20];
+} Ent340;
+
+typedef struct Obj1A4 {
+    char pad[0xA8];
+    unsigned short n;
+    char pad2[0xBC - 0xAA];
+    Ent340 *ent;
+    char pad3[0x1B0 - 0xC0];
+    float scale;
+} Obj1A4;
+
+void func_001A49D0(Ent340 *, int, int, int);
+
+void func_001A4350(Obj1A4 *p, unsigned int i, int a, int b) {
+    Ent340 *e;
+    int k;
+    if (i >= p->n) {
+        return;
+    }
+    if (p->scale != 1.0f) {
+        if (a) {
+            a = a * p->scale;
+        }
+        if (b) {
+            b = b * p->scale;
+        }
+    }
+    e = &p->ent[i];
+    for (k = 0; k < e->cnt; k++) {
+        func_001A49D0(e, *(int *)(e->items + k * 0x150 + 8), a, b);
+    }
+}
