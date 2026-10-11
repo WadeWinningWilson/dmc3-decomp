@@ -365,6 +365,7 @@ public:
     virtual void d13();
     virtual void d14();
     virtual void m44();
+    virtual void m48(int, char *);
 };
 
 
@@ -408,6 +409,7 @@ public:
     virtual void d13();
     virtual void m40();
     virtual void m44();
+    virtual void m48(int, char *);
 };
 
 /* Random idle pose. */
@@ -632,6 +634,10 @@ extern float D_005BD100[];
 extern float D_005BD104[];
 void func_003E6750(char *, int, int, int);
 }
+
+
+
+
 
 
 
@@ -1022,5 +1028,41 @@ extern "C" void func_004633D0(char *p) {
         (*(Anim4 **)(p + 0xA8))->m18(3);
         break;
     }
+}
+
+extern "C" void func_0046A6B0(char *p) {
+    *(short *)(*(char **)(p + 0x10) + 0x50) = *(short *)(*(char **)(p + 4) + 0x20);
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m18(0x2A);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m18(0x2D);
+        break;
+    }
+    *(int *)(p + 0xD4) = 0;
+    (*(Anim4 **)(p + 0xA8))->m48(6, *(char **)(p + 0x10) + 0x10);
+    (*(Anim4 **)(p + 0xA8))->m48(0x384, *(char **)(p + 0x10) + 0x10);
+}
+
+extern "C" void func_004A6EB0(char *p) {
+    *(short *)(*(char **)(p + 0x10) + 0x50) = *(short *)(*(char **)(p + 4) + 0x20);
+    p[0xCD] = 0;
+    p[0xCE] = 0;
+    p[0xCF] = 0;
+    switch (mt_rand() & 1) {
+    case 0:
+        (*(Anim4 **)(p + 0xA8))->m18(0x2A);
+        break;
+    case 1:
+        (*(Anim4 **)(p + 0xA8))->m18(0x2D);
+        break;
+    }
+    *(int *)(p + 0xD4) = 0;
+    (*(Anim4 **)(p + 0xA8))->m48(6, *(char **)(p + 0x10) + 0x10);
+    (*(Anim4 **)(p + 0xA8))->m48(0x384, *(char **)(p + 0x10) + 0x10);
 }
 }

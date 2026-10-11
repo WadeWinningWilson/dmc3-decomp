@@ -355,3 +355,56 @@ void func_0050DE10(char *p) {
     func_0050E5B0(p);
     ((unsigned char *)p)[4]++;
 }
+
+typedef struct Rng24 {
+    float base[4];
+    float range[4];
+    char pad[4];
+} Rng24;
+extern Rng24 D_00582230[];
+extern Rng24 D_00582530[];
+
+void func_00376CF0(unsigned char *p) {
+    Rng24 *t;
+    if (p[0x972] == 0) {
+        t = &D_00582230[p[5]];
+    } else {
+        t = &D_00582530[p[5]];
+    }
+    *(float *)(p + 0x8F8) = t->base[p[0x8EB]] + t->range[p[0x8EB]] * (2.3283064e-10f * mt_rand());
+}
+
+/* Picks an index with the given percentage weights. */
+int func_0034BBE0(int n, float *w) {
+    float r = 100.0f * (2.3283064e-10f * mt_rand());
+    float acc = 0.0f;
+    int i;
+    for (i = 0; i < n - 1; i++) {
+        if (acc <= r && r < acc + *w) {
+            return i;
+        }
+        acc += *w;
+        w++;
+    }
+    return n - 1;
+}
+
+extern float D_005BD108[];
+void func_003F2F60(char *);
+void func_003F32B0(char *);
+void func_003EDC10(char *);
+void func_003E9930(char *);
+
+void func_003EDEF0(char *p) {
+    func_003F2F60(p);
+    func_003F32B0(p);
+    *(float *)(p + 0x3A8C) -= *(float *)(p + 0x10);
+    if (*(float *)(p + 0x3A8C) < 0.0f) {
+        if (100.0f * (2.3283064e-10f * mt_rand()) > D_005BD108[0]) {
+            func_003EDC10(p);
+        } else {
+            func_003E9930(p);
+        }
+        return;
+    }
+}
