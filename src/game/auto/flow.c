@@ -8305,6 +8305,16 @@ void func_00247920(p0, p1, p2) int p0; int p1; int p2; {
     __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(((v0 + (v7 << 4)) + 240)), "r"(v1) : "memory");
 }
 
+int func_002496D0(p0) char *p0; {
+    int tmp9;
+    func_0024DD30(((p0 + (*(unsigned char *)(p0 + 10400) * 416)) + 16880));
+    func_0024DD30(((p0 + (*(unsigned char *)(p0 + 10400) * 416)) + 16672));
+    func_00249A00(p0, 1);
+    func_00249A00(p0, 0);
+    tmp9 = func_0024E520(((p0 + (*(unsigned char *)(p0 + 10400) * 416)) + 16880));
+    return tmp9;
+}
+
 int func_00249780(p0) int p0; {
     char *v0;
     int v1;
@@ -23745,6 +23755,16 @@ int func_004D1EB0(p0) int p0; {
     int tmp1;
     tmp1 = func_0024E780(*(int *)((char *)p0 + 43776), 1, 3);
     return ((tmp1 & 255) == 3);
+}
+
+int func_004D1EF0(p0) char *p0; {
+    int v0;
+    *(float *)(p0 + 45708) = (*(float *)(p0 + 45708) + *(float *)(p0 + 16));
+    v0 = 1;
+    if (*(float *)(p0 + 45716) <= *(float *)(p0 + 45720)) {
+        v0 = 0;
+    }
+    return (v0 ^ 1);
 }
 
 void func_004D27B0(p0) char *p0; {

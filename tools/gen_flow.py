@@ -2435,7 +2435,9 @@ def main():
     taken = set()
     for p in (ROOT / "src").rglob("*.c*"):
         if p not in (OUT, OUT_CPP):
-            taken |= {int(x, 16) for x in re.findall(r"\bfunc_([0-9A-F]{8})\s*\([^;{}\n]*\)[^{}\n]*\{", p.read_text())}
+            # definitions only: a line that starts with the type (a call in `if (f(x)) {` is not one)
+            taken |= {int(x, 16) for x in re.findall(
+                r"^(?:extern \"C\" )?(?:static )?\w[\w *]*?[ *]func_([0-9A-F]{8})\([^;{}\n]*\)[^{}\n]*\{", p.read_text(), re.M)}
     taken |= {int(m, 16) for m in re.findall(r"=\s*0x([0-9A-Fa-f]+);",
                                              "".join(f.read_text() for f in (ROOT / "config/SLUS_209.64").glob("symbols*.txt")))}
     src = (ROOT / "asm/us/text.s").read_text()

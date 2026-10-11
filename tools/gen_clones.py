@@ -107,7 +107,8 @@ def main():
         for m in HEADER.finditer(f.read_text(errors="replace")):
             defined.setdefault(m.group(1), (f, m.group(0)))
     for f in list((ROOT / "src").rglob("*.c")) + list((ROOT / "src").rglob("*.cpp")):
-        for m in re.finditer(r"\b(func_[0-9A-F]{8})\s*\([^;{}\n]*\)[^{}\n]*\{", f.read_text(errors="replace")):
+        for m in re.finditer(r"^(?:extern \"C\" )?(?:static )?\w[\w *]*?[ *](func_[0-9A-F]{8})\([^;{}\n]*\)[^{}\n]*\{",
+                             f.read_text(errors="replace"), re.M):
             defined.setdefault(m.group(1), (None, None))
     # functions with a real name in symbols.txt are defined under that name
     for m in re.finditer(r"=\s*0x([0-9A-Fa-f]+);", "".join(
