@@ -723,3 +723,100 @@ void func_001AA690(O1AA *p, int a, int b, int c) {
         func_001AA2D0(&p->ent[i], a, p->tbl + p->ent[i].k * 64, b, c);
     }
 }
+
+/* True-plus-one when all five 0x34-byte entries are in state 4 (written out: MW kept it unrolled). */
+int func_00356A70(unsigned char *p, int k) {
+    unsigned char all = 1;
+    if (p[0x79C0] != 4) all = 0;
+    if (p[0x79F4] != 4) all = 0;
+    if (p[0x7A28] != 4) all = 0;
+    if (p[0x7A5C] != 4) all = 0;
+    if (p[0x7A90] != 4) all = 0;
+    if ((unsigned char)k == 4 && all == 1) {
+        return (unsigned char)k + 1;
+    }
+    return (unsigned char)k;
+}
+
+/* Two-state updaters (state 0 falls through into 1). */
+void func_00376E40(char *); void func_00376B80(char *, int); void func_00376CF0(char *); int func_0041D6B0(char *, float); void func_00376B40(char *, int);
+void func_004AD470(char *p) {
+    func_00376E40(p);
+    *(int *)(p + 0x8FC) |= 0x400000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_00376B80(p, -1);
+        func_00376CF0(p);
+        *(float *)(p + 0x60) = 0.0f;
+        *(float *)(p + 0x64) = 0.0f;
+        *(float *)(p + 0x68) = 0.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+        p[6] = 1;
+    case 1:
+        if ((unsigned char)func_0041D6B0(p + 0x8F8, *(float *)(p + 0x10)) == 1) {
+            func_00376B40(p, 3);
+        }
+        break;
+    }
+}
+extern char D_01CAFF0C[]; extern char D_005BE0C8[4]; extern char D_005BE098[4];
+void func_0028C5C0(char *, int, float); int func_001C1250(char *, char *, char *); void func_0021CF60(char *, char *, int); void func_00195E20(char *, char *);
+void func_00483360(char *p) {
+    char *o;
+    if (!*(unsigned char *)(p + 0x560)) {
+        return;
+    }
+    switch (*(unsigned char *)(p + 0xDC)) {
+    case 0:
+        p[0xDC] = 1;
+    case 1:
+        func_0028C5C0(p + 0x570, 0, 1.0f);
+        if (func_001C1250(D_005BE0C8, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, p + 0x800)) {
+            o = *(char **)(*(char **)D_01CAFF0C + 0xC);
+            func_0021CF60(o, o + 0x50, *(short *)(o + 0x90));
+        }
+        break;
+    }
+    func_00195E20(D_005BE098, p);
+}
+
+/* Finds the first free of three slots and acts on it (two identical copies). */
+int func_0024E800(unsigned char *); void func_00299DE0(unsigned char *, int); void func_00299CC0(unsigned char *); void func_002965E0(unsigned char *, int);
+void func_00299C00(unsigned char *p) {
+    int idx = -1;
+    int i;
+    if (func_0024E800(p + 0x8980)) {
+        func_00299DE0(p, 0);
+        for (i = 0; i < 3; i++) {
+            if (p[0xA8F8 + i] == 0) {
+                idx = i;
+                break;
+            }
+        }
+        if (p[0x8920 + idx] == 0) {
+            func_00299CC0(p);
+        } else {
+            p[0xA993] = 0;
+            func_002965E0(p, 0);
+        }
+    }
+}
+void func_00299D20(unsigned char *p) {
+    int idx = -1;
+    int i;
+    if (func_0024E800(p + 0x8980)) {
+        func_00299DE0(p, 0);
+        for (i = 0; i < 3; i++) {
+            if (p[0xA8F8 + i] == 0) {
+                idx = i;
+                break;
+            }
+        }
+        if (p[0x8920 + idx] == 0) {
+            func_00299CC0(p);
+        } else {
+            p[0xA993] = 0;
+            func_002965E0(p, 0);
+        }
+    }
+}
