@@ -458,3 +458,58 @@ void func_003C0110(char *p, int a, float f) {
     *(short *)(p + 0x1664) += a * *(float *)(p + 0x10);
     *(float *)(p + 0x54) += *(float *)(p + 0x10) * (f * func_00131BA0(*(short *)(p + 0x1664)));
 }
+
+/* Text helper with the 0 variant; record sizes rounded to 16; two-slot check; a scene reset. */
+void func_004E5F00(void) {
+    int x, y;
+    unsigned int w = func_003101B0(D_01DFA340, 0x3106, 0);
+    x = 472 - (w >> 16);
+    if (D_005BE0D8[3]) {
+        y = 222 - *(short *)(D_005BE0D8 + 0x2E);
+    } else {
+        y = 445 - *(short *)(D_005BE0D8 + 0x2E);
+    }
+    func_0030FD40(D_01DFA340, 0x3106, x, y, 0x585858, 0, 0xFFFFF2, 1);
+}
+typedef struct Arr1A5 { int base; int n; int stride; } Arr1A5;
+int func_00197B30(int);
+int func_001A5AA0(int a, Arr1A5 *s) {
+    int sum = 0;
+    int i;
+    for (i = 0; i < s->n; i++) {
+        sum += func_00197B30(s->base + ((i * s->stride) << 6));
+        sum = (sum + 15) & ~15;
+    }
+    return sum;
+}
+int func_00412D80(char *, char *);
+unsigned char func_00412CF0(char *p) {
+    unsigned char ok = 1;
+    int i;
+    for (i = 0; i < 2; i++) {
+        if (!(unsigned char)func_00412D80(p, p + 0x33C2 + i * 7)) {
+            ok = 0;
+        }
+    }
+    if (*(unsigned char *)(p + 0x33C1) == 1) {
+        p[0x33C1] = 0;
+    }
+    return ok;
+}
+extern char D_01CAFF0C[]; extern char D_00645A30[]; extern char D_01DF5D20[]; extern int D_005BE09C; extern char D_01DF8E4D[];
+void func_00195CC0(char *); void func_001F9BF0(char *); void func_001ACCD0(int); void func_00247760(char *); void func_002D8F40(int, unsigned char);
+void func_0023A710(char *p, int k) {
+    if (!(unsigned char)k) {
+        p[0x5BE0] = 0;
+    }
+    (*(char **)D_01CAFF0C)[8] = 0;
+    func_00195CC0(D_00645A30);
+    (*(char **)(p + 0x2058))[0x28B4] = 0;
+    func_001F9BF0(D_01DF5D20);
+    func_001ACCD0(D_005BE09C);
+    (*(char **)D_01CAFF0C)[9] = 0;
+    D_01DF8E4D[0] = 0;
+    D_01DFA340[0] = 0;
+    func_00247760(p + 0x45C0);
+    func_002D8F40(*(int *)(p + 0x2058), *(unsigned char *)(p + 0x5BE2));
+}
