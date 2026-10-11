@@ -69,3 +69,27 @@ Ent21B *func_0021B100(List21B *p, Src21B *s, int id) {
     p->n++;
     return &p->e[p->n - 1];
 }
+
+/* Turn angle from degrees, two position updates, keeps 20 units above the target. */
+extern char D_01CAFF0C[];
+void func_0041E270(char *, char *, float, float); void func_0024BF20(char *);
+void func_00317740(char *p, int k) {
+    char *o;
+    float d;
+    *(float *)(p + 0x20) = 6.283185f * (*(float *)(p + 0x220) / 360.0f);
+    func_0041E270(p + 0x70, p + 0x1A0, *(float *)(p + 0x228), *(float *)(p + 0x22C));
+    func_0041E270(p + 0x80, p + 0x190, *(float *)(p + 0x230), *(float *)(p + 0x234));
+    if (*(unsigned char *)(p + 0x2B6) == 0) {
+        if ((unsigned char)k == 0) {
+            o = *(char **)(*(char **)D_01CAFF0C + 0xC);
+        } else {
+            o = *(char **)(*(char **)D_01CAFF0C + 0x10);
+        }
+        if (*(float *)(p + 0x74) - *(float *)(o + 0x54) < 20.0f) {
+            *(float *)(p + 0x74) = 20.0f + *(float *)(o + 0x54);
+        }
+    }
+    *(float *)(p + 0x7C) = 1.0f;
+    *(float *)(p + 0x8C) = 1.0f;
+    func_0024BF20(p);
+}
