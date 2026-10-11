@@ -323,3 +323,140 @@ void func_002D56B0(O2D3 *q) {
         break;
     }
 }
+
+extern float D_00569400[];
+extern float D_00569404[];
+void func_003A53F0(unsigned char *, int);
+
+void func_003A5220(unsigned char *p) {
+    unsigned char go;
+    int k;
+    *(float *)(p + 0x4BE0) += *(float *)(p + 0x10);
+    switch (p[6]) {
+    case 0:
+        p[6]++;
+    case 1:
+        k = p[0x4E17] * 12 + p[0x4E18] * 4;
+        go = 0;
+        if (*(float *)(p + 0x4BE0) > D_00569400[k]) {
+            go = 1;
+        }
+        if (*(float *)(p + 0x4E20) < D_00569404[k]) {
+            go = 1;
+        }
+        func_003A53F0(p, 0);
+        if (p[0x4E15] == 1) {
+            if ((unsigned char)func_003ACB40((char *)p) == 1) {
+                p[0x4E15] = 0;
+            }
+        } else if (go == 1) {
+            *(float *)(p + 0x4E08) = 40.0f;
+            p[6]++;
+        }
+        break;
+    case 2:
+        *(float *)(p + 0x4E08) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0x4E08) < 0.0f) {
+            p[0x4E15] = 1;
+        }
+        func_003A53F0(p, 1);
+        if (p[0x4E15] == 1 && (unsigned char)func_003ACB40((char *)p) == 1) {
+            p[0x4E15] = 0;
+        }
+        break;
+    }
+    func_002EF940(*(int *)D_01CAFF0C, (char *)p + 0x5080);
+    *(short *)(p + 0x90) = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, (char *)p + 0x50);
+}
+
+extern float D_00569640[];
+extern float D_00569644[];
+void func_003A60E0(unsigned char *, int);
+
+void func_003A5F10(unsigned char *p) {
+    unsigned char go;
+    int k;
+    *(float *)(p + 0x4BE0) += *(float *)(p + 0x10);
+    switch (p[6]) {
+    case 0:
+        p[6]++;
+        func_003A5C70(p);
+    case 1:
+        k = p[0x4E17] * 12 + p[0x4E18] * 4;
+        go = 0;
+        if (*(float *)(p + 0x4BE0) > D_00569640[k]) {
+            go = 1;
+        }
+        if (*(float *)(p + 0x4E20) < D_00569644[k]) {
+            go = 1;
+        }
+        func_003A60E0(p, 0);
+        if (p[0x4E15] == 1) {
+            if ((unsigned char)func_003ACB40((char *)p) == 1) {
+                p[0x4E15] = 0;
+            }
+        } else if (go == 1) {
+            *(float *)(p + 0x4E08) = 40.0f;
+            p[6]++;
+        }
+        break;
+    case 2:
+        *(float *)(p + 0x4E08) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0x4E08) < 0.0f) {
+            p[0x4E15] = 1;
+        }
+        func_003A60E0(p, 1);
+        if (p[0x4E15] == 1 && (unsigned char)func_003ACB40((char *)p) == 1) {
+            p[0x4E15] = 0;
+        }
+        break;
+    }
+    func_002EF940(*(int *)D_01CAFF0C, (char *)p + 0x5080);
+    *(short *)(p + 0x90) = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, (char *)p + 0x50);
+}
+
+extern float D_005696D0[];
+extern float D_005696D4[];
+void func_003A6510(unsigned char *, int);
+
+void func_003A6340(unsigned char *p) {
+    unsigned char go;
+    int k;
+    *(float *)(p + 0x4BE0) += *(float *)(p + 0x10);
+    switch (p[6]) {
+    case 0:
+        p[6]++;
+        func_003A5C70(p);
+    case 1:
+        k = p[0x4E17] * 12 + p[0x4E18] * 4;
+        go = 0;
+        if (*(float *)(p + 0x4BE0) > D_005696D0[k]) {
+            go = 1;
+        }
+        if (*(float *)(p + 0x4E20) > D_005696D4[k]) {
+            go = 1;
+        }
+        func_003A6510(p, 0);
+        if (p[0x4E15] == 1) {
+            if ((unsigned char)func_003ACB40((char *)p) == 1) {
+                p[0x4E15] = 0;
+            }
+        } else if (go == 1) {
+            *(float *)(p + 0x4E08) = 40.0f;
+            p[6]++;
+        }
+        break;
+    case 2:
+        *(float *)(p + 0x4E08) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0x4E08) < 0.0f) {
+            p[0x4E15] = 1;
+        }
+        func_003A6510(p, 1);
+        if (p[0x4E15] == 1 && (unsigned char)func_003ACB40((char *)p) == 1) {
+            p[0x4E15] = 0;
+        }
+        break;
+    }
+    func_002EF940(*(int *)D_01CAFF0C, (char *)p + 0x5080);
+    *(short *)(p + 0x90) = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, (char *)p + 0x50);
+}
