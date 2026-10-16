@@ -315,3 +315,31 @@ void func_004589C0(char *p) {
     func_0028C5C0(p + 0x230, 0, 1.0f);
     func_00195E20(D_005BE098, p);
 }
+
+void func_00104C00(char *, float *, char *);
+
+/* Camera shake: a random x/y offset within the current amplitude, which eases toward its
+ * target over the remaining frames. */
+void func_001ACA00(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    if (*(int *)(p + 0x230) == 0) {
+        return;
+    }
+    if (*(short *)(p + 0x23A) != 0) {
+        __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+        if (*(unsigned int *)(p + 0x234) & 2) {
+            m[12] = (int)(mt_rand() % *(short *)(p + 0x23A)) - (*(short *)(p + 0x23A) >> 1);
+        }
+        if (*(unsigned int *)(p + 0x234) & 1) {
+            m[13] = (int)(mt_rand() % *(short *)(p + 0x23A)) - (*(short *)(p + 0x23A) >> 1);
+        }
+        func_00104C00(p + 0x100, m, p + 0x100);
+    }
+    *(short *)(p + 0x23A) += (*(short *)(p + 0x238) - *(short *)(p + 0x23A)) / *(int *)(p + 0x230);
+    if (*(short *)(p + 0x23A) < 0) {
+        *(short *)(p + 0x23A) = 0;
+    }
+    if (*(int *)(p + 0x230) > 0) {
+        (*(int *)(p + 0x230))--;
+    }
+}
