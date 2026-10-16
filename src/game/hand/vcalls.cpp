@@ -2415,3 +2415,40 @@ extern "C" void func_004C4BA0(char *p) {
         break;
     }
 }
+
+extern "C" void func_0045D990(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(Sub0C **)(p + 0xC))->m28(0x48);
+        p[0xB5] = 1;
+        break;
+    case 1:
+        if ((*(Sub0C **)(p + 0xC))->m0C() != 0x48) {
+            if (2.3283064e-10f * mt_rand() < 0.5f) {
+                (*(Sub0C **)(p + 0xC))->m28(0x45);
+                p[0xB5] = 6;
+            } else {
+                (*(Sub0C **)(p + 0xC))->m28(0x46);
+                p[0xB5] = 7;
+            }
+        }
+        break;
+    case 6:
+        if ((*(Sub0C **)(p + 0xC))->m0C() != 0x45) {
+            (*(Sub0C **)(p + 0xC))->m28(0x49);
+            p[0xB5] = 8;
+        }
+        break;
+    case 7:
+        if ((*(Sub0C **)(p + 0xC))->m0C() != 0x46) {
+            (*(Sub0C **)(p + 0xC))->m28(0x49);
+            p[0xB5] = 8;
+        }
+        break;
+    case 8:
+        if ((*(Sub0C **)(p + 0xC))->m0C() != 0x49) {
+            ((ObjB4 *)p)->mB4(0x17);
+        }
+        break;
+    }
+}

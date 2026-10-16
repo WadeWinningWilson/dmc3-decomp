@@ -343,3 +343,51 @@ void func_001ACA00(char *p) {
         (*(int *)(p + 0x230))--;
     }
 }
+
+void func_00105230(float *, float *, float *);
+char *func_00207480(int, int, float *, int);
+
+void func_003DD120(Walker *q) {
+    unsigned char *p = (unsigned char *)q;
+    unsigned char out;
+    float v[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    switch (p[5]) {
+    case 0:
+        *(float *)(p + 0xEC4) -= *(float *)(p + 0x10);
+        if (*(float *)(p + 0xEC4) < 0.0f) {
+            v[0] = *(float *)(p + 0x50);
+            v[1] = -45.0f;
+            v[2] = *(float *)(p + 0x58);
+            v[3] = 1.0f;
+            __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+            func_00105230(m, m, v);
+            func_00207480(3, 0x146, m, 16);
+            if (mt_rand() & 1) {
+                func_0034BA60(0x4E, q->pos, 0x35, 0, 1);
+            }
+            func_0034BA60(0x4C, q->pos, 0x35, 0, 1);
+            *(float *)(p + 0xEC4) = 60.0f;
+            p[5]++;
+        }
+        break;
+    case 1:
+        out = 0;
+        if (!(500.0f <= *(float *)(p + 0x50)) || !(*(float *)(p + 0x50) <= 4500.0f)) {
+            out = 1;
+        }
+        if (!(500.0f <= *(float *)(p + 0x58)) || !(*(float *)(p + 0x58) <= 4500.0f)) {
+            out = 1;
+        }
+        if (out == 0) {
+            *(float *)(p + 0x54) += *(float *)(p + 0x10) * 5.1666665f;
+            *(float *)(p + 0xEC4) -= *(float *)(p + 0x10);
+            if (*(float *)(p + 0xEC4) < 0.0f) {
+                p[0xF05] = 1;
+            }
+        } else {
+            p[0xF0B] = 1;
+        }
+        break;
+    }
+}
