@@ -2452,3 +2452,41 @@ extern "C" void func_0045D990(char *p) {
         break;
     }
 }
+
+extern "C" void func_004C5200(char *p) {
+    switch (*(unsigned char *)(p + 0xB158)) {
+    case 0:
+        (*(unsigned char *)(p + 0xB158))++;
+        ((ObjB *)p)->m300(0x59);
+        *(int *)(p + 0xB184) = 0;
+        break;
+    case 1:
+        if ((unsigned char)func_004D2610(p) == 1) {
+            func_004CBD90(p);
+            break;
+        }
+        func_004D1AF0(p, D_0058AAA0, 0);
+        if (((Sub130 *)(p + 0x130))->m88()) {
+            func_004CBBE0(p, 3.0f);
+        }
+        if ((unsigned char)func_0024E800(*(char **)(p + 0xAB00)) == 1) {
+            *(int *)(p + 0xB184) = *(int *)(p + 0xB184) >= 2 ? 0 : *(int *)(p + 0xB184) + 1;
+            switch (*(int *)(p + 0xB184)) {
+            case 0:
+                if (mt_rand() & 1) {
+                    ((ObjB *)p)->m300(0x59);
+                } else {
+                    ((ObjB *)p)->m300(0x5A);
+                }
+                break;
+            case 1:
+                ((ObjB *)p)->m300(0);
+                break;
+            case 2:
+                ((ObjB *)p)->m300(1);
+                break;
+            }
+        }
+        break;
+    }
+}
