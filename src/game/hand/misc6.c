@@ -560,3 +560,81 @@ void func_00247710(char *p, char *src, signed char n) {
         *(char *)(p + 0x170) = n;
     }
 }
+
+int func_001C52A0(char *, char *);
+
+int func_001C52F0(char *p) {
+    int i;
+    int r;
+    char *e;
+    for (i = 0, e = p; i < 16; i++, e += 640) {
+        if (*(unsigned char *)e != 0) {
+            r = func_001C52A0(p, e);
+        }
+    }
+    return r;
+}
+
+char *func_00287270(char *p, unsigned char k, int id) {
+    char *v;
+    for (v = *(char **)(p + 0x394); v != 0; v = *(char **)(v + 8)) {
+        if (*(unsigned char *)(v + 0x11) == k && *(int *)(v + 0x14) == id) {
+            *(int *)(v + 0x18) += 1;
+            return v;
+        }
+    }
+    return 0;
+}
+
+void func_004E9680(char *, int);
+int func_004E98A0(char *);
+
+int func_004E9840(char *p) {
+    int r;
+    unsigned char k = *(unsigned char *)(p + 4);
+    switch (k) {
+    case 0:
+        func_004E9680(p, k);
+        *(unsigned char *)(p + 4) += 1;
+    case 1:
+        r = func_004E98A0(p);
+    }
+    return r;
+}
+
+int func_004F7310(char *p) {
+    char *q;
+    *(char **)(p + 0xBA0) = func_00207480(2, 0x76, 0, 16);
+    q = *(char **)(p + 0xBA0);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x8E0;
+        *(char *)(q + 0x9A) = 0;
+        return 1;
+    }
+    return 0;
+}
+
+extern float D_01DF5D20[];
+
+int func_003A20C0(char *p, float *v, float rate, float floor) {
+    float d;
+    if (*(float *)(p + 0x10) <= 0.0f) {
+        return 0;
+    }
+    d = D_01DF5D20[0];
+    *v = *v - rate * d;
+    if (*v <= floor) {
+        *v = floor;
+        return 1;
+    }
+    return 0;
+}
+
+void func_0021C100(char *, int, int, float, float);
+
+void func_0023D5B0(char *p) {
+    *(char *)(p + 0x28A9) = 0;
+    *(float *)(p + 0x291C) = *(float *)(*(char **)(p + 0x283C) + 0x2F0);
+    *(unsigned char *)(p + 0x299F) = (unsigned int)*(float *)(*(char **)(p + 0x283C) + 0x2C4);
+    func_0021C100(p, 7, 10, 0.0f, -1.5f);
+}
