@@ -455,3 +455,48 @@ void func_0033D010(char *p) {
     *(float *)(p + 0xB6C) = 1.0f;
     func_0033D5B0(p);
 }
+
+int func_001AE140(char *t, int i) {
+    unsigned char k = *(unsigned char *)(t + i * 80 + 0x11);
+    if (k == 6 || k == 2) {
+        return 1;
+    }
+    return 0;
+}
+
+char *func_00279290(char *);
+
+int func_003A25A0(char *p, int i) {
+    if (i < *(unsigned short *)(func_00279290(p + 0x4C0) + 0xAA)) {
+        return *(int *)(p + 0xCCC);
+    }
+    return 0;
+}
+
+int func_003B6B00(char *p, int i) {
+    if (i < *(unsigned short *)(func_00279290(p + 0x700) + 0xAA)) {
+        return *(int *)(p + 0x66C);
+    }
+    return 0;
+}
+
+int func_001AEA60(char *, int, unsigned short);
+void func_001AF080(char *, int);
+
+void func_001AF7A0(char *p, unsigned char a, unsigned char b) {
+    int r = func_001AEA60(p, 1, a * 34 + b);
+    if (r != 0) {
+        func_001AF080(p, r);
+    }
+}
+
+extern float D_0057895C[];
+
+void func_00450480(char *p, float add) {
+    float x, m;
+    if (*(unsigned char *)(p + 0x80E) != 1 && *(unsigned char *)(p + 0x800) != 3) {
+        x = *(float *)(p + 0x830) + add;
+        m = D_0057895C[0];
+        *(float *)(p + 0x830) = x < m ? x : m;
+    }
+}
