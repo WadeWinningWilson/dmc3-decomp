@@ -58,3 +58,8 @@ __dt__10CUnk2791E0Fv = 0x2791E0;
 __vt__14CUIDMemoryCard = 0x5BA060;
 __dt__14CUIDMemoryCardFv = 0x4E3970;
 __dt__5CWorkFv = 0x1AD090;
+// MW double-precision runtime (call names MW emits for `double` arithmetic)
+_d_utod = 0x100300; // (double)unsigned int
+_dpflt = 0x100310; // a < b
+fptodp = 0x11FA58; // (double)float
+dpmul = 0x11FF50; // a * b
