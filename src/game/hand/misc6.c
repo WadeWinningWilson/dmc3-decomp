@@ -417,3 +417,21 @@ void func_0037C550(char *p, int mode) {
         p[0x78C8] = (*(signed char *)(p + 0x78C6) + 3) % *(int *)(p + 0x6E78);
     }
 }
+
+void func_00496640(char *);
+
+void func_004962F0(char *p) {
+    p[0x371] = 0;
+    func_00496640(p);
+    p[0x372] = 1;
+    *(float *)(p + 0x380) = 30.0f;
+    if (mt_rand() & 1) {
+        p[0x373] = 2;
+    } else {
+        p[0x373] = 3;
+    }
+    *(float *)(p + 0x390) = (float)(mt_rand() % 30) - 15.0f;
+    *(float *)(p + 0x394) = (float)(mt_rand() % 30) - 15.0f;
+    *(float *)(p + 0x398) = 60.0f;
+    *(float *)(p + 0x39C) = 1.0f;
+}
