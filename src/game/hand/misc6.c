@@ -391,3 +391,29 @@ void func_003DD120(Walker *q) {
         break;
     }
 }
+
+typedef struct EffIds { int id[3][4]; } EffIds;
+typedef struct EffPer { int n[3]; } EffPer;
+extern EffIds D_00562B30;
+extern EffPer D_00562B60;
+
+/* Every few frames (period by mode) fires a random effect on two parts, cycling the parts. */
+void func_0037C550(char *p, int mode) {
+    EffPer per;
+    EffIds ids;
+    ids = D_00562B30;
+    per = D_00562B60;
+    (*(unsigned char *)(p + 0x78C5))++;
+    if (!(*(unsigned char *)(p + 0x78C5) < per.n[mode])) {
+        p[0x78C5] = 0;
+    }
+    if (*(unsigned char *)(p + 0x78C5) == 0) {
+        func_0034BA60(ids.id[mode][mt_rand() & 3], ((char **)(p + 0x69F8))[*(signed char *)(p + 0x78C6)] + 0x50, 0x29, 0, 1);
+        func_0034BA60(ids.id[mode][mt_rand() & 3], ((char **)(p + 0x69F8))[*(signed char *)(p + 0x78C8)] + 0x50, 0x29, 0, 1);
+        (*(signed char *)(p + 0x78C6))++;
+        if (*(signed char *)(p + 0x78C6) >= *(int *)(p + 0x6E78)) {
+            p[0x78C6] = 0;
+        }
+        p[0x78C8] = (*(signed char *)(p + 0x78C6) + 3) % *(int *)(p + 0x6E78);
+    }
+}
