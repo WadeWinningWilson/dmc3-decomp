@@ -500,3 +500,63 @@ void func_00450480(char *p, float add) {
         *(float *)(p + 0x830) = x < m ? x : m;
     }
 }
+
+int func_0020F180(char *p) {
+    int v = D_01CAFF30[0];
+    if (v >= 15 && v <= 19) {
+        return *(unsigned char *)(p + 0x40);
+    }
+    return 0;
+}
+
+int func_003FA5B0(char *p, char *other) {
+    return (unsigned char)((unsigned short)(func_0034B940(other, p + 0x50) + 0x1000) >> 13);
+}
+
+unsigned char func_0030A700(char *p) {
+    unsigned char r = 0;
+    if (*(unsigned char *)(p + 0x558A) == 0) {
+        if (*(int *)(p + 0x558C) >= *(int *)(p + 0x5590)) {
+            r = 1;
+        }
+    } else {
+        if (*(int *)(p + 0x558C) <= 0) {
+            r = 1;
+        }
+    }
+    return r;
+}
+
+void func_00195D30(char *p, signed char i) {
+    ((int *)(p + 0x450))[i / 32] &= ~(1 << (i & 31));
+}
+
+int func_001A2170(char *);
+
+int func_001A2120(char *p, unsigned int i) {
+    int ok = i < *(unsigned short *)(p + 0xA8);
+    if (ok == 0) {
+        return 0;
+    } else {
+        return func_001A2170((*(char (**)[832])(p + 0xBC))[i]);
+    }
+}
+
+extern int D_01CAFF38[];
+
+int func_0020F1C0(char *p) {
+    if (D_01CAFF30[0] == 19 && D_01CAFF38[0] == 421 && *(int *)(p + 0x30) == 1) {
+        return 1;
+    }
+    return 0;
+}
+
+void func_00247710(char *p, char *src, signed char n) {
+    int i;
+    if (n > 0) {
+        for (i = 0; i < n; i++) {
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + (i << 4) + 0xF0), "r"(src + (i << 4)) : "memory");
+        }
+        *(char *)(p + 0x170) = n;
+    }
+}
