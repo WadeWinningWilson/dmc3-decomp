@@ -638,3 +638,70 @@ void func_0023D5B0(char *p) {
     *(unsigned char *)(p + 0x299F) = (unsigned int)*(float *)(*(char **)(p + 0x283C) + 0x2C4);
     func_0021C100(p, 7, 10, 0.0f, -1.5f);
 }
+
+int func_003303A0(char *p, int k) {
+    int i;
+    if (k == -1) {
+        return -1;
+    }
+    for (i = 0; i < 4; i++) {
+        if (k == *(signed char *)(p + i + 0x114)) {
+            return i + 3;
+        }
+    }
+    return -1;
+}
+void func_001AF980(char *p, unsigned char a, signed char b) {
+    int r = func_001AEA60(p, 2, a * 15 + b);
+    if (r != 0) {
+        func_001AF080(p, r);
+    }
+}
+void func_001AFB30(char *p, unsigned char a, signed char b) {
+    int r = func_001AEA60(p, 3, a * 6 + b);
+    if (r != 0) {
+        func_001AF080(p, r);
+    }
+}
+void func_00195870(char *, signed char, int);
+void func_00195C60(char *p, signed char i, int c) {
+    ((int *)(p + 0x450))[i / 32] |= 1 << (i & 31);
+    if (c != 0) {
+        func_00195870(p, i, c);
+    }
+}
+int func_001A4050(char *, int, int, int);
+int func_001A39C0(char *p, unsigned int i, unsigned int j, int a, int b) {
+    int r;
+    if (i < *(unsigned short *)(p + 0xA8) && j < *(short *)(p + 0xAC)) {
+        r = func_001A4050((*(char (**)[832])(p + 0xBC))[i], j, a, b);
+    }
+    return r;
+}
+void func_002E0580(char *, int, int, int);
+int func_002E02C0(char *, int, int);
+int func_002DF910(char *p, int a, int b) {
+    int r;
+    if (*(unsigned char *)(p + 0x3C80) == 6) {
+        func_002E0580(p, a, b, 0);
+        r = func_002E02C0(p, a, b);
+    }
+    return r;
+}
+extern char D_005A7AD0[];
+void func_0022C850(char *, int);
+void func_00100580(char *);
+char *func_001ED5B0(char *p, short flag) {
+    char *m;
+    if (p != 0) {
+        m = p + 0xC3C;
+        if (m != 0) {
+            *(char **)(p + 0xC3C) = D_005A7AD0;
+            func_0022C850(m, 0);
+        }
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
