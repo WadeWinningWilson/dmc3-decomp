@@ -435,3 +435,23 @@ void func_004962F0(char *p) {
     *(float *)(p + 0x398) = 60.0f;
     *(float *)(p + 0x39C) = 1.0f;
 }
+
+void func_0033D310(char *);
+void func_0033D5B0(char *);
+
+void func_0033D010(char *p) {
+    p[0xB41] = 0;
+    func_0033D310(p);
+    p[0xB42] = 1;
+    *(float *)(p + 0xB4C) = 40.0f;
+    if (mt_rand() & 1) {
+        p[0xB43] = 2;
+    } else {
+        p[0xB43] = 3;
+    }
+    *(float *)(p + 0xB60) = (float)(mt_rand() % 30) - 15.0f;
+    *(float *)(p + 0xB64) = (float)(mt_rand() % 30) - 15.0f;
+    *(float *)(p + 0xB68) = 60.0f;
+    *(float *)(p + 0xB6C) = 1.0f;
+    func_0033D5B0(p);
+}
