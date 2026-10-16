@@ -1270,7 +1270,7 @@ public:
     virtual void d184();
     virtual int m2EC();
     virtual void m2F0(int);
-    virtual void d187();
+    virtual void m2F4(int);
     virtual void m2F8(int);
     virtual void m2FC(int);
     virtual void m300(int);
@@ -2333,5 +2333,49 @@ extern "C" void func_0045E650(char *p) {
             ((ObjB4 *)p)->mB4(0x17);
         }
         break;
+    }
+}
+
+extern "C" void func_0037BDD0(char *);
+
+/* Every 40 frames a random effect; when no sub-part is alive the boss is defeated, otherwise
+ * its parts spin (faster while the player is in state 0x3C78). */
+extern "C" void func_00379B90(char *p) {
+    char *pl = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    int i;
+    unsigned char dead;
+    func_0037BDD0(p);
+    (*(unsigned char *)(p + 0x78CC))++;
+    if (*(unsigned char *)(p + 0x78CC) % 40 == 0) {
+        if (mt_rand() & 1) {
+            func_0034BA60(0x24, p + 0x6F0, 0x29, 0, 1);
+        } else {
+            func_0034BA60(0x25, p + 0x6F0, 0x29, 0, 1);
+        }
+    }
+    dead = 1;
+    for (i = 0; i < *(int *)(p + 0x6E78); i++) {
+        if (*(int *)(*(char **)(p + i * 4 + 0x69F8) + 0x144C) > 0) {
+            dead = 0;
+        }
+    }
+    if (dead) {
+        ((ObjB *)p)->m2F4(0x6A);
+        *(float *)(p + 0x6E6C) = 5.0f;
+        return;
+    }
+    for (i = 0; i < *(int *)(p + 0x6E80); i++) {
+        if (*(short *)(p + i * 2 + 0x6668) != 0) {
+            if (*(unsigned char *)(pl + 0x3C78)) {
+                *(short *)(p + i * 2 + 0x6668) += 0x80;
+                *(short *)(p + i * 2 + 0x6668) &= -0x80;
+            } else {
+                *(short *)(p + i * 2 + 0x6668) += 0x200;
+                *(short *)(p + i * 2 + 0x6668) &= -0x200;
+            }
+        }
+    }
+    if (*(unsigned char *)(pl + 0x28AC) == 1 && *(unsigned char *)(p + 0x7805)) {
+        ((ObjB *)p)->m2F4(0x69);
     }
 }
