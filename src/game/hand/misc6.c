@@ -705,3 +705,72 @@ char *func_001ED5B0(char *p, short flag) {
     }
     return p;
 }
+
+int func_00471DF0(char *p) {
+    char *q;
+    *(char **)(p + 0x460) = func_00207480(3, 0xD3, 0, 8);
+    q = *(char **)(p + 0x460);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x150;
+        *(char *)(q + 0x9A) = 0;
+        *(char *)(*(char **)(p + 0x460) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
+}
+int func_004F9040(char *p) {
+    char *q;
+    *(char **)(p + 0x138) = func_00207480(3, 0x19D, 0, 16);
+    q = *(char **)(p + 0x138);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x5B0;
+        *(char *)(q + 0x9A) = 0;
+        *(char *)(*(char **)(p + 0x138) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
+}
+int func_004F9110(char *p) {
+    char *q;
+    *(char **)(p + 0x13C) = func_00207480(3, 0x19E, 0, 16);
+    q = *(char **)(p + 0x13C);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x5B0;
+        *(char *)(q + 0x9A) = 0;
+        *(char *)(*(char **)(p + 0x13C) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
+}
+int func_0050E790(char *p) {
+    char *q;
+    *(char **)(p + 0x460) = func_00207480(3, 0xD3, 0, 8);
+    q = *(char **)(p + 0x460);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x150;
+        *(char *)(q + 0x9A) = 0;
+        *(char *)(*(char **)(p + 0x460) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
+}
+
+char *func_002109C0(char *p, int i) {
+    char *e = *(char **)(p + 36) + (i << 4);
+    char *v;
+    if (*(int *)e != 0) {
+        v = *(char **)(e + 4);
+        switch (*(unsigned char *)v) {
+        case 0:
+            break;
+        case 1:
+        case 2:
+        case 4:
+        case 3:
+            return v;
+        default:
+            return 0;
+        }
+    }
+    return 0;
+}

@@ -2,6 +2,8 @@
  * with their constants and symbols substituted, verified byte-for-byte. */
 /* Hand-matched functions (sixth file: its callee declarations differ from the others). */
 
+#include "game/mt_rand.h"
+
 extern char D_00666710[];
 extern char D_0066671A[];
 extern char D_01DFC180[];
@@ -49,8 +51,186 @@ void func_002965E0(char *, int);
 
 
 
+float func_00131B50(float);
+
+
+
+
+
+void func_0034BA60(int, char *, signed char, int, int);
+
+
+
+
+
+
+void func_002EF940(int, char *);
+
+/* Wanders inside the 500..4500 square; leaving it (or the timer / distance) ends the state. */
+typedef struct Walker { char pad[0x50]; char pos[0x10]; } Walker;
+
+
+
+typedef struct PickRow {
+    signed char id0[8];
+    float w0[8];
+    signed char id1[8];
+    float w1[8];
+} PickRow;
+extern PickRow D_0056E190[][3];
+void func_003ACB40(unsigned char *);
+
+/* Picks the next attack (weights in percent) for the current level and difficulty. */
+
+
+extern char D_005BE098[4];
+void func_00382A50(char *);
+void func_00206730(char *);
+void func_001AD140(char *);
+void func_001AD100(char *);
+void func_00458BF0(char *);
+void func_00458CB0(char *);
+void func_00459020(char *);
+void func_004594B0(char *);
+void func_0028C5C0(char *, int, float);
+void func_00195E20(char *, char *);
+
+
+
+void func_00104C00(char *, float *, char *);
+
+/* Camera shake: a random x/y offset within the current amplitude, which eases toward its
+ * target over the remaining frames. */
+
+
+void func_00105230(float *, float *, float *);
+char *func_00207480(int, int, float *, int);
+
+
+
+typedef struct EffIds { int id[3][4]; } EffIds;
+typedef struct EffPer { int n[3]; } EffPer;
+extern EffIds D_00562B30;
+extern EffPer D_00562B60;
+
+/* Every few frames (period by mode) fires a random effect on two parts, cycling the parts. */
+
+
+void func_00496640(char *);
+
+
+
+void func_0033D310(char *);
+void func_0033D5B0(char *);
+
+
+
+
+
+char *func_00279290(char *);
+
+
+
+
+
+int func_001AEA60(char *, int, unsigned short);
+void func_001AF080(char *, int);
+
+
+
+extern float D_0057895C[];
+
+
+
+
+
+
+
+
+
+
+
+int func_001A2170(char *);
+
+
+
+extern int D_01CAFF38[];
+
+
+
+
+
+int func_001C52A0(char *, char *);
+
+
+
+
+
+void func_004E9680(char *, int);
+int func_004E98A0(char *);
+
+
+
+
+
+extern float D_01DF5D20[];
+
+
+
+void func_0021C100(char *, int, int, float, float);
+
+
+
+
+
+
+void func_00195870(char *, signed char, int);
+
+int func_001A4050(char *, int, int, int);
+
+void func_002E0580(char *, int, int, int);
+int func_002E02C0(char *, int, int);
+
+extern char D_005A7AD0[];
+void func_0022C850(char *, int);
+void func_00100580(char *);
+
+
+
+
+
+
+
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
     }
+}
+
+int func_004E34C0(char *p) {
+    char *q;
+    *(char **)(p + 0x630) = func_00207480(3, 0x345, 0, 16);
+    q = *(char **)(p + 0x630);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x150;
+        *(char *)(q + 0x9A) = 0;
+        *(char *)(*(char **)(p + 0x630) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
+}
+
+int func_004F8E40(char *p) {
+    char *q;
+    *(char **)(p + 0x138) = func_00207480(3, 0x361, 0, 16);
+    q = *(char **)(p + 0x138);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x5B0;
+        *(char *)(q + 0x9A) = 0;
+        *(char *)(*(char **)(p + 0x138) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
 }
