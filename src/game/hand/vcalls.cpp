@@ -13337,3 +13337,14 @@ extern "C" void func_004B1CA0(char *p) {
         func_0013D5D0(p + k * 16 + 0x3C);
     }
 }
+
+extern "C" void func_0045AC70(char *p, char *h, int a) {
+    if (*(unsigned char *)(p + 0x1D) != 3) {
+        if (*(signed char *)(h + 2) == 1) {
+            *(float *)(p + 0x38) = *(float *)(p + 0x38) + *(float *)(h + 4) / 2.0f;
+        }
+        hit_copy(p, h);
+        ((HitRx *)p)->mB4(0x10);
+        ((HitRx *)p)->m68(h, a);
+    }
+}

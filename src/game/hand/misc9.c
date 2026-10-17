@@ -576,6 +576,8 @@ float func_00132630(float *, char *);
 void func_00132580(float *, char *, float);
 extern int D_01DFA344[];
 extern int D_01DFA348[];
+signed char func_00406D80(char *, signed char);
+signed char func_00406CF0(char *, signed char);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -8901,4 +8903,30 @@ void func_00351DA0(char *p, int a, int b, int x, int y) {
     func_0030FD40(D_01DFA340, 0x30FC, x + (5 - ndig(a)) * 8, y, 0x585858, 0x10, 0xFFFFF2, 1);
     func_0030FD40(D_01DFA340, 0x30FD, x + (5 - ndig(b)) * 8 + 0x32, y, 0x585858, 0x10, 0xFFFFF2, 1);
     func_0030FD40(D_01DFA340, 0x30FE, x + 0x29, y, 0x585858, 0x10, 0xFFFFF2, 1);
+}
+
+void func_0047DE50(char *p) {
+    int i;
+    int v;
+    *(unsigned short *)(p + 0x3106) = 0;
+    for (i = 0; i < *(signed char *)(p + 0x310E); i++) {
+        {
+            char *t;
+            signed char r = func_00406D80(*(char **)(p + 0x3100), i + *(signed char *)(p + 0x310D));
+            t = *(char **)(p + 0x3100);
+            if (r == 0) {
+                v = *(int *)(t + 4);
+            } else {
+                v = *(unsigned char *)(r + t + 8);
+            }
+        }
+        if (v != 0) {
+            *(unsigned short *)(p + 0x3106) |= (unsigned short)(1 << i);
+        }
+        *(signed char *)(p + i + 0x3108) = *(signed char *)(*(char **)(p + 0x3100) + func_00406CF0(*(char **)(p + 0x3100), i + *(signed char *)(p + 0x310D)) + 0xA5);
+    }
+    *(unsigned char *)(p + 0x3105) = 0;
+    while (!(*(unsigned short *)(p + 0x3106) & (1 << *(unsigned char *)(p + 0x3105)))) {
+        *(unsigned char *)(p + 0x3105) = (*(unsigned char *)(p + 0x3105) + 1) & 0xF;
+    }
 }
