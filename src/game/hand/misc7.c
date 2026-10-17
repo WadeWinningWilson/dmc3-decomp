@@ -372,3 +372,25 @@ void func_001F8120(char *p, unsigned char k) {
     *s = func_001B0FD0(p + k * 16 + 0x108, *e, 0);
     func_00128488(*s, 0, *e);
 }
+
+int func_001980B0(char *p, short a, short b, int c, int k) {
+    char *e = p + k * 20;
+    char *q = e + 0xC;
+    unsigned char *s = (unsigned char *)(*(char **)(e + 0x1C) + *(int *)(e + 0x14) * 132);
+    if (*s > 0) {
+        return 0;
+    }
+    s[0] = 1;
+    *(short *)(s + 2) = a;
+    *(short *)(s + 4) = b;
+    *(int *)(s + 8) = c;
+    q[0] = 1;
+    {
+        int t = *(int *)(q + 8);
+        int c = *(int *)(q + 0xC);
+        t++;
+        *(int *)(q + 8) = t;
+        *(int *)(q + 8) = t % c;
+    }
+    return 1;
+}
