@@ -176,6 +176,8 @@ void func_003EFCE0(char *p) {
 
 /* Aims at the target selected by +0xBA0/+0xBA4 (VU0 vector difference), then refreshes. */
 float func_00132470(char *, float *); void func_0030CCD0(char *);
+short func_0034B940(char *, char *);
+int func_0034B8C0(short *, short *, int);
 void func_0030CBD0(char *p) {
     float v[4];
     char *a;
@@ -205,4 +207,11 @@ void func_0030CBD0(char *p) {
         break;
     }
     func_0030CCD0(p);
+}
+
+unsigned char func_0041DAB0(char *a, short *b, int c) {
+    short d;
+    d = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, a);
+    d = d - *b;
+    return func_0034B8C0(b, &d, c);
 }

@@ -51,6 +51,18 @@ extern unsigned int D_00662308[];
 extern unsigned int D_0066230C[];
 extern unsigned int D_00662310[];
 void func_00134DE0(char *, char *, int);
+extern char D_0065E4F0[];
+extern unsigned int D_0065E530[];
+extern unsigned int D_0065E534[];
+extern unsigned int D_0065E538[];
+extern unsigned int D_0065E53C[];
+extern unsigned int D_0065E540[];
+extern char D_00661A80[];
+extern unsigned int D_00661AC0[];
+extern unsigned int D_00661AC4[];
+extern unsigned int D_00661AC8[];
+extern unsigned int D_00661ACC[];
+extern unsigned int D_00661AD0[];
 
 void func_001A72B0(void) {
     unsigned int i;
@@ -232,3 +244,32 @@ void func_001A8E70(int a) {
     }
 }
 
+void func_001A74E0(void) {
+    unsigned long long *n;
+    n = (unsigned long long *)(D_0065E4F0 + (*(signed char *)(D_005BE0D8 + 0xE) << 5) + 0x10);
+    n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+    n[1] = 0;
+    n -= 2;
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_0065E530[0] = 0;
+    D_0065E534[0] = 0;
+    D_0065E538[0] = 0;
+    D_0065E53C[0] = 0;
+    D_0065E540[0] = 0;
+}
+
+void func_001A8060(void) {
+    unsigned long long *n;
+    n = (unsigned long long *)(D_00661A80 + (*(signed char *)(D_005BE0D8 + 0xE) << 5) + 0x10);
+    n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+    n[1] = 0;
+    n -= 2;
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_00661AC0[0] = 0;
+    D_00661AC4[0] = 0;
+    D_00661AC8[0] = 0;
+    D_00661ACC[0] = 0;
+    D_00661AD0[0] = 0;
+}
