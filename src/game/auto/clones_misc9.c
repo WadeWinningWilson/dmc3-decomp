@@ -515,7 +515,7 @@ void func_0024FE00(char *);
 void func_00320540(char *);
 void func_0031E4A0(char *);
 void func_001AAD30(void);
-void func_0013D240(void);
+void func_0013D240(char *, int);
 void func_00400FF0(void);
 void func_00401030(void);
 void func_00204CD0(void);
@@ -1428,6 +1428,47 @@ void func_00211670(char *);
 void func_00105760(char *, char *, float);
 void func_00105668(char *, char *, float);
 void func_00105578(char *, char *, float);
+void func_001A4240(char *, int, int, float, float);
+void func_00204F40(char *, int, float, float, float, float);
+extern char D_005A7930[];
+float func_00131B80(float);
+extern int D_005866B0[];
+void func_003FB560(char *);
+void func_00417CE0(char *);
+char *func_00207470(int, int, char *);
+void func_00199270(char *);
+void func_00199280(char *, int);
+int func_001A97E0(char *);
+void func_001A16B0(char *, unsigned int);
+void func_00226820(char *, int, int, int);
+float func_0011DBE0(float, float);
+short func_0027BC50(char *);
+void func_001C52A0(char *, int);
+void func_002874D0(char *, char *);
+extern char D_005AB140[];
+extern char D_005AB158[];
+void func_002E0580(char *, char *, char *, int);
+void func_002E02C0(char *, char *, char *);
+void func_002E00E0(char *, char *, char *, int);
+void func_0024FD30(char *, int);
+void func_002E77F0(char *, int);
+extern int D_0055BF10[];
+void func_003305E0(char *, int, int, int, int, int, int);
+void func_003BA860(char *);
+extern char D_01C60F80[];
+extern char D_006480D0[];
+extern unsigned short D_0053FF90[];
+extern unsigned short D_0053FF78[];
+void func_00196C40(char *, char *);
+void func_001B1110(char *);
+unsigned short func_001AE200(char *, int);
+unsigned short func_001AE2E0(char *, int, int);
+unsigned short func_001AE250(char *, int, int);
+void func_0013D5D0(char *);
+void func_001A29A0(char *);
+extern char D_00564370[];
+extern void (*D_005BE184)(short *, char *);
+void func_002FAD60(short *, unsigned short, unsigned short);
 
 
 
@@ -1599,6 +1640,96 @@ static inline int lock_btn(char *p) {
 
 
 
+#define ITOF0(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tvitof0.xyzw $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static inline unsigned char eqb(unsigned char a, unsigned char b) {
+    return a == b;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void func_00233F60(char *p) {
     char *e;
     char *o;
@@ -1656,4 +1787,15 @@ void func_004B67D0(char *p) {
         break;
     }
     func_00206730(p + 0x460);
+}
+
+void func_00481D70(char *p) {
+    float v[4];
+    v[0] = 0.0f;
+    v[1] = 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f);
+    v[2] = 0.0f;
+    v[3] = 1.0f;
+    UNIT(p + 0x2C0);
+    func_00131700(p + 0x2C0, p + 0x2C0, (char *)v);
+    func_00105230(p + 0x2C0, p + 0x2C0, p + 0x50);
 }

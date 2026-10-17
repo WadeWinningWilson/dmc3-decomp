@@ -9573,6 +9573,9 @@ unsigned short func_001AE2E0(char *, int, int);
 unsigned short func_001AE250(char *, int, int);
 void func_0013D5D0(char *);
 void func_001A29A0(char *);
+extern char D_00564370[];
+extern void (*D_005BE184)(short *, char *);
+void func_002FAD60(short *, unsigned short, unsigned short);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -10595,4 +10598,61 @@ void func_0028BF50(char *p) {
         *(unsigned char *)(p + 0xD1) = 1;
         func_00195E20(D_005BE098, p);
     }
+}
+
+void func_002DF9F0(char *p, char *a, char *b) {
+    if (*(unsigned char *)(p + 0x3C80) == 6) {
+        func_002E0580(p, a, b, 1);
+        func_002E02C0(p, a, b);
+        *(float *)(p + 0x29A8) = *(float *)(a + 0x2C);
+        func_002E00E0(p, b, a, *(signed char *)(a + 0x18) < 4 ? 3 : 5);
+    }
+}
+
+void func_00333030(char *p) {
+    int i;
+    char *e;
+    for (i = 0; i < 20; i++) {
+        e = p + i * 12;
+        if (*(unsigned char *)(e + 0xC) == 2) {
+            *(float *)(e + 0x14) = *(float *)(e + 0x14) - func_001F9C40(D_01DF5D20, 0x87);
+            if (*(float *)(e + 0x14) <= 0.0f) {
+                *(unsigned char *)(e + 0xC) = 0;
+                *(float *)(e + 0x14) = 0.0f;
+                *(int *)(e + 0x10) = -1;
+            }
+        }
+    }
+}
+
+void func_00407BF0(char *p) {
+    float v[4];
+    v[0] = 0.0f;
+    v[1] = 6.283185f * ((float)*(short *)(p + 0x428) / 65536.0f);
+    v[2] = 0.0f;
+    v[3] = 1.0f;
+    UNIT(p + 0x3E0);
+    func_00131700(p + 0x3E0, p + 0x3E0, (char *)v);
+    func_00105230(p + 0x3E0, p + 0x3E0, p + 0x50);
+}
+
+int func_002FB1C0(char *o, short *d, int a, int b) {
+    unsigned short v = *(unsigned short *)(o + 4);
+    if (v & 2) {
+        *d = v & ~8;
+    } else {
+        *d = v | 8;
+    }
+    if (D_005BE184 != 0) {
+        D_005BE184(d, o);
+    }
+    func_002FAD60(d, a, b);
+    return 0;
+}
+
+float func_003B57C0(char *p, int i) {
+    float v[4];
+    QCOPY(v, D_00564370 + i * 16);
+    VSUBR(v, v, p + 0x50);
+    return (float)func_00124EC0((int)fsqrt(v[0] * v[0] + v[2] * v[2]));
 }

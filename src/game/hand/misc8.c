@@ -6776,3 +6776,49 @@ void func_00456B70(char *p, unsigned char k, float *t) {
         func_002075D0(3, 6, (char *)m, 1, 0x40);
     }
 }
+
+void func_002999D0(char *p) {
+    float m[16];
+    char *o;
+    func_0029DCE0(p, 0x30);
+    *(unsigned char *)(p + 5) = 0xD;
+    *(unsigned char *)(p + 0xA992) = 0;
+    *(unsigned char *)(p + 0xA993) = 0;
+    UNIT(m);
+    o = func_00207480(3, 0xAD, (char *)m, 0x10);
+    if (o != 0) {
+        *(char **)(o + 0x90) = p + 0x9BB0;
+        *(unsigned char *)(o + 0x9A) = 0;
+    }
+}
+
+void func_00299AA0(char *p) {
+    float m[16];
+    char *o;
+    func_0029DCE0(p, 0x35);
+    *(unsigned char *)(p + 5) = 0xE;
+    *(unsigned char *)(p + 0xA992) = 0;
+    *(unsigned char *)(p + 0xA993) = 0;
+    UNIT(m);
+    o = func_00207480(3, 0xAE, (char *)m, 0x10);
+    if (o != 0) {
+        *(char **)(o + 0x90) = p + 0x9BB0;
+        *(unsigned char *)(o + 0x9A) = 0;
+    }
+}
+
+void func_00299B70(char *p) {
+    float m[16];
+    char *o;
+    func_0029DCE0(p, 0x31);
+    *(unsigned char *)(p + 0xA993) = 1;
+    *(unsigned char *)(p + 0xA992) = 0;
+    func_002A0100(p);
+    *(unsigned char *)(p + 5) = 0x11;
+    UNIT(m);
+    o = func_00207480(3, 0xAF, (char *)m, 0x10);
+    if (o != 0) {
+        *(char **)(o + 0x90) = p + 0x9BB0;
+        *(unsigned char *)(o + 0x9A) = 0;
+    }
+}
