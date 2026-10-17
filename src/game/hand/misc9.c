@@ -9501,6 +9501,8 @@ void func_002EC070(int, int, int, float, float);
 void func_004D6C20(int, char *, int, short, char *, int);
 void func_003B5DC0(char *, char *, float, float);
 void func_002DFFD0(char *, char *, int, char *, int, float, float, float, float);
+void func_001ABE90(char *, float, float, float);
+void func_001ACCF0(int, float, float, float, float);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -9708,4 +9710,29 @@ void func_00472170(char *p, char *q, int c, float x, float y, float z) {
 
 void func_00485ED0(char *p, char *q, int c, float x, float y, float z) {
     func_002DFFD0(*(char **)(p + 0x390), q, c, q, 0, x, y, z, *(float *)(q + 0x28));
+}
+
+void func_001ABE60(char *p, char k) {
+    *(char *)(p + 0x240) = k;
+    *(float *)(p + 0x1D8) = *(float *)(D_005BE0D8 + 0x6C);
+    *(float *)(p + 0x1DC) = 0.0f;
+    func_001ABE90(p, 0.9599310159683228f, *(float *)(D_005BE0D8 + 0x70), *(float *)(D_005BE0D8 + 0x74));
+}
+
+float func_001C34A0(float x) {
+    return 1.0f / fsqrt(x);
+}
+
+void func_0024E2D0(char *p, int i) {
+    char *c = *(char **)(p + 0x14);
+    *(char **)(p + 0x14) = c + 6;
+    func_001282D0(p + i * 5 + 0x5D, c + 1, 5);
+}
+
+void func_002500E0(char *p) {
+    func_001ACCF0(D_005BE09C, *(float *)(p + 0x50), 100.0f + *(float *)(p + 0x54), *(float *)(p + 0x58), 1.0f);
+}
+
+void func_002DFFD0(char *p, char *q, int c, char *r, int s, float x, float y, float z, float w) {
+    func_00332890(p + 0x3D90, r, c, s, w, *(float *)(q + 0x24), x, y, z);
 }
