@@ -12225,3 +12225,54 @@ extern "C" void func_0041EB00(char *p) {
         break;
     }
 }
+
+extern "C" void func_0041EF30(char *p) {
+    *(unsigned int *)(p + 0x42C) = *(unsigned int *)(p + 0x42C) | 0x2000;
+    *(unsigned int *)(p + 0x42C) = *(unsigned int *)(p + 0x42C) | 0x10000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        if (*(unsigned int *)(p + 0x42C) & 0x4000) {
+            func_0038F300(p, -1);
+            *(float *)(p + 0x60) = 32.0f - 8.0f * frand();
+            *(float *)(p + 0x64) = 0.0f;
+            *(float *)(p + 0x68) = 0.0f;
+            *(float *)(p + 0x6C) = 1.0f;
+            *(float *)(p + 0x70) = -1.0f;
+            *(float *)(p + 0x74) = 0.0f;
+            *(float *)(p + 0x78) = 0.0f;
+            *(float *)(p + 0x7C) = 1.0f;
+        } else if (100.0f * frand() < 50.0f) {
+            func_0038F300(p, 4);
+            *(float *)(p + 0x60) = 6.0f;
+            *(float *)(p + 0x64) = 0.0f;
+            *(float *)(p + 0x68) = 0.0f;
+            *(float *)(p + 0x6C) = 1.0f;
+            *(float *)(p + 0x70) = -0.2f;
+            *(float *)(p + 0x74) = 0.0f;
+            *(float *)(p + 0x78) = 0.0f;
+            *(float *)(p + 0x7C) = 1.0f;
+        } else {
+            func_0038F300(p, -1);
+            *(float *)(p + 0x60) = 20.0f - 2.0f * frand();
+            *(float *)(p + 0x64) = 0.0f;
+            *(float *)(p + 0x68) = 0.0f;
+            *(float *)(p + 0x6C) = 1.0f;
+            *(float *)(p + 0x70) = -0.44f;
+            *(float *)(p + 0x74) = 0.0f;
+            *(float *)(p + 0x78) = 0.0f;
+            *(float *)(p + 0x7C) = 1.0f;
+        }
+        *(float *)(p + 0x428) = 79.0f;
+        *(unsigned int *)(p + 0x42C) = *(unsigned int *)(p + 0x42C) & ~0x4000;
+        *(unsigned char *)(p + 6) = 1;
+    case 1:
+        func_0041D820(p + 0x60, *(float *)(p + 0x70) * *(float *)(p + 0x10), 0.0f);
+        func_0041D6E0(up(p, 0x40), p + 0x60, 1, *(float *)(p + 0x10));
+        func_0041DAB0(p + 0x50, p + 0x90, func_0038F490(p));
+        if ((unsigned char)func_0041D6B0((float *)(p + 0x428), *(float *)(p + 0x10)) == 1) {
+            func_0038F830(p);
+            *(unsigned char *)(p + 6) = 0;
+        }
+        break;
+    }
+}
