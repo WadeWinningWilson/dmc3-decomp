@@ -2274,3 +2274,37 @@ void func_00253BC0(char *d, char *s) {
     *(int *)(d + 88) = *(int *)(s + 44);
     *(int *)(d + 92) = *(int *)(s + 48);
 }
+
+void func_0024F050(char *p) {
+    signed char ch;
+    signed char mask;
+    int i;
+    int off;
+    *(int *)(p + 20) += 1;
+    ch = *(*(signed char **)(p + 20))++;
+    mask = *(*(signed char **)(p + 20))++;
+    *(int *)(p + 20) += 1;
+    if (*(int *)(p + 204) != 0 && ch == *(int *)(p + 56)) {
+        for (i = 0, off = 0; i < 16; i++, off += 4) {
+            char *o = *(char **)(*(char **)(p + 204) + off + 124);
+            if (o != 0 && (mask & **(unsigned char **)(o + 256)) != 0) {
+                func_0028C790(*(char **)(p + 204), i);
+            }
+        }
+    }
+}
+float func_0041E060(char *);
+void func_004B9AB0(char *p) {
+    char *b;
+    *(float *)(p + 1008) *= 0.5f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(*(char **)(p + 208) + 80), "r"(p + 80) : "memory");
+    *(float *)(p + 84) += 70.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(*(char **)(p + 208) + 128), "r"(p + 128) : "memory");
+    *(short *)(p + 144) = (short)(unsigned short)(short)(int)(0.5f + 65536.0f * *(float *)(p + 132) / 6.283185005187988f);
+    b = p;
+    if (b != 0) {
+        b += 64;
+    }
+    *(float *)(p + 1252) = func_0041E060(b);
+    *(float *)(p + 1260) = 1.0f;
+}
