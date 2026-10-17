@@ -741,6 +741,28 @@ void func_00300020(char *);
 
 
 typedef struct { char pad[0xC]; int v; char rest[0xA0]; } R176;
+void func_003B4D80(char *, int, int);
+int func_003B3F70(char *);
+int func_003B4840(char *);
+void func_003F5430(char *);
+void func_003F69E0(char *);
+void func_003F7000(char *);
+void func_0038F300(char *, int);
+void func_0038F360(char *);
+void func_0041E120(char *, float);
+void func_0038F2C0(char *, int);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1383,4 +1405,44 @@ void func_001BDFC0(char *p) {
     *(float *)(p + 0x458) = *(short *)(q + 0x48);
     *(unsigned char *)(p + 0x455) = 0;
     func_001F8910(p + 0x444, p + 0x444, *(char **)(p + 0x45C), *(char **)(p + 0x45C) + 0x14, 4, 4, 0.0f);
+}
+
+void func_0048A9D0(char *p) {
+    char *e;
+    if (*(int *)(p + 0x440) != 0) {
+        func_0041D670(p + 0x440);
+        e = func_00207480(3, 0xE9, 0, 16);
+        if (e != 0) {
+            *(int *)(e + 0x90) = *(int *)(*(char **)(p + 0x560) + 0x104);
+            e[0x9A] = 1;
+            e[0x3A] = 1;
+            e[0x9C] = 0x40;
+            e[0x9D] = 0x20;
+            *(unsigned char *)(e + 0x9E) = 0x80;
+            e[0x9B] = 2;
+        }
+        func_003305E0(D_01DFABA0, 0, 0x5C, (int)(p + 0x50), 0, 0, 0);
+    }
+}
+
+void func_004190D0(char *p) {
+    void func_00419180(char *);
+    func_001AD100(p);
+    *(float *)(p + 0x3B0) = *(float *)(p + 0x10);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x300), "r"(p + 0x50) : "memory");
+    *(int *)(p + 0x110) = 0;
+    switch ((unsigned char)*(unsigned char *)(p + 4)) {
+    case 0:
+        func_00419180(p);
+        break;
+    case 1:
+        func_003F69E0(p);
+        break;
+    case 2:
+        func_003F7000(p);
+        break;
+    case 3:
+        break;
+    }
+    *(int *)(p + 0x110) = *(int *)(p + 0x110) | 0x10000000;
 }

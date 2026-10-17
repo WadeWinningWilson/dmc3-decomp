@@ -2440,6 +2440,9 @@ void func_002DB2C0(char *);
 int func_002496D0(char *);
 void func_0021B790(char *, int);
 void func_002DBAA0(char *, short, float);
+void func_00253110(char *, char *, int, float);
+int func_002536B0(char *, char *);
+short func_00131D10(float, float);
 void func_002D3720(char *p) {
     int k = *(unsigned char *)(p + 5);
     switch (k) {
@@ -2533,4 +2536,23 @@ void func_0025D060(char *p) {
         }
         break;
     }
+}
+
+void func_00471B40(char *p) {
+    *(float *)(p + 0x144) = *(float *)(p + 0x144) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0x144) < 0.0f) {
+        func_001AD140(p);
+        return;
+    }
+    func_00253110(p, p + 0x490, 3, *(float *)(p + 0x10));
+    switch (func_002536B0(p, p + 0x490)) {
+    case 0:
+        break;
+    case 1:
+        break;
+    case -1:
+        func_001AD140(p);
+        return;
+    }
+    *(short *)(p + 0x90) = func_00131D10(*(float *)(p + 0xF0), *(float *)(p + 0xF8));
 }

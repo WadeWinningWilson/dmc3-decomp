@@ -3174,6 +3174,16 @@ void func_002E1A00(char *p) {
 }
 
 typedef struct { char pad[0xC]; int v; char rest[0xA0]; } R176;
+void func_003B4D80(char *, int, int);
+int func_003B3F70(char *);
+int func_003B4840(char *);
+void func_003F5430(char *);
+void func_003F69E0(char *);
+void func_003F7000(char *);
+void func_0038F300(char *, int);
+void func_0038F360(char *);
+void func_0041E120(char *, float);
+void func_0038F2C0(char *, int);
 
 void func_002FFB40(char *p) {
     *(unsigned char *)(p + 0x68C) = 0;
@@ -3189,4 +3199,112 @@ void func_002FFB40(char *p) {
     }
     *(unsigned char *)(p + 0x38) = 1;
     *(float *)(p + 0x688) = 10.0f + (float)(*(R176 **)(p + 0x40))[*(short *)(p + 0x3A)].v;
+}
+
+void func_00370830(char *p) {
+    *(float *)(p + 0x580) = *(float *)(p + 0x580) - 1.0f;
+    if (*(float *)(p + 0x580) < 0.0f) {
+        *(float *)(p + 0x570) = 40.0f;
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+    }
+    func_00105300(p + 0x4F0, p + 0x4B0);
+    func_00105300(p + 0x530, p + 0x4B0);
+    *(float *)(p + 0x524) = *(float *)(p + 0x524) - 80.0f;
+    *(float *)(p + 0x564) = *(float *)(p + 0x564) + 150.0f;
+    func_0028C5C0(p + 0x150, 0, 1.0f);
+}
+
+void func_0038E9E0(char *p) {
+    char *e;
+    if (*(int *)(p + 0x410) != 0) {
+        func_0041D670(p + 0x410);
+        e = func_00207480(3, 0xE9, 0, 16);
+        if (e != 0) {
+            *(int *)(e + 0x90) = *(int *)(*(char **)(p + 0x4E0) + 0x104);
+            e[0x9A] = 1;
+            e[0x3A] = 1;
+            e[0x9C] = 0x40;
+            e[0x9D] = 0x20;
+            *(unsigned char *)(e + 0x9E) = 0x80;
+            e[0x9B] = 2;
+        }
+        func_003305E0(D_01DFABA0, 0, 0x5C, (int)(p + 0x50), 0, 0, 0);
+    }
+}
+
+void func_003AFC80(char *p) {
+    *(unsigned char *)(p + 0x21CA) = 0;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(short *)(p + 0x21C0) = *(short *)(p + 0x21C2);
+        *(short *)(p + 0x21C2) = 1;
+        func_0024DA80(p + 0x1D00, 0, 1);
+        func_0024DA80(p + 0x1DD0, 0, 1);
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        *(unsigned char *)(p + 0x21C4) = 1;
+        break;
+    case 1:
+        func_003B4D80(p, 0x800, 0);
+        if ((unsigned char)func_003B3F70(p) == 1) {
+            func_003B4840(p);
+        }
+        break;
+    }
+}
+
+void func_003DBDA0(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+    case 1:
+        *(float *)(p + 0x54) = 110.0f;
+        *(short *)(p + 0x90) = func_0034B940(((char **)(*(char **)D_01CAFF0C + 0xC))[*(unsigned char *)(p + 0xF02)] + 0x50, p + 0x50);
+        *(float *)(p + 0xEC4) = *(float *)(p + 0xEC4) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0xEC4) < 0.0f) {
+            *(unsigned char *)(p + 0xF05) = 1;
+        }
+    }
+    func_002EF940(*(int *)D_01CAFF0C, p + 0xAF0);
+}
+
+void func_003F5310(char *p) {
+    func_001AD100(p);
+    *(float *)(p + 0x3B0) = *(float *)(p + 0x10);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x300), "r"(p + 0x50) : "memory");
+    *(int *)(p + 0x110) = 0;
+    switch ((unsigned char)*(unsigned char *)(p + 4)) {
+    case 0:
+        func_003F5430(p);
+        break;
+    case 1:
+        func_003F69E0(p);
+        break;
+    case 2:
+        func_003F7000(p);
+        break;
+    case 3:
+        break;
+    }
+    *(int *)(p + 0x110) = *(int *)(p + 0x110) | 0x10000000;
+}
+
+void func_0041FBB0(char *p) {
+    char *b;
+    *(int *)(p + 0x42C) = *(int *)(p + 0x42C) | 0x2000;
+    *(int *)(p + 0x42C) = *(int *)(p + 0x42C) | 0x80000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_0038F300(p, -1);
+        func_0038F360(p);
+        *(unsigned char *)(p + 6) = 1;
+    case 1:
+        b = p;
+        if (b != 0) {
+            b += 0x40;
+        }
+        func_0041E120(b, 0.0f);
+        if ((unsigned char)func_0041D6B0((float *)(p + 0x428), *(float *)(p + 0x10)) == 1) {
+            func_0038F2C0(p, 1);
+        }
+    }
 }
