@@ -2059,3 +2059,114 @@ void func_00481800(char *p) {
         }
     }
 }
+
+extern char D_005B9A90[];
+extern char D_005B9AB4[];
+extern char D_005B9B34[];
+extern char D_005B9BC8[];
+void func_002047C0(void);
+void func_00401030(char *, int);
+void func_0027A660(char *, int);
+char *func_004DD450(char *p, short flag) {
+    if (p != 0) {
+        *(char **)p = D_005B9A90;
+        *(char **)(p + 64) = D_005B9AB4;
+        *(char **)(p + 160) = D_005B9B34;
+        *(char **)(p + 208) = D_005B9BC8;
+        func_0028C1A0(p + 4896, -1);
+        func_002E83B0(p + 4544, -1);
+        func_001003E0(p + 1552, (void *)func_002047C0, 80, 31);
+        func_00401030(p + 1472, -1);
+        func_0027A660(p + 384, -1);
+        func_0024FEA0(p, 0);
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+extern char D_005BA850[];
+extern char D_005BA874[];
+extern char D_005BA8F4[];
+extern char D_005A78F8[];
+extern char D_005A77A0[];
+char *func_004F7580(char *p, short flag) {
+    char *m;
+    if (p != 0) {
+        *(char **)p = D_005BA850;
+        *(char **)(p + 64) = D_005BA874;
+        *(char **)(p + 160) = D_005BA8F4;
+        func_0028C1A0(p + 2336, -1);
+        m = p + 2080;
+        if (m != 0) {
+            *(char **)(p + 2096) = D_005A78F8;
+            if (m != 0) {
+                *(char **)(p + 2096) = D_005A77A0;
+            }
+        }
+        func_002791E0(p + 512, -1);
+        func_001003E0(p + 340, (void *)func_0013D240, 16, 7);
+        func_00253000(p, 0);
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+extern char D_005BB140[];
+extern char D_005A6F50[];
+char *func_00504110(char *p, short flag) {
+    if (p != 0) {
+        *(char **)p = D_005BB140;
+        if (p + 6592 != 0) {
+            func_0013D240(p + 6680, -1);
+            func_0013D240(p + 6664, -1);
+        }
+        func_002791E0(p + 5056, -1);
+        func_002791E0(p + 3200, -1);
+        func_002791E0(p + 1664, -1);
+        func_001003E0(p + 128, (void *)func_002791E0, 1536, 1);
+        if (p != 0) {
+            *(char **)p = D_005A6F50;
+            func_0013D240(p + 36, -1);
+        }
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+typedef struct { short k; short pad; int a; int b; } K12;
+typedef struct { short n; short pad; K12 e[64]; } K12Tab;
+int func_00287D90(K12Tab *, int, int, int);
+int func_00287E30(K12Tab *t, int k, int a, int b) {
+    if (func_00287D90(t, k, a, b) != 0) {
+        return 1;
+    }
+    if (t->n >= 64) {
+        return 0;
+    }
+    t->e[t->n].k = k;
+    t->e[t->n].a = a;
+    t->e[t->n].b = b;
+    t->n += 1;
+    return 1;
+}
+extern char D_01CAFF0C[];
+int func_002F2FC0(int, int);
+void func_003FA770(char *, char *, char *, float *, float *);
+int func_00424DE0(char *p) {
+    char stk[0x20] __attribute__((aligned(16)));
+    float x;
+    float y;
+    if (func_002F2FC0(*(int *)(*(char **)D_01CAFF0C + 32), 1) != 0) {
+        return 0;
+    }
+    func_003FA770(p, p + 80, *(char **)(*(char **)D_01CAFF0C + 12) + 80, (float *)stk, (float *)(stk + 16));
+    x = func_0041DB20(stk);
+    y = func_0041DB20(stk + 16);
+    if (x < 60.0f || y < 60.0f) {
+        return 1;
+    }
+    return 0;
+}
