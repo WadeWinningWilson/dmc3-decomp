@@ -513,7 +513,7 @@ void func_0024FE00(char *);
 void func_00320540(char *);
 void func_0031E4A0(char *);
 void func_001AAD30(void);
-void func_0013D240(void);
+void func_0013D240(char *, int);
 void func_00400FF0(void);
 void func_00401030(void);
 void func_00204CD0(void);
@@ -9535,6 +9535,9 @@ void func_00211670(char *);
 void func_00105760(char *, char *, float);
 void func_00105668(char *, char *, float);
 void func_00105578(char *, char *, float);
+void func_001A4240(char *, int, int, float, float);
+void func_00204F40(char *, int, float, float, float, float);
+extern char D_005A7930[];
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -10160,4 +10163,73 @@ void func_0048B440(int a, char *m, float x, float y, float z) {
     func_00105668(m, m, x);
     func_00105578(m, m, y);
     func_00105760(m, m, z);
+}
+
+#define ITOF0(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tvitof0.xyzw $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_001A3030(char *p, unsigned int c) {
+    int v[4];
+    if (*(unsigned int *)p & 0x200) {
+        v[0] = c & 0xFF;
+        v[1] = (c >> 8) & 0xFF;
+        v[2] = (c >> 16) & 0xFF;
+        v[3] = 0;
+        ITOF0(p + 0x140, v);
+    }
+}
+
+void func_001F7350(char *s, float *out, float t) {
+    if (t < 0.0f) {
+        t = 0.0f;
+    }
+    if (!(t <= 1.0f)) {
+        t = 1.0f;
+    }
+    func_001F73C0(s, out, ((float)(*(int *)s + 1) - -1.0f) * t - 1.0f);
+}
+
+void func_00233A50(char *p) {
+    float s = func_001F9C40(D_01DF5D20, 0x86);
+    func_00210240(*(char **)(p + 0x200C));
+    func_001A4240(func_00279290(p + 0x40), 0, 0, 0.0005f * s, 0.0f);
+}
+
+void func_0023A400(char *p, int i) {
+    char *e;
+    if (!(i < *(unsigned short *)(*(char **)(p + 0x2050) + 6))) {
+        i = 0;
+    }
+    e = (char *)(i * 48) + (int)*(char **)(p + 0x2054);
+    func_00204F40(*(char **)(p + 0x2058), *(unsigned char *)e, *(float *)(e + 4), *(float *)(e + 8), *(float *)(e + 0xC), 6.283185f * (*(float *)(e + 0x10) / 360.0f));
+}
+
+void func_0027D540(char *p, int i) {
+    unsigned char *e = (unsigned char *)(*(char **)(p + 0x2300) + i * 2);
+    unsigned char a = e[0];
+    unsigned char b = e[1];
+    func_0024DA80(p + 0x2160, a, b);
+    func_0024DA80(p + 0x2230, a, b);
+    *(unsigned char *)(p + 0x2B41) = a;
+    *(unsigned char *)(p + 0x2B42) = b;
+}
+
+void func_0027D5B0(char *p, int i) {
+    unsigned char *e = (unsigned char *)(*(char **)(p + 0x2304) + i * 2);
+    unsigned char a = e[0];
+    unsigned char b = e[1];
+    func_0024DA80(p + 0x2160, a, b);
+    func_0024DA80(p + 0x2230, a, b);
+    *(unsigned char *)(p + 0x2B41) = a;
+    *(unsigned char *)(p + 0x2B42) = b;
+}
+
+char *func_0022C850(char *p, short flags) {
+    if (p) {
+        *(char **)p = D_005A7930;
+        func_0013D240(p + 0xC, -1);
+        if (flags > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
 }
