@@ -4541,6 +4541,9 @@ void func_0048B400(char *);
 void func_0048B320(char *);
 int func_0048B150(char *);
 void func_0048AF80(char *, int);
+void func_0041D820(char *, float, float);
+void func_0041D6E0(char *, char *, int, float);
+void func_0022A890(char *);
 
 void func_0023D330(char *p) {
     *(C4 *)(p + 0x2928) = *(C4 *)(p + 0x2960);
@@ -6260,5 +6263,135 @@ void func_00422AA0(char *p) {
             func_0048AF80(p, 0xB);
             *(int *)(p + 0x454) = 0;
         }
+    }
+}
+
+void func_00428040(char *p) {
+    if (*(float *)(p + 0x478) <= 0.0f) {
+        *(int *)(p + 0x110) = *(int *)(p + 0x110) | 0x40000000;
+    }
+    *(int *)(p + 0x110) = *(int *)(p + 0x110) | 1;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(float *)(p + 0x3B8) = 40.0f - 6.0f * (float)(unsigned int)*(unsigned char *)(p + 0x3AB);
+        *(unsigned char *)(p + 6) = 1;
+    case 1:
+        if ((unsigned char)func_0041D6B0((float *)(p + 0x3B8), *(float *)(p + 0x10)) == 1) {
+            func_003FA440(p, -1);
+            *(unsigned char *)(p + 6) = 2;
+        }
+        break;
+    case 2:
+        if ((unsigned char)func_0024E800(p + 0xB60) == 1) {
+            func_003FA3F0(p, 0);
+        }
+        break;
+    }
+}
+
+void func_004F6150(char *p) {
+    char *b;
+    if ((unsigned char)func_0041D600(p) != 0) {
+        func_001AD100(p);
+        func_00206730(p + 0xB50);
+        switch (*(int *)(p + 0xB54)) {
+        case 0:
+            *(float *)(p + 0xB60) = 60.0f;
+            *(int *)(p + 0xB54) = 1;
+        case 1:
+            func_0041D820(p + 0x68, *(float *)(p + 0x78) * *(float *)(p + 0x10), 10.0f);
+            b = p;
+            if (b != 0) {
+                b += 0x40;
+            }
+            func_0041D6E0(b, p + 0x60, 1, *(float *)(p + 0x10));
+            *(float *)(p + 0x5C) = 1.0f;
+        case 2:
+            if ((unsigned char)func_0041D6B0((float *)(p + 0xB60), *(float *)(p + 0x10)) == 1) {
+                func_001AD140(p);
+                return;
+            }
+        }
+        b = p;
+        if (b != 0) {
+            b += 0x40;
+        }
+        func_0041D840(b, p + 0x1B0, 0.7f);
+        func_0028C5C0(p + 0x8D0, 0, 1.0f);
+    }
+}
+
+void func_004FF000(char *p) {
+    char *b;
+    if ((unsigned char)func_0041D600(p) != 0) {
+        func_001AD100(p);
+        func_00206730(p + 0x460);
+        if (*(int *)(p + 0x460) == 0) {
+            func_001AD140(p);
+            return;
+        }
+        switch (*(unsigned char *)(p + 5)) {
+        case 0:
+            if (*(int *)(p + 0x470) == 0) {
+                *(float *)(p + 0x464) = 150.0f;
+            } else {
+                *(float *)(p + 0x464) = 100.0f;
+            }
+            *(float *)(p + 0x46C) = 150.0f / *(float *)(p + 0x464);
+            *(unsigned char *)(p + 5) = 1;
+        case 1:
+            *(float *)(p + 0x434) = *(float *)(p + 0x434) + *(float *)(p + 0x46C);
+            if ((unsigned char)func_0041D6B0((float *)(p + 0x464), *(float *)(p + 0x10)) == 1) {
+                func_001AD140(p);
+                return;
+            }
+        }
+        b = p;
+        if (b != 0) {
+            b += 0x40;
+        }
+        func_0041D840(b, p + 0x160, 1.0f);
+    }
+}
+
+void func_002287F0(char *tbl, char *e, unsigned char slot, unsigned char mask) {
+    int m;
+    char **pp;
+    char **pq;
+    char **pr;
+    if (*(unsigned char *)e == 1) {
+        m = **(unsigned char **)(e + 0x100) & mask;
+        if (m & 1) {
+            pp = (char **)(tbl + slot * 12);
+            if (*pp == 0) {
+                *(int *)(e + 0x2FC) = 0;
+            } else {
+                *(char **)(e + 0x2FC) = *pp;
+            }
+            *pp = e;
+            *(unsigned char *)(e + 3) = 1;
+        }
+        if (m & 2) {
+            pq = (char **)(tbl + (slot * 3 + 1) * 4);
+            if (*pq == 0) {
+                *(int *)(e + 0x300) = 0;
+            } else {
+                *(char **)(e + 0x300) = *pq;
+            }
+            *pq = e;
+            *(unsigned char *)(e + 3) = 0;
+        }
+        if (m & 4) {
+            pr = (char **)(tbl + (slot * 3 + 2) * 4);
+            if (*pr == 0) {
+                *(int *)(e + 0x304) = 0;
+            } else {
+                *(char **)(e + 0x304) = *pr;
+            }
+            *pr = e;
+            *(unsigned char *)(e + 3) = 0;
+        }
+        func_0022A890(e);
+        *(unsigned char *)e = 2;
     }
 }

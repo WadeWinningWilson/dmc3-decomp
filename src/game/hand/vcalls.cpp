@@ -6753,3 +6753,81 @@ extern "C" void func_00381920(char *p, int a, int b, int c, int d) {
     }
     ((Obj98 *)(p + 0x130))->m98(D_0056842C[0]);
 }
+
+class Anim9 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void m1C(int);
+    virtual void d6();
+    virtual void m24();
+    virtual void d8();
+    virtual int m2C();
+    virtual int m30();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void m44();
+};
+
+/* Three-phase stance: wait for the hit frame, then the end frame, ticking the target transform. */
+extern "C" void func_00365660(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(Anim9 **)(p + 0xA8))->m30() != 0) {
+            *(unsigned char *)(p + 0xCF) = 4;
+            (*(Anim9 **)(p + 0xA8))->m44();
+            (*(Anim9 **)(p + 0xA8))->m1C(0xD);
+            *(int *)(p + 0xD4) = 1;
+        }
+        ((ObjE4 *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+        break;
+    case 1:
+        if ((*(Anim9 **)(p + 0xA8))->m2C() != 0) {
+            *(unsigned char *)(p + 0xCD) = 0;
+            (*(Anim9 **)(p + 0xA8))->m44();
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(Anim9 **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        break;
+    }
+}
+
+extern "C" void func_003A0CD0(char *, int);
+extern "C" void func_003A02B0(char *, int);
+
+static inline unsigned char pair_done2(char *p) {
+    if ((unsigned char)func_0024E800(p + 0x29D0) == 1 && (unsigned char)func_0024E800(p + 0x2AA0) == 1) {
+        return 1;
+    }
+    return 0;
+}
+
+extern "C" void func_00393F20(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(short *)(p + 0x2DDE) = *(short *)(p + 0x2DDC);
+        *(short *)(p + 0x2DDC) = 0x1A;
+        func_0024DA80(p + 0x29D0, 0, 0x1A);
+        func_0024DA80(p + 0x2AA0, 0, 0x1A);
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        break;
+    case 1:
+        if (!(((AnimF *)(p + 0x4C4))->m28(0) < 5.0f)) {
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        }
+        break;
+    case 2:
+        func_003A0CD0(p, 0x888);
+        if (pair_done2(p) == 1) {
+            func_003A02B0(p, 2);
+        }
+        break;
+    }
+}
