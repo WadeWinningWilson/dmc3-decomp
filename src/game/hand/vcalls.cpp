@@ -9235,6 +9235,12 @@ extern "C" float D_005BDF2C;
 extern "C" float func_0041DB40(char *);
 extern "C" void func_00492E20(char *, int);
 extern "C" char *func_003D0CB0(char *, int, int, int, int, int);
+extern "C" int func_00427DE0(char *);
+extern "C" void func_00427E30(char *);
+extern "C" void func_00428040(char *);
+extern "C" void func_00428160(char *);
+extern "C" void func_003F8B60(char *);
+extern "C" void func_004284F0(char *);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -10057,4 +10063,50 @@ extern "C" void func_0031F260(char *p) {
         (*(Anim31F **)(p + 8))->m24();
         break;
     }
+}
+
+extern "C" void func_004279F0(char *p) {
+    if (*(unsigned char *)(p + 0x48D) == 0) {
+        ((ObjB40 *)(p + 0xB40))->m10(*(float *)(p + 0x10));
+        if (*(unsigned char *)(p + 5) == 0 && (unsigned char)func_0041D6B0((float *)(p + 0x478), *(float *)(p + 0x10)) == 1 &&
+            (unsigned char)func_00427DE0(p) == 1) {
+            *(int *)(p + 0x3BC) = *(int *)(p + 0x3BC) | 0x2000;
+            func_003FA3F0(p, 3);
+            *(float *)(p + 0x478) = 120.0f - 20.0f * (float)(unsigned int)*(unsigned char *)(p + 0x3AB);
+        }
+    }
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        func_003F85D0(p);
+        break;
+    case 2:
+        func_00427E30(p);
+        break;
+    case 3:
+        func_00428040(p);
+        break;
+    case 4:
+        func_00428160(p);
+        break;
+    case 6:
+        func_003F8B60(p);
+        break;
+    case 7:
+        func_004284F0(p);
+        break;
+    case 10:
+        func_003F8E90(p);
+        break;
+    case 12:
+        func_003F94A0(p);
+        break;
+    case 13:
+        func_003F9700(p);
+        break;
+    }
+    if (D_01CAFF38[0] == 0x191 && *(float *)(p + 0x58) < 1950.0f) {
+        *(int *)(p + 0x3BC) = *(int *)(p + 0x3BC) & ~0x800;
+        *(unsigned char *)(p + 0x489) = 0;
+    }
+    *(short *)(p + 0x484) = *(short *)(p + 0x90);
 }
