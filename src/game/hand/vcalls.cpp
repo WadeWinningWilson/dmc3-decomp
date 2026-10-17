@@ -6491,3 +6491,25 @@ extern "C" void func_0036D4D0(char *p) {
     }
 }
 
+
+extern "C" void func_0046D5E0(char *p) {
+    *(unsigned char *)(p + 0xCD) = 1;
+    *(unsigned char *)(p + 0xCE) = 4;
+    *(unsigned char *)(p + 0xCF) = 1;
+    (*(Anim8 **)(p + 0xA8))->m40();
+    (*(Anim8 **)(p + 0xA8))->m48(0x1F, *(char **)(p + 0x10) + 0x10);
+    func_00330BD0(D_01DFABA0, 0x19, *(char **)(p + 0x10) + 0x10, 8, 0);
+    (*(Anim8 **)(p + 0xA8))->m48(0x2C, *(char **)(p + 0x10) + 0x10);
+    func_00330BD0(D_01DFABA0, 0x23, *(char **)(p + 0x10) + 0x10, 8, 0);
+    *(int *)(p + 0xE0) = 0;
+    *(int *)(p + 0xE4) = 0;
+    *(int *)(p + 0xE8) = 0;
+    *(int *)(p + 0xEC) = 0;
+    *(int *)(p + 0xF0) = 0;
+    *(int *)(p + 0xF4) = 0;
+    *(int *)(p + 0xF8) = 0;
+    *(int *)(p + 0xFC) = 0;
+    ((ObjE4 *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+    *(int *)(p + 0x100) = 0;
+    *(int *)(p + 0xD4) = 10;
+}
