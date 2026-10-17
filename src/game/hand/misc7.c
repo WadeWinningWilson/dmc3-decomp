@@ -176,6 +176,10 @@ void func_0048B320(char *);
 int func_0048B150(char *);
 void func_0041DAB0(char *, char *, int);
 void func_0048AF80(char *, int);
+extern int D_00541894[];
+extern int D_00541898[];
+char *func_001B0FD0(char *, int, int);
+void *func_00128488(void *, int, unsigned int);
 int func_001F3A50(KLTab272 *t, short k) {
     int i;
     for (i = 0; i < 272; i++) {
@@ -351,4 +355,20 @@ void func_0026C380(char *p) {
         }
         break;
     }
+}
+
+void func_001F8050(char *p, unsigned char k) {
+    int *e = &D_00541894[k * 3];
+    char **s = (char **)(p + k * 4);
+    int n;
+    *s = func_001B0FD0(p + k * 16 + 0x58, *e, 0);
+    n = *e;
+    func_00128488(*s, 0, n);
+}
+
+void func_001F8120(char *p, unsigned char k) {
+    int *e = &D_00541898[k * 3];
+    char **s = (char **)((char *)(k * 4) + (int)p + 0x2C);
+    *s = func_001B0FD0(p + k * 16 + 0x108, *e, 0);
+    func_00128488(*s, 0, *e);
 }

@@ -9547,6 +9547,11 @@ void func_00199270(char *);
 void func_00199280(char *, int);
 int func_001A97E0(char *);
 void func_001A16B0(char *, unsigned int);
+void func_00226820(char *, int, int, int);
+float func_0011DBE0(float, float);
+short func_0027BC50(char *);
+void func_001C52A0(char *, int);
+void func_002874D0(char *, char *);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -10370,6 +10375,45 @@ void func_001A1630(char *p, unsigned int i) {
             break;
         case 0x30000000:
             break;
+        }
+    }
+}
+
+void func_00226C00(char *p, int a, unsigned char c) {
+    func_00226A00(p, a);
+    func_00226820(p, 0, 0, 0);
+    if (c == 0) {
+        func_002490F0(p, 0, 0x32, -1, 0, 0, -1.0f);
+    }
+}
+
+void func_00247770(char *p, char *t) {
+    float v[4];
+    float d[4];
+    QCOPY(v, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50);
+    v[1] = v[1] + *(float *)(p + 0xD0);
+    VSUBR(d, t, v);
+    func_002477F0(p, func_0011DBE0(d[0], d[2]));
+}
+
+short func_0027BDC0(char *p) {
+    short i = func_0027BC50(p);
+    if (i < 0) {
+        return -1;
+    }
+    *(short *)((char *)(i * 2) + (int)p + 4) = -1;
+    func_001C52A0(D_01C61900, *(int *)((char *)(i * 4) + (int)p + 0x58));
+    *(unsigned char *)(i + (int)p + 0xAC) = 0;
+    return i;
+}
+
+void func_00287320(char *p) {
+    int i;
+    char *e;
+    for (i = 0; i < 32; i++) {
+        e = p + i * 0x1C;
+        if (*(int *)(e + 0x10) != 0 && *(int *)(e + 0x1C) == 0 && *(unsigned char *)(e + 0x14) == 0) {
+            func_002874D0(p, e + 4);
         }
     }
 }
