@@ -9232,6 +9232,9 @@ extern "C" void func_0041D7F0(char *, float);
 extern "C" void func_0041D6E0(char *, char *, int, float);
 extern "C" int func_0041E120(char *, float);
 extern "C" float D_005BDF2C;
+extern "C" float func_0041DB40(char *);
+extern "C" void func_00492E20(char *, int);
+extern "C" char *func_003D0CB0(char *, int, int, int, int, int);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -9890,6 +9893,45 @@ extern "C" void func_0036C0B0(char *p) {
     case 2:
         if ((*(AnimJ **)(p + 0xA8))->m2C() != 0) {
             ((ObjEC *)p)->mEC(0xE);
+        }
+        break;
+    }
+}
+
+extern "C" void func_00493D20(char *p) {
+    char *e;
+    if (func_0041DB40(p + 0x50) < 600.0f) {
+        func_00492E20(p, *(unsigned char *)(p + 0x3C94));
+        return;
+    }
+    switch (((unsigned char *)(p + 0x3C98))[*(int *)(p + 0x3C94)]) {
+    case 0:
+        ((signed char *)(p + 0x3CA8))[*(int *)(p + 0x3C94)] = 0;
+        ((unsigned char *)(p + 0x3CB8))[*(int *)(p + 0x3C94)] = 6;
+        ((unsigned char *)(p + 0x3C98))[*(int *)(p + 0x3C94)] = 1;
+    case 1:
+        e = func_003D0CB0(p + 0x9B0, *(int *)(p + 0x9F0), *(int *)(p + 0x90C), ((ObjV134 *)p)->m134(0x11), 0,
+                          ((signed char *)(p + 0x3CA8))[*(int *)(p + 0x3C94)]);
+        if (e != 0) {
+            ((ObjV134 *)e)->m130();
+        }
+        ((float *)(p + 0x3CC8))[*(int *)(p + 0x3C94)] = 15.0f;
+        ((unsigned char *)(p + 0x3C98))[*(int *)(p + 0x3C94)] = 2;
+    case 2:
+        if ((unsigned char)func_0041D6B0((float *)(p + *(int *)(p + 0x3C94) * 4 + 0x3CC8), *(float *)(p + 0x10)) == 1) {
+            ((signed char *)(p + 0x3CA8))[*(int *)(p + 0x3C94)]++;
+            if (!(((signed char *)(p + 0x3CB8))[*(int *)(p + 0x3C94)] > ((signed char *)(p + 0x3CA8))[*(int *)(p + 0x3C94)])) {
+                ((float *)(p + 0x3CC8))[*(int *)(p + 0x3C94)] = 60.0f;
+                ((unsigned char *)(p + 0x3C98))[*(int *)(p + 0x3C94)] = 3;
+            } else {
+                ((float *)(p + 0x3CC8))[*(int *)(p + 0x3C94)] = 6.0f;
+                ((unsigned char *)(p + 0x3C98))[*(int *)(p + 0x3C94)] = 1;
+            }
+        }
+        break;
+    case 3:
+        if ((unsigned char)func_0041D6B0((float *)(p + *(int *)(p + 0x3C94) * 4 + 0x3CC8), *(float *)(p + 0x10)) == 1) {
+            func_00492E20(p, *(unsigned char *)(p + 0x3C94));
         }
         break;
     }
