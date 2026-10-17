@@ -197,6 +197,10 @@ extern "C" void func_0024DA80(char *, int, int);
 extern "C" int func_002D65E0(char *);
 extern "C" void func_002D2270(char *, int);
 extern "C" void func_002D6D30(char *);
+extern "C" void func_0034B8C0(char *, char *, int);
+extern "C" void func_002CD970(char *);
+extern "C" int func_002CFA00(char *, float);
+extern "C" void func_002CD800(char *);
 
 extern "C" void func_0043F920(char *p) {
     unsigned char r;
@@ -344,5 +348,36 @@ extern "C" void func_002D5A70(char *p) {
             func_002D6D30(p);
         }
         break;
+    }
+}
+
+extern "C" void func_002CD450(char *p) {
+    int v;
+    *(float *)(p + 0x2D70) = 1.0f;
+    switch (*(unsigned char *)(p + 0x5AD)) {
+    case 0:
+        *(unsigned char *)(p + 0x5AD) = *(unsigned char *)(p + 0x5AD) + 1;
+        v = *(short *)(p + 0x2F50) / 100;
+        *(short *)(p + 0x2F52) = v < 0 ? -v : v;
+    case 1:
+        func_0034B8C0(p + 0x90, p + 0x2F50, *(short *)(p + 0x2F52));
+        *(float *)(p + 0x84) = 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f);
+        if ((unsigned char)func_0024E800(p + 0x2450) == 1) {
+            func_002CD970(p);
+            *(float *)(p + 0x60) = *(float *)(p + 0x2F40);
+            *(float *)(p + 0x64) = *(float *)(p + 0x2F44);
+            *(float *)(p + 0x68) = *(float *)(p + 0x2F48);
+            *(float *)(p + 0x74) = -1.0f;
+            *(float *)(p + 0x50) = *(float *)(p + 0x50) + *(float *)(p + 0x60) * *(float *)(p + 0x10);
+            *(float *)(p + 0x54) = *(float *)(p + 0x54) + *(float *)(p + 0x64) * *(float *)(p + 0x10);
+            *(float *)(p + 0x58) = *(float *)(p + 0x58) + *(float *)(p + 0x68) * *(float *)(p + 0x10);
+            *(float *)(p + 0x64) = *(float *)(p + 0x64) + *(float *)(p + 0x74) * *(float *)(p + 0x10);
+        }
+        if ((unsigned char)func_0024E780(p + 0x2450, 0, 1) == 1 && (unsigned char)func_002CFA00(p, 0.0f) == 1) {
+            func_00207480(3, 0x14F, p + 0x1890, 0x10);
+            *(unsigned char *)(p + 0x2D7C) = 7;
+            *(unsigned char *)(p + 0x5C1) = 0;
+            func_002CD800(p);
+        }
     }
 }
