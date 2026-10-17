@@ -609,6 +609,21 @@ float func_00133BD0(float);
 void func_00277E70(char *);
 int func_001C13B0(char *, int, int, int *);
 void func_00131650(char *, char *);
+extern char D_005BBFF8[4];
+extern char D_005BBFFC[4];
+extern char D_005BC000[4];
+extern char D_005BC004[4];
+extern char D_005BC008[4];
+extern char D_005BC00C[4];
+extern char D_005BC010[4];
+extern char D_005BC014[4];
+extern char D_005BC018[4];
+extern char D_005BC01C[4];
+extern char D_005BC020[4];
+extern char D_005BC024[4];
+extern char D_005BC028[4];
+extern char D_005BC02C[4];
+extern char D_005BC030[4];
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -9293,4 +9308,40 @@ int func_001C0EC0(char *ctx, char *pts, char *seg, int unused, int key, float *o
         QCOPY(out, pts + idx[0] * 16);
     }
     return 1;
+}
+
+void func_00288190(char *p, char *name) {
+    if (func_0012B1A0(name, D_005BBFF8) == 0) {
+        *(int *)(p + 0x40) = 2;
+    } else if (func_0012B1A0(name, D_005BBFFC) == 0) {
+        *(int *)(p + 0x40) = 11;
+    } else if (func_0012B1A0(name, D_005BC000) == 0) {
+        *(int *)(p + 0x40) = 8;
+    } else if (func_0012B1A0(name, D_005BC004) == 0) {
+        *(int *)(p + 0x40) = 9;
+    } else if (func_0012B1A0(name, D_005BC008) == 0) {
+        *(int *)(p + 0x40) = 5;
+    } else if (func_0012B1A0(name, D_005BC00C) == 0) {
+        *(int *)(p + 0x40) = 7;
+    } else if (func_0012B1A0(name, D_005BC010) == 0) {
+        *(int *)(p + 0x40) = 12;
+    } else if (func_0012B1A0(name, D_005BC014) == 0) {
+        *(int *)(p + 0x40) = 1;
+    } else if (func_0012B1A0(name, D_005BC018) == 0) {
+        *(int *)(p + 0x40) = 4;
+    } else if (func_0012B1A0(name, D_005BC01C) == 0) {
+        *(int *)(p + 0x40) = 10;
+    } else if (func_0012B1A0(name, D_005BC020) == 0) {
+        *(int *)(p + 0x40) = 3;
+    } else if (func_0012B1A0(name, D_005BC024) == 0) {
+        *(int *)(p + 0x40) = 6;
+    } else if (func_0012B1A0(name, D_005BC028) == 0) {
+        *(int *)(p + 0x40) = 13;
+    } else if (func_0012B1A0(name, D_005BC02C) == 0) {
+        *(int *)(p + 0x40) = 14;
+    } else if (func_0012B1A0(name, D_005BC030) == 0) {
+        *(int *)(p + 0x40) = 15;
+    } else {
+        return;
+    }
 }
