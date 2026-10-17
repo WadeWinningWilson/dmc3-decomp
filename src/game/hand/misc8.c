@@ -982,3 +982,33 @@ int func_004B2EA0(char *p) {
     }
     return 1;
 }
+
+void func_00385500(char *p) {
+    if (*(signed char *)(p + 0x58) == 0 && *(unsigned char *)(p + 0xA0) == 0) {
+        *(unsigned char *)(p + 4) += 1;
+        return;
+    }
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+    case 1:
+        *(unsigned char *)(p + 5) += 1;
+        break;
+    case 2:
+        *(unsigned char *)(p + 4) += 1;
+        break;
+    }
+}
+extern int D_01CAFF30[];
+int func_0020F100(char *p) {
+    switch (D_01CAFF30[0]) {
+    case 9:
+        return 0;
+    case 10:
+        return (*(int *)(p + 0x18) & 8) != 0;
+    case 11:
+        return 1;
+    case 12:
+        return (*(int *)(p + 0x18) & 8) == 0;
+    }
+    return 0;
+}
