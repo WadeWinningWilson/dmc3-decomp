@@ -1694,3 +1694,50 @@ extern unsigned char D_0056C030[][44];
 short func_0038F490(char *p) {
     return (short)(unsigned short)(short)(int)(0.5f + 65536.0f * (*(float *)(p + 16) * (unsigned int)D_0056C030[*(unsigned char *)(p + 5)][*(unsigned char *)(p + 1051)]) / 360.0f);
 }
+
+extern char D_005B5A80[];
+extern char D_005B5AA4[];
+extern char D_005B5B24[];
+extern char D_005B5BB8[];
+extern char D_005B5C84[];
+extern char D_005B5D3C[];
+void func_0031E4E0(char *, int);
+void func_0024FEA0(char *, int);
+char *func_0046FC30(char *p, short flag) {
+    if (p != 0) {
+        *(char **)p = D_005B5A80;
+        *(char **)(p + 64) = D_005B5AA4;
+        *(char **)(p + 160) = D_005B5B24;
+        *(char **)(p + 208) = D_005B5BB8;
+        *(char **)(p + 304) = D_005B5C84;
+        *(char **)(p + 464) = D_005B5D3C;
+        func_0031E4E0(p + 464, 0);
+        func_00320590(p + 304, 0);
+        func_0024FEA0(p, 0);
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+extern char D_005B74C0[];
+extern char D_005B74E4[];
+extern char D_005B7564[];
+char *func_0048D760(char *p, short flag) {
+    if (p != 0) {
+        *(char **)p = D_005B74C0;
+        *(char **)(p + 64) = D_005B74E4;
+        *(char **)(p + 160) = D_005B7564;
+        if (p + 4288 != 0) {
+            func_0013D240(p + 4340, -1);
+        }
+        func_002791E0(p + 2752, -1);
+        func_002791E0(p + 1216, -1);
+        func_0028C1A0(p + 432, -1);
+        func_00253000(p, 0);
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
