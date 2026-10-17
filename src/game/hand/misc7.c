@@ -415,6 +415,7 @@ void func_001A1E70(char *, int);
 extern char *D_0057B060[];
 extern unsigned char D_01CAFF3C[];
 void func_0046F9A0(char *);
+extern char *D_005BE0D8;
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -502,4 +503,24 @@ int func_0046F8E0(char *p) {
     }
     func_0046F9A0(p);
     return 1;
+}
+
+void func_00197910(char *p, char *q) {
+    func_00128488(p, 0, 0x108);
+    func_00128488(q, 0, 0x40);
+    *(int *)(p + 0x100) = 1;
+    *(int *)(p + 0x104) = 1;
+    *(char **)p = q;
+    *(short *)(q + 2) = -1;
+    *(short *)(q + 0) = -1;
+    *(short *)(q + 4) = 1;
+    *(short *)(q + 8) = *(short *)(D_005BE0D8 + 0x20) / 64;
+    *(short *)(q + 0xA) = *(short *)(D_005BE0D8 + 0x20);
+    *(short *)(q + 0xC) = *(short *)(D_005BE0D8 + 0x22);
+    if (*(signed char *)(D_005BE0D8 + 6) == 2) {
+        *(unsigned short *)(q + 6) = *(unsigned short *)(D_005BE0D8 + 0x4C);
+    } else {
+        *(unsigned short *)(q + 6) = *(unsigned short *)(D_005BE0D8 + 0x48);
+    }
+    *(short *)(q + 0x18) = -1;
 }

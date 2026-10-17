@@ -63,6 +63,17 @@ extern unsigned int D_00661AC4[];
 extern unsigned int D_00661AC8[];
 extern unsigned int D_00661ACC[];
 extern unsigned int D_00661AD0[];
+extern char D_0065F570[];
+extern unsigned int D_0065F614[];
+extern unsigned int D_0065F610[];
+extern unsigned int D_0065F60C[];
+extern unsigned int D_0065F608[];
+extern unsigned int D_0065F604[];
+extern unsigned int D_0065F600[];
+extern unsigned int D_0065F5FC[];
+extern unsigned int D_0065F5F8[];
+extern unsigned int D_0065F5F4[];
+extern unsigned int D_0065F5F0[];
 
 void func_001A72B0(void) {
     unsigned int i;
@@ -285,4 +296,30 @@ void func_001A8DC0(int a) {
         *(int *)(D_005BE0D8 + 0x88) += D_0066062C[0];
         *(int *)(D_005BE0D8 + 0x8C) += D_00660630[0];
     }
+}
+
+void func_001A78D0(void) {
+    unsigned long long *a;
+    unsigned long long *b;
+    char *n = D_0065F570 + (*(signed char *)(D_005BE0D8 + 0xE) << 5);
+    a = (unsigned long long *)(n + 0x10);
+    b = (unsigned long long *)(n + 0x50);
+    a[0] = ((unsigned long long)(unsigned int)(a - 2) << 32) | 0x20000000;
+    a[1] = 0;
+    a[-2] = 0xF0000000;
+    a[-1] = 0;
+    b[0] = ((unsigned long long)(unsigned int)(b - 2) << 32) | 0x20000000;
+    b[1] = 0;
+    b[-2] = 0xF0000000;
+    b[-1] = 0;
+    D_0065F614[0] = 0;
+    D_0065F610[0] = 0;
+    D_0065F60C[0] = 0;
+    D_0065F608[0] = 0;
+    D_0065F604[0] = 0;
+    D_0065F600[0] = 0;
+    D_0065F5FC[0] = 0;
+    D_0065F5F8[0] = 0;
+    D_0065F5F4[0] = 0;
+    D_0065F5F0[0] = 0;
 }
