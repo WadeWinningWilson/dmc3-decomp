@@ -11927,3 +11927,36 @@ void func_0022B330(char *p) {
         QCOPY(p + 0x130, p + 0xD0);
     }
 }
+
+int func_0022F930(char *p, char *a, char *b) {
+    int i;
+    int r = -1;
+    for (i = 0; i < *(int *)p; i++) {
+        if (func_0012B1A0(p + i * 32 + 0x4004, b) == 0 && func_0012B1A0(p + i * 32 + 0xC004, a) == 0) {
+            r = i;
+            break;
+        }
+    }
+    return r;
+}
+
+float func_0024B880(float a, float b, float c, float d) {
+    float x;
+    float y;
+    if (!(a <= c) && b < d) {
+        x = a - c;
+        y = d - b;
+        return (c - d) + (x < y ? x : y);
+    }
+    if (a < c && !(b <= d)) {
+        x = c - a;
+        y = b - d;
+        return (a - b) + (x < y ? x : y);
+    }
+    x = c;
+    if (!(a < c)) {
+        x = a;
+    }
+    y = b <= d ? b : d;
+    return (a - b) + (c - d) - (x - y);
+}
