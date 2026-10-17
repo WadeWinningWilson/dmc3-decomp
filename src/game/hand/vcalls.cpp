@@ -4607,3 +4607,82 @@ extern "C" void func_0042CF90(char *p) {
     }
     func_0028C740(p + 0x150);
 }
+
+class ObjRate {
+public:
+    char pad[0x1C];
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual float m14();
+};
+
+/* Recomputes the playback speed from the rate source unless the input step is ~0. */
+extern "C" int func_0030AC20(char *p) {
+    float a = *(float *)(p + 0x10);
+    if ((a < 0.0f ? -a : a) <= 0.0001f) {
+        return 0;
+    }
+    *(float *)(p + 0x34) = *(float *)(p + 0x10) * ((ObjRate *)p)->m14();
+    return 1;
+}
+
+/* Counts the timer at +0x77E8 down; on motion end or expiry enters state 0x6A. */
+extern "C" void func_0037AE20(char *p) {
+    *(float *)(p + 0x77E8) = *(float *)(p + 0x77E8) - *(float *)(p + 0x10);
+    if (func_0024E800(p + 0x6D70) != 0 || *(float *)(p + 0x77E8) < 0.0f) {
+        ((ObjB *)p)->m2F4(0x6A);
+        *(float *)(p + 0x6E6C) = 5.0f;
+    }
+}
+
+extern "C" Sub130 *func_002792A0(char *);
+extern "C" void func_003F2E90(char *);
+extern "C" void func_003F2F60(char *);
+extern "C" void func_003E9930(char *);
+
+/* Per-frame update: step past frame 1, always tick, and finish when the motion ends. */
+extern "C" void func_003EF680(char *p) {
+    if (!(func_002792A0(p + 0x980)->m7C() <= 1.0f)) {
+        func_003F2E90(p);
+    }
+    func_003F2F60(p);
+    if (func_0024E800(p + 0x1FD0) != 0) {
+        func_003E9930(p);
+    }
+}
+
+extern "C" char D_005BE098[4];
+extern "C" void func_00195E20(char *, char *);
+extern "C" void func_001AD100(char *);
+extern "C" void func_0038BDE0(char *);
+extern "C" void func_00474DD0(char *);
+
+/* Two-step actor update (enter once, then run), then re-registers in the draw list. */
+extern "C" void func_0038B930(char *p) {
+    func_001AD100(p);
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        ((Obj130b *)p)->m130();
+        *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+        break;
+    case 1:
+        func_0038BDE0(p);
+        break;
+    }
+    func_00195E20(D_005BE098, p);
+}
+
+extern "C" void func_00474CB0(char *p) {
+    func_001AD100(p);
+    switch (*(unsigned char *)(p + 0x194)) {
+    case 0:
+        ((Obj130b *)p)->m130();
+        *(unsigned char *)(p + 0x194) = 1;
+        break;
+    case 1:
+        func_00474DD0(p);
+        break;
+    }
+    func_00195E20(D_005BE098, p);
+}
