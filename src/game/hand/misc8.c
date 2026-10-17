@@ -3255,6 +3255,9 @@ void func_002D9070(char *, int);
 void func_00226A00(char *, int);
 void func_00225F30(char *, int);
 void func_00226580(char *, int);
+extern signed char D_005BCD60[];
+void func_0031E570(char *);
+void func_002D2270(char *, int);
 
 void func_002FFB40(char *p) {
     *(unsigned char *)(p + 0x68C) = 0;
@@ -4018,4 +4021,49 @@ void func_00277280(char *p) {
         }
         *(unsigned char *)(p + 0x7F8B) = 0;
     }
+}
+
+void func_002D59A0(char *p) {
+    char *q;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        func_0031E570(p + 0x1D0);
+        *(char **)(p + 0x390C) = func_00207480(3, 0x16B, 0, 16);
+        q = *(char **)(p + 0x390C);
+        if (q != 0) {
+            *(int *)(q + 0x90) = *(int *)(*(char **)(p + 0x688) + 0x104);
+            q[0x9A] = 3;
+            *(*(char **)(p + 0x390C) + 0x3A) = 1;
+        }
+    case 1:
+        if ((unsigned char)func_0024E800(p + 0x2F70) == 1) {
+            func_002D2270(p, D_005BCD60[*(unsigned char *)(p + 0x38D0)]);
+        }
+    }
+}
+
+int func_002FFA10(char *p) {
+    char *r;
+    switch (*(unsigned char *)(p + 0x39)) {
+    case 0:
+    case 1:
+        r = func_001B0FD0(p + 0x694, 0x4340, 1);
+        if (r == 0) {
+            return 0;
+        }
+        *(char **)(p + 0x44) = r;
+        func_00128488(*(char **)(p + 0x44), 0, 0x4340);
+        break;
+    case 2:
+    case 3:
+        r = func_001B0FD0(p + 0x694, 0x2C0, 1);
+        if (r == 0) {
+            return 0;
+        }
+        *(char **)(p + 0x48) = r;
+        func_00128488(*(char **)(p + 0x48), 0, 0x2C0);
+        break;
+    }
+    return 1;
 }
