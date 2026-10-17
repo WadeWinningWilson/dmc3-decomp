@@ -11649,3 +11649,21 @@ int func_00356B20(char *p) {
     }
     return 0;
 }
+
+void func_003C39C0(char *p) {
+    int i;
+    if (*(char **)(*(char **)D_01CAFF0C + 0x20) != 0) {
+        func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), p);
+    }
+    for (i = 0; i < 8; i++) {
+        func_00206730(p + i * 4 + 0x1400);
+        if (*(char **)(p + i * 4 + 0x1400) != 0) {
+            func_001AD140(*(char **)(p + i * 4 + 0x1400));
+            *(char **)(p + i * 4 + 0x1400) = 0;
+        }
+    }
+    func_003AD5C0(p + 0x1CAC);
+    if (*(char **)(p + 0x1CAC) != 0) {
+        func_001AD140(*(char **)(p + 0x1CAC));
+    }
+}
