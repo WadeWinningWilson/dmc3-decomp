@@ -11690,6 +11690,9 @@ void func_0043A750(char *p, int k, int b, int m) {
 extern V4 D_00586720;
 void func_00132DF0(char *, char *, V4 *);
 void func_001A01C0(char *, unsigned int, unsigned int, int, int);
+int func_001A5050(char *);
+int func_001A5100(char *);
+int func_001A53F0(char *);
 
 void func_0046F690(char *p) {
     int i;
@@ -11740,4 +11743,68 @@ void func_001A0050(char *p, unsigned int i, unsigned int j, int a, int b) {
             break;
         }
     }
+}
+
+void func_001A95A0(char *p) {
+    int i;
+    char *e;
+    int j;
+    char *q;
+    *(char **)(p + 0x1C) = *(char **)(p + 0x1C) + (int)p;
+    for (i = 0; i < *(unsigned char *)(p + 0x10); i++) {
+        e = p + i * 0x30 + 0x30;
+        *(char **)(e + 4) = *(char **)(e + 4) + (int)p;
+        for (j = 0; j < *(unsigned char *)e; j++) {
+            q = *(char **)(e + 4) + j * 0x30;
+            *(char **)(q + 0xC) = *(char **)(q + 0xC) + (int)p;
+            *(char **)(q + 0x10) = *(char **)(q + 0x10) + (int)p;
+            *(char **)(q + 0x14) = *(char **)(q + 0x14) + (int)p;
+            *(char **)(q + 0x18) = *(char **)(q + 0x18) + (int)p;
+            *(char **)(q + 0x1C) = *(char **)(q + 0x1C) + (int)p;
+        }
+    }
+}
+
+void func_001A35F0(char *p) {
+    int i;
+    char *e;
+    int j;
+    char *q;
+    if (*(unsigned int *)(p + 0xA0) & 0x10) {
+        *(unsigned int *)(p + 0xA0) &= ~0x70;
+        for (i = 0; i < *(unsigned short *)(p + 0xA8); i++) {
+            e = *(char **)(p + 0xBC) + i * 0x340;
+            *(unsigned char *)(e + 5) = *(unsigned char *)(e + 6);
+            for (j = 0; j < *(unsigned char *)(e + 0xC); j++) {
+                q = *(char **)(e + 0x1C) + j * 0x150;
+                *(unsigned long long *)(q + 0x10) = *(unsigned long long *)(*(char **)(p + 0xC8) + *(unsigned short *)(*(char **)(q + 0xC) + 2) * 48 + 0x10);
+                *(unsigned char *)(q + 0x30) = 3;
+            }
+        }
+    }
+}
+
+int func_001A4F90(char *p) {
+    int v;
+    int r = 0;
+    int t = func_001A97E0(*(char **)(p + 0xC0));
+    r += func_001A5050(p);
+    switch (t) {
+    case 0x10000000:
+    case 0x20000000:
+        v = func_001A5100(p);
+        if (v < 0) {
+            return -1;
+        }
+        r += v;
+        break;
+    case 0x30000000:
+        v = func_001A53F0(p);
+        if (v < 0) {
+            return -1;
+        }
+        r += v;
+        break;
+    }
+    return r;
 }
