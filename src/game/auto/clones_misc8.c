@@ -369,6 +369,31 @@ void func_0022F8C0(char *);
 void func_0027BF60(char *);
 void func_0013CF50(char *);
 void func_00197C90(char *);
+void func_002DAB90(char *, int);
+int func_002DA0B0(int, int);
+int func_002D9EB0(char *);
+extern char D_005A7AA0[];
+extern char D_005A7990[];
+void func_001FF760(char *, int);
+void func_00202010(char *, char *, char *, float);
+void func_001C4970(char *, char *, int);
+int func_002102F0(char *);
+void func_003008D0(char *);
+void func_00300CC0(char *);
+void func_00300BD0(char *);
+void func_00301160(char *);
+void func_003A02B0(char *, int);
+extern signed char D_005BD070;
+void func_003C5430(char *, char *);
+void func_00417C70(char *);
+void func_00418040(char *);
+void func_003FA440(char *, int);
+void func_003FA3F0(char *, int);
+void func_0044CD30(char *);
+void func_0044CED0(char *);
+void func_0044CEE0(char *);
+short func_0034B940(char *, char *);
+void func_00131650(char *, char *);
 
 
 
@@ -434,6 +459,42 @@ void func_00197C90(char *);
 static inline unsigned char flag0(char *p) {
     return (*(unsigned short *)(p + 0x20CC) & 1) != 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1047,4 +1108,15 @@ void func_003A7180(char *p) {
         func_0024E800(p + 0x4BF0);
     }
     func_002EF940(*(int *)D_01CAFF0C, p + 0x5080);
+}
+
+void func_00344940(char *p) {
+    func_001A1F90(func_00279290(p + 0x4C0));
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 12:
+    case 13:
+        func_001A1F90(func_00279290(p + 0xAC0));
+        func_001A1F90(func_00279290(p + 0x10C0));
+    }
+    func_001A1F90(func_00279290(p + 0x16C0));
 }

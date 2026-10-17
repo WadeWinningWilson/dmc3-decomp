@@ -4686,3 +4686,148 @@ extern "C" void func_00474CB0(char *p) {
     }
     func_00195E20(D_005BE098, p);
 }
+
+class Obj148 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual void d75();
+    virtual void d76();
+    virtual void d77();
+    virtual void d78();
+    virtual void d79();
+    virtual void m148();
+    virtual void m14C();
+};
+
+extern "C" void func_001A1E10(char *);
+extern "C" void func_001A1F90(char *);
+extern "C" char *func_00279290(char *);
+extern "C" int func_0024E800(char *);
+extern "C" char D_00565D90[];
+
+/* Ticks the body and, in states 20/21, the attached part at +0x2BC8. */
+extern "C" void func_0034A090(char *p) {
+    func_001A1F90(func_00279290(p + 0x4C0));
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 20:
+    case 21:
+        if (*(Obj148 **)(p + 0x2BC8) != 0) {
+            (*(Obj148 **)(p + 0x2BC8))->m148();
+        }
+    }
+    func_001A1F90(func_00279290(p + 0x16C0));
+}
+
+extern "C" void func_0034A110(char *p) {
+    func_001A1E10(func_00279290(p + 0x4C0));
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 20:
+    case 21:
+        if (*(Obj148 **)(p + 0x2BC8) != 0) {
+            (*(Obj148 **)(p + 0x2BC8))->m14C();
+        }
+    }
+    func_001A1E10(func_00279290(p + 0x16C0));
+}
+
+/* Waits for the motion at +0x1680 to finish, then enters state 0xD. */
+extern "C" void func_003BF140(char *p) {
+    *(int *)(p + 0x1668) = 0;
+    *(unsigned char *)(p + 0x1BC6) = 0;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        if ((unsigned char)func_0024E800(p + 0x1680) == 1) {
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        }
+        break;
+    case 1:
+        ((ObjB *)p)->m304(0xD);
+        break;
+    }
+}
+
+/* Resets both motions, scale and position, recovers the stance and enters state 0xD. */
+extern "C" void func_003BFCA0(char *p) {
+    func_001A1E10(func_00279290(p + 0x9C0));
+    func_001A1E10(func_00279290(p + 0xFC0));
+    *(float *)(p + 0x1BB4) = 1.0f;
+    *(float *)(p + 0x1BB8) = 1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(p + 0x50), "r"(D_00565D90) : "memory");
+    *(short *)(p + 0x90) = *(short *)(*(char **)(p + 0x134) + 0x20);
+    ((ObjB *)p)->m304(0xD);
+}
