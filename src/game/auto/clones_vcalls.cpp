@@ -2884,6 +2884,1044 @@ extern "C" void func_00330BD0(char *, int, char *, int, int);
 /* Three-step motion chain on the sub-object at +0xC, ending in a self state change. */
 
 
+class Obj0D0 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void mD0();
+};
+
+extern "C" char D_00666750[];
+extern "C" void func_001AF080(char *, int);
+
+/* Recovers the stance from +0x134 and switches to state 0x20. */
+
+
+/* Releases the handle at +0x38 back to the pool, then notifies the sub-object at +0x40. */
+
+
+class ObjRel {
+public:
+    virtual void m08(int);
+    virtual void d1();
+    virtual void m10();
+};
+
+extern "C" void func_0013D5D0(char *);
+
+/* In states 2 and 3 notify the sub-object at +0x80, then reset the list at +0x694. */
+
+
+/* Shuts down and deletes the owned object at +8, then resets the list at +0xC. */
+
+
+extern "C" void func_003E6750(char *, int, int, int);
+extern "C" int func_0034BBE0(int, char *);
+extern "C" char D_00572F50[];
+
+/* Enters state 0x11, clears the three phase bytes, restarts motion 3 and grabs effect handle 4. */
+
+
+class ObjRel2 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void m10(int);
+};
+
+extern "C" void func_00206730(char *);
+extern "C" void func_001AD140(char *);
+extern "C" void func_0028C740(char *);
+
+/* Drops the effect at +0x4A4, stops the helper at +0x4B4, then resets the motion at +0x150. */
+
+
+class ObjRate {
+public:
+    char pad[0x1C];
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual float m14();
+};
+
+/* Recomputes the playback speed from the rate source unless the input step is ~0. */
+
+
+/* Counts the timer at +0x77E8 down; on motion end or expiry enters state 0x6A. */
+
+
+extern "C" Sub130 *func_002792A0(char *);
+extern "C" void func_003F2E90(char *);
+extern "C" void func_003F2F60(char *);
+extern "C" void func_003E9930(char *);
+
+/* Per-frame update: step past frame 1, always tick, and finish when the motion ends. */
+
+
+extern "C" char D_005BE098[4];
+extern "C" void func_00195E20(char *, char *);
+extern "C" void func_001AD100(char *);
+extern "C" void func_0038BDE0(char *);
+extern "C" void func_00474DD0(char *);
+
+/* Two-step actor update (enter once, then run), then re-registers in the draw list. */
+
+
+
+
+class Obj148 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual void d75();
+    virtual void d76();
+    virtual void d77();
+    virtual void d78();
+    virtual void d79();
+    virtual void m148();
+    virtual void m14C();
+};
+
+extern "C" void func_001A1E10(char *);
+extern "C" void func_001A1F90(char *);
+extern "C" char *func_00279290(char *);
+extern "C" int func_0024E800(char *);
+extern "C" char D_00565D90[];
+
+/* Ticks the body and, in states 20/21, the attached part at +0x2BC8. */
+
+
+
+
+/* Waits for the motion at +0x1680 to finish, then enters state 0xD. */
+
+
+/* Resets both motions, scale and position, recovers the stance and enters state 0xD. */
+
+
+extern "C" void func_0037E850(char *, int);
+extern "C" void func_0034BA60(int, char *, int, int, int);
+extern "C" float D_005679BC[];
+extern "C" float D_005679C0[];
+
+/* Enters the charge phase: state 1, motion 2, sound 0x23, 100-frame timer and reset ranges. */
+
+
+extern "C" void func_00228300(char *);
+extern "C" void func_0030C5E0(char *);
+extern "C" void func_0030CB50(char *);
+
+
+
+class Sub980 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual float m80(int);
+};
+
+class ObjBC {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void mBC(float);
+};
+
+extern "C" void func_003F2F90(char *);
+extern "C" void * func_002075D0(int, int, char *, int, int);
+extern "C" void func_0044E700(char *, int, int);
+
+/* Enters attack state 0x25 with its phase bytes, timer 22.4 and motion 0x16; arms a 180 delay once. */
+
+
+/* Past frame 40 of the current motion, switch to state 0x39. */
+
+
+/* Spawns the trail effect at +0x4A4 (self-destructs on failure) and restarts the helper. */
+
+
+
+
+
+
+class Obj174 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void mE8(int);
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual void d75();
+    virtual void d76();
+    virtual void d77();
+    virtual void d78();
+    virtual void d79();
+    virtual void d80();
+    virtual void d81();
+    virtual void d82();
+    virtual void d83();
+    virtual void d84();
+    virtual void d85();
+    virtual void d86();
+    virtual void d87();
+    virtual void d88();
+    virtual void d89();
+    virtual void d90();
+    virtual void m174();
+};
+
+class Sub130x {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual unsigned char m84();
+};
+
+extern "C" void func_00481E00(char *, int);
+extern "C" void func_00482240(char *);
+extern "C" void func_00418980(char *);
+extern "C" void func_0031E570(char *);
+extern "C" float D_00565278[];
+
+/* Type 0x18 takes its own exit; others tick the animation and flag completion. */
+
+
+
+
+/* Releases both pool handles and notifies the four sub-objects, then resets the body at +0x19C0. */
+
+
+
+
+class ObjT1C {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual float m1C();
+};
+
+extern "C" char D_01CAFF0C[];
+
+/* Arms a timed event: stores its four parameters, snapshots the clock and enters state 0xE. */
+
+
+class ObjB4C8 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void mB4(int, int, int, int);
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void mC8(char *);
+};
+
+/* Resets both trails (+0x580, +0xB80) to the shared anchor at +0x18D0 and ticks the motion. */
+
+
+extern "C" float D_01DF5D24[];
+
+/* Like the rate update above, but mode 0 first scales the global rate by the track gain at +0x30. */
+
+
+class ObjSel {
+public:
+    virtual void d0();
+    virtual void mC();
+    virtual void d2();
+    virtual void m14(char *);
+};
+
+extern "C" char D_01CAFF30[];
+extern "C" char D_01CAFF3C[];
+extern "C" char D_0054A0E0[];
+extern "C" void func_0036F7D0(char *, char *);
+extern "C" void func_0036FCF0(char *);
+
+/* Opens the menu: copies the current selection, resets the list and loads the entry text. */
+
+
+extern "C" int func_004D2D20(char *, int);
+
+/* Grab-release check: if armed and the partner no longer holds, restore the hit scale and enter 0x17. */
+
+
+
+extern "C" char *func_002D9F00(char *, int);
+extern "C" void func_0022C520(char *, char *, char *, char *);
+extern "C" void func_00105300(char *, char *);
+
+/* Re-anchors the two held weapons (+0xB00, +0x1100) to their bones on the owner at +0xE0. */
+
+
+class ObjA8 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void mA8(int);
+};
+
+extern "C" void func_001A1E10(char *);
+
+
+
+extern "C" int func_00482180(char *);
+extern "C" void func_004822B0(char *);
+extern "C" void func_00481310(char *);
+
+
+
+class ObjRate2 {
+public:
+    char pad[0x1C];
+    virtual void d0();
+    virtual void d1();
+    virtual void m10();
+};
+
+extern "C" float func_001F9C40(char *, int);
+extern "C" char D_01DF5D20[];
+extern "C" short func_0027BC40(char *, int);
+extern "C" int func_0027BCB0(char *, int);
+extern "C" void func_00288140(char *);
+extern "C" char *func_00210240(char *);
+extern "C" int func_0024E780(char *, int, int);
+
+/* Track timer: when it runs out, or neither direction has a next key, finish; otherwise advance. */
+
+
+
+
+
+class Obj1D4 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual void d75();
+    virtual void d76();
+    virtual void d77();
+    virtual void d78();
+    virtual void d79();
+    virtual void d80();
+    virtual void d81();
+    virtual void d82();
+    virtual void d83();
+    virtual void d84();
+    virtual void d85();
+    virtual void d86();
+    virtual void d87();
+    virtual void d88();
+    virtual void d89();
+    virtual void d90();
+    virtual void d91();
+    virtual void d92();
+    virtual void d93();
+    virtual void d94();
+    virtual void d95();
+    virtual void d96();
+    virtual void d97();
+    virtual void d98();
+    virtual void d99();
+    virtual void d100();
+    virtual void d101();
+    virtual void d102();
+    virtual void d103();
+    virtual void d104();
+    virtual void d105();
+    virtual void d106();
+    virtual void d107();
+    virtual void d108();
+    virtual void d109();
+    virtual void d110();
+    virtual void d111();
+    virtual void d112();
+    virtual void d113();
+    virtual void d114();
+    virtual void m1D4(int, char *);
+};
+
+extern "C" void func_001A1F90(char *);
+extern "C" void func_00228300(char *);
+extern "C" void func_0030B340(char *);
+extern "C" void func_0030B3D0(char *);
+extern "C" void func_003023F0(int);
+extern "C" void func_0033A580(char *);
+
+/* Ticks the body and, in state 26, the six extra parts, then emits sound 0x2A at the body. */
+
+
+
+
+
+
+
+
+
+
+
+
+extern "C" void func_00335EF0(char *, int);
+
+
+
+/* Buckets the current motion frame into six phases at +0x134C. */
+
+
+class Anim6 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void m1C(int);
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void m40();
+    virtual void d15();
+    virtual void m48(int, char *);
+};
+
+class ObjE4 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void mE4(char *, char *, char *, char *);
+};
+
+extern "C" void func_00330BD0(char *, int, char *, int, int);
+
+
+
+
+
+class ObjSnd {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void m14(unsigned int, int);
+};
+
+extern "C" ObjSnd *D_005BC1A8;
+extern "C" char D_005D0E70[];
+extern "C" char D_005D0E78[];
+extern "C" char D_006011B4[];
+extern "C" int func_00486460(char *);
+extern "C" void func_0013D900(char *, int);
+extern "C" void func_0013DC30(char *, int, int);
+extern "C" void func_0013E040(char *, int, int);
+
+/* Mode switch: aborts to state 2 when flagged, otherwise on confirm arms the stage and fades. */
+
+
+
+
+
+
+extern "C" void func_00438170(char *, char *, char *, char *);
+
+/* Arms a timed event, snapshots the clock, picks the matching motion frame and enters state 0x17. */
+
+
+/* Enters state 0x3B, sets its phase bytes, restarts motion 0x1B and sparks the six weapon joints. */
+
+
+extern "C" void func_004CC3A0(char *, char *, char *, char *);
+
+
+
+class Obj64 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void m64();
+};
+
+static inline char *cur_key(char *p, int f, int n, int k) {
+    if (*(unsigned char *)(p + f) != 0 && 0 < *(int *)(p + n)) {
+        return **(char ***)(p + k);
+    }
+    return 0;
+}
+
+
+
+
+
+class Anim7 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void m18(int);
+};
+
+class Obj6C {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void m6C();
+    virtual void m70();
+    virtual void d27();
+    virtual short m78(short, short);
+};
+
+/* Resets the attack and its target transform, recomputes facing, then stores a tenth of it. */
+
+
 extern "C" {
 extern "C" void func_00465AA0(char *p) {
     short d;
@@ -4393,5 +5431,45 @@ extern "C" void func_004A7E30(char *p) {
         (*(Anim5 **)(p + 0xA8))->m48(0x388, *(char **)(p + 0x10) + 0x10);
         break;
     }
+}
+
+extern "C" void func_004646B0(char *p) {
+    *(unsigned char *)(p + 0xCD) = 0;
+    *(unsigned char *)(p + 0xCE) = 0;
+    *(unsigned char *)(p + 0xCF) = 0;
+    (*(Anim7 **)(p + 0xA8))->m18(0x37);
+    *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x24) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x28) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x2C) = 1.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x34) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x3C) = 1.0f;
+    ((Obj6C *)p)->m6C();
+    ((Obj6C *)p)->m70();
+    *(short *)(p + 0xC0) = ((Obj6C *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50)) / 10;
+    *(float *)(p + 0xC4) = 10.0f;
+    *(int *)(p + 0xD4) = 0;
+}
+
+extern "C" void func_004A0FC0(char *p) {
+    *(unsigned char *)(p + 0xCD) = 0;
+    *(unsigned char *)(p + 0xCE) = 0;
+    *(unsigned char *)(p + 0xCF) = 0;
+    (*(Anim7 **)(p + 0xA8))->m18(0x37);
+    *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x24) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x28) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x2C) = 1.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x34) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x3C) = 1.0f;
+    ((Obj6C *)p)->m6C();
+    ((Obj6C *)p)->m70();
+    *(short *)(p + 0xC0) = ((Obj6C *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50)) / 10;
+    *(float *)(p + 0xC4) = 10.0f;
+    *(int *)(p + 0xD4) = 0;
 }
 }

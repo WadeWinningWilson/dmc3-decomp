@@ -6094,3 +6094,125 @@ extern "C" void func_004C39E0(char *p, int a, int b, int c, int d) {
     *(unsigned char *)(p + 0x14D) = 0;
     ((ObjB *)p)->m2F8(0x16);
 }
+
+class Obj64 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void m64();
+};
+
+static inline char *cur_key(char *p, int f, int n, int k) {
+    if (*(unsigned char *)(p + f) != 0 && 0 < *(int *)(p + n)) {
+        return **(char ***)(p + k);
+    }
+    return 0;
+}
+
+extern "C" void func_0027A120(char *p) {
+    if (*(unsigned char *)(p + 0xB) != 0) {
+        ((Obj64 *)(p + 0x400))->m64();
+        *(float *)(p + 0x5A0) = *(float *)(cur_key(p, 0x4AC, 0x410, 0x414) + 0x10C);
+        *(float *)(p + 0x5A4) = *(float *)(cur_key(p, 0x4AC, 0x410, 0x414) + 0x120);
+        *(float *)(p + 0x5A8) = *(float *)(cur_key(p, 0x4AC, 0x410, 0x414) + 0x134);
+        *(float *)(p + 0x5AC) = 1.0f;
+        __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0
+	sqc2 $vf20, 0x0(%0)" : : "r"(p + 0x5B0) : "memory");
+    }
+}
+
+extern "C" void func_0027B450(char *p) {
+    if (*(unsigned char *)(p + 0xB) != 0) {
+        ((Obj64 *)(p + 0x270))->m64();
+        *(float *)(p + 0x410) = *(float *)(cur_key(p, 0x31C, 0x280, 0x284) + 0x10C);
+        *(float *)(p + 0x414) = *(float *)(cur_key(p, 0x31C, 0x280, 0x284) + 0x120);
+        *(float *)(p + 0x418) = *(float *)(cur_key(p, 0x31C, 0x280, 0x284) + 0x134);
+        *(float *)(p + 0x41C) = 1.0f;
+        __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0
+	sqc2 $vf20, 0x0(%0)" : : "r"(p + 0x420) : "memory");
+    }
+}
+
+class Anim7 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void m18(int);
+};
+
+class Obj6C {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void m6C();
+    virtual void m70();
+    virtual void d27();
+    virtual short m78(short, short);
+};
+
+/* Resets the attack and its target transform, recomputes facing, then stores a tenth of it. */
+extern "C" void func_00363070(char *p) {
+    *(unsigned char *)(p + 0xCD) = 0;
+    *(unsigned char *)(p + 0xCE) = 0;
+    *(unsigned char *)(p + 0xCF) = 0;
+    (*(Anim7 **)(p + 0xA8))->m18(0x37);
+    *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x24) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x28) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x2C) = 1.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x34) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x3C) = 1.0f;
+    ((Obj6C *)p)->m6C();
+    ((Obj6C *)p)->m70();
+    *(short *)(p + 0xC0) = ((Obj6C *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50)) / 10;
+    *(float *)(p + 0xC4) = 10.0f;
+    *(int *)(p + 0xD4) = 0;
+}

@@ -128,6 +128,8 @@ int func_003B96D0(char *p, int a, int b, int c) {
 typedef struct { short k; short pad; int v; } KLEnt;
 typedef struct { short n; short pad; KLEnt e[272]; } KLTab272;
 typedef struct { short n; short pad; KLEnt e[128]; } KLTab128;
+int func_0019E7B0(char *);
+int func_0019EAA0(char *);
 int func_001F3A50(KLTab272 *t, short k) {
     int i;
     for (i = 0; i < 272; i++) {
@@ -154,4 +156,23 @@ int func_001FEFB0(KLEnt *t, short k) {
         }
     }
     return 0;
+}
+
+void func_0019DFF0(char *p) {
+    *(float *)(p + 0x20) = 1.0f / *(float *)(p + 0x30) * *(float *)(p + 0x70);
+    if ((unsigned char)func_0019E7B0(p) == 1) {
+        *(float *)(p + 0x44) = *(float *)(p + 0x44) - *(float *)(p + 0x70);
+        if (*(float *)(p + 0x44) <= 0.0f) {
+            *(float *)(p + 0x44) = *(float *)(p + 0x34);
+            *(short *)(p + 0x58) = -*(short *)(p + 0x58);
+        }
+    }
+    *(float *)(p + 0x28) = 1.0f / *(float *)(p + 0x38) * *(float *)(p + 0x70);
+    if ((unsigned char)func_0019EAA0(p) == 1) {
+        *(float *)(p + 0x4C) = *(float *)(p + 0x4C) - *(float *)(p + 0x70);
+        if (*(float *)(p + 0x4C) <= 0.0f) {
+            *(float *)(p + 0x4C) = *(float *)(p + 0x3C);
+            *(short *)(p + 0x5A) = -*(short *)(p + 0x5A);
+        }
+    }
 }
