@@ -578,6 +578,17 @@ extern int D_01DFA344[];
 extern int D_01DFA348[];
 signed char func_00406D80(char *, signed char);
 signed char func_00406CF0(char *, signed char);
+void func_004AD470(char *);
+void func_004AD520(char *);
+void func_004AD5B0(char *);
+void func_004AD970(char *);
+void func_004ADC50(char *);
+void func_004ADEA0(char *);
+void func_004AE120(char *);
+void func_004AE1D0(char *);
+void func_004AE310(char *);
+void func_004AE3F0(char *);
+void func_004AE4B0(char *);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -8928,5 +8939,49 @@ void func_0047DE50(char *p) {
     *(unsigned char *)(p + 0x3105) = 0;
     while (!(*(unsigned short *)(p + 0x3106) & (1 << *(unsigned char *)(p + 0x3105)))) {
         *(unsigned char *)(p + 0x3105) = (*(unsigned char *)(p + 0x3105) + 1) & 0xF;
+    }
+}
+
+void func_00376850(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        func_004AD470(p);
+        break;
+    case 1:
+        func_004AD520(p);
+        break;
+    case 3:
+        func_004AD5B0(p);
+        break;
+    case 4:
+        func_004AD6D0(p);
+        break;
+    case 7:
+        func_004AD800(p);
+        break;
+    case 8:
+        func_004AD970(p);
+        break;
+    case 9:
+        func_004ADC50(p);
+        break;
+    case 11:
+        func_004ADEA0(p);
+        break;
+    case 13:
+        func_004AE120(p);
+        break;
+    case 14:
+        func_004AE1D0(p);
+        break;
+    case 15:
+        func_004AE310(p);
+        break;
+    case 18:
+        func_004AE3F0(p);
+        break;
+    case 20:
+        func_004AE4B0(p);
+        break;
     }
 }

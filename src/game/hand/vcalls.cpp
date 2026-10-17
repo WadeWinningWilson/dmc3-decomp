@@ -13348,3 +13348,88 @@ extern "C" void func_0045AC70(char *p, char *h, int a) {
         ((HitRx *)p)->m68(h, a);
     }
 }
+
+class ObjC1F0 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void m6C();
+    virtual void m70();
+    virtual void d74();
+    virtual int m78(int, int);
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void mB4(int);
+};
+
+class AnimC {
+public:
+    virtual void d8();
+    virtual int mC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void m28(int);
+};
+
+extern "C" void func_0035C1F0(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0: {
+        short r;
+        ((ObjC1F0 *)p)->m6C();
+        ((ObjC1F0 *)p)->m70();
+        r = ((ObjC1F0 *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+        *(short *)(p + 0xC0) = r / 16;
+        *(float *)(p + 0xC4) = 16.0f;
+        (*(AnimC **)(p + 0xC))->m28(0x25);
+        *(unsigned char *)(p + 0xB5) = 1;
+    }
+    case 1:
+        if (!(*(float *)(p + 0xC4) <= 0.0f)) {
+            *(short *)(*(char **)(p + 0x10) + 0x50) = (short)(int)((float)*(short *)(*(char **)(p + 0x10) + 0x50) + (float)*(short *)(p + 0xC0) * *(float *)(p + 0xB0));
+            *(float *)(p + 0xC4) = *(float *)(p + 0xC4) - *(float *)(p + 0xB0);
+        }
+        if ((*(AnimC **)(p + 0xC))->mC() != 0x25) {
+            ((ObjC1F0 *)p)->mB4(0x17);
+        }
+        break;
+    }
+}
