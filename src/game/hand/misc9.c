@@ -12002,3 +12002,20 @@ void func_002D9DF0(char *p) {
     func_001323E0(b);
     QCOPY(p + 0x2590, b);
 }
+
+void func_002E9E00(char *p) {
+    float b[4];
+    float a[4];
+    b[0] = *(float *)(p + 0xB0);
+    b[1] = *(float *)(p + 0xB4);
+    b[2] = *(float *)(p + 0xB8);
+    b[3] = 1.0f;
+    a[0] = 0.0f;
+    a[1] = 6.283185f * (*(float *)(p + 0x48) / 360.0f);
+    a[2] = 0.0f;
+    a[3] = 1.0f;
+    UNIT(p + 0xD0);
+    func_00131700(p + 0xD0, p + 0xD0, (char *)a);
+    func_00105230(p + 0xD0, p + 0xD0, (char *)b);
+    func_00104C00(p + 0xD0, p + 0x50, p + 0xD0);
+}

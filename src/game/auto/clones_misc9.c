@@ -504,7 +504,7 @@ void func_0023D5B0(char *);
 void func_004BAD60(char *, char *, short, int);
 extern char D_005B67E0[];
 void func_002790E0(char *);
-void func_002791E0(void);
+char *func_002791E0(char *, short);
 extern char D_005AF6F0[];
 extern char D_005AF714[];
 extern char D_005AF794[];
@@ -1469,6 +1469,24 @@ void func_001A29A0(char *);
 extern char D_00564370[];
 extern void (*D_005BE184)(short *, char *);
 void func_002FAD60(short *, unsigned short, unsigned short);
+void func_003AD5C0(char *);
+void func_0019F950(char *, int, unsigned int, int);
+int func_0019FFC0(char *, unsigned int);
+int func_001A03D0(char *, unsigned int);
+extern char D_005A79A0[];
+extern char D_005A7990[];
+extern char D_005A7D90[];
+extern char D_005A7DB4[];
+extern char D_005A7E34[];
+extern char D_005A7EC8[];
+void func_001AA4B0(char *, int, char *, int);
+int func_001F5AC0(char *, int, char *, char *, int, int, int, int, int, int);
+short func_001F8640(char *, unsigned char, short);
+char *func_0012B2E8(char *, char *);
+void func_001003E0(char *, void *, int, int);
+void func_0022D750(void);
+void func_0024FDB0(char *, int);
+char *func_0024F810(char *, short);
 
 
 
@@ -1730,6 +1748,246 @@ static inline unsigned char eqb(unsigned char a, unsigned char b) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+typedef struct { float v[4]; } F4;
+extern char D_005A8650[];
+extern char D_005A8740[];
+extern char D_005A8460[];
+extern char D_005A8550[];
+void func_001FBC10(char *, int);
+void func_00278D50(char *, int);
+void func_00279090(char *, int);
+void func_00292090(char *);
+extern char D_006011E4[];
+extern char D_00631568[];
+extern float D_00562A90[];
+extern float D_00562A80[];
+extern char *D_005BDC4C;
+void func_00323140(char *, int, int, int, int);
+int func_001B3B30(char *, char *, int, int, unsigned int *);
+void func_002DA130(char *, int, int);
+int func_00437920(char *, char *, float *);
+int func_00437840(char *, char *, float *);
+int func_0019F770(char *, unsigned int, int);
+void func_001A0270(char *, unsigned int, int, int, int);
+int func_001A1D60(char *, unsigned int, int);
+void func_001AF0B0(char *, char *);
+void func_00123028(int, int, char *);
+extern int D_01CAF560[];
+extern unsigned char D_005D0E53[];
+extern unsigned char D_005D0E51[];
+extern int D_005D0E54[];
+void func_0020E8D0(char *, int, int, int);
+void func_0022A870(char *);
+int func_002E76D0(char *, float *);
+extern char D_005A7BB0[];
+extern char D_005A7BD4[];
+extern char D_005A7C54[];
+void func_0024F700(char *, int);
+void func_0024CC30(char *, unsigned char);
+void func_0024DB10(char *, int, int, int, int, int, int);
+void func_00249A00(char *, int);
+char *func_00215A30(char *, int, int);
+int func_00210810(char *, float);
+char *func_00210830(char *, int, float);
+void func_0020FF40(char *, float);
+void func_001AC630(int, float);
+void func_001AC980(int, char *);
+void func_001AEEC0(char *);
+void func_002873A0(char *);
+void func_001A5D00(char *);
+void func_001A5C30(char *);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static inline unsigned char flag8000(char *p) {
+    return (*(unsigned int *)(p + 0x8FC) & 0x8000) != 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define QCOPYW1(d, s) __asm__ volatile("lqc2 $vf10, 0x0(%1)\n\tvmove.w $vf10, $vf0\n\tsqc2 $vf10, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+typedef struct { float v[4]; } __attribute__((aligned(16))) V4;
+
+extern V4 D_005599B0;
+void func_00133890(char *, char *, V4 *);
+
+
+
+
+
+
+
+extern V4 D_0055C280;
+void func_0046FCF0(char *);
+void func_0046F8E0(char *);
+void func_0046FB40(char *);
+int func_0048D140(char *);
+
+
+
+
+
+
+
+
+
+extern V4 D_00586720;
+void func_00132DF0(char *, char *, V4 *);
+void func_001A01C0(char *, unsigned int, unsigned int, int, int);
+int func_001A5050(char *);
+int func_001A5100(char *);
+int func_001A53F0(char *);
+char *func_001AEAA0(char *, int, int);
+int func_001AEF60(char *, char *, int, int, int);
+void func_001B6470(char *, int *);
+void func_001B64C0(char *, int);
+void func_001B64D0(char *, short *);
+void func_001B6510(char *, int);
+void func_001B6520(char *, int);
+void func_001B6550(char *, int);
+void func_001B6630(char *, int);
+void func_0023A710(char *, int);
+void func_0023A3C0(char *, signed char);
+void func_00138330(void);
+void func_001323E0(float *);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define VMOVXYZ30(d, s) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+#define VSUBIP(x, y) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(x), "r"(y) : "memory")
+
+
+
+
+
 void func_00233F60(char *p) {
     char *e;
     char *o;
@@ -1798,4 +2056,21 @@ void func_00481D70(char *p) {
     UNIT(p + 0x2C0);
     func_00131700(p + 0x2C0, p + 0x2C0, (char *)v);
     func_00105230(p + 0x2C0, p + 0x2C0, p + 0x50);
+}
+
+void func_00417CE0(char *p) {
+    float b[4];
+    float a[4];
+    b[0] = *(float *)(p + 0x3C);
+    b[1] = *(float *)(p + 0x40);
+    b[2] = *(float *)(p + 0x44);
+    b[3] = 1.0f;
+    a[0] = 0.0f;
+    a[1] = 6.283185f * (*(float *)(p + 0x48) / 360.0f);
+    a[2] = 0.0f;
+    a[3] = 1.0f;
+    UNIT(p + 0x90);
+    func_00131700(p + 0x90, p + 0x90, (char *)a);
+    func_00105230(p + 0x90, p + 0x90, (char *)b);
+    func_00104C00(p + 0x90, p + 0x50, p + 0x90);
 }
