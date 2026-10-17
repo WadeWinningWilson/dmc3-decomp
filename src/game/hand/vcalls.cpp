@@ -11719,3 +11719,31 @@ extern "C" void func_00421400(char *p) {
         break;
     }
 }
+
+extern "C" void func_00420E80(char *p) {
+    *(unsigned int *)(p + 0x42C) = *(unsigned int *)(p + 0x42C) | 0x2000;
+    *(unsigned int *)(p + 0x42C) = *(unsigned int *)(p + 0x42C) | 0x8000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(float *)(p + 0x80) = 0.5f * (frand() - 0.5f);
+        *(float *)(p + 0x88) = 0.5f * (frand() - 0.5f);
+        func_0038F300(p, -1);
+        *(float *)(p + 0x60) = 0.0f;
+        *(float *)(p + 0x64) = 0.0f;
+        *(float *)(p + 0x68) = 0.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+        *(unsigned char *)(p + 6) = 1;
+    case 1:
+        func_0041DBA0(p, p + 0x600);
+        if ((unsigned char)func_0024E800(p + 0xC20) == 1) {
+            *(unsigned char *)(p + 6) = 2;
+        }
+    case 2:
+        func_0041D820(p + 0x64, -9.0f * *(float *)(p + 0x10), -30.0f);
+        func_0041D6E0(up(p, 0x40), p + 0x60, 1, *(float *)(p + 0x10));
+        if ((unsigned char)func_0041E120(up(p, 0x40), 0.0f) == 1) {
+            func_0038F2C0(p, 0x11);
+        }
+        break;
+    }
+}
