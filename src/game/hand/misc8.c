@@ -560,3 +560,77 @@ int func_002D2650(int x, int k, unsigned char *t) {
     }
     return k;
 }
+
+int func_003C4B90(char *p) {
+    switch (*(unsigned char *)(p + 0x1424)) {
+    case 3:
+    case 4:
+    case 8:
+    case 9:
+    case 10:
+        return 2;
+    }
+    return 0;
+}
+int func_003C4BF0(char *p) {
+    switch (*(unsigned char *)(p + 0x1424)) {
+    case 3:
+    case 4:
+    case 8:
+    case 9:
+    case 10:
+        return 2;
+    }
+    return 0;
+}
+char *func_0030E9D0(char *p) {
+    int i;
+    char *e;
+    char *t;
+    int n;
+    n = *(int *)(p + 0x14);
+    i = 0;
+    if (0 < n) {
+        t = *(char **)p;
+        e = t;
+        do {
+            if (*(short *)e == -1) {
+                return t + i * 8;
+            }
+            i++;
+            e += 8;
+        } while (i < n);
+    }
+    return 0;
+}
+int func_002F1EF0(char *p) {
+    int n = 0;
+    int i;
+    if (*(unsigned char *)(*(char **)D_01CAFF0C + 8) == 1) {
+        return n;
+    }
+    for (i = 0; i < 10; i++) {
+        if (*(signed char *)(p + i + 0x1037) != -1) {
+            n++;
+        }
+    }
+    return n;
+}
+extern short D_00586260[][47];
+short func_004838E0(int x, int a) {
+    return D_00586260[a / 100][a % 100];
+}
+void func_0048E970(char *p) {
+    switch (*(int *)(p + 8)) {
+    case 0:
+        *(char *)(p + 0x2D) = 1;
+        *(int *)(p + 8) += 1;
+    case 1:
+        if (*(unsigned char *)(p + 0x2D) == 0) {
+            *(char *)(p + 0x2A) = 2;
+            *(int *)(p + 4) += 1;
+            *(int *)(p + 8) = 0;
+        }
+        break;
+    }
+}
