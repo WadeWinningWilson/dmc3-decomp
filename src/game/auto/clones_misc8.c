@@ -315,6 +315,148 @@ void func_001318E0(char *, char *, float *);
 typedef struct { float v[4]; } __attribute__((aligned(16))) V4;
 extern V4 D_0057BAB0;
 void func_00133890(char *, char *, V4 *);
+extern char D_01C61900[];
+extern char *D_005BE09C;
+void func_00210220(char *);
+char *func_00210240(char *);
+long func_0011EF60(int, unsigned long);
+void func_00138120(int);
+void func_001C52F0(char *);
+void func_004F7680(int, char *, int, short, char *);
+void func_00105300(char *, char *);
+void func_00104E78(char *, char *);
+extern int D_005BE0E0;
+extern char D_01CB0530[];
+void func_00130990(int, int);
+void func_002289C0(char *);
+void func_002289F0(char *);
+void func_002290E0(char *);
+void func_002965E0(char *, int);
+void func_001A1F90(char *);
+void func_0029FD40(char *);
+char *func_0027A710(char *);
+void func_001A20C0(char *, int);
+void func_001A1F30(char *, int);
+void func_003023F0(int);
+void func_00322C50(char *);
+void func_00322620(char *);
+void func_00322870(char *);
+void func_0037E850(char *, int);
+void func_0034BA60(int, char *, int, int, int);
+void func_0037D030(char *, int);
+void func_002F2D30(char *, char *);
+void func_0041D670(char *);
+void func_003B4B60(char *, int);
+void func_001970E0(char *);
+int func_0013D2A0(char *, char *, int);
+void func_00220860(char *, int, int, float);
+void func_002497E0(char *);
+void func_00249860(char *);
+void func_0028C5C0(char *, int, float);
+extern char D_005A7770[];
+extern char D_01DF8E4D[];
+extern char D_01DFA340[];
+void func_00228300(char *);
+void func_004BC510(char *);
+void func_004BC5C0(char *);
+void func_00100580(char *);
+void func_004D85E0(char *, int);
+int func_00207060(char *);
+void func_00213C40(char *);
+void func_002102E0(void);
+void func_00230000(char *);
+void func_0022F8C0(char *);
+void func_0027BF60(char *);
+void func_0013CF50(char *);
+void func_00197C90(char *);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static inline unsigned char flag0(char *p) {
+    return (*(unsigned short *)(p + 0x20CC) & 1) != 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -894,4 +1036,15 @@ void func_004BE330(char *p) {
     func_00131700(p + 0x380, p + 0x380, rot);
     func_00105230(p + 0x380, p + 0x380, pos);
     func_001318E0(p + 0x380, p + 0x380, scl);
+}
+
+void func_003A7180(char *p) {
+    *(float *)(p + 0x516C) = *(float *)(p + 0x516C) + *(float *)(p + 0x10);
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(unsigned char *)(p + 6) = *(unsigned char *)(p + 6) + 1;
+    case 1:
+        func_0024E800(p + 0x4BF0);
+    }
+    func_002EF940(*(int *)D_01CAFF0C, p + 0x5080);
 }

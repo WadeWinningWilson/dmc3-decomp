@@ -4582,3 +4582,28 @@ extern "C" void func_003ECE20(char *p) {
     func_003E6750(p, 3, 0, 0);
     *(int *)(p + 0x3A84) = func_0034BBE0(4, D_00572F50);
 }
+
+class ObjRel2 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void m10(int);
+};
+
+extern "C" void func_00206730(char *);
+extern "C" void func_001AD140(char *);
+extern "C" void func_0028C740(char *);
+
+/* Drops the effect at +0x4A4, stops the helper at +0x4B4, then resets the motion at +0x150. */
+extern "C" void func_0042CF90(char *p) {
+    func_00206730(p + 0x4A4);
+    if (*(char **)(p + 0x4A4) != 0) {
+        *(*(char **)(p + 0x4A4) + 0x3A) = 1;
+        func_001AD140(*(char **)(p + 0x4A4));
+        *(char **)(p + 0x4A4) = 0;
+    }
+    if (*(ObjRel2 **)(p + 0x4B4) != 0) {
+        (*(ObjRel2 **)(p + 0x4B4))->m10(0);
+    }
+    func_0028C740(p + 0x150);
+}
