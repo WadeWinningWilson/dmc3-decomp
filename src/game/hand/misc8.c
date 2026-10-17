@@ -1283,3 +1283,31 @@ void func_0020E4D0(char *p, short a, short b) {
         *(short *)(p + 0xF8) = b;
     }
 }
+
+extern char D_01CB1290[];
+extern int D_01CB1308[];
+extern int D_01CB130C[];
+extern int D_01CB1310[];
+void func_001F41B0(char *, int, int);
+
+void func_001F4820(char *, int);
+void func_0030F510(char *p, int s, int *last) {
+    int x;
+    int y;
+    if (*last != s) {
+        *(char *)*last = 0;
+        x = D_01CB1308[0];
+        y = D_01CB130C[0];
+        if (*(unsigned char *)(p + 33) == 1) {
+            func_001F41C0(D_01CB1290, *(int *)(p + 48));
+            func_001F41B0(D_01CB1290, x + 1, y + 1);
+            D_01CB1310[0] = 0xFFFFF1;
+            func_001F4820(D_01CB1290, s);
+        }
+        func_001F41C0(D_01CB1290, *(int *)(p + 36));
+        func_001F41B0(D_01CB1290, x, y);
+        D_01CB1310[0] = 0xFFFFF2;
+        func_001F4820(D_01CB1290, s);
+        *last = s;
+    }
+}
