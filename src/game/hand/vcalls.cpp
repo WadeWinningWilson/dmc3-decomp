@@ -6472,3 +6472,22 @@ extern "C" void func_003F29B0(char *p) {
         }
     }
 }
+
+/* Charges a meter by the frame rate (mode 0, cap 5) or by 1 (mode 1, cap 200), firing sounds on overflow. */
+extern "C" void func_0036D4D0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if (!((*(float *)(p + 0x100) = *(float *)(p + 0x100) + *(float *)(p + 0xB0)) <= 5.0f)) {
+            (*(Anim8 **)(p + 0xA8))->m48(0x3E2, *(char **)(p + 0x10) + 0x10);
+            (*(Anim8 **)(p + 0xA8))->m48(0x388, *(char **)(p + 0x10) + 0x10);
+        }
+        break;
+    case 1:
+        if (!((*(float *)(p + 0x100) = *(float *)(p + 0x100) + 1.0f) <= 200.0f)) {
+            (*(Anim8 **)(p + 0xA8))->m48(0x3E2, *(char **)(p + 0x10) + 0x10);
+            (*(Anim8 **)(p + 0xA8))->m48(0x388, *(char **)(p + 0x10) + 0x10);
+        }
+        break;
+    }
+}
+

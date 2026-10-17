@@ -180,3 +180,32 @@ extern "C" void func_00421B00(char *p) {
         }
     }
 }
+
+extern "C" void func_0043FA30(char *, int);
+
+extern "C" void func_0043F920(char *p) {
+    unsigned char r;
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+        break;
+    case 1:
+        r = ((ObjBCr *)(p + 0x1C0))->mBC(*(float *)(p + 0x10));
+        if (r == 4 || r == 0) {
+            *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+        }
+        break;
+    case 2:
+        if (*(unsigned char *)(*(char **)(p + 0x804) + 0x800) != 2) {
+            func_0043FA30(p, 5);
+            *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+        }
+        break;
+    case 3:
+        r = ((ObjBCr *)(p + 0x1C0))->mBC(*(float *)(p + 0x10));
+        if (r == 4 || r == 0) {
+            func_00440090(p, 0);
+        }
+        break;
+    }
+}
