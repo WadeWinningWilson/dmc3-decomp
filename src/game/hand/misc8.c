@@ -6650,3 +6650,11 @@ void func_003C74C0(char *p) {
 void func_0020EA00(char *p, unsigned char *q) {
     func_0023A3E0(*(char **)(p + 0x69C), *q);
 }
+
+char *func_0040FAD0(char *p, int i) {
+    return func_00207480(3, 0x1C, ((char **)(p + 0x108))[i] + 0x450, 0x40);
+}
+
+char *func_0040FB60(char *p, int i) {
+    return func_00207480(3, 0x229, ((char **)(p + 0x108))[i] + 0x450, 0x40);
+}

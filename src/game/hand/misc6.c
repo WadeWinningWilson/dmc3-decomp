@@ -2894,3 +2894,19 @@ void func_0026B010(char *p) {
 void func_0038EB10(char *p) {
     func_0034BA60(0x18, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
 }
+
+void func_003A2060(char *p, int k) {
+    func_0034BA60(k, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+}
+
+void func_003B6AE0(char *p, int k) {
+    func_0034BA60(k, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+}
+
+void func_004B8850(char *p, int k) {
+    func_0034BA60(k, p + 0x50, *(signed char *)(*(char **)(p + 0xAC0) + 0x46), 0, 1);
+}
+
+void func_004D85E0(char *p, int k) {
+    func_0034BA60(k, p + 0x50, *(signed char *)(*(char **)(p + 0x508) + 0x46), 0, 1);
+}
