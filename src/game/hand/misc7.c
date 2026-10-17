@@ -87,3 +87,21 @@ void func_004203C0(char *p) {
         break;
     }
 }
+
+int func_001AD140(int, int, int);
+int func_0039D440(char *p, int k) {
+    int r;
+    int m = k & 255;
+    int *slot;
+    if (m == 0) {
+        *(unsigned char *)(p + 12004) &= 2;
+    } else if (m == 1) {
+        *(unsigned char *)(p + 12004) &= 1;
+    }
+    slot = (int *)(k ? p + 12028 : p + 12024);
+    if (*slot != 0) {
+        r = func_001AD140(*slot, k, m);
+        *slot = 0;
+    }
+    return r;
+}
