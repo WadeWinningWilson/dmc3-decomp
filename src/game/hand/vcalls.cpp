@@ -13630,3 +13630,113 @@ extern "C" int func_0023EC60(char *p) {
     }
     return 0;
 }
+
+class ObjCE3 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void m6C();
+    virtual void m70();
+    virtual void m74();
+    virtual int m78(int, int);
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void dB4();
+    virtual void dB8();
+    virtual void dBC();
+    virtual void dC0();
+    virtual void dC4();
+    virtual void dC8();
+    virtual void dCC();
+    virtual void dD0();
+    virtual void dD4();
+    virtual void dD8();
+    virtual void dDC();
+    virtual void dE0();
+    virtual void dE4();
+    virtual void mE8(int);
+};
+
+class Snd24 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void m24();
+};
+
+extern "C" void func_003CE3C0(char *p) {
+    short d;
+    float f;
+    *(float *)(p + 0x110) = *(float *)(p + 0x110) + *(float *)(p + 0xB0);
+    if (!(*(float *)(p + 0x110) <= 180.0f)) {
+        ((ObjCE3 *)p)->mE8(1);
+    }
+    ((ObjCE3 *)p)->m6C();
+    ((ObjCE3 *)p)->m70();
+    ((ObjCE3 *)p)->m74();
+    switch (*(unsigned char *)(p + 0x10C)) {
+    case 0:
+        d = (short)((ObjCE3 *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50)) + 0xE39;
+        if (d > 0xB6) {
+            d = 0xB6;
+        }
+        if (d < -0xB5) {
+            d = -0xB5;
+        }
+        f = (float)d * *(float *)(p + 0xB0);
+        *(short *)(*(char **)(p + 0x10) + 0x50) = (short)(int)((float)*(short *)(*(char **)(p + 0x10) + 0x50) + f);
+        break;
+    case 1:
+        d = (short)((ObjCE3 *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50)) - 0xE39;
+        if (d > 0xB6) {
+            d = 0xB6;
+        }
+        if (d < -0xB5) {
+            d = -0xB5;
+        }
+        f = (float)d * *(float *)(p + 0xB0);
+        *(short *)(*(char **)(p + 0x10) + 0x50) = (short)(int)((float)*(short *)(*(char **)(p + 0x10) + 0x50) + f);
+        break;
+    }
+    (*(Snd24 **)(p + 0xA8))->m24();
+}
