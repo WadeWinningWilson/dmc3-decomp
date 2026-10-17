@@ -206,6 +206,13 @@ extern "C" void func_003F2D20(char *, float);
 extern "C" int func_0024E810(char *);
 extern "C" void func_003E6750(char *, int, int, int);
 extern "C" void func_00206730(char *);
+extern "C" float D_00570380[];
+extern "C" float D_00570434[];
+extern "C" char D_00572F28[];
+extern "C" float D_00572F38[];
+extern "C" int func_0034BBE0(int, char *);
+extern "C" void func_004E09F0(char *, int, int);
+extern "C" void func_003F2800(char *);
 
 extern "C" void func_0043F920(char *p) {
     unsigned char r;
@@ -656,5 +663,65 @@ extern "C" void func_003F1850(char *p) {
     func_003F2F60(p);
     if (func_0024E810(p + 0x1FD0) == 0) {
         func_003F2E90(p);
+    }
+}
+
+extern "C" void func_003EDD50(char *p) {
+    int k;
+    float r;
+    if (*(float *)(p + 0x3A8C) < 10.0f) {
+        k = speed_band(p);
+        r = D_00570380[k];
+        func_003F2D20(p, r * *(float *)(p + 0x10));
+    }
+    func_003F2F60(p);
+    if (func_0024E810(p + 0x1FD0) == 0) {
+        func_003F2E90(p);
+    }
+    if (*(char **)(p + 0x21FC) != 0 && (*(int *)(*(char **)(p + 0x21FC) + 8) & 0x1000)) {
+        ((ObjV2F8 *)p)->m2F8(0x1A);
+        *(unsigned char *)(p + 0x3434) = 0;
+        *(unsigned char *)(p + 0x3435) = 0;
+        *(unsigned char *)(p + 0x3436) = 0;
+        *(float *)(p + 0x3A8C) = D_00572F38[func_0034BBE0(3, D_00572F28)];
+        *(int *)(p + 0x2170) = 0;
+    } else {
+        *(float *)(p + 0x3A8C) = *(float *)(p + 0x3A8C) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x3A8C) < 0.0f) {
+            *(float *)(p + 0x3A8C) = D_00572F38[func_0034BBE0(3, D_00572F28)];
+            ((ObjV2F8 *)p)->m2F8(0x1A);
+            *(int *)(p + 0x2170) = 0;
+        }
+    }
+}
+
+extern "C" void func_003F1FB0(char *p) {
+    int k;
+    float r;
+    int i;
+    int n;
+    float m[16];
+    char *e;
+    *(float *)(p + 0x710) = *(float *)(p + 0x710) - 20.0f * *(float *)(p + 0x35B0);
+    *(float *)(p + 0x718) = *(float *)(p + 0x718) - 20.0f * *(float *)(p + 0x35B8);
+    if ((unsigned char)func_0024E780(p + 0x1FD0, 0, 0) == 0) {
+        k = speed_band(p);
+        r = D_00570434[k];
+        func_003F2D20(p, r * *(float *)(p + 0x10));
+    }
+    if ((unsigned char)func_0024E780(p + 0x1FD0, 0, 1) == 1) {
+        func_0024E7B0(p + 0x1FD0, 0, 1);
+        n = 4;
+        for (i = 0; i < n; i++) {
+            func_004E09F0(p, i, n);
+        }
+        UNIT(m);
+        e = func_00207480(3, 0x3A2, (char *)m, 0x10);
+        if (e != 0) {
+            attach(e, *(char **)(*(char **)(p + 0x850) + 0x104));
+        }
+    }
+    if (func_0024E800(p + 0x1FD0) != 0) {
+        func_003F2800(p);
     }
 }
