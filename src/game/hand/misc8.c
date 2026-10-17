@@ -6899,6 +6899,8 @@ void func_003E6680(char *p) {
 typedef struct { short s[4]; } S8;
 
 extern S8 D_005BCD08;
+extern float D_0057894C[];
+extern unsigned char D_01CAFF3D[];
 
 void func_003B6490(char *p, unsigned char k) {
     float m[16];
@@ -6918,5 +6920,42 @@ void func_003B6490(char *p, unsigned char k) {
         *(unsigned char *)(o + 0x9D) = 0;
         *(unsigned char *)(o + 0x9E) = 0;
         *(unsigned char *)(o + 0x9B) = 2;
+    }
+}
+
+void func_0048B320(char *p) {
+    float m[16];
+    char *o;
+    UNIT(m);
+    m[12] = 5.0f;
+    m[13] = 5.0f;
+    m[14] = 15.0f;
+    o = func_00207480(3, 0x173, (char *)m, 0x10);
+    if (o != 0) {
+        *(char **)(o + 0x90) = *(char **)(*(char **)(p + 0x570) + 0x104);
+        *(unsigned char *)(o + 0x9A) = 0;
+        *(unsigned char *)(o + 0x3A) = 1;
+    }
+    m[12] = -5.0f;
+    o = func_00207480(3, 0x173, (char *)m, 0x10);
+    if (o != 0) {
+        *(char **)(o + 0x90) = *(char **)(*(char **)(p + 0x570) + 0x104);
+        *(unsigned char *)(o + 0x9A) = 0;
+        *(unsigned char *)(o + 0x3A) = 1;
+    }
+}
+
+void func_004503B0(char *p, float *a, int b) {
+    float m[16];
+    float f;
+    if (a != 0 && b != 0 && *(unsigned char *)(p + 0x807) != 0 && *(unsigned char *)(p + 0x800) != 3) {
+        f = a[1] * (D_0057894C[0] / 100.0f);
+        func_0044EA50(p, 0);
+        func_00207480(3, 0x31, (char *)m, 0x20);
+        *(float *)(p + 0x830) = *(float *)(p + 0x830) - f;
+        if (*(float *)(p + 0x830) <= 0.0f || D_01CAFF3D[0] != 0) {
+            *(float *)(p + 0x830) = -1.0f;
+            *(unsigned char *)(p + 0x80E) = 1;
+        }
     }
 }

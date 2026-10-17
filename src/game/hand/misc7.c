@@ -420,6 +420,9 @@ char *func_00277610(char *, float *, int, int);
 void func_002CB900(char *, int);
 extern float D_0059E5C0[];
 void func_001A3BD0(char *, int, float, float);
+extern char D_01DFABA0[];
+void func_0043EEF0(char *, int);
+void func_003305E0(char *, int, int, char *, int, int, int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -593,4 +596,23 @@ void func_003564A0(char *p, unsigned char k, char *l) {
             func_001A3BD0(func_00279290(p + k * 0x600 + 0xC0), i, e[0], e[1]);
         }
     }
+}
+
+#define VMOVXYZ30(d, s) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_0043FD00(char *p, signed char k, int v) {
+    float a[4];
+    switch (k) {
+    case 0:
+        *(int *)(p + 0x7DC) = *(int *)(p + 0x7DC) + v;
+        break;
+    case 10:
+    case 11:
+    case 12:
+        *(int *)(p + 0x7E0) = *(int *)(p + 0x7E0) + v;
+        break;
+    }
+    func_0043EEF0(p, 1);
+    VMOVXYZ30(a, *(char **)(*(char **)(p + 0x1B0) + 0x104));
+    func_003305E0(D_01DFABA0, 8, 0x82, (char *)a, 0x2D, 0, 0);
 }
