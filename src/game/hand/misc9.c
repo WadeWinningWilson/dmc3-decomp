@@ -12203,6 +12203,9 @@ static inline int bit_on(unsigned int *a, int k) {
 }
 
 ret12 func_0050D630(int, int, int);
+extern unsigned char D_01CB1292[];
+extern int D_00582AD0[];
+unsigned int func_0030FDF0(char *, int, int, int, int, int, int, int);
 
 int func_00196180(char *p) {
     int r = 1;
@@ -12229,4 +12232,32 @@ unsigned char func_0050D720(int a, int b, int c) {
         r = 1;
     }
     return r;
+}
+
+#define OPCROSS(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tlqc2 $vf6, 0x0(%0)\n\tvopmula.xyz $ACC, $vf4, $vf5\n\tvopmsub.xyz $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+#define QCOPYW1V4(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tvmove.w $vf4, $vf0\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_001ECF20(char *p) {
+    if (*(unsigned char *)(p + 0x3CE) == 1) {
+        D_01CB1292[0] = 0;
+        func_0030FDF0(p + 0x3D4, D_00582AD0[D_00666712[0]], 0x1E, 0xA0, 0x80FFFFFF, 0x12, 0xFFFFF5, 1);
+        func_001B6C90(D_01C61820, 0, 0, 0xFFFFF4, 0x280, 0xF0, 0x70000000);
+        func_001B6C90(D_01C61820, 0, 0x9B, 0xFFFFF4, 0x280, 0x32, 0x80000000);
+    } else {
+        *(unsigned char *)(p + 0x3D4) = 0;
+    }
+}
+
+void func_001F36E0(char *u, char *m, char *pos, char *up) {
+    float d[4];
+    VSUBR(d, pos, *(char **)((char *)D_005BE09C + 0x23C) + 0x70);
+    func_00131650(m, up);
+    OPCROSS(m + 0x10, d, m);
+    func_00131650(m + 0x10, m + 0x10);
+    OPCROSS(m + 0x20, m, m + 0x10);
+    *(float *)(m + 0xC) = 0.0f;
+    *(float *)(m + 0x1C) = 0.0f;
+    *(float *)(m + 0x2C) = 0.0f;
+    QCOPYW1V4(m + 0x30, pos);
 }
