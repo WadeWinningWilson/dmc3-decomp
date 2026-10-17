@@ -315,6 +315,7 @@ void func_0028C290(char *, int, int, int);
 void func_001A2D70(char *, int, int);
 int func_002CFA00(char *, float);
 void func_002CA460(char *);
+int func_0021CAD0(char *);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -3858,4 +3859,68 @@ void func_002C7530(char *p) {
     case 4:
         break;
     }
+}
+
+void func_0033A740(char *p, signed char a1) {
+    char *g;
+    float f;
+    if (*(unsigned char *)(p + 4) == 0) {
+        return;
+    }
+    if (*(unsigned char *)(p + 0x14D) == 3) {
+        return;
+    }
+    if (a1 != 1) {
+        return;
+    }
+    if (*(unsigned char *)(p + 0x138C) != 0) {
+        return;
+    }
+    g = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    if (g == 0) {
+        return;
+    }
+    switch ((unsigned char)func_0021CAD0(g)) {
+    case 0x82:
+    case 0x83:
+    case 0x84:
+    case 0x85:
+    case 0x86:
+    case 0x87:
+    case 0x88:
+        f = 60.0f;
+        break;
+    case 0x8C:
+    case 0x8D:
+    case 0x8E:
+    case 0x8F:
+    case 0x90:
+    case 0x91:
+    case 0x92:
+    case 0x93:
+        f = 240.0f;
+        break;
+    case 0x96:
+    case 0x97:
+    case 0x98:
+    case 0x99:
+    case 0x9A:
+    case 0x9B:
+        f = 240.0f;
+        break;
+    case 0xA0:
+    case 0xA1:
+    case 0xA2:
+        f = 480.0f;
+        break;
+    case 0xAA:
+    case 0xAB:
+    case 0xAC:
+        f = 480.0f;
+        break;
+    default:
+        f = 0.0f;
+        break;
+    }
+    *(float *)(p + 0x1374) = *(float *)(p + 0x1374) + f;
 }
