@@ -4469,3 +4469,116 @@ extern "C" void func_0035C490(char *p) {
         break;
     }
 }
+
+class Obj0D0 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void mD0();
+};
+
+extern "C" char D_00666750[];
+extern "C" void func_001AF080(char *, int);
+
+/* Recovers the stance from +0x134 and switches to state 0x20. */
+extern "C" void func_0033A170(char *p) {
+    func_0033A660(p, 1);
+    *(short *)(p + 0x90) = *(short *)(*(char **)(p + 0x134) + 0x20);
+    ((ObjB *)p)->m304(0x20);
+}
+
+/* Releases the handle at +0x38 back to the pool, then notifies the sub-object at +0x40. */
+extern "C" void func_00503F40(char *p) {
+    if (*(int *)(p + 0x38) != 0) {
+        func_001AF080(D_00666750, *(int *)(p + 0x38));
+        *(int *)(p + 0x38) = 0;
+    }
+    ((Obj0D0 *)(p + 0x40))->mD0();
+}
+
+class ObjRel {
+public:
+    virtual void m08(int);
+    virtual void d1();
+    virtual void m10();
+};
+
+extern "C" void func_0013D5D0(char *);
+
+/* In states 2 and 3 notify the sub-object at +0x80, then reset the list at +0x694. */
+extern "C" void func_00301870(char *p) {
+    if (*(unsigned char *)(p + 0x39) == 2 || *(unsigned char *)(p + 0x39) == 3) {
+        ((Obj0D0 *)(p + 0x80))->mD0();
+    }
+    func_0013D5D0(p + 0x694);
+}
+
+/* Shuts down and deletes the owned object at +8, then resets the list at +0xC. */
+extern "C" void func_0022CAD0(char *p) {
+    (*(ObjRel **)(p + 8))->m10();
+    (*(ObjRel **)(p + 8))->m08(-1);
+    *(int *)(p + 8) = 0;
+    func_0013D5D0(p + 0xC);
+}
+
+extern "C" void func_003E6750(char *, int, int, int);
+extern "C" int func_0034BBE0(int, char *);
+extern "C" char D_00572F50[];
+
+/* Enters state 0x11, clears the three phase bytes, restarts motion 3 and grabs effect handle 4. */
+extern "C" void func_003ECE20(char *p) {
+    ((ObjB *)p)->m2F8(0x11);
+    *(unsigned char *)(p + 0x3434) = 0;
+    *(unsigned char *)(p + 0x3435) = 0;
+    *(unsigned char *)(p + 0x3436) = 0;
+    func_003E6750(p, 3, 0, 0);
+    *(int *)(p + 0x3A84) = func_0034BBE0(4, D_00572F50);
+}
