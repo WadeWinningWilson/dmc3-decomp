@@ -10822,6 +10822,10 @@ char *func_00210830(char *, int, float);
 void func_0020FF40(char *, float);
 void func_001AC630(int, float);
 void func_001AC980(int, char *);
+void func_001AEEC0(char *);
+void func_002873A0(char *);
+void func_001A5D00(char *);
+void func_001A5C30(char *);
 
 void func_001AA740(char *p, int a, int b) {
     int i;
@@ -11501,4 +11505,61 @@ int func_00231E00(char *p, short k) {
         }
     }
     return r;
+}
+
+void func_00286F20(char *p, int a) {
+    *(unsigned char *)(p + 0x3A4) = 0;
+    if (*(unsigned char *)(p + 0x39C) != 0) {
+        *(unsigned char *)(p + 0x39C) = 4;
+        func_001AEEC0(D_00666750);
+        *(unsigned char *)(p + 0x3AC) = 1;
+        *(int *)(p + 0x3B0) = a;
+    } else {
+        if (*(unsigned char *)(p + 0x39E) != 1 || *(int *)(p + 0x3A0) != a) {
+            func_002873A0(p);
+            func_00287320(p);
+        }
+        *(unsigned char *)(p + 0x39C) = 1;
+        *(unsigned char *)(p + 0x39E) = 1;
+        *(int *)(p + 0x3A0) = a;
+        *(unsigned char *)(p + 0x39D) = 1;
+    }
+}
+
+void func_0028BE90(char *p, unsigned char k) {
+    unsigned int i;
+    switch (k) {
+    case 1:
+    default:
+        for (i = 0; i < 4; i++) {
+            if (*(char **)(p + i * 4 + 0xE8) != 0) {
+                func_001A5C30(func_00279290(*(char **)(p + i * 4 + 0xE8)));
+            }
+        }
+        break;
+    case 2:
+        for (i = 0; i < 4; i++) {
+            if (*(char **)(p + i * 4 + 0xE8) != 0) {
+                func_001A5D00(func_00279290(*(char **)(p + i * 4 + 0xE8)));
+            }
+        }
+        break;
+    }
+}
+
+void func_002DAD80(char *p, short a, float f) {
+    if (*(unsigned char *)(p + 0x3B9D) == 0) {
+        *(short *)(p + 0x28E0) = 0;
+        *(short *)(p + 0x28E2) = 0;
+        return;
+    }
+    if (f == 0.0f) {
+        f = 1.0f;
+    }
+    if (a == 0) {
+        *(short *)(p + 0x28E0) = func_00131B60((int)((float)(*(short *)(p + 0x90) - *(short *)(p + 0x3BA2)) / f));
+    } else {
+        *(short *)(p + 0x28E0) = a;
+    }
+    *(short *)(p + 0x28E2) = *(short *)(p + 0x3BA2) - *(short *)(p + 0x90);
 }

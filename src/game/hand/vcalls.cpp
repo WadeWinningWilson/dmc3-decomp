@@ -14788,6 +14788,9 @@ extern "C" int func_003B5A00(char *, short);
 extern "C" int func_0034B490(unsigned char *, int *, char *, int, int, float, float);
 extern "C" void func_001A5CC0(char *);
 extern "C" void func_001A5B90(char *);
+extern "C" float D_005602E4[];
+extern "C" float D_005602E8[];
+extern "C" float D_005602EC[];
 
 extern "C" void func_0037B920(Obj1E0 *p) {
     *(int *)(*(char **)(*(char **)D_01CAFF0C + 0x18) + 0x100) = (int)p->m1E0((int)D_005678BC[0]);
@@ -15041,4 +15044,53 @@ extern "C" void func_004DCEF0(char *p) {
         func_001A5B90(func_00279290(p + 0x600));
     }
     ((SubCCx *)(p + 0x600))->mCC(p + 0xC70);
+}
+
+class Obj7C {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual float m7C();
+};
+
+extern "C" int func_002A4A40(char *p) {
+    int r;
+    float f = ((Obj7C *)(p + 0x130))->m7C();
+    if (f < D_005602E4[0]) {
+        r = 0;
+    } else if (D_005602E4[0] <= f && f < D_005602E8[0]) {
+        r = 1;
+    } else if (D_005602E8[0] <= f && f < D_005602EC[0]) {
+        r = 2;
+    } else {
+        r = 3;
+    }
+    return r;
 }
