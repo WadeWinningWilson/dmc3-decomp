@@ -9487,6 +9487,15 @@ void func_002F1830(char *, char *);
 void func_00205A10(int, int, int, int, int, int, float);
 char *func_002075D0(int, int, char *, int, int);
 void func_001980B0(char *, int, int, int, int);
+void func_0023A3E0(char *, int);
+void func_0021CBE0(char *, int, float);
+void func_002E9F70(int, int, int, int, float);
+void func_002EB8A0(int, int, int, int, float, float, float);
+void func_0032D3E0(int, int, int, float, float);
+void func_003528C0(unsigned long long);
+void func_0027C040(char *, unsigned char);
+void func_002477F0(char *, float);
+void func_00131990(char *, char *, char *, char *, float);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -9598,4 +9607,40 @@ void func_002075C0(int a, int b, char *c, int d) {
 
 void func_00198140(char *unused, short *s, int a, int b) {
     func_001980B0(D_00654430, 0, *(unsigned short *)s, a, b);
+}
+
+short func_002500D0(char *p) {
+    return func_00131D10(*(float *)(p + 0xF0), *(float *)(p + 0xF8));
+}
+
+void func_002DFF90(char *p, char *q) {
+    func_0021CBE0(p, 0, *(float *)(q + 0x1C));
+}
+
+void func_002E9F60(int a, int b, int c, int d) {
+    func_002E9F70(a, b, c, d, 0.0f);
+}
+
+void func_002EB890(int a, int b, int c, float x, float y) {
+    func_002EB8A0(a, b, c, 0, x, y, 0.0f);
+}
+
+void func_0032D3D0(int a, int b, float x) {
+    func_0032D3E0(a, b, 0, x, 0.0f);
+}
+
+void func_00331000(int unused, unsigned int b) {
+    func_003528C0(b);
+}
+
+void func_0023A3E0(char *p, int k) {
+    func_0027C040(p + 0x18EA8, (unsigned char)k);
+}
+
+void func_0023A8D0(char *p, float x) {
+    func_002477F0(p + 0x45C0, x + *(float *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x84));
+}
+
+void func_0024BF20(char *p) {
+    func_00131990(p + 0x30, p + 0x70, p + 0x80, p + 0x10, *(float *)(p + 0x24));
 }

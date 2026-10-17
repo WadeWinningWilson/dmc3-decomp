@@ -4560,6 +4560,7 @@ extern int D_0056EC80[];
 extern float D_0056EBF0[];
 void func_003C8350(char *);
 int func_003C8470(char *, int, int);
+void func_0023A3E0(char *, unsigned char);
 
 void func_0023D330(char *p) {
     *(C4 *)(p + 0x2928) = *(C4 *)(p + 0x2960);
@@ -6644,4 +6645,8 @@ void func_003C74C0(char *p) {
         break;
     }
     func_002EF940(*(int *)D_01CAFF0C, p + 0x1BD0);
+}
+
+void func_0020EA00(char *p, unsigned char *q) {
+    func_0023A3E0(*(char **)(p + 0x69C), *q);
 }
