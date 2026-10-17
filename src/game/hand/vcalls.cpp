@@ -5461,3 +5461,26 @@ extern "C" void func_0041C3D0(char *p) {
     }
     func_001A1E10(func_00279290(p + 0x16C0));
 }
+
+extern "C" int func_00482180(char *);
+extern "C" void func_004822B0(char *);
+extern "C" void func_00481310(char *);
+
+extern "C" void func_00481240(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        func_00481E00(p, 0);
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+    case 1:
+        *(float *)(p + 0x2A4) = *(float *)(p + 0x2A4) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x2A4) < 0.0f) {
+            if ((unsigned char)func_00482180(p) == 1) {
+                func_004822B0(p);
+                return;
+            }
+            *(float *)(p + 0x2A4) = 50.0f;
+        }
+        func_00481310(p);
+        ((ObjBC *)(p + 0x740))->mBC(*(float *)(p + 0x10));
+    }
+}
