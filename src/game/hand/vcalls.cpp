@@ -8821,3 +8821,26 @@ extern "C" void func_004A7AA0(char *p) {
         break;
     }
 }
+extern "C" int func_002A4A40(char *);
+extern "C" float D_00561DA0[][3];
+extern "C" void func_002965E0(char *, int);
+extern "C" void func_0029FD40(char *);
+
+extern "C" void func_0029C940(char *p) {
+    int k;
+    *(float *)(p + 0x9644) = *(float *)(p + 0x9644) + *(float *)(p + 0x10);
+    k = func_002A4A40(p);
+    if (!(*(float *)(p + 0x9644) <= 100.0f / ((float *)D_00561DA0[k])[*(int *)(p + 0x8928)])) {
+        ((ObjM74 *)(char *)func_002792A0(p + 0x1D00))->m74(277.0f);
+        ((ObjM74 *)(char *)func_002792A0(p + 0x2900))->m74(277.0f);
+        ((ObjM74 *)(char *)func_002792A0(p + 0x2F00))->m74(277.0f);
+        ((ObjM74 *)(char *)func_002792A0(p + 0x3500))->m74(277.0f);
+        *(unsigned char *)(p + 5) = 0x20;
+    }
+    if (func_0024E800(p + 0x8980) != 0 || *(unsigned char *)(p + 0x8922) == 0) {
+        func_002965E0(p, 0xFFFF);
+        func_0029FD40(p);
+        *(int *)(p + 0xAA9C) = 0;
+        *(unsigned char *)(p + 0xA563) = 0;
+    }
+}
