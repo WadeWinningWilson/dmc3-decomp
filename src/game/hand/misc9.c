@@ -500,6 +500,9 @@ void func_002DA540(char *);
 void func_0021D3F0(char *, int);
 void func_0023D5B0(char *);
 void func_004BAD60(char *, char *, short, int);
+extern char D_005B67E0[];
+void func_002790E0(char *);
+void func_002791E0(void);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -7245,4 +7248,76 @@ void func_00274B60(char *p) {
         func_002DBAA0(p, *(short *)(p + 0x90), 1.0f);
         break;
     }
+}
+
+char *func_00477EA0(char *p) {
+    int i;
+    char *q;
+    *(char **)p = D_005A6F50;
+    func_0013D6A0(p + 0x24);
+    *(int *)(p + 0x20) = 0;
+    *(int *)(p + 0x1C) = 0;
+    *(unsigned char *)(p + 7) = 0;
+    *(unsigned char *)(p + 6) = 0;
+    *(unsigned char *)(p + 5) = 0;
+    *(unsigned char *)(p + 4) = 0;
+    *(unsigned char *)(p + 0x18) = 0;
+    *(int *)(p + 8) = 0;
+    *(signed char *)(p + 0x34) = -1;
+    *(unsigned char *)(p + 0x35) = 0;
+    *(unsigned char *)(p + 0x36) = 0;
+    *(int *)(p + 0xC) = 0x87;
+    *(float *)(p + 0x10) = 1.0f;
+    *(float *)(p + 0x14) = 1.0f;
+    *(char **)p = D_005B67E0;
+    func_00100450(p + 0x80, (void *)func_002790E0, (void *)func_002791E0, 0x600, 1);
+    func_002790E0(p + 0x680);
+    func_002790E0(p + 0xC80);
+    func_00100450(p + 0x1280, (void *)func_002790E0, (void *)func_002791E0, 0x600, 0x14);
+    func_002790E0(p + 0x8A80);
+    func_002790E0(p + 0x9080);
+    *(unsigned char *)(p + 0x9680) = 0;
+    *(unsigned char *)(p + 0x9700) = 0;
+    *(int *)(p + 0x38) = 0;
+    *(int *)(p + 0x3C) = 0;
+    *(int *)(p + 0x40) = 0;
+    *(int *)(p + 0x44) = 0;
+    *(unsigned char *)(p + 0x9788) = 2;
+    *(unsigned char *)(p + 0x9789) = 0;
+    *(short *)(p + 0x978E) = 0;
+    *(short *)(p + 0x9790) = 0;
+    *(unsigned char *)(p + 0x978A) = 0;
+    *(unsigned char *)(p + 0x9794) = 0;
+    *(signed char *)(p + 0x979E) = -1;
+    *(signed char *)(p + 0x9799) = -1;
+    *(unsigned char *)(p + 0x979D) = 0;
+    *(unsigned char *)(p + 0x979F) = 0;
+    *(unsigned char *)(p + 0x97A0) = 0;
+    *(unsigned char *)(p + 0x97A1) = 0;
+    *(unsigned char *)(p + 0x97A2) = 0;
+    *(short *)(p + 0x97A4) = -1;
+    *(unsigned char *)(p + 0x97A3) = 0;
+    *(unsigned char *)(p + 0x97A6) = 0;
+    *(unsigned char *)(p + 0x97A7) = 0;
+    *(unsigned char *)(p + 0x97A8) = 0;
+    *(unsigned char *)(p + 0x97A9) = 0;
+    *(unsigned char *)(p + 0x97AA) = 0;
+    *(unsigned char *)(p + 0x97AB) = 0;
+    *(unsigned char *)(p + 0x97AC) = 0;
+    *(unsigned char *)(p + 0x97AD) = 0;
+    *(int *)(p + 0x9840) = 0;
+    *(int *)(p + 0x9844) = 0;
+    *(float *)(p + 0x984C) = 0.3f;
+    *(int *)(p + 0x9848) = 0;
+    for (i = 0, q = p; i < 20; i++, q += 6) {
+        *(unsigned char *)(q + 0x97B0) = 0;
+        *(unsigned char *)(q + 0x97B1) = i;
+        *(unsigned char *)(q + 0x97AE) = 0;
+        *(unsigned char *)(q + 0x97AF) = 0;
+    }
+    *(unsigned char *)(p + 0x9828) = 0;
+    *(unsigned char *)(p + 0x9829) = 0;
+    *(unsigned char *)(p + 0x9826) = 0;
+    *(unsigned char *)(p + 0x9827) = 0;
+    return p;
 }
