@@ -1380,12 +1380,102 @@ void func_002F1830(char *, char *);
 void func_00205A10(int, int, int, int, int, int, float);
 char *func_002075D0(int, int, char *, int, int);
 void func_001980B0(char *, int, int, int, int);
+void func_0023A3E0(char *, int);
+void func_0021CBE0(char *, int, float);
+void func_002E9F70(int, int, int, int, float);
+void func_002EB8A0(int, int, int, int, float, float, float);
+void func_0032D3E0(int, int, int, float, float);
+void func_003528C0(unsigned long long);
+void func_0027C040(char *, unsigned char);
+void func_002477F0(char *, float);
+void func_00131990(char *, char *, char *, char *, float);
+void func_00332890(char *, char *, int, int, float, float, float, float, float);
+void func_002EC070(int, int, int, float, float);
+void func_004D6C20(int, char *, int, short, char *, int);
+void func_003B5DC0(char *, char *, float, float);
+void func_002DFFD0(char *, char *, int, char *, int, float, float, float, float);
+void func_001ABE90(char *, float, float, float);
+void func_001ACCF0(int, float, float, float, float);
 
 
 
 static inline int lock_btn(char *p) {
     return *(unsigned short *)(p + 0x49C0) & *(unsigned short *)(D_0066671A + func_001AE770(D_00666710, 8) * 2);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1432,4 +1522,9 @@ void func_001B4250(int a, int b, int c, int d) {
 void func_001EDE80(int a, int b, int c, int d) {
     void func_001EDE90(int, int, int, int, int, int, float);
     func_001EDE90(a, b, c, d, 0, 0, 0.0f);
+}
+
+void func_004D6AC0(char *p) {
+    UNIT(p + 0x150);
+    func_00105230(p + 0x150, p + 0x150, p + 0x50);
 }
