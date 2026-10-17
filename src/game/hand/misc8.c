@@ -6848,3 +6848,23 @@ int func_004F91E0(char *p) {
     }
     return 0;
 }
+
+void func_0029D120(char *p) {
+    float m[16];
+    char *o;
+    UNIT(m);
+    if (*(unsigned int *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x2898) & 2) {
+        func_0029DCE0(p, 0x34);
+    } else {
+        func_0029DCE0(p, 0x37);
+        o = func_00207480(3, 0xAF, (char *)m, 0x10);
+        if (o != 0) {
+            *(char **)(o + 0x90) = p + 0x9BB0;
+            *(unsigned char *)(o + 0x9A) = 0;
+        }
+    }
+    *(unsigned char *)(p + 5) = 0x13;
+    *(unsigned char *)(p + 0xA992) = 0;
+    *(unsigned char *)(p + 0xA993) = 0;
+    *(unsigned char *)(p + 0xA991) = 0;
+}

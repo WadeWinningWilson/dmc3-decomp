@@ -15282,6 +15282,10 @@ public:
 extern "C" void func_00252B50(Obj1FC *, int, int, float, float);
 extern "C" int D_005759C0[];
 extern "C" int D_005759E0[];
+extern "C" void *func_00128488(void *, int, unsigned int);
+extern "C" void func_0024DDF0(char *);
+extern "C" void func_0024E860(char *);
+extern "C" void func_0024E9B0(char *);
 
 extern "C" void func_0037D190(Obj1FC *o) {
     char *p = (char *)o;
@@ -15419,5 +15423,37 @@ extern "C" void func_004FCE10(char *p) {
         func_0028C740(p + 0xBB0);
     } else {
         ((ObjD0 *)(p + 0x2F0))->mD0();
+    }
+}
+
+class ObjCurve {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual float m28(int);
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual float m38(int);
+};
+
+extern "C" void func_0024DD30(char *p) {
+    *(float *)(p + 0x88) = *(float *)(p + 0x88) + 1.0f;
+    func_00128488(p + 0xC4, 0, 5);
+    func_0024DDF0(p);
+    *(float *)(p + 0x28) = (*(ObjCurve **)(p + 0x44))->m28(*(int *)(p + 0x38));
+    *(float *)(p + 0x2C) = (*(ObjCurve **)(p + 0x44))->m38(*(int *)(p + 0x38));
+    if (*(unsigned char *)(p + 0x82) == 0) {
+        if (*(unsigned char *)(p + 0x80) == 1) {
+            *(short *)(p + 0x4C) = (int)*(float *)(p + 0x28);
+            func_0024E860(p);
+        }
+        func_0024E9B0(p);
     }
 }
