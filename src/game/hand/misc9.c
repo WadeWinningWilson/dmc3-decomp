@@ -11704,6 +11704,7 @@ void func_001B6550(char *, int);
 void func_001B6630(char *, int);
 void func_0023A710(char *, int);
 void func_0023A3C0(char *, signed char);
+void func_00138330(void);
 
 void func_0046F690(char *p) {
     int i;
@@ -11959,4 +11960,22 @@ float func_0024B880(float a, float b, float c, float d) {
     }
     y = b <= d ? b : d;
     return (a - b) + (c - d) - (x - y);
+}
+
+void func_002A02F0(char *p) {
+    int i;
+    if (*(unsigned char *)(p + 0xAA88) == 0) {
+        func_002A0090(p);
+        func_001AD140(*(char **)(p + 0xA984));
+        if (*(char **)(*(char **)D_01CAFF0C + 0x20) != 0) {
+            func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), p);
+        }
+        for (i = 0; i < 4; i++) {
+            if (*(char **)(p + i * 4 + 0xAB7C) != 0) {
+                func_001AD140(*(char **)(p + i * 4 + 0xAB7C));
+                *(char **)(p + i * 4 + 0xAB7C) = 0;
+            }
+        }
+        func_00138330();
+    }
 }
