@@ -3354,3 +3354,121 @@ extern "C" void func_002DBAA0(char *p, int a, float f) {
     *(int *)(p + 340) = 0;
     func_002DB3E0(p, a);
 }
+
+class ObjTurn {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void m6C();
+    virtual void m70();
+    virtual void d27();
+    virtual int m78(int, int);
+};
+
+class Obj24 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual int m24();
+};
+
+extern "C" int func_00362050(ObjTurn *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 256 ? 256 : d;
+    d = (short)d < -256 ? -256 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    return (*(Obj24 **)(p + 168))->m24();
+}
+
+extern "C" int func_00365120(ObjTurn *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 256 ? 256 : d;
+    d = (short)d < -256 ? -256 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    return (*(Obj24 **)(p + 168))->m24();
+}
+
+extern "C" int func_00463510(ObjTurn *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 256 ? 256 : d;
+    d = (short)d < -256 ? -256 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    return (*(Obj24 **)(p + 168))->m24();
+}
+
+extern "C" int func_00466230(ObjTurn *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 256 ? 256 : d;
+    d = (short)d < -256 ? -256 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    return (*(Obj24 **)(p + 168))->m24();
+}
+
+extern "C" int func_0049FFA0(ObjTurn *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 256 ? 256 : d;
+    d = (short)d < -256 ? -256 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    return (*(Obj24 **)(p + 168))->m24();
+}
+
+extern "C" int func_004A2AC0(ObjTurn *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 256 ? 256 : d;
+    d = (short)d < -256 ? -256 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    return (*(Obj24 **)(p + 168))->m24();
+}
+

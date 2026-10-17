@@ -2170,3 +2170,37 @@ int func_00424DE0(char *p) {
     }
     return 0;
 }
+
+void func_003F85D0(char *, int);
+void func_00424EB0(char *, int);
+void func_004252D0(char *, int);
+void func_004254B0(char *, int);
+void func_003F8E90(char *, int);
+void func_003F94A0(char *, int);
+void func_003F9700(char *, int);
+void func_00424B30(char *p) {
+    int k = *(unsigned char *)(p + 5);
+    switch (k) {
+    case 0:
+        func_003F85D0(p, k);
+        break;
+    case 2:
+        func_00424EB0(p, k);
+        break;
+    case 3:
+        func_004252D0(p, k);
+        break;
+    case 4:
+        func_004254B0(p, k);
+        break;
+    case 10:
+        func_003F8E90(p, k);
+        break;
+    case 12:
+        func_003F94A0(p, k);
+        break;
+    case 13:
+        func_003F9700(p, k);
+        break;
+    }
+}
