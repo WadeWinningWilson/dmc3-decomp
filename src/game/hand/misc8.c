@@ -1012,3 +1012,40 @@ int func_0020F100(char *p) {
     }
     return 0;
 }
+
+typedef struct { signed char v; signed char k; } KV2;
+extern KV2 D_0056AF30[];
+int func_00406EA0(int p0, signed char k) {
+    int i;
+    KV2 *e;
+    if (k == -1) {
+        return -1;
+    }
+    i = 0;
+    if (D_0056AF30[0].v != 0x3B) {
+        e = D_0056AF30;
+        do {
+            if (k == e->k) {
+                return D_0056AF30[i].v;
+            }
+            e++;
+            i++;
+        } while (e->v != 0x3B);
+    }
+    return -1;
+}
+typedef struct { float x, y, z, w; } V4i;
+int func_003AC490(char *p, int k, V4i *out, float *r) {
+    switch (k) {
+    case 0:
+        switch (*(unsigned char *)(p + 0x4BE4)) {
+        case 0x23:
+            return 0;
+        }
+        *out = *(V4i *)(p + 0x50);
+        out->y += 100.0f;
+        *r = 100.0f;
+        return 1;
+    }
+    return 0;
+}
