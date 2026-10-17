@@ -149,6 +149,33 @@ void func_002F30B0(int, char *, char *);
 void func_002DB2C0(char *);
 void func_0021B790(char *, int);
 void func_002DBAA0(char *, short, float);
+extern int D_01DFAB74[];
+extern char *D_005BC2E0;
+extern float D_0055C7F0[];
+extern float D_0055C7F4[];
+extern float D_0055C7F8[];
+extern float D_0055C7FC[];
+int func_00124EC0(int);
+void func_002F9860(char *, int, int, int);
+void func_0028C790(char *, int);
+void func_0028C200(char *, char *, char *, int, char *, char *, int);
+void func_0028C8E0(char *, int);
+void func_0028C3A0(char *, int, int, char *);
+void func_0028C5C0(char *, int, float);
+void func_0024DA80(char *, int, int);
+int func_0024E800(char *);
+void func_003B61B0(char *);
+void func_003B6450(char *);
+int func_003B3F70(char *);
+void func_003B4840(char *);
+void func_003B4F60(char *);
+void func_0048AFC0(char *, int);
+void func_0034BA60(int, char *, int, int, int);
+void func_0048B400(char *);
+void func_0048B320(char *);
+int func_0048B150(char *);
+void func_0041DAB0(char *, char *, int);
+void func_0048AF80(char *, int);
 int func_001F3A50(KLTab272 *t, short k) {
     int i;
     for (i = 0; i < 272; i++) {
@@ -298,6 +325,27 @@ void func_00260950(char *p) {
         if ((unsigned char)func_002496D0(p) == 4) {
             func_0021B790(p, 5);
             D_01DFAB70[0] = D_01DFAB70[0] | 0x20000;
+        } else {
+            func_002DBAA0(p, *(short *)(p + 0x90), 1.0f);
+        }
+        break;
+    }
+}
+
+void func_0026C380(char *p) {
+    switch (*(unsigned char *)(p + 0x284C)) {
+    case 0:
+        func_0021CBB0(p, 1);
+        func_002DAF70(p, 0xE39, 0, 0, *(float *)(*(char **)(p + 0x2844) + 0x380));
+        func_002490F0(p, 15, 0, -1, 0, 0, -1.0f);
+        func_002F30B0(0x3F, *(char **)(((char **)(p + 0x1384))[func_002D9EB0(p)] + 0x104), p);
+        *(unsigned char *)(p + 0x284C) = *(unsigned char *)(p + 0x284C) + 1;
+        break;
+    case 1:
+        func_002DB2C0(p);
+        if ((unsigned char)func_002496D0(p) == 4) {
+            D_01DFAB74[0] = D_01DFAB74[0] | 0x80000000;
+            func_0021B790(p, 5);
         } else {
             func_002DBAA0(p, *(short *)(p + 0x90), 1.0f);
         }

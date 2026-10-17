@@ -6667,3 +6667,89 @@ extern "C" void func_004539C0(char *p) {
         ((ObjCCv *)(p + 0xDA0))->mCC(p + 0x1220);
     }
 }
+
+class Obj98 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void m98(int);
+};
+
+extern "C" void func_00381A60(char *, char *, char *, char *);
+extern "C" int D_0056842C[];
+
+extern "C" void func_00381920(char *p, int a, int b, int c, int d) {
+    char *g;
+    char *m;
+    char *n;
+    float t;
+    *(int *)(p + 0x134) = a;
+    *(int *)(p + 0x138) = b;
+    *(int *)(p + 0x13C) = c;
+    *(int *)(p + 0x140) = d;
+    g = *(char **)(*(char **)D_01CAFF0C + 4);
+    if (g != 0 && *(ObjT1C **)(g + 0x10) != 0) {
+        t = (*(ObjT1C **)(g + 0x10))->m1C();
+    } else {
+        t = 0.0f;
+    }
+    *(float *)(p + 0x144) = t;
+    *(short *)(p + 0x160) = 0;
+    *(int *)(p + 0x164) = 0;
+    *(int *)(p + 0x168) = 0;
+    *(int *)(p + 0x1388) = 0;
+    m = p;
+    if (m != 0) {
+        m += 0x40;
+    }
+    n = p;
+    if (n != 0) {
+        n += 0xD0;
+    }
+    func_00381A60(p, p + 0x2E0, n, m);
+    *(unsigned char *)(p + 0x14C) = 0;
+    *(unsigned char *)(p + 0x14D) = 0;
+    switch (*(unsigned short *)(p + 0x302)) {
+    case 1:
+        ((ObjB *)p)->m2F0(0xE);
+        break;
+    default:
+        ((ObjB *)p)->m2F0(0xE);
+        break;
+    }
+    ((Obj98 *)(p + 0x130))->m98(D_0056842C[0]);
+}
