@@ -1396,6 +1396,38 @@ void func_003B5DC0(char *, char *, float, float);
 void func_002DFFD0(char *, char *, int, char *, int, float, float, float, float);
 void func_001ABE90(char *, float, float, float);
 void func_001ACCF0(int, float, float, float, float);
+void func_002E7510(char *, int, int, int, float, float, float, float);
+extern char D_00567850[];
+extern float D_00567874[];
+extern float D_00567878[];
+void func_00332AE0(char *, char *, float, float);
+extern char D_005A7A90[];
+extern char D_005A7B70[];
+extern char D_005A89F0[];
+void func_00100580(char *);
+void func_00430AD0(char *);
+extern char D_005A8D80[];
+extern char D_005A9490[];
+extern char D_005A97F0[];
+extern char D_005AB1C0[];
+extern char D_005AC0C0[];
+extern char D_005AC310[];
+extern char D_005AC360[];
+extern char D_005AC460[];
+extern char D_005AC550[];
+extern char D_005B2530[];
+extern char D_005B3180[];
+extern char D_005B31D0[];
+void func_0028C280(char *);
+void func_00104C00(char *, char *, char *);
+void func_00309FD0(char *);
+extern int D_00581DE0[];
+int func_001156A8(int, int, int, int *);
+void func_00211570(char *);
+void func_00211670(char *);
+void func_00105760(char *, char *, float);
+void func_00105668(char *, char *, float);
+void func_00105578(char *, char *, float);
 
 
 
@@ -1408,6 +1440,88 @@ static inline int lock_btn(char *p) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define VSUBR(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
 
 
 
@@ -1527,4 +1641,19 @@ void func_001EDE80(int a, int b, int c, int d) {
 void func_004D6AC0(char *p) {
     UNIT(p + 0x150);
     func_00105230(p + 0x150, p + 0x150, p + 0x50);
+}
+
+void func_004B67D0(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        *(float *)(p + 0x464) = 1.0f;
+    case 1:
+        *(float *)(p + 0x464) = *(float *)(p + 0x464) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x464) < 0.0f) {
+            *(unsigned char *)(p + 4) = 3;
+        }
+        break;
+    }
+    func_00206730(p + 0x460);
 }

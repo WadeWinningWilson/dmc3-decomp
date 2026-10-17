@@ -6697,3 +6697,15 @@ int func_0036DF10(char *out, int a, int b, int c, int d, int v) {
     }
     return 0;
 }
+
+extern V4 D_0058BB70;
+
+void func_004F50B0(char *p) {
+    V4 t;
+    t = D_0058BB70;
+    func_00133890(p + 0x170, p + 0xF0, &t);
+    *(float *)(p + 0x1A0) = *(float *)(p + 0x50);
+    *(float *)(p + 0x1A4) = *(float *)(p + 0x54);
+    *(float *)(p + 0x1A8) = *(float *)(p + 0x58);
+    *(float *)(p + 0x1AC) = 1.0f;
+}
