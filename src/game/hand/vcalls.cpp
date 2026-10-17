@@ -5968,3 +5968,41 @@ extern "C" void func_0022F620(char *p) {
         D_005BC1A8->m14(0x80000000, 5);
     }
 }
+
+extern "C" void func_002C3070(char *p) {
+    func_001A1E10(func_00279290(p + 0x4C0));
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+        ((ObjA8 *)(p + 0x4C0))->mA8(0x14);
+        ((ObjA8 *)(p + 0x4C0))->mA8(0x15);
+    }
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 8:
+    case 9:
+        func_001A1E10(func_00279290(p + 0xAC0));
+        func_001A1E10(func_00279290(p + 0x10C0));
+    }
+    func_001A1E10(func_00279290(p + 0x16C0));
+}
+
+extern "C" void func_003449C0(char *p) {
+    func_001A1E10(func_00279290(p + 0x4C0));
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 12:
+    case 13:
+    case 14:
+    case 15:
+        ((ObjA8 *)(p + 0x4C0))->mA8(0x10);
+        ((ObjA8 *)(p + 0x4C0))->mA8(0x11);
+    }
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 12:
+    case 13:
+        func_001A1E10(func_00279290(p + 0xAC0));
+        func_001A1E10(func_00279290(p + 0x10C0));
+    }
+    func_001A1E10(func_00279290(p + 0x16C0));
+}
