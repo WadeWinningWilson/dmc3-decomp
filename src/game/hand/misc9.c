@@ -527,6 +527,9 @@ void func_002E8A10(char *);
 void func_00313E20(char *);
 void func_001B1570(char *);
 int func_004836A0(char *, int, int);
+extern char D_005B4750[];
+void func_00304E70(void);
+void func_0027BBF0(void);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -7807,4 +7810,90 @@ int func_004844D0(char *a, int b, int id) {
         break;
     }
     return r;
+}
+
+char *func_00440A00(char *p) {
+    int i;
+    int j;
+    *(char **)p = D_005A6F50;
+    func_0013D6A0(p + 0x24);
+    *(int *)(p + 0x20) = 0;
+    *(int *)(p + 0x1C) = 0;
+    *(unsigned char *)(p + 7) = 0;
+    *(unsigned char *)(p + 6) = 0;
+    *(unsigned char *)(p + 5) = 0;
+    *(unsigned char *)(p + 4) = 0;
+    *(unsigned char *)(p + 0x18) = 0;
+    *(int *)(p + 8) = 0;
+    *(signed char *)(p + 0x34) = -1;
+    *(unsigned char *)(p + 0x35) = 0;
+    *(unsigned char *)(p + 0x36) = 0;
+    *(int *)(p + 0xC) = 0x87;
+    *(float *)(p + 0x10) = 1.0f;
+    *(float *)(p + 0x14) = 1.0f;
+    *(char **)p = D_005B4750;
+    func_00100450(p + 0x3C, (void *)func_001AAD30, (void *)func_0013D240, 0x10, 8);
+    func_00100450(p + 0x100, (void *)func_002790E0, (void *)func_002791E0, 0x600, 3);
+    func_002790E0(p + 0x1300);
+    func_00100450(p + 0x1900, (void *)func_002790E0, (void *)func_002791E0, 0x600, 3);
+    func_00100450(p + 0x2B00, (void *)func_002790E0, (void *)func_002791E0, 0x600, 6);
+    func_00100450(p + 0x4F00, (void *)func_002790E0, (void *)func_002791E0, 0x600, 0xC);
+    func_002790E0(p + 0x9700);
+    *(unsigned char *)(p + 0x9D20) = 0;
+    *(unsigned char *)(p + 0x9DA0) = 0;
+    func_00100450(p + 0x9E20, (void *)func_00304E70, (void *)func_0027BBF0, 0x80, 3);
+    func_00100450(p + 0x9FA0, (void *)func_00304E70, (void *)func_0027BBF0, 0x80, 6);
+    func_00100450(p + 0xA2A0, (void *)func_00304E70, (void *)func_0027BBF0, 0x80, 0xC);
+    *(unsigned char *)(p + 0xA934) = 2;
+    *(unsigned char *)(p + 0xA936) = 0;
+    *(unsigned char *)(p + 0xA937) = 0;
+    *(unsigned char *)(p + 0xA939) = 0;
+    *(unsigned char *)(p + 0xA938) = 0;
+    *(unsigned char *)(p + 0xA93A) = 0;
+    *(unsigned char *)(p + 0xA93B) = 0;
+    *(int *)(p + 0xBC) = 0;
+    *(int *)(p + 0xC0) = 0;
+    *(int *)(p + 0xDC) = 0;
+    *(unsigned char *)(p + 0xA948) = 0;
+    *(unsigned char *)(p + 0xA949) = 0;
+    *(unsigned char *)(p + 0xA94A) = 0;
+    *(unsigned char *)(p + 0xA94B) = 0;
+    *(unsigned char *)(p + 0xA94C) = 0;
+    *(int *)(p + 0xA950) = -1;
+    *(int *)(p + 0xC4) = 0;
+    *(int *)(p + 0xD0) = 0;
+    *(short *)(p + 0xA93C) = -1;
+    *(short *)(p + 0xA942) = -1;
+    *(int *)(p + 0xC8) = 0;
+    *(int *)(p + 0xD4) = 0;
+    *(short *)(p + 0xA93E) = -1;
+    *(short *)(p + 0xA944) = -1;
+    *(int *)(p + 0xCC) = 0;
+    *(int *)(p + 0xD8) = 0;
+    *(short *)(p + 0xA940) = -1;
+    *(short *)(p + 0xA946) = -1;
+    *(unsigned char *)(p + 0xA8A4) = 0;
+    *(unsigned char *)(p + 0xA8A5) = 0;
+    *(unsigned char *)(p + 0xA8AB) = 0;
+    *(unsigned char *)(p + 0xA8AC) = 0;
+    *(unsigned char *)(p + 0xA8AD) = 1;
+    *(unsigned char *)(p + 0xA8B3) = 0;
+    *(unsigned char *)(p + 0xA8B4) = 0;
+    *(unsigned char *)(p + 0xA8B5) = 2;
+    *(unsigned char *)(p + 0xA8BB) = 0;
+    *(unsigned char *)(p + 0xA8BC) = 0;
+    *(unsigned char *)(p + 0xA8BD) = 3;
+    *(unsigned char *)(p + 0xA8C3) = 0;
+    *(unsigned char *)(p + 0xA8C4) = 0;
+    *(unsigned char *)(p + 0xA8C5) = 4;
+    *(unsigned char *)(p + 0xA8CB) = 0;
+    *(unsigned char *)(p + 0xA8CC) = 0;
+    *(unsigned char *)(p + 0xA8CD) = 5;
+    *(unsigned char *)(p + 0xA8D3) = 0;
+    for (j = 0; j < 12; j++) {
+        *(unsigned char *)(p + j * 8 + 0xA8D4) = 0;
+        *(unsigned char *)(p + j * 8 + 0xA8D5) = j;
+        *(unsigned char *)(p + j * 8 + 0xA8DB) = 0;
+    }
+    return p;
 }
