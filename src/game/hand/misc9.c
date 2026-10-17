@@ -12459,6 +12459,12 @@ void func_0039D980(char *p) {
 extern V4 D_005646A0;
 void func_001051C8(float *, float *, float);
 void func_00105090(char *, float *, float *);
+void func_004F93B0(int *);
+void func_004F7EB0(char *);
+void func_004F8100(char *);
+void func_004F82F0(char *);
+void func_004F8710(char *);
+void func_004F8B00(char *);
 
 void func_003B61F0(char *p) {
     float m[16];
@@ -12500,4 +12506,50 @@ void func_0041E270(char *out, char *b, float s, float t) {
     u[1] = y0 * t;
     w[1] = y1 * (1.0f - t);
     func_00105090(out, u, w);
+}
+
+void func_004F7DE0(char *p) {
+    int t;
+    func_001AD100(p);
+    t = *(int *)(p + 0x608);
+    func_004F93B0(&t);
+    *(int *)(p + 0x608) = t;
+    *(unsigned char *)(p + 0x616) = 0;
+    switch (*(unsigned char *)(p + 0x60C)) {
+    case 0:
+        func_004F7EB0(p);
+        break;
+    case 1:
+        func_004F8100(p);
+        break;
+    case 2:
+        func_004F82F0(p);
+        break;
+    case 3:
+        func_004F8710(p);
+        break;
+    }
+    func_004F8B00(p);
+    func_0028C5C0(p + 0x140, 0, *(float *)(p + 0x10));
+}
+
+void func_005038F0(char *p) {
+    short sz[2];
+    int s[7];
+    if (*(unsigned char *)(p + 0x55) != 0) {
+        int a;
+        s[0] = 0;
+        s[1] = 0;
+        s[2] = 0xFFFFFF;
+        a = *(int *)(p + 0x4C) << 24;
+        sz[0] = 0x200;
+        sz[1] = 0x100;
+        func_001B6470(D_01C61820, s);
+        func_001B64C0(D_01C61820, a);
+        func_001B64D0(D_01C61820, sz);
+        func_001B6510(D_01C61820, 3);
+        func_001B6520(D_01C61820, 0xF);
+        func_001B6550(D_01C61820, 1);
+        func_001B6630(D_01C61820, 0);
+    }
 }
