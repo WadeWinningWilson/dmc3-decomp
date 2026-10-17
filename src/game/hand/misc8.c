@@ -1461,6 +1461,15 @@ void func_0044CED0(char *);
 void func_0044CEE0(char *);
 short func_0034B940(char *, char *);
 void func_00131650(char *, char *);
+extern float D_005679BC;
+extern float D_005679C0;
+extern char D_00558B60[];
+void func_00128488(char *, int, int);
+int func_0023DF80(char *, int, int, float);
+void func_0021C100(char *, int, int, float, float);
+void func_00385460(char *);
+void func_00385500(char *);
+void func_00385580(char *);
 void func_0019DD20(char *p) {
     int k;
     float v;
@@ -2341,4 +2350,75 @@ void func_00482070(char *p) {
     __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(p + 0x300), "r"(p + 0x50), "r"(p + ((*(signed char *)(p + 0x288) + 1) << 4) + 0x310) : "memory");
     func_00131650(p + 0x300, p + 0x300);
     *(float *)(p + 0x30C) = 1.0f;
+}
+
+int func_0050E800(char *p) {
+    char *q;
+    if (*(char **)(p + 0x460) != 0) {
+        func_001AD140(*(char **)(p + 0x460));
+    }
+    *(char **)(p + 0x460) = func_00207480(3, 0x3B7, 0, 8);
+    q = *(char **)(p + 0x460);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x150;
+        q[0x9A] = 0;
+        *(*(char **)(p + 0x460) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
+}
+
+void func_0021D3F0(char *p, int flag) {
+    *(int *)(p + 0x24BC) = 0;
+    if (*(unsigned char *)(p + 0x28AC) != 1 && (unsigned char)flag != 1) {
+        if (func_0023DF80(p, flag, 1, -20.0f) != 0) {
+            func_0021B790(p, 0);
+        } else {
+            func_0021C100(p, 4, 0, 0.0f, -1.5f);
+        }
+    }
+}
+
+typedef struct { int w[8]; } __attribute__((aligned(16))) M32;
+
+void func_00277DE0(char *p, char *s, char *x, int flag) {
+    *(signed char *)(p + 0x10) = *(signed char *)s;
+    *(unsigned char *)(p + 0x11) = *(unsigned char *)(s + 1);
+    *(float *)(p + 0x14) = *(float *)(s + 4);
+    *(unsigned char *)(p + 0x18) = *(unsigned char *)(s + 8);
+    *(M32 *)(p + 0x20) = *(M32 *)(s + 0x10);
+    *(M32 *)(p + 0x40) = *(M32 *)(s + 0x30);
+    if (flag != 0) {
+        *(char **)(p + 0xA0) = x;
+    } else {
+        func_00105300(p + 0x60, x);
+        *(char **)(p + 0xA0) = p + 0x60;
+    }
+}
+
+int func_0030AA50(char *p) {
+    float a = *(float *)(p + 0x10);
+    int r;
+    if ((a < 0.0f ? -a : a) <= 0.0001f) {
+        return 0;
+    }
+    r = (int)func_00210240(p);
+    return ((int (**)(char *, int))D_00558B60)[*(int *)(p + 0x20)](p + 0x24, r);
+}
+
+void func_003853D0(char *p) {
+    func_001AD100(p);
+    if (*(unsigned char *)(p + 0x44) != 0) {
+        switch (*(unsigned char *)(p + 4)) {
+        case 0:
+            func_00385460(p);
+            *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+        case 1:
+            func_00385500(p);
+            break;
+        case 2:
+            func_00385580(p);
+            break;
+        }
+    }
 }

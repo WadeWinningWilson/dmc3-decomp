@@ -4831,3 +4831,40 @@ extern "C" void func_003BFCA0(char *p) {
     *(short *)(p + 0x90) = *(short *)(*(char **)(p + 0x134) + 0x20);
     ((ObjB *)p)->m304(0xD);
 }
+
+extern "C" void func_0037E850(char *, int);
+extern "C" void func_0034BA60(int, char *, int, int, int);
+extern "C" float D_005679BC[];
+extern "C" float D_005679C0[];
+
+/* Enters the charge phase: state 1, motion 2, sound 0x23, 100-frame timer and reset ranges. */
+extern "C" void func_0037AD90(char *p) {
+    ((ObjB *)p)->m2FC(1);
+    func_0037E850(p, 2);
+    func_0034BA60(0x23, p + 0x6F0, 0x29, 0, 1);
+    *(float *)(p + 0x77E8) = 100.0f;
+    *(float *)(p + 0x7294) = D_005679BC[0];
+    *(float *)(p + 0x7298) = D_005679C0[0];
+    *(float *)(p + 0x7314) = *(float *)(p + 0x7294);
+    *(float *)(p + 0x7318) = *(float *)(p + 0x7298);
+}
+
+extern "C" void func_00228300(char *);
+extern "C" void func_0030C5E0(char *);
+extern "C" void func_0030CB50(char *);
+
+extern "C" void func_0030C290(char *p) {
+    func_00228300(p + 0xD0);
+    func_001AD100(p);
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        ((Obj130b *)p)->m130();
+        break;
+    case 1:
+        func_0030C5E0(p);
+        break;
+    case 2:
+        func_0030CB50(p);
+        break;
+    }
+}
