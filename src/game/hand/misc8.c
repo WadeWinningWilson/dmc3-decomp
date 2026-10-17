@@ -4555,6 +4555,8 @@ void func_0048B020(char *);
 void func_0041D800(char *, float, float);
 void func_0021CB60(char *, int);
 void func_0021CB50(char *, int);
+extern float D_0056EC20[];
+extern int D_0056EC80[];
 
 void func_0023D330(char *p) {
     *(C4 *)(p + 0x2928) = *(C4 *)(p + 0x2960);
@@ -6553,4 +6555,50 @@ void func_0021BFC0(char *p) {
         func_002490F0(p, 0, 0x20, -1, 0, 0, -1.0f);
     }
     func_0021C7A0(p, 8);
+}
+
+static inline void mot_setup(char *p) {
+    func_0024E7B0(p + 0x1500, 0, 0);
+    func_0028C8E0(p + 0x1950, 5);
+    func_0028C910(p + 0x1950);
+    func_0028C290(p + 0x1950, 7, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 8, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 9, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 0xD, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 0xE, 0x14, p + 0x64C);
+}
+
+void func_003C7830(char *p) {
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(unsigned char *)(p + 6) = *(unsigned char *)(p + 6) + 1;
+        *(float *)(p + 0x15D4) = D_0056EC20[*(unsigned char *)(p + 0x15D1) + *(unsigned char *)(p + 0x15D0) * 3];
+        *(int *)(p + 0x16E0) = 0;
+        *(float *)(p + 0x15F0) = 40.0f;
+        {
+            int f = D_0056EC80[*(unsigned char *)(p + 0x15D1) + *(unsigned char *)(p + 0x15D0) * 3];
+            if (f != 0) {
+                func_003C6880(p, f);
+            }
+        }
+    case 1:
+        func_003C2D30(p, 1);
+        *(float *)(p + 0x15F0) = *(float *)(p + 0x15F0) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x15F0) < 0.0f) {
+            *(float *)(p + 0x15F0) = 40.0f;
+            func_003C8130(p, 1);
+        }
+        if ((unsigned char)func_0024E780(p + 0x1500, 0, 0) == 8) {
+            mot_setup(p);
+        }
+        if ((unsigned char)func_0024E780(p + 0x1500, 0, 0) == 9) {
+            mot_setup(p);
+        }
+        *(float *)(p + 0x15D4) = *(float *)(p + 0x15D4) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x15D4) < 0.0f) {
+            *(unsigned char *)(p + 0x1CEA) = 1;
+        }
+        break;
+    }
+    func_002EF940(*(int *)D_01CAFF0C, p + 0x1BD0);
 }
