@@ -11721,6 +11721,7 @@ extern float D_00577D18[];
 extern float D_00577DD0[];
 extern float D_00577DD4[];
 extern float D_00577DD8[];
+void func_004E29F0(char *, char *, int, float);
 
 void func_0046F690(char *p) {
     int i;
@@ -12172,4 +12173,22 @@ void func_004376E0(char *p, float *out, int i, unsigned char k) {
         out[2] = D_00577DD8[i * 3];
         out[3] = 1.0f;
     }
+}
+
+int func_004E2930(char *o, char *m, int n) {
+    float w[4];
+    float v[4];
+    int i;
+    if (o == 0) {
+        return 0;
+    }
+    v[2] = 250.0f;
+    v[3] = 1.0f;
+    v[0] = 0.0f;
+    v[1] = 0.0f;
+    func_00104B80((char *)w, m, (char *)v);
+    for (i = 0; i < n; i++) {
+        func_004E29F0(o, (char *)w, i, 15.0f + 5.0f * (float)(i + 1));
+    }
+    return 1;
 }

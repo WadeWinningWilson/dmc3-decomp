@@ -412,6 +412,9 @@ float func_0011D798(float);
 char *func_00279290(char *);
 void func_001A2000(char *, int);
 void func_001A1E70(char *, int);
+extern char *D_0057B060[];
+extern unsigned char D_01CAFF3C[];
+void func_0046F9A0(char *);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -482,4 +485,21 @@ void func_00356570(char *p, unsigned char k, char *l) {
             func_001A1E70(func_00279290(p + k * 0x600 + 0xC0), i);
         }
     }
+}
+
+int func_0046F8E0(char *p) {
+    unsigned char k = *(unsigned char *)(p + 0x254);
+    if (k == 0 && *(short *)(p + 0x276) == 1 && *(short *)(p + 0x276) != *(short *)(p + 0x278)) {
+        *(short *)(p + 0x27A) = 9;
+    } else {
+        short *t = *(short **)(D_0057B060[k] + D_01CAFF3C[0] * 4);
+        short n = t[0];
+        *(unsigned char *)(p + 0x256) = *(unsigned char *)(p + 0x256) + 1;
+        if (!(*(unsigned char *)(p + 0x256) < n)) {
+            *(unsigned char *)(p + 0x256) = 0;
+        }
+        *(short *)(p + 0x27A) = t[*(unsigned char *)(p + 0x256) + 1];
+    }
+    func_0046F9A0(p);
+    return 1;
 }

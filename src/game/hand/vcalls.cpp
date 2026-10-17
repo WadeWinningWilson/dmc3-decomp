@@ -15555,3 +15555,14 @@ extern "C" float func_0041E060(char *p) {
     }
     return 0.0f;
 }
+
+extern "C" void func_0043AFC0(char *p) {
+    float m2[16];
+    float m[16];
+    float *src = ((ObjPosC4 *)(p + 0x580))->mC4();
+    QCOPY(p + 0x60, src);
+    SETPOS(m2, p + 0x60);
+    func_00105760(m, m2, 6.283185f * ((float)*(short *)(p + 0x4850) / 65536.0f));
+    GETPOS(p + 0x60, m);
+    VADDIP(p + 0x50, p + 0x60);
+}
