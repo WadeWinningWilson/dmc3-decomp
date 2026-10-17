@@ -5204,3 +5204,44 @@ int func_001EC640(char *p) {
     }
     return 0;
 }
+
+static inline float fsqrt(float x) {
+    float r;
+    __asm__("sqrt.s %0, %1" : "=f"(r) : "f"(x));
+    return r;
+}
+
+void func_0025F200(char *p) {
+    switch (*(unsigned char *)(p + 0x284C)) {
+    case 0:
+        func_0021CBB0(p, 1);
+        func_002490F0(p, 0xD, 0xF, -1, 2, 5, -1.0f);
+        *(unsigned char *)(p + 0x284C) = *(unsigned char *)(p + 0x284C) + 1;
+        break;
+    case 1:
+        if ((unsigned char)func_002496D0(p) == 4) {
+            func_0021B790(p, 0xA);
+        } else {
+            func_002DBAA0(p, *(short *)(p + 0x90), 1.0f);
+        }
+        break;
+    }
+}
+
+void func_002D9D30(char *p) {
+    float s;
+    *(int *)(p + 0x2590) = 0;
+    *(int *)(p + 0x2594) = 0;
+    *(float *)(p + 0x2598) = 1.0f;
+    *(unsigned char *)(*(char **)(p + 0x1394) + 0x1C0) = 2;
+    *(unsigned char *)(*(char **)(p + 0x1394) + 0x1C1) = 1;
+    *(char **)(*(char **)(p + 0x1394) + 0xFC) = p + 0x2500;
+    s = func_0011D798(0.7853981f);
+    *(float *)(p + 0x2564) = s;
+    *(float *)(p + 0x2568) = fsqrt(1.0f - s * s);
+    *(float *)(p + 0x256C) = func_0011D798(3.1415925f);
+    *(unsigned char *)(p + 0x2560) = 1;
+    *(int *)(p + 0x2580) = 0;
+    *(char **)(p + 0x2518) = p + 0x2590;
+    *(unsigned char *)(p + 0x2514) = 4;
+}
