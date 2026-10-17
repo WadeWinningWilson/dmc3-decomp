@@ -896,3 +896,31 @@ int func_0030AB30(char *p) {
     func_0013DA10(D_005D0E70, 0);
     return 1;
 }
+
+void func_0043EB20(char *p, unsigned char k) {
+    if (k == 1) {
+        if (*(signed char *)(p + 0x7C1) == 0) {
+            func_001A2000(func_00279290(p + 0x1C0), 0);
+        }
+    } else if (*(signed char *)(p + 0x7C1) == 0) {
+        func_001A1E70(func_00279290(p + 0x1C0), 0);
+    }
+}
+float func_004D2B70(char *);
+int func_004D2CB0(char *p) {
+    if (*(unsigned char *)(p + 0xB2C8) == 1 && *(unsigned char *)(p + 0xB2D7) == 1 && func_004D2B70(p) < 40.0f) {
+        return 1;
+    }
+    return 0;
+}
+int func_00250060(char *p) {
+    float a = *(float *)(p + 0xF0);
+    if (!(a <= 1.0f) || a < -1.0f) {
+        return 1;
+    }
+    a = *(float *)(p + 0xF8);
+    if (!(a <= 1.0f) || a < -1.0f) {
+        return 1;
+    }
+    return 0;
+}
