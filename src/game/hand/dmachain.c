@@ -1,0 +1,197 @@
+/* GS DMA packet chain initialisers: each node's tag points at the previous node. */
+#pragma opt_unroll_loops off
+
+extern char *D_005BE0D8;
+extern char D_0065D4D0[];
+extern int D_0065E4D0[];
+extern int D_0065E4D4[];
+extern int D_0065E4D8[];
+extern int D_0065E4DC[];
+extern int D_0065E4E0[];
+extern char D_0065E550[];
+extern int D_0065F550[];
+extern int D_0065F554[];
+extern int D_0065F558[];
+extern int D_0065F55C[];
+extern int D_0065F560[];
+extern char D_0065F620[];
+extern int D_00660620[];
+extern int D_00660624[];
+extern int D_00660628[];
+extern int D_0066062C[];
+extern int D_00660630[];
+extern char D_00660640[];
+extern int D_00661640[];
+extern int D_00661644[];
+extern int D_00661648[];
+extern int D_0066164C[];
+extern int D_00661650[];
+extern char D_0065D0B0[];
+extern int D_0065D4B0[];
+extern int D_0065D4B4[];
+extern int D_0065D4B8[];
+extern int D_0065D4BC[];
+extern int D_0065D4C0[];
+extern char D_00661660[];
+extern int D_00661A60[];
+extern int D_00661A64[];
+extern int D_00661A68[];
+extern int D_00661A6C[];
+extern int D_00661A70[];
+extern char D_00661AE0[];
+extern int D_00661EE0[];
+extern int D_00661EE4[];
+extern int D_00661EE8[];
+extern int D_00661EEC[];
+extern int D_00661EF0[];
+extern char D_00661F00[];
+extern int D_00662300[];
+extern int D_00662304[];
+extern int D_00662308[];
+extern int D_0066230C[];
+extern int D_00662310[];
+
+void func_001A72B0(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_0065D4D0 + (*(signed char *)(D_005BE0D8 + 0xE) << 11) + 0x7F0);
+    for (i = 0x7F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_0065E4D0[0] = 0;
+    D_0065E4D4[0] = 0;
+    D_0065E4D8[0] = 0;
+    D_0065E4DC[0] = 0;
+    D_0065E4E0[0] = 0;
+}
+
+void func_001A76A0(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_0065E550 + (*(signed char *)(D_005BE0D8 + 0xE) << 11) + 0x7F0);
+    for (i = 0x7F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_0065F550[0] = 0;
+    D_0065F554[0] = 0;
+    D_0065F558[0] = 0;
+    D_0065F55C[0] = 0;
+    D_0065F560[0] = 0;
+}
+
+void func_001A7C00(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_0065F620 + (*(signed char *)(D_005BE0D8 + 0xE) << 11) + 0x7F0);
+    for (i = 0x7F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_00660620[0] = 0;
+    D_00660624[0] = 0;
+    D_00660628[0] = 0;
+    D_0066062C[0] = 0;
+    D_00660630[0] = 0;
+}
+
+void func_001A7E30(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_00660640 + (*(signed char *)(D_005BE0D8 + 0xE) << 11) + 0x7F0);
+    for (i = 0x7F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_00661640[0] = 0;
+    D_00661644[0] = 0;
+    D_00661648[0] = 0;
+    D_0066164C[0] = 0;
+    D_00661650[0] = 0;
+}
+
+void func_001A7090(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_0065D0B0 + (*(signed char *)(D_005BE0D8 + 0xE) << 9) + 0x1F0);
+    for (i = 0x1F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_0065D4B0[0] = 0;
+    D_0065D4B4[0] = 0;
+    D_0065D4B8[0] = 0;
+    D_0065D4BC[0] = 0;
+    D_0065D4C0[0] = 0;
+}
+
+void func_001A8280(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_00661660 + (*(signed char *)(D_005BE0D8 + 0xE) << 9) + 0x1F0);
+    for (i = 0x1F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_00661A60[0] = 0;
+    D_00661A64[0] = 0;
+    D_00661A68[0] = 0;
+    D_00661A6C[0] = 0;
+    D_00661A70[0] = 0;
+}
+
+void func_001A84B0(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_00661AE0 + (*(signed char *)(D_005BE0D8 + 0xE) << 9) + 0x1F0);
+    for (i = 0x1F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_00661EE0[0] = 0;
+    D_00661EE4[0] = 0;
+    D_00661EE8[0] = 0;
+    D_00661EEC[0] = 0;
+    D_00661EF0[0] = 0;
+}
+
+void func_001A86E0(void) {
+    unsigned int i;
+    unsigned long long *n;
+    n = (unsigned long long *)(D_00661F00 + (*(signed char *)(D_005BE0D8 + 0xE) << 9) + 0x1F0);
+    for (i = 0x1F; i != 0; i--) {
+        n[0] = ((unsigned long long)(unsigned int)(n - 2) << 32) | 0x20000000;
+        n[1] = 0;
+        n -= 2;
+    }
+    n[0] = 0xF0000000;
+    n[1] = 0;
+    D_00662300[0] = 0;
+    D_00662304[0] = 0;
+    D_00662308[0] = 0;
+    D_0066230C[0] = 0;
+    D_00662310[0] = 0;
+}
+
