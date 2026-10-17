@@ -9287,6 +9287,7 @@ extern "C" void func_00253920(char *);
 extern "C" void func_00331350(char *);
 extern "C" void func_0013E020(char *, int, int);
 extern "C" void func_0041D800(char *, float, float);
+extern "C" void func_00312980(char *);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -12339,4 +12340,51 @@ extern "C" void func_00461440(char *p) {
         (*(AnimBE **)(p + 0xA8))->m24();
         break;
     }
+}
+
+extern "C" void func_00312A50(char *p) {
+    *(float *)(p + 0xD54) = *(float *)(p + 0xD54) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0xD54) < 0.0f) {
+        float s;
+        if (mt_rand() & 1) {
+            s = 1.0f;
+        } else {
+            s = -1.0f;
+        }
+        if (!(s <= 0.0f) && !(*(float *)(p + 0xD60) <= 0.0f)) {
+            *(unsigned char *)(p + 0xD68) = *(unsigned char *)(p + 0xD68) + 1;
+        } else if (s < 0.0f && *(float *)(p + 0xD60) < 0.0f) {
+            *(unsigned char *)(p + 0xD68) = *(unsigned char *)(p + 0xD68) + 1;
+        } else {
+            *(unsigned char *)(p + 0xD68) = 0;
+        }
+        if (*(unsigned char *)(p + 0xD68) > 0) {
+            s = s * -1.0f;
+        }
+        *(float *)(p + 0xD60) = s;
+        if (mt_rand() % 10 == 0) {
+            *(float *)(p + 0xD64) = 15.0f;
+        } else {
+            if (mt_rand() & 1) {
+                *(float *)(p + 0xD64) = *(float *)(p + 0xD64) + 2.0f * *(float *)(p + 0x10);
+            } else {
+                *(float *)(p + 0xD64) = *(float *)(p + 0xD64) - 2.0f * *(float *)(p + 0x10);
+            }
+            if (!(*(float *)(p + 0xD64) < 15.0f)) {
+                *(float *)(p + 0xD64) = 15.0f;
+            }
+            if (*(float *)(p + 0xD64) < 5.0f) {
+                *(float *)(p + 0xD64) = 5.0f;
+            }
+        }
+        *(float *)(p + 0xD54) = *(float *)(p + 0xD58) = 60.0f + (float)(mt_rand() % 300);
+    }
+    *(float *)(p + 0xD5C) = *(float *)(p + 0xD5C) + *(float *)(p + 0xD60) * *(float *)(p + 0x10);
+    if (!(*(float *)(p + 0xD5C) < 180.0f)) {
+        *(float *)(p + 0xD5C) = *(float *)(p + 0xD5C) - 360.0f;
+    }
+    if (*(float *)(p + 0xD5C) < -180.0f) {
+        *(float *)(p + 0xD5C) = *(float *)(p + 0xD5C) + 360.0f;
+    }
+    func_00312980(p);
 }
