@@ -12124,3 +12124,51 @@ extern "C" void func_00461EC0(char *p) {
         break;
     }
 }
+
+extern "C" void func_00462380(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        QCOPY(*(char **)(p + 0x10) + 0x20, p + 0xE0);
+        if (*(float *)(p + 0x100) < 0.0f) {
+            *(int *)(p + 0xD4) = 1;
+        }
+        *(float *)(p + 0x100) = *(float *)(p + 0x100) - *(float *)(p + 0xB0);
+        break;
+    case 1:
+        if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
+            (*(AnimBE **)(p + 0xA8))->m1C(0x16);
+        }
+        ((SelfBE *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+        if ((*(AnimBE **)(p + 0xA8))->m30() != 0) {
+            *(unsigned char *)(p + 0xCD) = 0;
+            *(unsigned char *)(p + 0xCF) = 4;
+            (*(AnimBE **)(p + 0xA8))->m1C(0xD);
+            (*(AnimBE **)(p + 0xA8))->m44();
+            (*(AnimBE **)(p + 0xA8))->m48(0xA, *(char **)(p + 0x10) + 0x10);
+            func_00330BD0(D_01DFABA0, 0x27, *(char **)(p + 0x10) + 0x10, 8, 0);
+            *(int *)(p + 0xD4) = 2;
+        }
+        break;
+    case 2:
+        if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
+            (*(AnimBE **)(p + 0xA8))->m1C(0x17);
+            *(int *)(p + 0xD4) = 3;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * frand();
+        }
+        (*(AnimBE **)(p + 0xA8))->m24();
+        break;
+    case 3:
+        if (!((*(AnimBE **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            (*(AnimBE **)(p + 0xA8))->m1C(6);
+            *(int *)(p + 0xD4) = 4;
+        }
+        (*(AnimBE **)(p + 0xA8))->m24();
+        break;
+    case 4:
+        if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
+            ((SelfBE *)p)->mEC(0xE);
+        }
+        (*(AnimBE **)(p + 0xA8))->m24();
+        break;
+    }
+}
