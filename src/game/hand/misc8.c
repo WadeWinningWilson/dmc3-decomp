@@ -1336,3 +1336,45 @@ int func_0031DF90(char *p, int a, int b, int c, int d, int e) {
     *(char *)(p + 28) = 1;
     return 1;
 }
+
+int func_0019DE30(char *, int);
+int func_0019DE60(char *, int);
+int func_0019DE90(char *, int);
+int func_0019DEC0(char *, int);
+int func_0019DF30(char *, int);
+int func_0019DFF0(char *, int);
+int func_0019E0F0(char *, int);
+void func_0019DD20(char *p) {
+    int k;
+    float v;
+    if ((*(int *)p & 0x80000000) && !(*(int *)p & 1)) {
+        v = *(float *)(*(char **)(p + 92) + 432);
+        *(float *)(p + 112) = v;
+        if (v > 0.0f) {
+            k = *(unsigned char *)(p + 6);
+            switch (k) {
+            case 0:
+                func_0019DE30(p, k);
+                break;
+            case 1:
+                func_0019DE60(p, k);
+                break;
+            case 2:
+                func_0019DE90(p, k);
+                break;
+            case 3:
+                func_0019DEC0(p, k);
+                break;
+            case 4:
+                func_0019DF30(p, k);
+                break;
+            case 5:
+                func_0019DFF0(p, k);
+                break;
+            case 10:
+                func_0019E0F0(p, k);
+                break;
+            }
+        }
+    }
+}
