@@ -63,3 +63,4 @@ _d_utod = 0x100300; // (double)unsigned int
 _dpflt = 0x100310; // a < b
 fptodp = 0x11FA58; // (double)float
 dpmul = 0x11FF50; // a * b
+dptofp = 0x120610; // (float)double
