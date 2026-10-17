@@ -863,7 +863,7 @@ void func_001AB220(char *, int, int);
 int func_0023E960(char *);
 int func_00245C40(char *);
 int func_0023EDD0(char *);
-void func_0023EF80(char *);
+int func_0023EF80(char *);
 
 
 
@@ -1009,6 +1009,159 @@ extern char D_005AC730[];
 void func_002CD800(char *);
 void func_0039D890(char *);
 char *func_00231CC0(char *, int, int);
+extern char D_01CAF2C0[];
+extern char D_01CAF570[];
+extern char D_00568CB0[];
+extern char D_00568CD0[];
+void func_0029B250(char *);
+int func_002A4030(char *);
+void func_0029DD80(char *, int, int);
+void func_0030E540(char *);
+void func_002872E0(char *, int, int);
+int func_002DBF70(char *);
+void func_001B1130(int);
+void func_001AB140(char *);
+void func_00287320(char *);
+void func_001ABE60(char *, int);
+void func_003712B0(char *, int);
+void func_00131D70(char *, char *);
+void func_004FE910(char *, char *);
+extern char D_00540DC0[];
+extern char D_00540DE0[];
+extern char D_00540E00[];
+extern char D_00540E20[];
+extern signed char D_00666718[];
+extern signed char D_00666719[];
+extern char D_006480D0[];
+int func_0019E7B0(char *);
+int func_0019EAA0(char *);
+void func_0029C760(char *);
+void func_003708E0(char *);
+void func_00370BF0(char *);
+void func_00370EF0(char *);
+void func_002282B0(char *);
+void func_00129690(char *, int);
+void func_001349C0(short, short);
+void func_001ED3F0(void);
+void func_00138500(void);
+void func_00196070(char *);
+void func_001960F0(char *, int);
+void func_001ED310(void);
+void func_00195390(char *);
+extern int D_01DFAB70[];
+extern int D_01DFAB7C[];
+void func_004AB880(char *);
+void func_004ABBF0(char *);
+void func_004AC030(char *);
+void func_004AC420(char *);
+void func_004AC670(char *);
+void func_004AC8F0(char *);
+void func_004ACA80(char *);
+void func_00505550(char *);
+void func_00505570(char *);
+void func_005055F0(char *);
+void func_00506080(char *);
+void func_00506210(char *);
+void func_00506480(char *);
+void func_00507550(char *);
+void func_00507570(char *);
+void func_005075E0(char *);
+extern float D_00561DA0[][3];
+void func_002A0090(char *);
+void func_00322030(char *, int);
+extern char D_005BA060[];
+void func_001AAD30();
+void func_0013D240();
+void func_002790E0();
+void func_002791E0();
+void func_003206E0(char *);
+void func_004D9B90(char *, int);
+void func_004D9950(char *);
+void func_004D9AC0(char *, int);
+void func_00323140(int, int, int, int, int);
+int func_0020F210(char *);
+float func_0041E060(char *);
+int func_0038F490(char *);
+void func_0041DAB0(char *, char *, int);
+void func_0038F830(char *);
+extern char D_0057BA90[];
+extern char D_005B6990[];
+extern signed char D_0056AF22[];
+extern signed char D_0056AF23[];
+int func_0023EC60(char *);
+int func_0023F290(char *);
+void func_003D16B0(char *);
+int func_0023E330(char *);
+int func_0023E500(char *);
+extern char D_00553750[];
+extern char D_005B8340[];
+extern char D_005AADD0[];
+extern char D_005B6810[];
+extern char D_005B6834[];
+extern char D_005B68B4[];
+extern char D_005B6948[];
+void func_002E00E0(char *, char *, char *, int);
+void func_002E1B90(char *);
+int func_0039D080(char *, int);
+void func_0041DBA0(char *, char *);
+void func_0024F750(char *);
+void func_0027A570(char *);
+void func_004AB580(char *);
+void func_004AB610(char *);
+void func_004AB6C0(char *);
+void func_004AB770(char *);
+int func_0023AA80(int);
+void func_004FE770(char *);
+void func_004FE780(char *);
+void func_004FE790(char *);
+void func_004FE7A0(char *);
+void func_004FE7B0(char *);
+void func_004FE7C0(char *);
+void func_004FE7D0(char *);
+void func_004FE120(char *);
+void func_00317740(char *, int);
+void func_00207850(char *);
+void func_001EF6B0(char *);
+void func_0023D5B0(char *);
+extern int D_01DFAB74[];
+extern float D_0055C7F0[];
+extern float D_0055C7F4[];
+extern float D_0055C7F8[];
+extern float D_0055C7FC[];
+void func_002F30B0(int, char *, char *);
+int func_00124EC0(int);
+void func_002F9860(char *, int, int, int);
+void func_003B61B0(char *);
+void func_003B6450(char *);
+void func_003B4F60(char *);
+void func_0048B400(char *);
+void func_0048B320(char *);
+int func_0048B150(char *);
+void func_0048AF80(char *, int);
+void func_0041D820(char *, float, float);
+void func_0041D6E0(char *, char *, int, float);
+void func_0022A890(char *);
+extern char D_00568430[];
+void func_0033C100(char *);
+void func_0033C500(char *);
+void func_0033C810(char *);
+void func_0033C8A0(char *);
+void func_00277E70(char *);
+void func_00277ED0(char *);
+void func_0048B020(char *);
+void func_0041D800(char *, float, float);
+void func_0021CB60(char *, int);
+void func_0021CB50(char *, int);
+extern float D_0056EC20[];
+extern int D_0056EC80[];
+extern float D_0056EBF0[];
+void func_003C8350(char *);
+int func_003C8470(char *, int, int);
+void func_0023A3E0(char *, unsigned char);
+extern char D_00546740[];
+void func_001A5D40(char *, int);
+extern unsigned char D_00666716[];
+void func_001AE0D0(char *);
 
 
 
@@ -1063,6 +1216,181 @@ static inline unsigned char partner_ready(char *g) {
     }
     return 0;
 }
+
+
+
+
+
+static inline unsigned char both_done(char *p) {
+    if ((unsigned char)func_0024E800(p + 0x1D00) == 1 && (unsigned char)func_0024E800(p + 0x1DD0) == 1) {
+        return 1;
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static inline unsigned char is_set(unsigned char v) {
+    return v != 0;
+}
+
+static inline unsigned char has_flag(char *p) {
+    return (*(unsigned short *)(p + 0x2DD8) & 0x100) != 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+static inline void mot_setup(char *p) {
+    func_0024E7B0(p + 0x1500, 0, 0);
+    func_0028C8E0(p + 0x1950, 5);
+    func_0028C910(p + 0x1950);
+    func_0028C290(p + 0x1950, 7, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 8, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 9, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 0xD, 0x14, p + 0x64C);
+    func_0028C290(p + 0x1950, 0xE, 0x14, p + 0x64C);
+}
+
+
+
+
+
+
+
+
+
+
+
+#define UNIT(e) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(e) : "memory")
+
+
+
+
+
+
+
+
+
+extern V4 D_0058BB70;
+
+
+
+extern V4 D_005599D0;
 
 
 
@@ -1866,4 +2194,16 @@ void func_00396EA0(char *p) {
             func_003A02B0(p, 2);
         }
     }
+}
+
+void func_004965D0(char *p) {
+    float m[16];
+    float v[4];
+    v[0] = *(float *)(p + 0x50);
+    v[1] = *(float *)(p + 0x54);
+    v[2] = *(float *)(p + 0x58);
+    v[3] = 1.0f;
+    UNIT(m);
+    func_00105230((char *)m, (char *)m, v);
+    func_00207480(3, 0x5, (char *)m, 8);
 }

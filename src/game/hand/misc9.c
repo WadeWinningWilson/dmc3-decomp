@@ -9538,6 +9538,7 @@ void func_00105578(char *, char *, float);
 void func_001A4240(char *, int, int, float, float);
 void func_00204F40(char *, int, float, float, float, float);
 extern char D_005A7930[];
+float func_00131B80(float);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -10232,4 +10233,63 @@ char *func_0022C850(char *p, short flags) {
         }
     }
     return p;
+}
+
+void func_002A0090(char *p) {
+    int i;
+    for (i = 0; i < 7; i++) {
+        if (*(char **)(p + i * 4 + 0xA9A8) != 0) {
+            func_001AD140(*(char **)(p + i * 4 + 0xA9A8));
+        }
+        *(char **)(p + i * 4 + 0xA9A8) = 0;
+    }
+}
+
+void func_00321640(char *p) {
+    float v[4];
+    VSUBR(v, p + 0x20, *(char **)(p + 0x10) + 0x10);
+    *(float *)(p + 0x34) = func_00131B80(v[0] * v[0] + v[2] * v[2]);
+}
+
+void func_0033B2F0(char *p) {
+    int i;
+    for (i = 0; i < 12; i++) {
+        func_00206730(p + i * 4 + 0x12B4);
+    }
+    func_00228350(p + 0xC8);
+    func_00286040(p + 0x12B0);
+}
+
+int func_003C49F0(char *p) {
+    float v[4];
+    float d;
+    v[0] = 2500.0f;
+    v[1] = -50.0f;
+    v[2] = 2500.0f;
+    v[3] = 1.0f;
+    d = func_00132470((char *)v, p + 0x50);
+    *(float *)(p + 0x16E8) = d;
+    return d < 100.0f;
+}
+
+void func_003D0A40(char *p, unsigned char k) {
+    char *s = p + k * 0x720;
+    char *q = s + 0x580;
+    func_0028C790(q, 0);
+    func_0028C910(q);
+    func_0028C3A0(q, 0, -1, s + 0x520);
+}
+
+float func_003D8E30(char *p) {
+    float r = 0.0f;
+    char *pl = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    if (pl != 0) {
+        float b[4];
+        float a[4];
+        QCOPY(a, pl + 0x50);
+        QCOPY(b, p + 0x50);
+        a[1] = b[1] = 0.0f;
+        r = func_00132470((char *)a, (char *)b);
+    }
+    return r;
 }

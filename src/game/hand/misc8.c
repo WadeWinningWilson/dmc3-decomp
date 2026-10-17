@@ -6709,3 +6709,28 @@ void func_004F50B0(char *p) {
     *(float *)(p + 0x1A8) = *(float *)(p + 0x58);
     *(float *)(p + 0x1AC) = 1.0f;
 }
+
+extern V4 D_005599D0;
+
+void func_0030CCD0(char *p) {
+    V4 t;
+    t = D_005599D0;
+    func_00133890(p + 0xB10, p + 0xF0, &t);
+    func_001318E0(p + 0xB10, p + 0xB10, (float *)(p + 0xE0));
+    *(float *)(p + 0xB40) = *(float *)(p + 0xB00);
+    *(float *)(p + 0xB44) = *(float *)(p + 0xB04);
+    *(float *)(p + 0xB48) = *(float *)(p + 0xB08);
+    *(float *)(p + 0xB4C) = 1.0f;
+}
+
+void func_0033D2A0(char *p) {
+    float m[16];
+    float v[4];
+    v[0] = *(float *)(p + 0x50);
+    v[1] = *(float *)(p + 0x54);
+    v[2] = *(float *)(p + 0x58);
+    v[3] = 1.0f;
+    UNIT(m);
+    func_00105230((char *)m, (char *)m, v);
+    func_00207480(3, 0x8B, (char *)m, 8);
+}

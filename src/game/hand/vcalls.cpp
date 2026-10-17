@@ -14361,3 +14361,10 @@ extern "C" void func_0044FB10(char *p) {
     ((SubC8CC *)(p + 0x200))->mC8(q);
     ((SubC8CC *)(p + 0x200))->mCC(q);
 }
+
+extern "C" void func_003B78A0(char *p) {
+    char *q = p + 0x1280;
+    ((SubC8CC *)(p + 0xC40))->mCC(q);
+    ((SubC8CC *)(p + 0x640))->mCC(q);
+    ((SubC8CC *)(p + 0x40))->mCC(q);
+}
