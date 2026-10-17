@@ -11689,6 +11689,7 @@ void func_0043A750(char *p, int k, int b, int m) {
 
 extern V4 D_00586720;
 void func_00132DF0(char *, char *, V4 *);
+void func_001A01C0(char *, unsigned int, unsigned int, int, int);
 
 void func_0046F690(char *p) {
     int i;
@@ -11725,5 +11726,18 @@ void func_0048CFC0(char *p) {
         *(float *)(p + 0x18C) = 1.0f;
         func_00195E20(D_005BE098, p);
         break;
+    }
+}
+
+void func_001A0050(char *p, unsigned int i, unsigned int j, int a, int b) {
+    if (i < *(unsigned short *)(p + 0xA8) && j < *(unsigned short *)(p + 0xAA)) {
+        switch (func_001A97E0(*(char **)(p + 0xC0))) {
+        case 0x10000000:
+        case 0x20000000:
+            func_001A01C0(p, i, j, a, b);
+            break;
+        case 0x30000000:
+            break;
+        }
     }
 }

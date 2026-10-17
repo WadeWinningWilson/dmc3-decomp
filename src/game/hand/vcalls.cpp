@@ -15407,3 +15407,17 @@ extern "C" void func_0043FA30(char *p, int i) {
         }
     }
 }
+
+extern "C" void func_004FCE10(char *p) {
+    int i;
+    if (*(unsigned char *)(p + 0x2BD) != 6) {
+        ((ObjD0 *)(p + 0x2F0))->mD0();
+        ((ObjD0 *)(p + 0x730))->mD0();
+        for (i = 0; i < *(int *)(p + 0xDC); i++) {
+            func_0013D5D0(p + i * 16 + 0xE0);
+        }
+        func_0028C740(p + 0xBB0);
+    } else {
+        ((ObjD0 *)(p + 0x2F0))->mD0();
+    }
+}
