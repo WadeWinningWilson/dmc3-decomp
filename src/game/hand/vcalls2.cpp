@@ -830,11 +830,13 @@ extern "C" int D_005BE09C;
 extern "C" char D_005729C0[];
 extern "C" char D_00572F00[];
 extern "C" int func_001ACCF0(int, float, float, float, float);
-extern "C" char *func_003F3420(char *, char *);
+extern "C" int func_003F3420(char *, char *);
 extern "C" void func_003EB530(char *, int, int);
 extern "C" char *func_002792A0(char *);
 extern "C" char *func_00279290(char *);
 extern "C" void func_001A2180(char *, int, int);
+extern "C" float D_00570284[];
+extern "C" float D_00570288[];
 
 extern "C" void func_003E6FA0(char *p) {
     func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
@@ -1417,7 +1419,7 @@ public:
 
 extern "C" void func_003E9EB0(char *p) {
     char *pl;
-    char *e;
+    int e;
     float out[4];
     float pos[4];
     char buf[0x40];
@@ -1432,7 +1434,7 @@ extern "C" void func_003E9EB0(char *p) {
     }
     if (e != 0) {
         ((Sub8C *)(p + 0x130))->m8C();
-        ((SelfF0 *)p)->m2F0(e);
+        ((SelfF0 *)p)->m2F0((char *)e);
         return;
     }
     QCOPY(pos, pl + 0x50);
@@ -1604,4 +1606,35 @@ extern "C" void func_003F0D90(char *p) {
     for (i = 0; i < *(unsigned short *)(mdl + 0xA8); i++) {
         node_clr(mdl, i);
     }
+}
+
+struct RateB {
+    unsigned char id;
+    float v[5];
+};
+
+extern "C" int func_003F3420(char *p, char *tbl) {
+    float w[256];
+    float hp;
+    int lvl;
+    int k;
+    int n;
+    RateB *base;
+    RateB *e;
+    hp = 100.0f * (*(float *)(p + 0x311C) / *(float *)(p + 0x309C));
+    if (hp < D_00570284[0]) {
+        lvl = 2;
+    } else if (D_00570284[0] <= hp && hp < D_00570288[0]) {
+        lvl = 1;
+    } else if (D_00570288[0] <= hp) {
+        lvl = 0;
+    }
+    base = ((RateB **)tbl)[*(unsigned char *)(p + 0x1FBC) * 3 + lvl];
+    e = base;
+    k = speed_band(p);
+    for (n = 0; !(e->v[0] < 0.0f); n++) {
+        w[n] = e->v[k];
+        e++;
+    }
+    return base[func_0034BBE0(n, (char *)w)].id;
 }
