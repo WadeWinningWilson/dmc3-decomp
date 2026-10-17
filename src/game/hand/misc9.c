@@ -589,6 +589,8 @@ void func_004AE1D0(char *);
 void func_004AE310(char *);
 void func_004AE3F0(char *);
 void func_004AE4B0(char *);
+void func_001C1510(char *, float *, char *, char *, char *);
+void func_00131680(float *, char *, char *, float);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -8984,4 +8986,33 @@ void func_00376850(char *p) {
         func_004AE4B0(p);
         break;
     }
+}
+
+int func_001BE570(char *ctx, char *s, char *t, float *out) {
+    float c[4];
+    float d[4];
+    float e[4];
+    float u[4];
+    float v[4];
+    float a;
+    func_001C1510(ctx, c, t, t + 0x10, s);
+    VSUB(v, c, s);
+    func_001C1510(ctx, d, t, t + 0x10, s + 0x10);
+    VSUB(u, d, s + 0x10);
+    if (func_00132630(v, (char *)u) <= 0.0f) {
+        a = func_00132470((char *)c, s);
+        {
+            float b = func_00132470((char *)d, s + 0x10);
+            func_00131680(e, s, s + 0x10, b / (a + b));
+        }
+        VSUB(v, t, e);
+        VSUB(u, t + 0x10, e);
+        if (func_00132630(v, (char *)u) <= 0.0f) {
+            if (out != 0) {
+                QCOPY(out, e);
+            }
+            return 1;
+        }
+    }
+    return 0;
 }
