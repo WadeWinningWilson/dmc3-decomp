@@ -6043,3 +6043,54 @@ extern "C" void func_00433570(char *p, int a, int b, int c, int d) {
     *(unsigned char *)(p + 0x14D) = 0;
     ((ObjB *)p)->m2F4(0x17);
 }
+
+/* Enters state 0x3B, sets its phase bytes, restarts motion 0x1B and sparks the six weapon joints. */
+extern "C" void func_003F0320(char *p) {
+    ((ObjB *)p)->m2F8(0x3B);
+    *(unsigned char *)(p + 0x3434) = 0;
+    *(unsigned char *)(p + 0x3435) = 3;
+    *(unsigned char *)(p + 0x3436) = 4;
+    func_003E6750(p, 0x1B, 0, 0);
+    func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x834) + 0x104), 16);
+    func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x840) + 0x104), 16);
+    func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x84C) + 0x104), 16);
+    func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8E4) + 0x104), 16);
+    func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8F0) + 0x104), 16);
+    func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8FC) + 0x104), 16);
+}
+
+extern "C" void func_004CC3A0(char *, char *, char *, char *);
+
+extern "C" void func_004C39E0(char *p, int a, int b, int c, int d) {
+    char *g;
+    char *m;
+    char *n;
+    float t;
+    *(int *)(p + 0x134) = a;
+    *(int *)(p + 0x138) = b;
+    *(int *)(p + 0x13C) = c;
+    *(int *)(p + 0x140) = d;
+    g = *(char **)(*(char **)D_01CAFF0C + 4);
+    if (g != 0 && *(ObjT1C **)(g + 0x10) != 0) {
+        t = (*(ObjT1C **)(g + 0x10))->m1C();
+    } else {
+        t = 0.0f;
+    }
+    *(float *)(p + 0x144) = t;
+    *(int *)(p + 0xB2C0) = ((Sub130 *)(p + 0x130))->m80(*(float *)(p + 0x144));
+    *(short *)(p + 0x160) = 0;
+    *(int *)(p + 0x164) = 0;
+    *(int *)(p + 0x168) = 0;
+    m = p;
+    if (m != 0) {
+        m += 0x40;
+    }
+    n = p;
+    if (n != 0) {
+        n += 0xD0;
+    }
+    func_004CC3A0(p, p + 0xE30, n, m);
+    *(unsigned char *)(p + 0x14C) = 0;
+    *(unsigned char *)(p + 0x14D) = 0;
+    ((ObjB *)p)->m2F8(0x16);
+}
