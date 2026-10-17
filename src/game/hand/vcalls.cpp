@@ -9936,3 +9936,125 @@ extern "C" void func_00493D20(char *p) {
         break;
     }
 }
+
+class ObjSt {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual int m10();
+    virtual int m14();
+    virtual int m18();
+};
+
+class AnimM4C {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void m4C(int);
+};
+
+extern "C" void func_004978A0(char *p, char *s) {
+    if (*(unsigned char *)(p + 0x1D) == 3) {
+        return;
+    }
+    *(signed char *)(p + 0x3C) = *(signed char *)(s + 0);
+    *(signed char *)(p + 0x3D) = *(signed char *)(s + 1);
+    *(signed char *)(p + 0x3E) = *(signed char *)(s + 2);
+    *(float *)(p + 0x40) = *(float *)(s + 4);
+    *(float *)(p + 0x44) = *(float *)(s + 8);
+    *(float *)(p + 0x48) = *(float *)(s + 0xC);
+    *(float *)(p + 0x4C) = *(float *)(s + 0x10);
+    *(float *)(p + 0x50) = *(float *)(s + 0x14);
+    *(signed char *)(p + 0x54) = *(signed char *)(s + 0x18);
+    *(float *)(p + 0x58) = *(float *)(s + 0x1C);
+    *(signed char *)(p + 0x5C) = *(signed char *)(s + 0x20);
+    *(float *)(p + 0x60) = *(float *)(s + 0x24);
+    *(float *)(p + 0x64) = *(float *)(s + 0x28);
+    *(float *)(p + 0x68) = *(float *)(s + 0x2C);
+    *(unsigned char *)(p + 0x6C) = *(unsigned char *)(s + 0x30);
+    *(int *)(p + 0x70) = *(int *)(s + 0x34);
+    *(float *)(p + 0x74) = *(float *)(s + 0x38);
+    *(signed char *)(p + 0x78) = *(signed char *)(s + 0x3C);
+    *(signed char *)(p + 0x79) = *(signed char *)(s + 0x3D);
+    *(signed char *)(p + 0x7A) = *(signed char *)(s + 0x3E);
+    if ((unsigned char)(*(ObjSt **)(p + 0xC))->m14() == 1) {
+        ((SelfB4 *)p)->mB4(0x10);
+    }
+    switch ((unsigned char)(*(ObjSt **)(p + 0xC))->m10()) {
+    case 0:
+        (*(ObjSt **)(p + 0xC))->m18();
+        break;
+    case 1:
+        switch ((unsigned char)(*(ObjSt **)(p + 0xC))->m18()) {
+        case 0:
+        case 1:
+            break;
+        default:
+            ((SelfB4 *)p)->mB4(8);
+            break;
+        }
+        break;
+    }
+    switch (*(unsigned char *)(p + 0x10C)) {
+    case 0:
+        (*(AnimM4C **)(p + 0xA8))->m4C(0);
+        break;
+    case 1:
+        (*(AnimM4C **)(p + 0xA8))->m4C(1);
+        break;
+    }
+}
+
+extern "C" void func_0031F260(char *p) {
+    switch (*(int *)(p + 0x1C)) {
+    case 0:
+        *(float *)(*(char **)(p + 0xC) + 0x20) = *(float *)(*(char **)(p + 0xC) + 0x20) + *(float *)(*(char **)(p + 0xC) + 0x30);
+        *(float *)(*(char **)(p + 0xC) + 0x24) = *(float *)(*(char **)(p + 0xC) + 0x24) + *(float *)(*(char **)(p + 0xC) + 0x34);
+        *(float *)(*(char **)(p + 0xC) + 0x28) = *(float *)(*(char **)(p + 0xC) + 0x28) + *(float *)(*(char **)(p + 0xC) + 0x38);
+        if (*(float *)(*(char **)(p + 0xC) + 0x24) < 0.0f && (*(Anim31F **)(p + 8))->m30() != 0) {
+            *(unsigned char *)(p + 0x11) = 0;
+            (*(Anim31F **)(p + 8))->m1C(0x11);
+            (*(Anim31F **)(p + 8))->m44();
+            *(float *)(*(char **)(p + 0xC) + 0x20) = 0.0f;
+            *(float *)(*(char **)(p + 0xC) + 0x24) = 6.0f;
+            *(float *)(*(char **)(p + 0xC) + 0x28) = 20.0f;
+            *(float *)(*(char **)(p + 0xC) + 0x2C) = 1.0f;
+            *(float *)(*(char **)(p + 0xC) + 0x30) = 0.0f;
+            *(float *)(*(char **)(p + 0xC) + 0x34) = -0.0f;
+            *(float *)(*(char **)(p + 0xC) + 0x38) = 0.0f;
+            *(float *)(*(char **)(p + 0xC) + 0x3C) = 1.0f;
+            *(int *)(p + 0x1C) = 1;
+        }
+        break;
+    case 1:
+        *(float *)(*(char **)(p + 0xC) + 0x20) = *(float *)(*(char **)(p + 0xC) + 0x20) - *(float *)(*(char **)(p + 0xC) + 0x20) / 30.0f;
+        *(float *)(*(char **)(p + 0xC) + 0x28) = *(float *)(*(char **)(p + 0xC) + 0x28) - *(float *)(*(char **)(p + 0xC) + 0x28) / 30.0f;
+        if ((*(Anim31F **)(p + 8))->m2C() != 0) {
+            (*(Anim31F **)(p + 8))->m1C(6);
+            (*(Anim31F **)(p + 8))->m44();
+            *(int *)(p + 0x1C) = 2;
+        }
+        break;
+    case 2:
+        if ((*(Anim31F **)(p + 8))->m2C() != 0) {
+            ((Self31F *)p)->m28(0xE);
+        }
+        (*(Anim31F **)(p + 8))->m24();
+        break;
+    }
+}
