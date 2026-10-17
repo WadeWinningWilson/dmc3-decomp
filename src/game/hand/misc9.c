@@ -11563,3 +11563,59 @@ void func_002DAD80(char *p, short a, float f) {
     }
     *(short *)(p + 0x28E2) = *(short *)(p + 0x3BA2) - *(short *)(p + 0x90);
 }
+
+typedef struct { float v[4]; } __attribute__((aligned(16))) V4;
+
+extern V4 D_005599B0;
+void func_00133890(char *, char *, V4 *);
+
+void func_002EE920(char *p) {
+    func_001AD100(p);
+    *(float *)(p + 0x350) = *(float *)(p + 0x350) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0x350) <= 0.0f) {
+        func_001AD140(p);
+    } else {
+        func_0028C5C0(p + 0xD0, (unsigned int)*(float *)(p + 0x10), 1.0f);
+    }
+}
+
+void func_0030B770(char *p) {
+    V4 t;
+    int i;
+    t = D_005599B0;
+    for (i = 0; i < 3; i++) {
+        func_00133890(p + i * 0x40 + 0x1670, p + i * 0x10 + 0x1610, &t);
+        func_001318E0(p + i * 0x40 + 0x1670, p + i * 0x40 + 0x1670, p + 0xE0);
+        *(float *)(p + i * 0x40 + 0x16A0) = *(float *)(p + i * 0x10 + 0x1640);
+        *(float *)(p + i * 0x40 + 0x16A4) = *(float *)(p + i * 0x10 + 0x1644);
+        *(float *)(p + i * 0x40 + 0x16A8) = *(float *)(p + i * 0x10 + 0x1648);
+        *(float *)(p + i * 0x40 + 0x16AC) = 1.0f;
+    }
+}
+
+void func_0030E240(char *p) {
+    switch (*(unsigned char *)(p + 0x4C)) {
+    case 0: {
+        char *o = *(char **)(p + 0x54);
+        func_00286040((char *)&o);
+        if (o != 0) {
+            func_001AD140(o);
+            o = 0;
+        }
+        break;
+    }
+    case 1:
+    case 2: {
+        char *o = *(char **)(p + 0x54);
+        func_00228350((char *)&o);
+        if (o != 0) {
+            func_001AD140(o);
+            o = 0;
+        }
+        break;
+    }
+    case 3:
+    case 4:
+        break;
+    }
+}
