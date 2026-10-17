@@ -5767,3 +5767,22 @@ extern "C" void func_003388D0(char *p) {
     }
     func_0033A580(p);
 }
+
+extern "C" void func_00335EF0(char *, int);
+
+extern "C" void func_00338C30(char *p) {
+    if ((unsigned char)func_0024E780(p + 0xDF0, 1, 0) == 1 && *(int *)(p + 0x12B0) != 0) {
+        func_003023F0(*(int *)(p + 0x12B0));
+    }
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        func_0033A660(p, 1);
+        func_00335EF0(p, 0x40);
+    case 1:
+        if ((unsigned char)func_0024E800(p + 0xDF0) == 1) {
+            ((ObjB *)p)->m304(0x20);
+        }
+    }
+    func_0033A580(p);
+}

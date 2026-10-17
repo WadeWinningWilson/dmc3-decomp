@@ -760,6 +760,168 @@ void func_0050E000(char *);
 void func_0050E160(char *);
 void func_0050E420(char *);
 void func_0050E5B0(char *);
+extern char D_005BBA18[4];
+extern int D_00540278[];
+extern signed char D_005BC278[4];
+int func_001AF3F0(char *, void *, int, int);
+void func_0026D0B0(char *);
+short func_0027BC40(char *, int);
+int func_0027BCB0(char *, int);
+void func_00288140(char *);
+int func_002DD950(char *, int);
+void func_00303820(char *);
+float func_0034C160(float, float, float);
+void func_003DA500(char *, int);
+void func_0048AFC0(char *, int);
+void func_00376CF0(char *);
+void func_004B9EC0(char *);
+void func_004BA4D0(char *);
+void func_004BA670(char *);
+void func_004BA880(char *);
+void func_00382A50(char *);
+void func_0024DD30(char *);
+void func_0024E520(char *);
+extern float D_005BCA80;
+extern int D_0065E530[];
+extern int D_0065E534[];
+extern int D_0065E53C[];
+extern int D_0065E540[];
+extern char D_0065E4F0[];
+void func_002DBCE0(char *);
+void func_002CF260(char *);
+void func_002CF630(char *, int);
+void func_0034B9A0(char *, short, float, float, float);
+void func_002CE1F0(char *);
+void func_0043EEF0(char *, int);
+void func_004D8560(char *, int);
+void func_004D81D0(char *);
+float func_0011DA38(float);
+int func_00244DF0(char *, int);
+void func_0021BDB0(char *, int, int);
+extern char D_01DF5D20[];
+extern float D_005606E0[][3];
+void func_00477CE0(char *, int);
+char *func_00203AB0(int, int, int);
+void func_002EF4D0(int, int);
+void func_00204E40(char *, char *);
+int func_002A4A40(char *);
+float func_001F9C40(char *, int);
+int func_003B5A00(char *, short);
+float func_003B5650(char *, int, int);
+void func_001A2600(char *, int);
+void func_001A23D0(char *);
+void func_003E9930(char *);
+void func_00480E90(char *, int);
+extern int D_01DFAB80[];
+extern int D_01DFAB8C[];
+void func_00131760(char *, char *, float *);
+int func_0020AC40(char *, char *);
+void func_0020D140(char *);
+int func_00249E20(char *, int);
+void func_002D9070(char *, int);
+void func_00226A00(char *, int);
+void func_00225F30(char *, int);
+void func_00226580(char *, int);
+extern signed char D_005BCD60[];
+void func_0031E570(char *);
+void func_002D2270(char *, int);
+extern char D_005B9CA0[];
+extern char D_005B9CC4[];
+extern char D_005B9D44[];
+extern char D_005BE0D4[4];
+extern unsigned int D_01CB051C[];
+void func_001A1DC0(char *);
+void func_001A1D90(char *);
+void func_0028C790(char *, int);
+void func_00252FA0(char *);
+void func_002E7840(char *);
+void func_0028C110(char *);
+void func_001ED920(char *);
+void func_001EC140(char *);
+void func_001EC390(char *);
+void func_001EC4F0(char *);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1480,4 +1642,35 @@ void func_003C0520(char *p) {
         q[0x9B] = 2;
     }
     func_003305E0(D_01DFABA0, 0, 0x5A, (int)(p + 0x50), 0, 0, 0);
+}
+
+char *func_0050EA20(char *p) {
+    extern char D_005BB6D0[];
+    extern char D_005BB6F4[];
+    extern char D_005BB774[];
+    int i;
+    func_00252FA0(p);
+    *(char **)p = D_005BB6D0;
+    *(char **)(p + 0x40) = D_005BB6F4;
+    *(char **)(p + 0xA0) = D_005BB774;
+    *(unsigned char *)(p + 0x240) = 0;
+    *(unsigned char *)(p + 0x241) = 0;
+    *(short *)(p + 0x242) = 0;
+    *(int *)(p + 0x248) = 0;
+    *(int *)(p + 0x24C) = 0;
+    *(int *)(p + 0x250) = 0;
+    *(int *)(p + 0x260) = 0;
+    *(int *)(p + 0x264) = 0;
+    *(int *)(p + 0x268) = 0;
+    *(float *)(p + 0x26C) = 1.0f;
+    *(float *)(p + 0x270) = 100000.0f;
+    *(unsigned char *)(p + 0x274) = 0;
+    *(unsigned char *)(p + 0x275) = 0;
+    *(short *)(p + 0x276) = 0;
+    for (i = 0; i < 10; i++) {
+        *(short *)(p + i * 2 + 0x278) = -1;
+    }
+    func_002E7840(p + 0x2A0);
+    func_0028C110(p + 0x340);
+    return p;
 }
