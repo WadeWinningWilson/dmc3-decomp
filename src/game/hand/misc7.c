@@ -407,6 +407,8 @@ float func_00131C20(int);
 char *func_002FB170(int);
 char *func_002FB8E0(int);
 void *func_001282D0(void *, void *, unsigned int);
+float func_0011DA38(float);
+float func_0011D798(float);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -458,4 +460,11 @@ int func_002FB930(int a, int b, void *src) {
     *(unsigned short *)(d + 0xE) = *(unsigned short *)(d + 6);
     func_001282D0(d + 0x10, src, 0x30);
     return 0;
+}
+
+void func_0034B9A0(float *v, int ang, float s, float y, float t) {
+    float a = 6.283185f * ((float)ang / 65536.0f);
+    v[0] = v[0] + t * (s * func_0011DA38(a));
+    v[1] = v[1] + y * t;
+    v[2] = v[2] + t * (s * func_0011D798(a));
 }

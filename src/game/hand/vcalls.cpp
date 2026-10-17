@@ -15286,6 +15286,7 @@ extern "C" void *func_00128488(void *, int, unsigned int);
 extern "C" void func_0024DDF0(char *);
 extern "C" void func_0024E860(char *);
 extern "C" void func_0024E9B0(char *);
+extern "C" void func_00105760(float *, float *, float);
 
 extern "C" void func_0037D190(Obj1FC *o) {
     char *p = (char *)o;
@@ -15456,4 +15457,74 @@ extern "C" void func_0024DD30(char *p) {
         }
         func_0024E9B0(p);
     }
+}
+
+class ObjPosC4 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual float *mC4();
+};
+
+#define SETPOS(m,s) __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(m), "r"(s) : "memory")
+
+#define GETPOS(d,m) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(m) : "memory")
+
+#define VADDIP(d,s) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+extern "C" void func_0033B710(char *p) {
+    float m2[16];
+    float m[16];
+    float a[4];
+    float *src = ((ObjPosC4 *)(p + 0x740))->mC4();
+    QCOPY(a, src);
+    SETPOS(m2, a);
+    func_00105760(m, m2, 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f));
+    GETPOS(a, m);
+    VADDIP(p + 0x50, a);
 }
