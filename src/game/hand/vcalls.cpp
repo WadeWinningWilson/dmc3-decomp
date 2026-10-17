@@ -16099,3 +16099,25 @@ extern "C" void func_003B4720(char *p) {
         *(unsigned char *)(p + 0x21C9) = 1;
     }
 }
+
+extern "C" void func_00415C80(char *p) {
+    int i;
+    if (*(int *)(p + 0x1D0) != 0) {
+        func_001AF080(D_00666750, *(int *)(p + 0x1D0));
+        *(int *)(p + 0x1D0) = 0;
+    }
+    if (*(int *)(p + 0x1D4) != 0) {
+        func_00196C40(D_006480D0, *(char **)(p + 0x1D4));
+        *(int *)(p + 0x1D4) = 0;
+    }
+    for (i = 0; i < 7; i++) {
+        ((ObjD0 *)(p + i * 0x600 + 0x200))->mD0();
+    }
+    ((ObjD0 *)(p + 0x2C00))->mD0();
+    {
+        int j;
+        for (j = 0; j < *(int *)(p + 0x38); j++) {
+            func_0013D5D0(p + j * 16 + 0x3C);
+        }
+    }
+}

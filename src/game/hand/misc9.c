@@ -12470,3 +12470,14 @@ void func_003B61F0(char *p) {
     VADDIP(&v, p + 0x50);
     *(int *)(p + 0x21F8) = func_004F7680(*(int *)(p + 0x4C0), p, 0, *(short *)(p + 0x90), (char *)&v);
 }
+
+void func_0041D9E0(char *a, char *b, char *out) {
+    float d[4];
+    float r[4];
+    VSUB(d, b, a);
+    r[0] = 6.283185f * ((float)func_00131D10(-d[1], func_00132470(a, b)) / 65536.0f);
+    r[1] = 6.283185f * ((float)func_00131D10(d[0], d[2]) / 65536.0f);
+    r[3] = 1.0f;
+    r[2] = 0.0f;
+    QCOPY(out, r);
+}
