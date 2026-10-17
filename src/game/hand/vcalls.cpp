@@ -9204,6 +9204,19 @@ extern "C" void func_003FA3F0(char *, int);
 extern "C" int func_00437BE0(char *);
 extern "C" int func_004361D0(char *);
 extern "C" int func_00437E00(char *, int);
+extern "C" int D_01CAFF10[];
+extern "C" int D_01CAFF38[];
+extern "C" int D_01CAFF14[];
+extern "C" char D_01CAF520[];
+extern "C" char D_006011E4[];
+extern "C" char D_00631568[];
+extern "C" int D_005BE09C;
+extern "C" void func_001F9BF0(char *);
+extern "C" void func_0020E4D0(char *, int, int);
+extern "C" void func_00286F20(char *, int);
+extern "C" void func_0027BEA0(char *);
+extern "C" void func_001ACCD0(int);
+extern "C" void func_0013E0A0(char *);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -9425,4 +9438,87 @@ extern "C" int func_00437C50(char *p) {
         return 1;
     }
     return 0;
+}
+
+class ObjCam20 {
+public:
+    virtual void d0();
+    virtual void mC();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void m20();
+};
+
+extern "C" void func_0036A870(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if ((*(AnimJ **)(p + 0xA8))->m2C() != 0) {
+            (*(AnimJ **)(p + 0xA8))->m18(0x52);
+            (*(AnimJ **)(p + 0xA8))->m48(0x3E4, *(char **)(p + 0x10) + 0x10);
+            *(int *)(p + 0xD4) = 1;
+        }
+        (*(AnimJ **)(p + 0xA8))->m24();
+        break;
+    case 1:
+        if (!((*(AnimJ **)(p + 0xA8))->m28() < 76.0f)) {
+            (*(AnimJ **)(p + 0xA8))->m40();
+            (*(AnimJ **)(p + 0xA8))->m48(3, *(char **)(p + 0x10) + 0x10);
+            switch (**(signed char **)(p + 4)) {
+            default:
+                func_00330BD0(D_01DFABA0, 0x19, *(char **)(p + 0x10) + 0x10, 0, 0);
+                break;
+            case 0x19:
+                func_00330BD0(D_01DFABA0, 0x19, *(char **)(p + 0x10) + 0x10, 7, 0);
+                break;
+            }
+            *(int *)(p + 0xD4) = 2;
+        }
+        (*(AnimJ **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        (*(AnimJ **)(p + 0xA8))->m48(0x388, *(char **)(p + 0x10) + 0x10);
+        break;
+    }
+}
+
+extern "C" void func_00235A30(char *p) {
+    char *g;
+    *(int *)(p + 0xC) = D_01CAFF10[0];
+    func_001F9BF0(D_01DF5D20);
+    D_01CAFF38[0] = *(int *)(p + 0x10) = *(short *)(*(char **)(*(char **)(p + 0xC) + 4) + 0xF2);
+    *(int *)(p + 0x14) = *(short *)(*(char **)(*(char **)(p + 0xC) + 4) + 0xF4);
+    func_0020E4D0(*(char **)(*(char **)(p + 0xC) + 4), *(int *)(p + 0x10), *(int *)(p + 0x14));
+    func_00286F20(*(char **)(*(char **)(p + 0xC) + 8), *(int *)(p + 0x10));
+    *(char **)D_01CAFF0C = p + 0x140;
+    *(char **)(p + 0x164) = p;
+    *(char **)(p + 0x140) = p + 0x5BF0;
+    *(int *)(p + 0x158) = *(int *)(*(char **)(p + 0xC) + 4);
+    *(char **)(p + 0x15C) = p + 0x180;
+    *(char **)(p + 0x160) = p + 0xB70;
+    *(int *)(p + 0x144) = *(int *)(p + 0xC);
+    *(char **)(p + 0x16C) = p + 0x18E94;
+    *(char **)(p + 0x170) = p + 0x18EA0;
+    *(char **)(p + 0x168) = p + 0x19484;
+    if (*(int *)(p + 0x10) == 0xC) {
+        (*(char **)D_01CAFF0C)[0xA] = 1;
+    } else {
+        (*(char **)D_01CAFF0C)[0xA] = 0;
+    }
+    D_01CAFF14[0] = (int)(p + 0x30);
+    func_0027BEA0(p + 0x18EA8);
+    *(char **)(p + 0x2308) = p + 0x45C0;
+    *(char **)(p + 0x230C) = p + 0x47C0;
+    *(unsigned char *)(p + 0x5BE0) = 0;
+    D_01CAF520[0] = 0;
+    (*(char **)D_01CAFF0C)[9] = 0;
+    func_001ACCD0(D_005BE09C);
+    func_0013E0A0(D_006011E4);
+    func_0013E0A0(D_00631568);
+    g = *(char **)D_01CAFF0C;
+    if (*(unsigned char *)(g + 0xA) != 0) {
+        (*(ObjCam20 **)(*(char **)(g + 4) + 0x10))->mC();
+        (*(ObjCam20 **)(*(char **)(g + 4) + 0x10))->m20();
+    }
 }
