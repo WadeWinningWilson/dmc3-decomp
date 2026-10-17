@@ -219,6 +219,32 @@ void func_0024BE40(char *, int);
 int func_0027BDC0(char *, int, int);
 
 
+unsigned char func_004908E0(char *, char *);
+
+unsigned char func_004B2F80(char *, char *);
+
+
+unsigned char func_003AC650(void);
+unsigned char func_003AC6B0(char *);
+
+
+extern char D_00666750[];
+int func_0036E050(int);
+
+
+void func_00252850(char *, int, int);
+
+
+int func_002FFE20(char *, int);
+int func_003002D0(char *, int);
+
+extern float D_005BCD2C;
+
+extern char D_006480D0[];
+int func_00196F20(char *, int, int, int);
+
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -281,4 +307,20 @@ char *func_002A7FD0(char *p, short flag) {
         }
     }
     return p;
+}
+
+void func_00301480(char *p) {
+    int func_003014F0(char *, int);
+    int func_00301790(char *, int);
+    int k = *(unsigned char *)(p + 57);
+    switch (k) {
+    case 0:
+    case 1:
+        func_003014F0(p, k);
+        break;
+    case 2:
+    case 3:
+        func_00301790(p, k);
+        break;
+    }
 }

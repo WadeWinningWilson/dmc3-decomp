@@ -913,3 +913,97 @@ int func_00370000(char *p) {
     }
     return 1;
 }
+
+void func_00252850(char *, int, int);
+void func_0033B0B0(char *p, unsigned char k, int a, int b) {
+    if (*(unsigned char *)(p + 333) == 3) {
+        return;
+    }
+    switch (k) {
+    case 0:
+    case 1:
+    case 4:
+        break;
+    case 2:
+    case 3:
+        func_00252850(p, a, b);
+        break;
+    }
+}
+void func_003C0890(char *p, unsigned char k, int a, int b) {
+    if (*(unsigned char *)(p + 333) == 3) {
+        return;
+    }
+    switch (k) {
+    case 0:
+    case 1:
+    case 4:
+        break;
+    case 2:
+    case 3:
+        func_00252850(p, a, b);
+        break;
+    }
+}
+int func_002FFE20(char *, int);
+int func_003002D0(char *, int);
+void func_002FFBF0(char *p) {
+    int k = *(unsigned char *)(p + 57);
+    switch (k) {
+    case 0:
+    case 1:
+        func_002FFE20(p, k);
+        break;
+    case 2:
+    case 3:
+        func_003002D0(p, k);
+        break;
+    }
+}
+extern float D_005BCD2C;
+void func_003FF6F0(char *p) {
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(unsigned char *)(p + 6) += 1;
+        break;
+    case 1:
+        *(float *)(p + 84) += D_005BCD2C * *(float *)(p + 16);
+        if (*(float *)(p + 84) >= *(float *)(p + 4868)) {
+            *(char *)(p + 5) = 0;
+            *(char *)(p + 6) = 0;
+        }
+        break;
+    }
+}
+extern char D_006480D0[];
+int func_00196F20(char *, int, int, int);
+int func_00197AC0(char *p) {
+    int a = *(short *)(p + 24);
+    int r = 0;
+    if (a < 0 || *(short *)(p + 56) > 0) {
+        return 0;
+    }
+    if (*(short *)(p + 20) == 0) {
+        r += func_00196F20(D_006480D0, a, *(short *)(p + 30), *(short *)(p + 32));
+    }
+    return r;
+}
+char *func_004D2740(char *p) {
+    char *r;
+    switch (*(unsigned char *)(p + 45769)) {
+    case 0:
+    case 1:
+        r = p + 3700;
+        break;
+    case 2:
+        r = p + 3952;
+        break;
+    case 3:
+        r = p + 4292;
+        break;
+    default:
+        r = p + 3700;
+        break;
+    }
+    return r;
+}
