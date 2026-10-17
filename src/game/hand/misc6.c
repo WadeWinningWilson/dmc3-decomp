@@ -1945,3 +1945,117 @@ int func_00437A00(int p0, int a) {
     }
     return best;
 }
+
+static inline unsigned char is_zero8(char *q) {
+    return *(unsigned char *)q == 0;
+}
+
+void func_001F87B0(char *, int, char *, float);
+void func_001B3600(char *, char *, char *, char *);
+
+void func_001B6060(char *p) {
+    char *t = *(char **)(p + 1088);
+    char *o;
+    float dt = *(float *)(*(char **)(p + 1184) + 16);
+    *(float *)(p + 16) = dt;
+    *(float *)(p + 188) += dt;
+    o = *(char **)(p + 1184);
+    if (is_zero8(o + 56) != 1) {
+        func_001AD140(p);
+    } else if (*(unsigned char *)(o + 57) == 0) {
+        func_001F87B0(p + 1092, 2, o, *(float *)(p + 16));
+        func_001B3600(p, t + 48, t + 54, t + 60);
+        if (*(float *)(*(char **)(p + 1184) + 64) <= 0.0f && *(unsigned char *)(p + 59) == 0) {
+            func_00195E20(D_005BE098, p);
+        }
+    }
+}
+
+void func_001BB920(char *p) {
+    char *t = *(char **)(p + 1088);
+    char *o;
+    float dt = *(float *)(*(char **)(p + 1184) + 16);
+    *(float *)(p + 16) = dt;
+    *(float *)(p + 188) += dt;
+    o = *(char **)(p + 1184);
+    if (is_zero8(o + 56) != 1) {
+        func_001AD140(p);
+    } else if (*(unsigned char *)(o + 57) == 0) {
+        func_001F87B0(p + 1092, 3, o, *(float *)(p + 16));
+        func_001B3600(p, t + 48, t + 54, t + 60);
+        if (*(float *)(*(char **)(p + 1184) + 64) <= 0.0f && *(unsigned char *)(p + 59) == 0) {
+            func_00195E20(D_005BE098, p);
+        }
+    }
+}
+
+void func_001BE070(char *p) {
+    char *t = *(char **)(p + 1088);
+    char *o;
+    float dt = *(float *)(*(char **)(p + 1184) + 16);
+    *(float *)(p + 16) = dt;
+    *(float *)(p + 188) += dt;
+    o = *(char **)(p + 1184);
+    if (is_zero8(o + 56) != 1) {
+        func_001AD140(p);
+    } else if (*(unsigned char *)(o + 57) == 0) {
+        func_001F87B0(p + 1092, 3, o, *(float *)(p + 16));
+        func_001B3600(p, t + 48, t + 54, t + 60);
+        if (*(float *)(*(char **)(p + 1184) + 64) <= 0.0f && *(unsigned char *)(p + 59) == 0) {
+            func_00195E20(D_005BE098, p);
+        }
+    }
+}
+
+void func_001F7050(char *p) {
+    char *t = *(char **)(p + 1088);
+    char *o;
+    float dt = *(float *)(*(char **)(p + 1184) + 16);
+    *(float *)(p + 16) = dt;
+    *(float *)(p + 188) += dt;
+    o = *(char **)(p + 1184);
+    if (is_zero8(o + 56) != 1) {
+        func_001AD140(p);
+    } else if (*(unsigned char *)(o + 57) == 0) {
+        func_001F87B0(p + 1092, 2, o, *(float *)(p + 16));
+        func_001B3600(p, t + 48, t + 54, t + 60);
+        if (*(float *)(*(char **)(p + 1184) + 64) <= 0.0f && *(unsigned char *)(p + 59) == 0) {
+            func_00195E20(D_005BE098, p);
+        }
+    }
+}
+
+void func_001F7DC0(char *p) {
+    char *t = *(char **)(p + 1088);
+    char *o;
+    float dt = *(float *)(*(char **)(p + 1184) + 16);
+    *(float *)(p + 16) = dt;
+    *(float *)(p + 188) += dt;
+    o = *(char **)(p + 1184);
+    if (is_zero8(o + 56) != 1) {
+        func_001AD140(p);
+    } else if (*(unsigned char *)(o + 57) == 0) {
+        func_001F87B0(p + 1092, 2, o, *(float *)(p + 16));
+        func_001B3600(p, t + 48, t + 54, t + 60);
+        if (*(float *)(*(char **)(p + 1184) + 64) <= 0.0f && *(unsigned char *)(p + 59) == 0) {
+            func_00195E20(D_005BE098, p);
+        }
+    }
+}
+
+void func_00481800(char *p) {
+    char stk[0x10] __attribute__((aligned(16)));
+    int i;
+    char *o;
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(p + 3856), "r"(stk) : "memory");
+    *(float *)(stk + 12) = 1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(p + 80), "r"(stk) : "memory");
+    *(float *)(p + 92) = 1.0f;
+    for (i = 0; i < 15; i++) {
+        o = ((char **)(p + 576))[i];
+        if (o != 0 && *(int *)(o + 260) != 0) {
+            __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(*(char **)(((char **)(p + 576))[i] + 260) + 48), "r"(stk) : "memory");
+            *(float *)(*(char **)(((char **)(p + 576))[i] + 260) + 60) = 1.0f;
+        }
+    }
+}
