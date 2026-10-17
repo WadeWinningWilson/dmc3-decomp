@@ -7002,3 +7002,21 @@ extern "C" void func_004C5460(char *p) {
         break;
     }
 }
+
+extern "C" void func_003F01B0(char *p) {
+    *(float *)(p + 0x714) = *(float *)(p + 0x714) + *(float *)(p + 0x3A14) * *(float *)(p + 0x10);
+    *(float *)(p + 0x3A14) = *(float *)(p + 0x3A14) + -0.896f * *(float *)(p + 0x10);
+    if (!(*(float *)(p + 0x3AA4) <= 0.0f)) {
+        ((ObjB *)p)->m2F8(0x2C);
+        *(unsigned char *)(p + 0x3434) = 0;
+        *(unsigned char *)(p + 0x3435) = 3;
+        *(unsigned char *)(p + 0x3436) = 2;
+        func_003E6750(p, 0x20, 0, 0);
+        func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x834) + 0x104), 0x10);
+        func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x840) + 0x104), 0x10);
+        func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x84C) + 0x104), 0x10);
+        func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8E4) + 0x104), 0x10);
+        func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8F0) + 0x104), 0x10);
+        func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8FC) + 0x104), 0x10);
+    }
+}
