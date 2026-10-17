@@ -16393,3 +16393,21 @@ extern "C" bool func_00430750(char *p, int u, char *q) {
     }
     return false;
 }
+
+extern "C" void func_0048F670(char *p) {
+    int i;
+    for (i = 0; i < 9; i++) {
+        ((ObjD0 *)(p + i * 0x600 + 0x80))->mD0();
+    }
+    for (i = 0; i < 2; i++) {
+        if (*(int *)(p + i * 4 + 0x3C) != 0) {
+            func_001AF080(D_00666750, *(int *)(p + i * 4 + 0x3C));
+            *(int *)(p + i * 4 + 0x3C) = 0;
+        }
+        ((ObjD0 *)(p + i * 0x600 + 0x3680))->mD0();
+    }
+    if (*(char **)(p + 0x44) != 0) {
+        func_00196C40(D_006480D0, *(char **)(p + 0x44));
+        *(char **)(p + 0x44) = 0;
+    }
+}

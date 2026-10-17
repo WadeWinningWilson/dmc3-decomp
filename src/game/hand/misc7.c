@@ -423,6 +423,9 @@ void func_001A3BD0(char *, int, float, float);
 extern char D_01DFABA0[];
 void func_0043EEF0(char *, int);
 void func_003305E0(char *, int, int, char *, int, int, int);
+extern int D_0058B1B0[];
+char *func_0027A710(char *);
+void func_001A1F30(char *, int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -615,4 +618,31 @@ void func_0043FD00(char *p, signed char k, int v) {
     func_0043EEF0(p, 1);
     VMOVXYZ30(a, *(char **)(*(char **)(p + 0x1B0) + 0x104));
     func_003305E0(D_01DFABA0, 8, 0x82, (char *)a, 0x2D, 0, 0);
+}
+
+void func_004CFBD0(char *p, int k, int b, int m) {
+    switch (m) {
+    case -1:
+        func_0024DA80(*(char **)(p + 0xAB00), (unsigned char)k, b);
+        func_0024DA80(*(char **)(p + 0xAB04), (unsigned char)k, b);
+        break;
+    case 0:
+        func_0024DA80(*(char **)(p + 0xAB00), (unsigned char)k, b);
+        break;
+    case 1:
+        func_0024DA80(*(char **)(p + 0xAB04), (unsigned char)k, b);
+        break;
+    }
+}
+
+void func_004D9AC0(char *p, int k) {
+    int i;
+    for (i = 0; i < 12; i++) {
+        if (*(unsigned char *)(p + i + 0x580) == 1) {
+            func_001A1F30(func_0027A710(p + 0xE0), D_0058B1B0[i]);
+        }
+    }
+    if ((unsigned char)k == 1 && *(unsigned char *)(p + 0x57F) == 1) {
+        func_003305E0(D_01DFABA0, 8, 0x8D, p + 0x50, 0x2C, 0, 0);
+    }
 }
