@@ -502,7 +502,7 @@ void func_0023D5B0(char *);
 void func_004BAD60(char *, char *, short, int);
 extern char D_005B67E0[];
 void func_002790E0(char *);
-void func_002791E0(void);
+char *func_002791E0(char *, short);
 extern char D_005AF6F0[];
 extern char D_005AF714[];
 extern char D_005AF794[];
@@ -10779,6 +10779,14 @@ void func_00199580(char *p, char *t, int f) {
 }
 
 typedef struct { float v[4]; } F4;
+extern char D_005A8650[];
+extern char D_005A8740[];
+extern char D_005A8460[];
+extern char D_005A8550[];
+void func_001FBC10(char *, int);
+void func_00278D50(char *, int);
+void func_00279090(char *, int);
+void func_00292090(char *);
 
 void func_001AA740(char *p, int a, int b) {
     int i;
@@ -10855,6 +10863,120 @@ int func_002529A0(char *p, int k, float *out, float *r) {
         *(F4 *)out = *(F4 *)(p + 0x50);
         out[1] = out[1] + 100.0f;
         *r = 100.0f;
+        return 1;
+    }
+    return 0;
+}
+
+char *func_002791E0(char *p, short flags) {
+    if (p) {
+        *(char **)p = D_005A8650;
+        *(char **)(p + 4) = D_005A8740;
+        func_001FBC10(p + 0x400, -1);
+        func_0013D240(p + 0x14, -1);
+        func_00278D50(p + 4, 0);
+        func_00279090(p, 0);
+        if (flags > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+
+char *func_0027A660(char *p, short flags) {
+    if (p) {
+        *(char **)p = D_005A8460;
+        *(char **)(p + 4) = D_005A8550;
+        func_001FBC10(p + 0x270, -1);
+        func_0013D240(p + 0x14, -1);
+        func_00278D50(p + 4, 0);
+        func_00279090(p, 0);
+        if (flags > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+
+void func_00299DE0(char *p, int a) {
+    unsigned char t;
+    if (a) {
+        t = *(unsigned char *)(p + 0xA8FA);
+        *(unsigned char *)(p + 0xA8FA) = *(unsigned char *)(p + 0xA8F9);
+        *(unsigned char *)(p + 0xA8F9) = *(unsigned char *)(p + 0xA8F8);
+        *(unsigned char *)(p + 0xA8F8) = t;
+    } else {
+        t = *(unsigned char *)(p + 0xA8F8);
+        *(unsigned char *)(p + 0xA8F8) = *(unsigned char *)(p + 0xA8F9);
+        *(unsigned char *)(p + 0xA8F9) = *(unsigned char *)(p + 0xA8FA);
+        *(unsigned char *)(p + 0xA8FA) = t;
+    }
+    func_00292090(p);
+}
+
+void func_0029FCA0(char *p) {
+    int i;
+    func_002EF940(*(int *)D_01CAFF0C, p + 0x8F80);
+    func_002EF940(*(int *)D_01CAFF0C, p + 0x8FD0);
+    for (i = 0; i < 3; i++) {
+        if (*(unsigned char *)(p + i + 0x8920) != 0) {
+            func_002EF940(*(int *)D_01CAFF0C, p + i * 0x50 + 0x9020);
+        }
+    }
+}
+
+void func_0029FFF0(char *p) {
+    int i;
+    for (i = 0; i < 7; i++) {
+        func_00206730(p + i * 4 + 0xA9A8);
+    }
+    func_00206730(p + 0xA9C4);
+    func_00206730(p + 0xA9C8);
+    func_00206730(p + 0xA9CC);
+    func_00206730(p + 0xA9D0);
+    func_00206730(p + 0xA9D4);
+    func_00206730(p + 0xA9D8);
+}
+
+void func_002CF590(char *p) {
+    int i;
+    for (i = 0; i < 3; i++) {
+        if (*(char **)(p + i * 4 + 0x2F58) != 0 && (unsigned char)func_0024E780((p + (i + 2) * 0xD0) + 0x2450, 0, 2) != 1) {
+            func_001AD140(*(char **)(p + i * 4 + 0x2F58));
+            *(char **)(p + i * 4 + 0x2F58) = 0;
+        }
+    }
+}
+
+int func_002DA8B0(char *p, signed char k) {
+    switch (k) {
+    case 1:
+        if (*(signed char *)(p + 0x3D4C) == -1) {
+            *(signed char *)(p + 0x3D4C) = k;
+            return 1;
+        }
+        if (*(signed char *)(p + 0x3D4D) == -1) {
+            *(signed char *)(p + 0x3D4D) = k;
+            return 1;
+        }
+        break;
+    case 6:
+        if (*(signed char *)(p + 0x3D4E) == -1) {
+            *(signed char *)(p + 0x3D4E) = k;
+            return 1;
+        }
+        if (*(signed char *)(p + 0x3D4F) == -1) {
+            *(signed char *)(p + 0x3D4F) = k;
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
+
+int func_002DAAB0(char *p, char *x, short a, short b) {
+    short d = func_002DAA60(p, x) - b - *(short *)(p + 0x90);
+    if (d < a && (short)-a < d) {
         return 1;
     }
     return 0;
