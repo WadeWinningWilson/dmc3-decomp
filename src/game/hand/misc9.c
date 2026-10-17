@@ -12206,6 +12206,7 @@ ret12 func_0050D630(int, int, int);
 extern unsigned char D_01CB1292[];
 extern int D_00582AD0[];
 unsigned int func_0030FDF0(char *, int, int, int, int, int, int, int);
+extern short D_00541CE0[];
 
 int func_00196180(char *p) {
     int r = 1;
@@ -12287,4 +12288,55 @@ float func_001F7280(char *s, float t) {
         return d * (-d * d) / 6.0f;
     }
     return 0.0f;
+}
+
+void func_0020E580(char *p) {
+    signed char k = *(signed char *)(p + 0xD4);
+    if (k != -1) {
+        char *o = *(char **)(*(char **)D_01CAFF0C + 4);
+        if (o != 0) {
+            if (k == 0) {
+                *(int *)(o + 0x1C) = 0;
+            } else {
+                *(unsigned char *)((char *)k + (int)o + 0x20) = 0;
+            }
+        }
+        k = *(signed char *)(p + 0xD4);
+        *(unsigned int *)((char *)(k / 32 * 4) + (int)p + 0x680) &= ~(1 << (k & 31));
+    }
+    k = *(signed char *)(p + 0xD5);
+    if (k != -1) {
+        char *o = *(char **)(*(char **)D_01CAFF0C + 4);
+        if (o != 0) {
+            if (k == 0) {
+                *(int *)(o + 0x1C) = 1;
+            } else {
+                *(unsigned char *)((char *)k + (int)o + 0x20) = 1;
+            }
+        }
+    }
+    *(signed char *)(p + 0xFF) = -1;
+    *(signed char *)(p + 0xFE) = -1;
+    *(short *)(p + 0xFC) = -1;
+    *(short *)(p + 0xFA) = -1;
+}
+
+void func_00211670(char *p) {
+    int i;
+    for (i = 0; i < D_00541CE0[*(unsigned char *)(p + 6) * 12]; i++) {
+        char *e = *(char **)(p + 0x24) + i * 16;
+        if (*(int *)e != 0) {
+            unsigned char *q = *(unsigned char **)(e + 4);
+            switch (*q) {
+            case 0:
+                break;
+            case 1:
+            case 2:
+            case 4:
+            case 3:
+                *q = 1;
+                break;
+            }
+        }
+    }
 }

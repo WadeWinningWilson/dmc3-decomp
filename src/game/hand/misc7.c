@@ -542,3 +542,19 @@ void func_001AA4B0(char *p, char *m, char *src, int flags) {
         }
     }
 }
+
+void func_0021CA00(char *p, unsigned char k) {
+    switch (k) {
+    case 0:
+        if (*(unsigned int *)(p + 0x2898) & 2) {
+            float f = *(float *)(*(char **)(p + 0x283C) + 0x2C4);
+            if (!((float)(unsigned int)*(unsigned char *)(p + 0x299F) <= f)) {
+                *(unsigned char *)(p + 0x299F) = (unsigned int)f;
+            }
+        }
+        break;
+    case 1:
+        *(unsigned char *)(p + 0x299F) = 0;
+        break;
+    }
+}
