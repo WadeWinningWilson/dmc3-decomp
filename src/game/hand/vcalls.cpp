@@ -14486,3 +14486,19 @@ extern "C" void func_002E7510(char *o, unsigned char a, unsigned char b, unsigne
     *(int *)(o + 0x1C) = c;
     func_002E7590(o);
 }
+
+extern "C" void func_00326BA0(char *p) {
+    char *q = p + 0x1880;
+    ((SubC8CC *)(p + 0x1240))->mCC(q);
+    ((SubC8CC *)(p + 0xC40))->mCC(q);
+    ((SubC8CC *)(p + 0x640))->mCC(q);
+    ((SubC8CC *)(p + 0x40))->mCC(q);
+}
+
+extern "C" void func_0038A500(char *p) {
+    char *q = p + 0x1880;
+    ((SubC8CC *)(p + 0x1240))->mCC(q);
+    ((SubC8CC *)(p + 0x640))->mCC(q);
+    ((SubC8CC *)(p + 0x40))->mCC(q);
+    ((SubC8CC *)(p + 0xC40))->mCC(q);
+}

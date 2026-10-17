@@ -6734,3 +6734,20 @@ void func_0033D2A0(char *p) {
     func_00105230((char *)m, (char *)m, v);
     func_00207480(3, 0x8B, (char *)m, 8);
 }
+
+void func_002FD660(char *p) {
+    float m[16];
+    float v[4];
+    char *o;
+    v[0] = 0.0f;
+    v[1] = 0.0f;
+    v[2] = -6.0f;
+    v[3] = 1.0f;
+    UNIT(m);
+    func_00105230((char *)m, (char *)m, v);
+    o = func_00207480(1, 0xE8, (char *)m, 0x20);
+    if (o != 0) {
+        *(char **)(o + 0x90) = p + 0x560;
+        *(unsigned char *)(o + 0x9A) = 0;
+    }
+}
