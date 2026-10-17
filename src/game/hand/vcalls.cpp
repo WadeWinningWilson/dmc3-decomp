@@ -5219,3 +5219,38 @@ extern "C" void func_002D2800(char *p) {
         break;
     }
 }
+
+class ObjT1C {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual float m1C();
+};
+
+extern "C" char D_01CAFF0C[];
+
+/* Arms a timed event: stores its four parameters, snapshots the clock and enters state 0xE. */
+extern "C" void func_003205F0(char *p, int a, int b, int c, int d) {
+    char *g;
+    float t;
+    *(int *)(p + 4) = a;
+    *(int *)(p + 8) = b;
+    *(int *)(p + 0xC) = c;
+    *(int *)(p + 0x10) = d;
+    g = *(char **)(*(char **)D_01CAFF0C + 4);
+    if (g != 0 && *(ObjT1C **)(g + 0x10) != 0) {
+        t = (*(ObjT1C **)(g + 0x10))->m1C();
+    } else {
+        t = 0.0f;
+    }
+    *(float *)(p + 0x14) = t;
+    *(short *)(p + 0x30) = 0;
+    *(int *)(p + 0x34) = 0;
+    *(int *)(p + 0x38) = 0;
+    *(unsigned char *)(p + 0x1C) = 0;
+    *(unsigned char *)(p + 0x1D) = 0;
+    ((ObjB4 *)p)->mB4(0xE);
+}
