@@ -348,6 +348,16 @@ void func_002075C0(int, int, char *, int);
 void func_004F6390(char *, char *, int, int);
 
 
+void func_003EF580(char *);
+
+
+typedef struct { short k; short pad; int v; } KEnt;
+typedef struct { short n; short pad; KEnt e[272]; } KTab;
+int func_001F3A50(KTab *, int);
+
+int func_001FED70(KTab *, int);
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -579,4 +589,18 @@ char *func_004F9310(char *p, short flag) {
         }
     }
     return p;
+}
+
+int func_00206850(KTab *t, int v, int k) {
+    int func_00206800(KTab *, int);
+    if (func_00206800(t, k) != 0) {
+        return 1;
+    }
+    if (t->n >= 256) {
+        return 0;
+    }
+    t->e[t->n].k = k;
+    t->e[t->n].v = v;
+    t->n += 1;
+    return 1;
 }

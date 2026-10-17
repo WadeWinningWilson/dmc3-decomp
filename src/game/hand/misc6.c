@@ -1491,3 +1491,53 @@ void func_003C6880(char *p, int a) {
     __asm__ volatile("lqc2 $vf4, 0x30(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%1)" : : "r"(*(char **)(*(char **)(p + 1508) + 260)), "r"(stk) : "memory");
     func_0034BA60(45, stk, *(signed char *)(p + 70), 0, 1);
 }
+
+void func_003EF580(char *);
+void func_003EF860(char *p) {
+    *(float *)(p + 1812) += *(float *)(p + 14868) * *(float *)(p + 16);
+    *(float *)(p + 14868) += -0.896f * *(float *)(p + 16);
+    if (func_0024E800(p + 8144) != 0 || *(float *)(p + 15012) > 0.0f) {
+        func_003EF580(p);
+    }
+}
+void func_002207C0(char *p) {
+    int cur;
+    *(short *)(p + 10460) = *(short *)(p + 144);
+    func_002497E0();
+    func_00249860(p);
+    cur = *(unsigned short *)(p + 9414);
+    if (cur != (unsigned short)func_00220860(p, 1, 1, 0.0f)) {
+        func_00220860(p, 1, 0, 5.0f);
+    }
+    if (*(unsigned char *)(p + 10423) == 1) {
+        func_00220860(p, 1, 0, 0.0f);
+    }
+}
+typedef struct { short k; short pad; int v; } KEnt;
+typedef struct { short n; short pad; KEnt e[272]; } KTab;
+int func_001F3A50(KTab *, int);
+int func_001F3AA0(KTab *t, int v, int k) {
+    if (func_001F3A50(t, k) != 0) {
+        return 1;
+    }
+    if (t->n >= 272) {
+        return 0;
+    }
+    t->e[t->n].k = k;
+    t->e[t->n].v = v;
+    t->n += 1;
+    return 1;
+}
+int func_001FED70(KTab *, int);
+int func_001FEDC0(KTab *t, int v, int k) {
+    if (func_001FED70(t, k) != 0) {
+        return 1;
+    }
+    if (t->n >= 128) {
+        return 0;
+    }
+    t->e[t->n].k = k;
+    t->e[t->n].v = v;
+    t->n += 1;
+    return 1;
+}
