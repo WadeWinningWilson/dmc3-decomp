@@ -140,3 +140,43 @@ extern "C" void func_00481490(char *p) {
         }
     }
 }
+
+class AnimF2 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual float m28(int);
+};
+
+extern "C" char *func_00207480(int, int, char *, int);
+extern "C" int func_0024E800(char *);
+
+extern "C" void func_0038F300(char *, int);
+extern "C" void func_0038F2C0(char *, int);
+
+/* Arms the hit window once the clip passes frame 149, then exits through state 8 on motion end. */
+extern "C" void func_00421B00(char *p) {
+    *(int *)(p + 0x42C) = *(int *)(p + 0x42C) | 0x2000;
+    *(int *)(p + 0x110) = *(int *)(p + 0x110) | 0x80000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_0038F300(p, -1);
+        *(unsigned char *)(p + 6) = 1;
+    case 1:
+        if (149.0f <= (*(float *)(p + 0x414) = ((AnimF2 *)(p + 0x604))->m28(0))) {
+            func_00207480(3, 0x194, p + 0x3D0, 16);
+            *(int *)(p + 0x42C) = *(int *)(p + 0x42C) | 0x1000;
+            *(unsigned char *)(p + 6) = 2;
+        }
+    case 2:
+        if ((unsigned char)func_0024E800(p + 0xC20) == 1) {
+            func_0038F2C0(p, 8);
+        }
+    }
+}
