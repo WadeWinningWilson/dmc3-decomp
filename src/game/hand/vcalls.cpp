@@ -4231,3 +4231,126 @@ extern "C" void func_002EE3F0(char *p) {
         break;
     }
 }
+
+class ObjTurn2 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void m6C();
+    virtual void m70();
+    virtual void d27();
+    virtual int m78(int, int);
+    virtual void e29();
+    virtual void e30();
+    virtual void e31();
+    virtual void e32();
+    virtual void e33();
+    virtual void e34();
+    virtual void e35();
+    virtual void e36();
+    virtual void e37();
+    virtual void e38();
+    virtual void e39();
+    virtual void e40();
+    virtual void e41();
+    virtual void e42();
+    virtual void e43();
+    virtual void e44();
+    virtual void e45();
+    virtual void e46();
+    virtual void e47();
+    virtual void e48();
+    virtual void e49();
+    virtual void e50();
+    virtual void e51();
+    virtual void e52();
+    virtual void e53();
+    virtual void e54();
+    virtual void e55();
+    virtual void e56();
+    virtual void mEC(int);
+};
+
+class Obj24b {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual int m24();
+};
+
+extern "C" int func_00364640(ObjTurn2 *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 2048 ? 2048 : d;
+    d = (short)d < -2048 ? -2048 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    *(float *)(p + 256) -= *(float *)(p + 176);
+    if (*(float *)(p + 256) < 0.0f) {
+        o->mEC(29);
+    }
+    return (*(Obj24b **)(p + 168))->m24();
+}
+
+extern "C" int func_00465710(ObjTurn2 *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 2048 ? 2048 : d;
+    d = (short)d < -2048 ? -2048 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    *(float *)(p + 256) -= *(float *)(p + 176);
+    if (*(float *)(p + 256) < 0.0f) {
+        o->mEC(29);
+    }
+    return (*(Obj24b **)(p + 168))->m24();
+}
+
+extern "C" int func_004A1FE0(ObjTurn2 *o) {
+    char *p = (char *)o;
+    int d;
+    o->m6C();
+    o->m70();
+    d = (short)o->m78(*(short *)(p + 48), *(short *)(*(char **)(p + 16) + 80));
+    d = d > 2048 ? 2048 : d;
+    d = (short)d < -2048 ? -2048 : d;
+    *(short *)(*(char **)(p + 16) + 80) = (int)((float)*(short *)(*(char **)(p + 16) + 80) + (float)d * *(float *)(p + 176));
+    *(float *)(p + 256) -= *(float *)(p + 176);
+    if (*(float *)(p + 256) < 0.0f) {
+        o->mEC(29);
+    }
+    return (*(Obj24b **)(p + 168))->m24();
+}
+

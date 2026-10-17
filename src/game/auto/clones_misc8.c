@@ -24,7 +24,7 @@ float func_001324E0(char *);
 float func_00131D10(float, float);
 
 extern char D_00645EB0[];
-void func_00286780(char *, int);
+int func_00286780(char *, int);
 void func_0013D5D0(char *);
 
 void func_001A0050(int, int, int, int, int);
@@ -163,6 +163,113 @@ typedef struct { float x, y, z, w; } V4g;
 
 
 
+typedef struct { float x, y, z, w; } V4h;
+
+
+void func_0022F0D0(char *);
+void func_0022F610(char *);
+void func_0022F620(char *);
+
+
+void func_00247510(char *, char *);
+
+
+
+void func_0037B280(char *);
+void func_0037B560(char *);
+void func_0037B8C0(char *);
+
+void func_00385810(char *, int);
+
+
+extern signed char D_005BE0BC;
+extern signed char D_005BE0E4;
+extern signed char D_005BE0B4;
+extern signed char D_005BE0E8;
+
+extern int D_01CAFF38[];
+
+
+
+
+
+extern char D_005D0E70[];
+void func_0013DA10(char *, int);
+
+
+
+float func_004D2B70(char *);
+
+
+
+
+
+
+
+
+
+extern int D_01CAFF30[];
+
+
+typedef struct { signed char v; signed char k; } KV2;
+extern KV2 D_0056AF30[];
+
+typedef struct { float x, y, z, w; } V4i;
+
+
+typedef struct { float x, y, z, w; } V4j;
+
+void func_003305E0(char *, int, int, int, int, int, int);
+
+extern char D_0055E250[];
+extern char D_0055E254[];
+extern char D_0055E258[];
+extern char D_0055E25C[];
+extern char D_0055E260[];
+int func_0036DF10(char *, int, int, int, int, int);
+
+
+
+typedef struct { signed char a; signed char b; signed char c; } KV3;
+extern KV3 D_0056AEE0[];
+
+
+
+void func_001971F0(char *);
+typedef struct { int a; int id; int ref; char obj[0x110 - 12]; } RefSlot;
+
+
+extern char D_00598570[];
+extern char D_00599090[];
+extern unsigned char D_005BE148;
+extern char D_00645A30[];
+char *func_001005E0(int, int, char *, char *, int);
+int func_00195D90(char *);
+
+
+
+
+
+
+typedef struct { short id; short a; short b; } Tri16;
+extern Tri16 D_00541B60[];
+
+
+extern char D_01CB1290[];
+extern int D_01CB1308[];
+extern int D_01CB130C[];
+extern int D_01CB1310[];
+void func_001F41B0(char *, int, int);
+
+void func_001F4820(char *, int);
+
+
+int func_0019F6C0(int, int, int);
+void func_0019F8B0(int, char *, int, int);
+int func_001A1CB0(int, int, int);
+char *func_001B0FD0(char *, int, int);
+
+
 char *func_001EDE90(int a, int b, int id, int c, int d, float f, int e) {
     extern char D_01CB0A00[];
     int func_001F3A50(char *, int);
@@ -293,4 +400,26 @@ int func_003F7DF0(char *p, int k, V4g *out, float *r) {
         return 1;
     }
     return 0;
+}
+
+int func_0031E0A0(char *p, int a, int b, int c, int d, int e) {
+    void func_001A0110(int, int, int, int, int);
+    int n = func_0019F6C0(a, b, d);
+    char *buf;
+    if (n <= 0) {
+        return 0;
+    }
+    buf = func_001B0FD0(p + 4, n, -2);
+    if (buf == 0) {
+        return 0;
+    }
+    func_0019F8B0(a, buf, b, d);
+    if (func_001A1CB0(a, b, n) != 0) {
+        return 0;
+    }
+    func_001A0110(a, b, c, e, 0);
+    *(int *)(p + 20) = a;
+    *(int *)(p + 24) = b;
+    *(char *)(p + 28) = 1;
+    return 1;
 }

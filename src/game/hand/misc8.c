@@ -1311,3 +1311,28 @@ void func_0030F510(char *p, int s, int *last) {
         *last = s;
     }
 }
+
+int func_0019F6C0(int, int, int);
+void func_0019F8B0(int, char *, int, int);
+int func_001A1CB0(int, int, int);
+char *func_001B0FD0(char *, int, int);
+int func_0031DF90(char *p, int a, int b, int c, int d, int e) {
+    int n = func_0019F6C0(a, b, d);
+    char *buf;
+    if (n <= 0) {
+        return 0;
+    }
+    buf = func_001B0FD0(p + 4, n, -2);
+    if (buf == 0) {
+        return 0;
+    }
+    func_0019F8B0(a, buf, b, d);
+    if (func_001A1CB0(a, b, n) != 0) {
+        return 0;
+    }
+    func_001A0050(a, b, c, e, 0);
+    *(int *)(p + 20) = a;
+    *(int *)(p + 24) = b;
+    *(char *)(p + 28) = 1;
+    return 1;
+}
