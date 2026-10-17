@@ -15812,3 +15812,22 @@ extern "C" void func_00296070(Obj17C *o) {
         func_0034BA60(0xC, (char *)v, *(signed char *)(p + 0x46), 0, 1);
     }
 }
+
+#define QCOPYA(d,s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+#define SETPOSA(m,s) __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(m), "r"(s) : "memory")
+
+#define GETPOSA(d,m) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(m) : "memory")
+
+#define VADDIPA(d,s) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+extern "C" void func_002D6C60(char *p, int a) {
+    float m2[16];
+    float m[16];
+    float *src = ((ObjPosC4 *)(p + 0x780))->mC4();
+    QCOPYA(p + 0x60, src);
+    SETPOSA(m2, p + 0x60);
+    func_00105760(m, m2, 6.283185f * ((float)a / 65536.0f));
+    GETPOSA(p + 0x60, m);
+    VADDIPA(p + 0x50, p + 0x60);
+}

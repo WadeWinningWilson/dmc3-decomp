@@ -417,6 +417,7 @@ extern unsigned char D_01CAFF3C[];
 void func_0046F9A0(char *);
 extern char *D_005BE0D8;
 char *func_00277610(char *, float *, int, int);
+void func_002CB900(char *, int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -557,4 +558,26 @@ void func_0021CA00(char *p, unsigned char k) {
         *(unsigned char *)(p + 0x299F) = 0;
         break;
     }
+}
+
+void func_002CB130(char *p) {
+    int v;
+    *(unsigned char *)(p + 0x1E1) = 0;
+    *(unsigned char *)(p + 0x1E4) = 0;
+    *(unsigned char *)(p + 0x1E5) = 0;
+    *(unsigned char *)(p + 0x1E2) = 0;
+    *(unsigned char *)(p + 0x1E3) = 0;
+    v = *(unsigned char *)(p + 0x2F21) == 0 ? 20 : 14;
+    func_0024DA80(p + 0x2450, 0, v);
+    func_0024DA80(p + 0x2520, 0, v);
+    func_0024DA80(p + 0x25F0, 0, v);
+    func_0024DA80(p + 0x26C0, 0, v);
+    func_0024DA80(p + 0x2790, 0, v);
+    func_002CB900(p, 0x21);
+    *(unsigned char *)(p + 0x2CE4) = 0x21;
+    *(unsigned char *)(p + 0x2CE5) = 0x21;
+    *(unsigned char *)(p + 0x2CE6) = 0x21;
+    *(unsigned char *)(p + 0x2CE7) = 0x21;
+    *(unsigned char *)(p + 0x2CE8) = 0x21;
+    func_00128488(p + 0x5AD, 0, 0x14);
 }

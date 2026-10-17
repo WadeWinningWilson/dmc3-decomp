@@ -12369,3 +12369,20 @@ void func_002482C0(char *p) {
     QCOPY(p + 0x1A0, p + 0x190);
     func_001325D0(p + 0x1A0, p + 0x180, *(float *)(p + 0xD8));
 }
+
+void func_002A4AF0(char *p) {
+    int i;
+    func_00228350(p + 0xAB7C);
+    func_00228350(p + 0xAB80);
+    func_00228350(p + 0xAB84);
+    func_00228350(p + 0xAB88);
+    for (i = 0; i < 7; i++) {
+        func_00206730(p + i * 4 + 0xA9A8);
+    }
+    func_00206730(p + 0xA9C4);
+    func_00206730(p + 0xA9C8);
+    func_00206730(p + 0xA9CC);
+    func_00206730(p + 0xA9D0);
+    func_00206730(p + 0xA9D4);
+    func_00206730(p + 0xA9D8);
+}
