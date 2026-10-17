@@ -924,3 +924,61 @@ int func_00250060(char *p) {
     }
     return 0;
 }
+
+void func_002FC2B0(char *p) {
+    if (*(unsigned char *)(p + 0x82A) == 0) {
+        *(unsigned char *)(p + 4) += 1;
+        return;
+    }
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+    case 1:
+        *(unsigned char *)(p + 5) += 1;
+        break;
+    case 2:
+        *(unsigned char *)(p + 4) += 1;
+        break;
+    }
+}
+void func_0038ADD0(char *p) {
+    if (*(unsigned char *)(p + 0x12C) == 0) {
+        *(unsigned char *)(p + 4) += 1;
+        return;
+    }
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+    case 1:
+        *(unsigned char *)(p + 5) += 1;
+        break;
+    case 2:
+        *(unsigned char *)(p + 4) += 1;
+        break;
+    }
+}
+void func_004F8A90(char *p, char *o) {
+    int k = *(unsigned char *)(p + 0x60C);
+    if (k == 0 || k == 1) {
+        if (*(unsigned char *)(p + 0x616) == 0) {
+            if (*(unsigned char *)(o + 0x3D) == 12 && *(unsigned char *)(p + 5) == 0) {
+                *(char *)(p + 0x616) = 1;
+                *(char *)(p + 0x617) = 1;
+            } else if (*(signed char *)(o + 2) == 0) {
+                *(char *)(p + 0x616) = 1;
+                *(char *)(p + 0x618) = 1;
+                return;
+            }
+        }
+    }
+}
+int func_004B2EA0(char *p) {
+    int i;
+    if (*(signed char *)(p + 0x3DF0) != 0 || *(unsigned char *)(p + 0x3DF2) != 1) {
+        return 0;
+    }
+    for (i = 0; i < 2; i++, p += 6) {
+        if (*(signed char *)(p + 0x3DF4) != 0 || *(unsigned char *)(p + 0x3DF8) != 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
