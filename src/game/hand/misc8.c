@@ -1260,3 +1260,26 @@ float func_003216D0(char *p) {
     }
     return v;
 }
+
+typedef struct { short id; short a; short b; } Tri16;
+extern Tri16 D_00541B60[];
+void func_0020E4D0(char *p, short a, short b) {
+    int i = 0;
+    Tri16 *e;
+    if (D_00541B60[0].id != -1) {
+        e = D_00541B60;
+        do {
+            if (D_01CAFF38[0] == e->id) {
+                *(short *)(p + 0xF6) = D_00541B60[i].a;
+                *(short *)(p + 0xF8) = D_00541B60[i].b;
+                break;
+            }
+            e++;
+            i++;
+        } while (e->id != -1);
+    }
+    if (*(short *)(p + 0xF6) == -1) {
+        *(short *)(p + 0xF6) = a;
+        *(short *)(p + 0xF8) = b;
+    }
+}
