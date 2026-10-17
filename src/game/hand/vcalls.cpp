@@ -6339,3 +6339,25 @@ extern "C" void func_00452720(char *p) {
         }
     }
 }
+
+extern "C" char D_00568010[];
+extern "C" void func_0037E690(char *);
+
+/* Advances the active rotor timers, and when the phase timer expires picks the next phase duration. */
+extern "C" void func_00379F80(char *p) {
+    int i;
+    char *q;
+    int k;
+    for (i = 0, q = p; i < *(int *)(p + 0x6E80); i++, q += 2) {
+        if (*(short *)(q + 0x6668) != 0) {
+            *(short *)(q + 0x6668) = *(short *)(q + 0x6668) + 0x200;
+        }
+    }
+    *(float *)(p + 0x77E8) = *(float *)(p + 0x77E8) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0x77E8) < 0.0f) {
+        ((ObjB *)p)->m2FC(0xB);
+        k = ((Sub130 *)(p + 0x130))->m80(((Sub130 *)(p + 0x130))->m7C());
+        *(float *)(p + 0x77E8) = *(float *)(k * 12 + (D_00568010 + *(int *)(p + 0x77CC) * 84));
+        func_0037E690(p);
+    }
+}
