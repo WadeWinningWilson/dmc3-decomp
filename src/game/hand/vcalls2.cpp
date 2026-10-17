@@ -223,6 +223,10 @@ extern "C" void func_003E9930(char *);
 extern "C" float D_00570344[];
 extern "C" void func_003E8070(char *);
 extern "C" void func_003E8330(char *);
+extern "C" void func_0028C5C0(char *, int, float);
+extern "C" int func_00201770(char *, float *, char *, char *, int);
+extern "C" float func_001324E0(float *);
+extern "C" float func_0034C200(char *, int, float);
 
 extern "C" void func_0043F920(char *p) {
     unsigned char r;
@@ -803,4 +807,52 @@ extern "C" void func_003ED660(char *p) {
             func_003E8330(p);
         }
     }
+}
+
+#define VSUBR(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+#define QCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+typedef struct { int w[4]; } __attribute__((aligned(16))) Q16;
+
+extern "C" Q16 D_00569E80;
+
+extern "C" void func_003E6FA0(char *p) {
+    func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
+}
+
+extern "C" int func_003F2FA0(char *p, char *a, char *b) {
+    float v[4];
+    QCOPY(v, p + 0x710);
+    v[1] = v[1] + 100.0f;
+    return (unsigned char)func_00201770(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, v, a, b, 0x10);
+}
+
+extern "C" void func_003F0D00(char *p) {
+    float m[16];
+    char *e;
+    ((ObjV2F8 *)p)->m2F8(0x43);
+    *(unsigned char *)(p + 0x3434) = 0;
+    *(unsigned char *)(p + 0x3435) = 0;
+    *(unsigned char *)(p + 0x3436) = 0;
+    func_003E6750(p, 0x22, 0, 0);
+    UNIT(m);
+    e = func_00207480(3, 0x2C0, (char *)m, 0x10);
+    if (e != 0) {
+        *(char **)(e + 0x90) = p + 0x6E0;
+        *(unsigned char *)(e + 0x9A) = 1;
+    }
+}
+
+extern "C" void func_003F2150(char *p) {
+    float d[4];
+    Q16 q;
+    ((ObjV2F8 *)p)->m2F8(0x52);
+    *(unsigned char *)(p + 0x3434) = 0;
+    *(unsigned char *)(p + 0x3435) = 0;
+    *(unsigned char *)(p + 0x3436) = 0;
+    func_003E6750(p, 0x29, 0, 0);
+    q = D_00569E80;
+    VSUBR(d, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, p + 0x710);
+    *(float *)(p + 0x3A18) = func_0034C200((char *)&q, 2, func_001324E0(d));
 }
