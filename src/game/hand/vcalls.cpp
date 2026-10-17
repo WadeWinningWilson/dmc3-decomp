@@ -4354,3 +4354,55 @@ extern "C" int func_004A1FE0(ObjTurn2 *o) {
     return (*(Obj24b **)(p + 168))->m24();
 }
 
+
+class AnimF {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual float m28(int);
+};
+
+extern "C" void func_0024DA80(char *, int, int);
+extern "C" void func_003B6490(char *, int);
+extern "C" int func_003B3F70(char *);
+extern "C" void func_003B4840(char *);
+extern "C" int func_0024E800(char *);
+extern "C" void func_003B4B60(char *, int);
+extern "C" void func_003B4F60(char *);
+
+static inline unsigned char both_done(char *p) {
+    if ((unsigned char)func_0024E800(p + 0x1D00) == 1 && (unsigned char)func_0024E800(p + 0x1DD0) == 1) {
+        return 1;
+    }
+    return 0;
+}
+
+/* Two-channel wait state: start both channels, then branch on the clip time or both finishing. */
+extern "C" void func_003B2F80(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(short *)(p + 0x21C0) = *(short *)(p + 0x21C2);
+        *(short *)(p + 0x21C2) = 0x26;
+        func_0024DA80(p + 0x1D00, 0, 0x26);
+        func_0024DA80(p + 0x1DD0, 0, 0x26);
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        func_003B6490(p, 1);
+        break;
+    case 1:
+        if (!(((AnimF *)(p + 0x704))->m28(0) < 25.0f) && (unsigned char)func_003B3F70(p) == 1) {
+            func_003B4840(p);
+            return;
+        }
+        if (both_done(p) == 1) {
+            func_003B4B60(p, 2);
+        }
+        break;
+    }
+    func_003B4F60(p);
+}

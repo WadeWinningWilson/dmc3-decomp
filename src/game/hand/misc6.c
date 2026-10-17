@@ -2426,6 +2426,8 @@ int func_00406C60(int p0, signed char k) {
 void func_0031E570(char *);
 void func_002D2270(char *, int);
 extern signed char D_005BCD60[];
+void func_0028C740(char *);
+void func_001A1F90(char *);
 void func_002D3720(char *p) {
     int k = *(unsigned char *)(p + 5);
     switch (k) {
@@ -2460,4 +2462,44 @@ void func_002CE1F0(char *p) {
     *(char *)(p + 0x2CE7) = 0xF;
     *(char *)(p + 0x2CE8) = 0xF;
     func_00128488(p + 0x5AD, 0, 4);
+}
+
+void func_0038F300(char *p, int c) {
+    if (c == -1) {
+        c = *(unsigned char *)(p + 5);
+    }
+    if (*(unsigned char *)(p + 0x41A) != c) {
+        func_0024DA80(p + 0xC20, 0, c);
+        *(unsigned char *)(p + 0x41A) = c;
+    }
+}
+
+void func_00407380(char *p) {
+    func_00206730(p + 0x414);
+    if (*(char **)(p + 0x414) != 0 && func_002077F0(*(char **)(p + 0x414)) == 0) {
+        func_001AD140(*(char **)(p + 0x414));
+        *(char **)(p + 0x414) = 0;
+    }
+    func_0028C740(p + 0x150);
+}
+
+void func_0040DC30(char *p) {
+    func_001A1F90(func_00279290(p + 0x4C0));
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 24:
+        func_001A1F90(func_00279290(p + 0xAC0));
+    }
+    func_001A1F90(func_00279290(p + 0x16C0));
+}
+
+void func_003C59D0(char *p) {
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(unsigned char *)(p + 6) = *(unsigned char *)(p + 6) + 1;
+    case 1:
+        if ((unsigned char)func_0024E800(p + 0x1430) == 1) {
+            *(unsigned char *)(p + 0x1CEA) = 1;
+        }
+    }
+    func_002EF940(*(int *)D_01CAFF0C, p + 0x1BD0);
 }
