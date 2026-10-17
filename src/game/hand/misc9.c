@@ -12478,6 +12478,11 @@ int func_001AEBC0(char *, char *, int);
 int func_001AF040(char *, char *, int);
 void func_001AEF50(void);
 void func_00198160(char *, void *, int, int, char *);
+extern unsigned char D_005BBA28[4];
+void func_00132410(char *, char *, char *, float *);
+int func_001BFA00(char *, float *, char *, char *, int, int);
+void func_001C5F70(char *, int);
+void func_001C5F10(char *);
 
 void func_003B61F0(char *p) {
     float m[16];
@@ -12598,4 +12603,47 @@ int func_001AEF60(char *p, char *e, int a, int b, int flag) {
         r = 1;
     }
     return r;
+}
+
+int func_001C12D0(char *u, char *a, char *pts, char *n, int cnt) {
+    float t[4];
+    int i;
+    int r = 1;
+    for (i = 0; i < cnt; i++) {
+        func_00132410(pts + i * 16, pts + (i + 1) % cnt * 16, a, t);
+        if (func_00132630(t, n) < 0.0f) {
+            r = 0;
+        }
+    }
+    return r;
+}
+
+int func_001BFD70(char *p, char *b, char *a, int c) {
+    float v2[4];
+    float v1[4];
+    int i;
+    for (i = 0; i < 3; i++) {
+        QCOPY(v1, a + i * 16);
+        QCOPY(v2, a + D_005BBA28[i] * 16);
+        if (func_001BFA00(p, v1, b, b + 0x30, 3, c) != 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void func_001C5B00(char *p, char *t) {
+    int k = *(signed char *)(D_005BE0D8 + 0xE);
+    if (t != 0) {
+        int *s = (int *)((char *)(k * 4) + (int)t + 0x20);
+        if (*s != 0) {
+            func_001C5F70(p, -1);
+            **(unsigned long long **)(p + 0x158A4) = ((unsigned long long)(*(unsigned int *)s & 0x0FFFFFFF) << 32) | 0x50000000;
+            *(int *)(*(char **)(p + 0x158A4) + 8) = 0;
+            *(int *)(*(char **)(p + 0x158A4) + 0xC) = 0;
+            *(char **)(p + 0x158A4) = *(char **)(p + 0x158A4) + 0x10;
+            func_001C5F10(p);
+            func_001C6520(p, 0, 1, 0xE);
+        }
+    }
 }
