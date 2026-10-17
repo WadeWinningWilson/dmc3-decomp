@@ -8054,3 +8054,220 @@ extern "C" void func_0031F680(char *p) {
         break;
     }
 }
+class Obj28C {
+public:
+    virtual void d0();
+    virtual int mC();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void m28(int);
+};
+
+extern "C" float D_00577C60[];
+extern "C" float D_00577C64[];
+extern "C" float D_00577C68[];
+extern "C" int func_00437B60(char *);
+extern "C" int func_004361D0(char *);
+extern "C" int func_00437E00(char *, int);
+
+extern "C" void func_00435EF0(char *p) {
+    switch (*(unsigned char *)(p + 0x47BF)) {
+    case 0:
+        *(unsigned char *)(p + 0x47BF) = *(unsigned char *)(p + 0x47BF) + 1;
+        ((ObjB *)p)->m2FC(0xB);
+        break;
+    case 1:
+        if ((unsigned char)func_0024E800(p + 0x41A0) == 1) {
+            if (*(float *)(p + 0x164) < D_00577C60[0] && (unsigned char)func_00437B60(p) == 1) {
+                ((ObjB *)p)->m2F4(0x1D);
+                break;
+            }
+            if (*(float *)(p + 0x164) < D_00577C64[0]) {
+                ((ObjB *)p)->m2F4(0x28);
+                break;
+            }
+            if ((unsigned char)func_00437E00(p, func_004361D0(p)) == 0 || !(*(float *)(p + 0x164) < D_00577C68[0])) {
+                ((ObjB *)p)->m2F4(0x17);
+            } else {
+                ((ObjB *)p)->m2F4(0x16);
+            }
+        }
+        break;
+    }
+}
+
+extern "C" void func_00436060(char *p) {
+    switch (*(unsigned char *)(p + 0x47BF)) {
+    case 0:
+        *(unsigned char *)(p + 0x47BF) = *(unsigned char *)(p + 0x47BF) + 1;
+        ((ObjB *)p)->m2FC(0xA);
+        break;
+    case 1:
+        if ((unsigned char)func_0024E800(p + 0x41A0) == 1) {
+            if (*(float *)(p + 0x164) < D_00577C60[0] && (unsigned char)func_00437B60(p) == 1) {
+                ((ObjB *)p)->m2F4(0x1D);
+                break;
+            }
+            if (*(float *)(p + 0x164) < D_00577C64[0]) {
+                ((ObjB *)p)->m2F4(0x28);
+                break;
+            }
+            if ((unsigned char)func_00437E00(p, func_004361D0(p)) == 0 || !(*(float *)(p + 0x164) < D_00577C68[0])) {
+                ((ObjB *)p)->m2F4(0x17);
+            } else {
+                ((ObjB *)p)->m2F4(0x16);
+            }
+        }
+        break;
+    }
+}
+
+
+class SelfB4 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual short m78(short, short);
+    virtual void d29();
+    virtual void d30();
+    virtual void m84();
+    virtual int m88();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual int mA0();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void mB4(int);
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void m108(float);
+};
+
+
+extern "C" void func_0035B340(char *p) {
+    short a;
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(Obj28C **)(p + 0xC))->m28(0x27);
+        *(unsigned char *)(p + 0xB5) = 1;
+    case 1:
+        ((SelfB4 *)p)->m84();
+        if ((*(Obj28C **)(p + 0xC))->mC() != 0x27) {
+            a = ((SelfB4 *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+            if (a > -0x2AAB && a <= 0x2AAA) {
+                if (((SelfB4 *)p)->mA0() != 0) {
+                    ((SelfB4 *)p)->mB4(0x29);
+                } else if (((SelfB4 *)p)->m88() != 0) {
+                    ((SelfB4 *)p)->m108(3.0f);
+                } else {
+                    ((SelfB4 *)p)->mB4(0x17);
+                }
+            } else {
+                ((SelfB4 *)p)->mB4(0x17);
+            }
+        }
+    }
+}
+
+extern "C" void func_0045C050(char *p) {
+    short a;
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(Obj28C **)(p + 0xC))->m28(0x27);
+        *(unsigned char *)(p + 0xB5) = 1;
+    case 1:
+        ((SelfB4 *)p)->m84();
+        if ((*(Obj28C **)(p + 0xC))->mC() != 0x27) {
+            a = ((SelfB4 *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+            if (a > -0x2AAB && a <= 0x2AAA) {
+                if (((SelfB4 *)p)->mA0() != 0) {
+                    ((SelfB4 *)p)->mB4(0x28);
+                } else if (((SelfB4 *)p)->m88() != 0) {
+                    ((SelfB4 *)p)->m108(3.0f);
+                } else {
+                    ((SelfB4 *)p)->mB4(0x17);
+                }
+            } else {
+                ((SelfB4 *)p)->mB4(0x17);
+            }
+        }
+    }
+}
+
+extern "C" void func_00498CA0(char *p) {
+    short a;
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(Obj28C **)(p + 0xC))->m28(0x27);
+        *(unsigned char *)(p + 0xB5) = 1;
+    case 1:
+        ((SelfB4 *)p)->m84();
+        if ((*(Obj28C **)(p + 0xC))->mC() != 0x27) {
+            a = ((SelfB4 *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+            if (a > -0x2AAB && a <= 0x2AAA) {
+                if (((SelfB4 *)p)->mA0() != 0) {
+                    ((SelfB4 *)p)->mB4(0x28);
+                } else if (((SelfB4 *)p)->m88() != 0) {
+                    ((SelfB4 *)p)->m108(3.0f);
+                } else {
+                    ((SelfB4 *)p)->mB4(0x17);
+                }
+            } else {
+                ((SelfB4 *)p)->mB4(0x17);
+            }
+        }
+    }
+}
