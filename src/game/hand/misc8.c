@@ -64,7 +64,7 @@ float func_002DAA60(char *p, char *v) {
     return func_00131D10(*(float *)(stk + 0), *(float *)(stk + 8));
 }
 extern char D_00645EB0[];
-void func_00286780(char *, int);
+int func_00286780(char *, int);
 void func_0013D5D0(char *);
 void func_0027A0D0(char *p) {
     func_00286780(D_00645EB0, *(int *)(p + 0xC));
@@ -1113,4 +1113,85 @@ void func_0024F220(char *p) {
     if (*(char **)(p + 0xCC) != 0) {
         *(int *)(*(char **)(p + 0xCC) + 0xD8) = v;
     }
+}
+
+typedef struct { signed char a; signed char b; signed char c; } KV3;
+extern KV3 D_0056AEE0[];
+int func_00406CF0(int p0, signed char k) {
+    int i;
+    KV3 *e;
+    if (k == -1) {
+        return -1;
+    }
+    i = 0;
+    if (D_0056AEE0[0].a != 0xF) {
+        e = D_0056AEE0;
+        do {
+            if (k == e->c) {
+                return D_0056AEE0[i].a;
+            }
+            e++;
+            i++;
+        } while (e->a != 0xF);
+    }
+    return -1;
+}
+int func_00406D80(int p0, signed char k) {
+    int i;
+    KV3 *e;
+    if (k == -1) {
+        return -1;
+    }
+    i = 0;
+    if (D_0056AEE0[0].b != 0x3B) {
+        e = D_0056AEE0;
+        do {
+            if (k == e->c) {
+                return D_0056AEE0[i].b;
+            }
+            e++;
+            i++;
+        } while (e->b != 0x3B);
+    }
+    return -1;
+}
+int func_00406E10(signed char k) {
+    int i;
+    KV3 *e;
+    if (k == -1) {
+        return -1;
+    }
+    i = 0;
+    if (D_0056AEE0[0].b != 0x3B) {
+        e = D_0056AEE0;
+        do {
+            if (k == e->a) {
+                return D_0056AEE0[i].b;
+            }
+            e++;
+            i++;
+        } while (e->b != 0x3B);
+    }
+    return -1;
+}
+void func_001971F0(char *);
+typedef struct { int a; int id; int ref; char obj[0x110 - 12]; } RefSlot;
+int func_00286780(char *p, int id) {
+    RefSlot *t = (RefSlot *)p;
+    int i;
+    char *e;
+    if (id != 0) {
+        for (i = 0, e = (char *)t; i < 32; i++, e += 0x110) {
+            if (*(int *)(e + 4) == id) {
+                t[i].ref -= 1;
+                if (t[i].ref == 0) {
+                    t[i].id = 0;
+                    func_001971F0(t[i].obj);
+                    return 1;
+                }
+                return 0;
+            }
+        }
+    }
+    return 0;
 }
