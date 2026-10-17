@@ -12276,3 +12276,67 @@ extern "C" void func_0041EF30(char *p) {
         break;
     }
 }
+
+extern "C" void func_00461440(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        ((SelfBE *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+        if (*(float *)(*(char **)(p + 0x10) + 0x24) < 0.0f) {
+            if ((*(AnimBE **)(p + 0xA8))->m30() != 0) {
+                *(unsigned char *)(p + 0xCD) = 0;
+                *(unsigned char *)(p + 0xCF) = 1;
+                (*(AnimBE **)(p + 0xA8))->m1C(0x11);
+                (*(AnimBE **)(p + 0xA8))->m44();
+                (*(AnimBE **)(p + 0xA8))->m48(0xB, *(char **)(p + 0x10) + 0x10);
+                *(float *)(p + 0xE0) = 0.0f;
+                *(float *)(p + 0xE4) = 6.0f;
+                *(float *)(p + 0xE8) = 20.0f;
+                *(float *)(p + 0xEC) = 1.0f;
+                *(float *)(p + 0xF0) = 0.0f;
+                *(float *)(p + 0xF4) = -0.54f;
+                *(float *)(p + 0xF8) = 0.0f;
+                *(float *)(p + 0xFC) = 1.0f;
+                ((SelfBE *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+                func_00330BD0(D_01DFABA0, 0x27, *(char **)(p + 0x10) + 0x10, 8, 0);
+                *(int *)(p + 0xD4) = 1;
+            }
+        }
+        break;
+    case 1:
+        *(float *)(p + 0xE0) = *(float *)(p + 0xE0) - *(float *)(p + 0xE0) / 14.0f * *(float *)(p + 0xB0);
+        *(float *)(p + 0xE8) = *(float *)(p + 0xE8) - *(float *)(p + 0xE8) / 14.0f * *(float *)(p + 0xB0);
+        ((SelfBE *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+        if ((*(AnimBE **)(p + 0xA8))->m30() != 0) {
+            (*(AnimBE **)(p + 0xA8))->m48(0x12, *(char **)(p + 0x10) + 0x10);
+        }
+        if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
+            *(unsigned char *)(p + 0xCF) = 5;
+            (*(AnimBE **)(p + 0xA8))->m1C(0x18);
+            *(float *)(p + 0xE0) = 0.0f;
+            *(float *)(p + 0xE4) = 0.0f;
+            *(float *)(p + 0xE8) = 0.0f;
+            *(float *)(p + 0xEC) = 1.0f;
+            *(float *)(p + 0xF0) = 0.0f;
+            *(float *)(p + 0xF4) = 0.0f;
+            *(float *)(p + 0xF8) = 0.0f;
+            *(float *)(p + 0xFC) = 1.0f;
+            ((SelfBE *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+            *(int *)(p + 0xD4) = 2;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * frand();
+        }
+        break;
+    case 2:
+        if (!((*(AnimBE **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            *(unsigned char *)(p + 0xCF) = 2;
+            (*(AnimBE **)(p + 0xA8))->m1C(5);
+            *(int *)(p + 0xD4) = 3;
+        }
+        break;
+    case 3:
+        if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
+            ((SelfBE *)p)->mEC(0xE);
+        }
+        (*(AnimBE **)(p + 0xA8))->m24();
+        break;
+    }
+}
