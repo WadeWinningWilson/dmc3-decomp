@@ -3472,3 +3472,106 @@ extern "C" int func_004A2AC0(ObjTurn *o) {
     return (*(Obj24 **)(p + 168))->m24();
 }
 
+
+class Obj38 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual int m38();
+};
+
+extern "C" char *D_005BE0D8;
+extern "C" void func_00131530(char *, int, char *, int, int);
+extern "C" void func_001B2B00(char *, char *, int, char *, char *);
+extern "C" unsigned char func_002070F0(char *);
+extern "C" void func_00207100(char *, char *);
+
+extern "C" void func_001B4550(Obj38 *o) {
+    char stk[0x40] __attribute__((aligned(16)));
+    char *p = (char *)o;
+    char *e = p + (*(signed char *)(D_005BE0D8 + 14) << 5) + 1136;
+    func_00131530(e, 39, p + (signed char)o->m38() * 624 + 1200, 0, 0);
+    if (func_002070F0(p) == 1) {
+        func_00207100(p, stk);
+        func_001B2B00(p, e + 16, 0, p + 80, stk);
+    } else {
+        func_001B2B00(p, e + 16, 0, p + 80, 0);
+    }
+}
+
+extern "C" void func_0050C0E0(char *p) {
+    int i;
+    char *o;
+    char *arg;
+    char *a;
+    char *o2;
+    int j;
+    i = 0;
+    o = p;
+    arg = p + 13952;
+    do {
+        if (*(unsigned char *)(p + 14813) == 0) {
+            ((SubCCc *)(o + 64))->mCC(arg);
+        }
+        i++;
+        o += 1536;
+    } while (i < 3);
+    j = 0;
+    a = p;
+    o2 = p;
+    do {
+        if (*(unsigned char *)(p + 14813) == 0) {
+            ((SubCCc *)(o2 + 4672))->mCC(a + 14080);
+        }
+        j++;
+        a += 128;
+        o2 += 1536;
+    } while (j < 5);
+    if (*(unsigned char *)(p + 14824) == 1) {
+        ((SubCCc *)(p + 12352))->mCC(p + 14720);
+    }
+}
+
+extern "C" float D_005623C0[6];
+extern "C" float D_00562400[6];
+extern "C" void func_002C5F40(char *, int);
+extern "C" void func_002C6790(char *, int);
+
+extern "C" void func_002C4BA0(Obj130 *o) {
+    int k;
+    float t5 = D_00562400[5];
+    float t4 = D_00562400[4];
+    float t3 = D_00562400[3];
+    float t2 = D_00562400[2];
+    float t1 = D_00562400[1];
+    D_005623C0[0] = D_00562400[0];
+    D_005623C0[1] = t1;
+    D_005623C0[2] = t2;
+    D_005623C0[3] = t3;
+    D_005623C0[4] = t4;
+    D_005623C0[5] = t5;
+    k = *(unsigned char *)((char *)o + 4);
+    switch (k) {
+    case 0:
+        o->m130(k);
+        break;
+    case 1:
+        func_002C5F40((char *)o, k);
+        break;
+    case 2:
+        func_002C6790((char *)o, k);
+        break;
+    case 3:
+        break;
+    }
+}

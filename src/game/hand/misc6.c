@@ -2204,3 +2204,73 @@ void func_00424B30(char *p) {
         break;
     }
 }
+
+extern char D_005455A6[];
+extern char D_00666750[];
+unsigned char func_001AF500(char *, int, int, int);
+unsigned char func_001AF690(char *, int, int, int);
+unsigned char func_001AF800(char *, int, int, int);
+unsigned char func_001AF9E0(char *, int, int, int);
+unsigned char func_00203670(unsigned char k) {
+    unsigned char r = 1;
+    if (func_001AF500(D_00666750, k, 1, 0) == 0) {
+        r = 0;
+    }
+    if (func_001AF800(D_00666750, k, 14, 1) == 0) {
+        r = 0;
+    }
+    if (func_001AF690(D_00666750, k, *(unsigned char *)D_005455A6, 1) == 0) {
+        r = 0;
+    }
+    if (func_001AF9E0(D_00666750, k, 0, 1) == 0) {
+        r = 0;
+    }
+    return r;
+}
+int func_0019F6C0(int, int, int);
+void func_0019F8B0(int, char *, int, int);
+int func_001A1CB0(int, int, int);
+int func_0031E1B0(char *p, int a, int b, int c) {
+    int n = func_0019F6C0(a, b, c);
+    char *buf;
+    if (n <= 0) {
+        return 0;
+    }
+    buf = func_001B0FD0(p + 4, n, -2);
+    if (buf == 0) {
+        return 0;
+    }
+    func_0019F8B0(a, buf, b, c);
+    if (func_001A1CB0(a, b, n) != 0) {
+        return 0;
+    }
+    *(int *)(p + 20) = a;
+    *(int *)(p + 24) = b;
+    *(char *)(p + 28) = 1;
+    return 1;
+}
+void func_00253BC0(char *d, char *s) {
+    unsigned int i;
+    for (i = 0; i < 5; i++) {
+        d[i] = s[i];
+        if (d[i] != -1) {
+            d[d[i] + 5] = s[i + 5];
+        }
+    }
+    d[20] = s[10];
+    d[21] = s[11];
+    d[32] = s[18];
+    d[*(unsigned char *)(s + 18) + 33] = s[19];
+    ((float *)(d + 40))[*(unsigned char *)(s + 18)] = *(float *)(s + 52);
+    d[23] = *(unsigned char *)(s + 17);
+    *(float *)(d + 24) = *(float *)(s + 60);
+    *(float *)(d + 28) = *(float *)(s + 68);
+    *(int *)(d + 64) = *(int *)(s + 20);
+    *(int *)(d + 68) = *(int *)(s + 24);
+    *(int *)(d + 72) = *(int *)(s + 28);
+    *(int *)(d + 76) = *(int *)(s + 32);
+    *(int *)(d + 80) = *(int *)(s + 36);
+    *(int *)(d + 84) = *(int *)(s + 40);
+    *(int *)(d + 88) = *(int *)(s + 44);
+    *(int *)(d + 92) = *(int *)(s + 48);
+}
