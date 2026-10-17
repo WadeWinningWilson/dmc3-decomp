@@ -513,3 +513,50 @@ void func_003ABE80(char *p, unsigned char k) {
         func_001A1E70(func_00279290(p + 0x880), 1);
     }
 }
+
+typedef struct { char pad[0x50]; char f; char rest[784 - 0x51]; } E784;
+char *func_00228790(E784 *t) {
+    int i;
+    char *e;
+    for (i = 0, e = (char *)t; i < 100; i++, e += 784) {
+        if (*(unsigned char *)(e + 0x50) == 0) {
+            t[i].f = 1;
+            return &t[i].f;
+        }
+    }
+    return 0;
+}
+int func_002077F0(char *p) {
+    switch (*(unsigned char *)(p + 0x38)) {
+    case 0:
+    case 1:
+        return 0;
+    case 2:
+    case 3:
+        return 1;
+    }
+    return 0;
+}
+int func_0020CFA0(char *p) {
+    char *o = *(char **)(p + 4);
+    switch (*(unsigned char *)o) {
+    case 0x54:
+        return (unsigned char)(*(float *)(p + 8) < (float)*(int *)(o + 4));
+    }
+    return -1;
+}
+int func_002D2650(int x, int k, unsigned char *t) {
+    int i = 0;
+    unsigned char *e;
+    if (*t != 0x1C) {
+        e = t;
+        do {
+            if ((unsigned char)k != *e) {
+                return (signed char)t[i * 8];
+            }
+            e += 8;
+            i++;
+        } while (*e != 0x1C);
+    }
+    return k;
+}
