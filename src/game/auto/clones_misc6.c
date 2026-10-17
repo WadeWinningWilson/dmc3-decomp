@@ -526,6 +526,11 @@ typedef struct { signed char k; signed char t; signed char v; } KVB;
 extern KVB D_0056AEE0[];
 
 
+void func_0031E570(char *);
+void func_002D2270(char *, int);
+extern signed char D_005BCD60[];
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -1520,4 +1525,36 @@ int func_0037BD20(char *p, char *o) {
         func_001AD140(o);
     }
     return -1;
+}
+
+void func_002D39A0(char *p) {
+    int k = *(unsigned char *)(p + 5);
+    switch (k) {
+    case 0:
+        *(char *)(p + 5) = k + 1;
+        func_0031E570(p + 0x1D0);
+        *(char *)(p + 0x1E2) = 3;
+        *(char *)(p + 0x1E3) = 2;
+    case 1:
+        if ((func_0024E800(p + 0x2F70) & 255) == 1) {
+            func_002D2270(p, D_005BCD60[*(unsigned char *)(p + 0x38D0)]);
+        }
+        break;
+    }
+}
+
+void func_002D3D40(char *p) {
+    int k = *(unsigned char *)(p + 5);
+    switch (k) {
+    case 0:
+        *(char *)(p + 5) = k + 1;
+        func_0031E570(p + 0x1D0);
+        *(char *)(p + 0x1E2) = 3;
+        *(char *)(p + 0x1E3) = 2;
+    case 1:
+        if ((func_0024E800(p + 0x2F70) & 255) == 1) {
+            func_002D2270(p, D_005BCD60[*(unsigned char *)(p + 0x38D0)]);
+        }
+        break;
+    }
 }
