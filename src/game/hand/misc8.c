@@ -872,3 +872,27 @@ void func_001F9D80(char *p) {
         }
     }
 }
+
+char *func_00501280(char *p, signed char k) {
+    int i;
+    char *e;
+    for (i = 0, e = p; i < 6; i++, e += 6) {
+        if (*(unsigned char *)(e + 0x13ED) == 1 && *(signed char *)(e + 0x13EF) == k) {
+            return p + i * 6 + 0x13ED;
+        }
+    }
+    return 0;
+}
+extern char D_005D0E70[];
+void func_0013DA10(char *, int);
+int func_0030AB30(char *p) {
+    float v = *(float *)(p + 0x10);
+    if (v < 0.0f) {
+        v = -v;
+    }
+    if (v <= 0.0001f) {
+        return 0;
+    }
+    func_0013DA10(D_005D0E70, 0);
+    return 1;
+}
