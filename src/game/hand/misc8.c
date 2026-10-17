@@ -6822,3 +6822,29 @@ void func_00299B70(char *p) {
         *(unsigned char *)(o + 0x9A) = 0;
     }
 }
+
+#define SETPOS(m, s) __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(m), "r"(s) : "memory")
+
+void func_00481CE0(char *p, signed char k, float *t) {
+    float m[16];
+    UNIT(m);
+    func_00105230((char *)m, (char *)m, t);
+    m[15] = 1.0f;
+    if (k == 0) {
+        func_00207480(3, 0x22C, (char *)m, 0x20);
+    } else {
+        func_00207480(3, 0x22B, (char *)m, 0x20);
+    }
+}
+
+int func_004F91E0(char *p) {
+    float m[16];
+    UNIT(m);
+    SETPOS(m, p + 0x50);
+    *(char **)(p + 0x138) = func_00207480(3, 0x2E8, (char *)m, 0x10);
+    if (*(char **)(p + 0x138) != 0) {
+        *(unsigned char *)(*(char **)(p + 0x138) + 0x3A) = 1;
+        return 1;
+    }
+    return 0;
+}

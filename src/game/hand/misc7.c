@@ -180,6 +180,7 @@ extern int D_00541894[];
 extern int D_00541898[];
 char *func_001B0FD0(char *, int, int);
 void *func_00128488(void *, int, unsigned int);
+void func_00483620(char *);
 int func_001F3A50(KLTab272 *t, short k) {
     int i;
     for (i = 0; i < 272; i++) {
@@ -393,4 +394,16 @@ int func_001980B0(char *p, short a, short b, int c, int k) {
         *(int *)(q + 8) = t % c;
     }
     return 1;
+}
+
+typedef struct { short a; signed char c; signed char d; short e; } ret6;
+
+ret6 func_00483CF0(char *, int, int);
+
+void func_00483760(char *p) {
+    func_00483620(p);
+    if (*(unsigned char *)(p + 0xD3) != 0) {
+        ret6 s = func_00483CF0(p, *(signed char *)(p + 0xD2), *(short *)(p + 0xD0));
+        ((int *)p)[s.c] |= 1 << s.d;
+    }
 }
