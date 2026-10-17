@@ -7861,3 +7861,131 @@ extern "C" void func_00466460(char *p) {
     ((ObjE4 *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
     *(int *)(p + 0xD4) = 0;
 }
+class ObjC0C {
+public:
+    virtual void d0();
+    virtual int mC();
+};
+
+extern "C" void func_003B4D80(char *, int, int);
+
+extern "C" unsigned char func_0035A420(char *p, signed char k) {
+    if (*(unsigned char *)(p + 0x1D) == 3) {
+        return 0;
+    }
+    switch (k) {
+    case 0:
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2C) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2D) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2E) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2F) {
+            return 1;
+        }
+        break;
+    case 2:
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x30) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x31) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
+
+extern "C" unsigned char func_0045AF80(char *p, signed char k) {
+    if (*(unsigned char *)(p + 0x1D) == 3) {
+        return 0;
+    }
+    switch (k) {
+    case 0:
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2C) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2D) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2E) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2F) {
+            return 1;
+        }
+        break;
+    case 2:
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x30) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x31) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
+
+extern "C" unsigned char func_00497D80(char *p, signed char k) {
+    if (*(unsigned char *)(p + 0x1D) == 3) {
+        return 0;
+    }
+    switch (k) {
+    case 0:
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2C) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2D) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2E) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x2F) {
+            return 1;
+        }
+        break;
+    case 2:
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x30) {
+            return 1;
+        }
+        if ((*(ObjC0C **)(p + 0xC))->mC() == 0x31) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
+
+extern "C" void func_003B02C0(char *p) {
+    float f;
+    *(unsigned short *)(p + 0x20CC) = *(unsigned short *)(p + 0x20CC) | 1;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(short *)(p + 0x21C0) = *(short *)(p + 0x21C2);
+        *(short *)(p + 0x21C2) = 5;
+        func_0024DA80(p + 0x1D00, 0, 5);
+        func_0024DA80(p + 0x1DD0, 0, 5);
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        func_003B6060(p);
+        *(unsigned char *)(p + 0x21C4) = 1;
+        break;
+    case 1:
+        if (both_done(p) == 1) {
+            func_003B4B60(p, 2);
+            *(unsigned char *)(p + 0x2215) = 1;
+            return;
+        }
+        break;
+    }
+    f = ((AnimF *)(p + 0x704))->m28(0);
+    if (!(f < 44.0f) && f <= 63.0f) {
+        func_003B4D80(p, 0x400, 0);
+    }
+    func_003B4F60(p);
+}
