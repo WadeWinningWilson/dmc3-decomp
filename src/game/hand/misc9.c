@@ -11693,6 +11693,15 @@ void func_001A01C0(char *, unsigned int, unsigned int, int, int);
 int func_001A5050(char *);
 int func_001A5100(char *);
 int func_001A53F0(char *);
+char *func_001AEAA0(char *, int, int);
+int func_001AEF60(char *, char *, int, int, int);
+void func_001B6470(char *, int *);
+void func_001B64C0(char *, int);
+void func_001B64D0(char *, short *);
+void func_001B6510(char *, int);
+void func_001B6520(char *, int);
+void func_001B6550(char *, int);
+void func_001B6630(char *, int);
 
 void func_0046F690(char *p) {
     int i;
@@ -11807,4 +11816,64 @@ int func_001A4F90(char *p) {
         break;
     }
     return r;
+}
+
+int func_001AFCA0(char *p, int k, int b) {
+    int r;
+    char *e = func_001AEAA0(p, 6, (unsigned char)k);
+    if (*(unsigned char *)(e + 1) == 3) {
+        r = 1;
+    } else {
+        *(short *)(e + 2) = (unsigned char)k;
+        if ((unsigned char)func_001AEF60(p, e, b, 0, 0) == 0) {
+            func_001AF080(p, (int)e);
+            r = 0;
+        } else {
+            r = 1;
+        }
+    }
+    return r;
+}
+
+void func_001B6BD0(char *p, int a, int b) {
+    short sz[2];
+    int s[7];
+    if (a == 0) {
+        a = 0x20000000;
+    }
+    sz[0] = 0x200;
+    s[2] = b;
+    sz[1] = 0x100;
+    s[0] = 0;
+    s[1] = 0;
+    func_001B6470(D_01C61820, s);
+    func_001B64C0(D_01C61820, a);
+    func_001B64D0(D_01C61820, sz);
+    func_001B6510(D_01C61820, 4);
+    func_001B6520(D_01C61820, 0);
+    func_001B6550(D_01C61820, 1);
+    func_001B6630(D_01C61820, 0);
+}
+
+int func_001A9BE0(char *p, int c) {
+    int n;
+    int i;
+    unsigned int j;
+    int r;
+    n = 1;
+    if (*(int *)(p + 0x128) != *(int *)(p + 0x12C)) {
+        n = 2;
+    }
+    for (i = 0; i < n; i++) {
+        if (*(char **)(p + i * 4 + 0x128) == 0) {
+            return 0;
+        }
+        for (j = 0; j < *(unsigned int *)(p + 4); j++) {
+            unsigned char *d = (unsigned char *)(*(char **)(p + i * 4 + 0x128) + j * 4);
+            d[0] = c & 0xFF;
+            d[1] = ((unsigned int)c >> 8) & 0xFF;
+            d[2] = ((unsigned int)c >> 16) & 0xFF;
+        }
+    }
+    return 1;
 }
