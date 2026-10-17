@@ -15296,6 +15296,8 @@ extern "C" void func_00278060(char *, int);
 extern "C" void func_002D9DF0(char *);
 extern "C" void func_00259B30(char *);
 extern "C" void func_0029DCE0(char *, int);
+extern "C" int func_003B5A20(char *);
+extern "C" int func_003B5DC0(char *, char *, float, float);
 
 extern "C" void func_0037D190(Obj1FC *o) {
     char *p = (char *)o;
@@ -16064,4 +16066,36 @@ extern "C" unsigned char func_003A0C00(char *p, short a) {
         r = 0;
     }
     return r;
+}
+
+extern "C" void func_003ABF70(char *p) {
+    float m2[16];
+    float m[16];
+    float *src = ((ObjPosC4 *)(p + 0x880))->mC4();
+    QCOPYA(p + 0x60, src);
+    SETPOSA(m2, p + 0x60);
+    func_00105760(m, m2, 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f));
+    GETPOSA(p + 0x60, m);
+    VADDIPA(p + 0x50, p + 0x60);
+    *(float *)(p + 0x5C) = 1.0f;
+}
+
+extern "C" void func_003B4720(char *p) {
+    float f;
+    if (((*(unsigned short *)(p + 0x20CC) & 1) != 0) == true) {
+        return;
+    }
+    if ((*(unsigned char *)(p + 0x21C9) != 0) == true) {
+        return;
+    }
+    f = 1.0f + (1.0f - *(float *)(p + 0x21DC));
+    if ((unsigned char)func_003B5A20(p) == 1) {
+        f *= 3.0f;
+        if (*(int *)(p + 0x2210) == *(int *)(p + 0x21FC)) {
+            f *= 3.0f;
+        }
+    }
+    if ((unsigned char)func_003B5DC0(p, p + 0x21D0, f, 0.0f) == 1 && *(unsigned char *)(p + 0x21C9) == 0) {
+        *(unsigned char *)(p + 0x21C9) = 1;
+    }
 }

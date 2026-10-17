@@ -8398,6 +8398,8 @@ extern "C" void func_00278060(char *, int);
 extern "C" void func_002D9DF0(char *);
 extern "C" void func_00259B30(char *);
 extern "C" void func_0029DCE0(char *, int);
+extern "C" int func_003B5A20(char *);
+extern "C" int func_003B5DC0(char *, char *, float, float);
 
 
 
@@ -8918,6 +8920,10 @@ public:
 };
 
 #define IN_ARC(a, base, len) ((unsigned short)((a) - (base)) != 0 && (unsigned short)((a) - (base)) < (unsigned int)((len) + 1))
+
+
+
+
 
 
 
@@ -10871,5 +10877,17 @@ extern "C" unsigned char func_003B4A30(char *p, short a) {
         r = 0;
     }
     return r;
+}
+
+extern "C" void func_003C4AC0(char *p) {
+    float m2[16];
+    float m[16];
+    float *src = ((ObjPosC4 *)(p + 0x680))->mC4();
+    QCOPYA(p + 0x60, src);
+    SETPOSA(m2, p + 0x60);
+    func_00105760(m, m2, 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f));
+    GETPOSA(p + 0x60, m);
+    VADDIPA(p + 0x50, p + 0x60);
+    *(float *)(p + 0x5C) = 1.0f;
 }
 }
