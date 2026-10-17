@@ -11705,6 +11705,7 @@ void func_001B6630(char *, int);
 void func_0023A710(char *, int);
 void func_0023A3C0(char *, signed char);
 void func_00138330(void);
+void func_001323E0(float *);
 
 void func_0046F690(char *p) {
     int i;
@@ -11978,4 +11979,26 @@ void func_002A02F0(char *p) {
         }
         func_00138330();
     }
+}
+
+#define VMOVXYZ30(d, s) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+#define VSUBIP(x, y) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(x), "r"(y) : "memory")
+
+void func_002D9DF0(char *p) {
+    float b[4];
+    float a[4];
+    if (*(unsigned char *)(p + 0x3B9D) == 0 || *(unsigned char *)(p + 0x28A6) == 0) {
+        *(float *)(p + 0x2580) = 0.0f;
+        return;
+    }
+    *(float *)(p + 0x2580) = 0.5f;
+    VMOVXYZ30(a, *(char **)(*(char **)(p + 0x1394) + 0x104));
+    QCOPY(b, p + 0x3C40);
+    if (b[1] < a[1]) {
+        b[1] = a[1];
+    }
+    VSUBIP(b, a);
+    func_001323E0(b);
+    QCOPY(p + 0x2590, b);
 }

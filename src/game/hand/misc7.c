@@ -402,6 +402,8 @@ ret6 func_00483CF0(char *, int, int);
 void func_00131650(char *, char *);
 float func_00132630(float *, char *);
 void func_00132580(float *, char *, float);
+float func_00131BA0(int);
+float func_00131C20(int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -424,4 +426,15 @@ int func_001C1510(char *u, char *out, char *o, char *a, char *b) {
     func_00132580(d2, (char *)d1, func_00132630(d2, (char *)d1));
     VADD(out, d2, o);
     return 1;
+}
+
+void func_002DB880(char *p, int a) {
+    float s = func_00131BA0(a);
+    float c;
+    *(float *)(p + 0x50) = *(float *)(p + 0x50) + *(float *)(p + 0x10) * (*(float *)(p + 0x150) * s);
+    *(float *)(p + 0x54) = *(float *)(p + 0x54) + *(float *)(p + 0x64) * *(float *)(p + 0x10);
+    c = func_00131C20(a);
+    *(float *)(p + 0x58) = *(float *)(p + 0x58) + *(float *)(p + 0x10) * (*(float *)(p + 0x150) * c);
+    *(float *)(p + 0x150) = *(float *)(p + 0x150) + *(float *)(p + 0x154) * *(float *)(p + 0x10);
+    *(float *)(p + 0x64) = *(float *)(p + 0x64) + *(float *)(p + 0x74);
 }
