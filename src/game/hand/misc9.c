@@ -9479,6 +9479,11 @@ typedef struct { char b[6]; } SvS6;
 typedef struct { float f[4]; } SvF4;
 
 typedef struct { float f[2]; } SvF2;
+int func_002F0740(char *, int, int);
+char *func_0023F670(char *, char *, short);
+char *func_002F0A50(char *, char *);
+short func_002DAA60(char *, char *);
+void func_002F1830(char *, char *);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -9513,4 +9518,69 @@ void func_0036F7D0(char *d, char *s) {
     func_001282D0(*(char **)(d + 0x14), r + 0x150, 0x68);
     func_001282D0(*(char **)(d + 0x14) + 0x68, r + 0x358, 0x68);
     func_001282D0(d + 0x71, s + k * 21 + 0x560, 0x15);
+}
+
+static inline int lock_btn(char *p) {
+    return *(unsigned short *)(p + 0x49C0) & *(unsigned short *)(D_0066671A + func_001AE770(D_00666710, 8) * 2);
+}
+
+void func_0023F3E0(char *p) {
+    char *t = 0;
+    unsigned char v;
+    int x;
+    if (*(unsigned char *)(p + 0x3B9C) == 1) {
+        return;
+    }
+    if (*(unsigned char *)(p + 0x28A6) == 0) {
+        v = func_002F0740(p + 0x2B58, 0, *(unsigned char *)(p + 0xD4));
+        *(unsigned char *)(p + 0x3B9C) = 1;
+        if (*(unsigned char *)(p + 0x28AA) != 2) {
+            if (lock_btn(p)) {
+                func_0023F760(p);
+                *(unsigned char *)(p + 0x28A6) = 1;
+                *(float *)(p + 0x3C60) = 0.0f;
+                if (v == 1) {
+                    if (*(unsigned int *)(p + 0x2898) & 0x10000) {
+                        t = func_0023F670(p, p + 0x3C40, *(short *)(p + 0x90));
+                    } else if ((unsigned char)func_002DAD40(p) == 2) {
+                        t = func_002F0A50(p + 0x2B58, p + 0x3C40);
+                    } else {
+                        t = func_0023F670(p, p + 0x3C40, func_002DACC0(p));
+                    }
+                }
+            } else if (v == 1) {
+                if ((unsigned char)func_002DAD40(p) == 2) {
+                    t = func_002F0A50(p + 0x2B58, p + 0x3C40);
+                } else {
+                    t = func_0023F670(p, p + 0x3C40, func_002DACC0(p));
+                }
+            }
+        }
+    } else {
+        v = func_002F0740(p + 0x2B58, 1, *(unsigned char *)(p + 0xD4));
+        *(unsigned char *)(p + 0x3B9C) = 1;
+        func_0023F760(p);
+        if (!lock_btn(p) && *(float *)(p + 0x3C60) <= 0.0f) {
+            *(unsigned char *)(p + 0x28A6) = 0;
+        }
+        if (v == 1) {
+            t = func_002F0A50(p + 0x2B58, p + 0x3C40);
+        }
+    }
+    if (t == 0) {
+        *(short *)(p + 0x3BA2) = *(short *)(p + 0x90);
+        *(unsigned char *)(p + 0x3B9D) = 0;
+        *(char **)(p + 0x3C68) = 0;
+        *(int *)(p + 0x3C64) = 0;
+    } else {
+        *(short *)(p + 0x3BA2) = func_002DAA60(p, p + 0x3C40);
+        *(unsigned char *)(p + 0x3B9D) = 1;
+        *(char **)(p + 0x3C68) = t;
+        func_002F1830(p + 0x2B58, t);
+        x = *(int *)(t + 8);
+        if (x != 0) {
+            x += 0x40;
+        }
+        *(int *)(p + 0x3C64) = x;
+    }
 }
