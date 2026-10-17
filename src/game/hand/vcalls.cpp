@@ -4216,3 +4216,18 @@ extern "C" void func_004398D0(Obj2FC *o, int k) {
         break;
     }
 }
+
+extern "C" void func_002EE3F0(char *p) {
+    switch (*(unsigned char *)(p + 0x360)) {
+    case 1:
+        if (*(SubCCc **)(p + 0x364) != 0) {
+            (*(SubCCc **)(p + 0x364))->mCC(p + 0x450);
+        }
+        break;
+    case 2:
+    case 3:
+    case 4:
+        (*(SubCCc **)(p + 0x368))->mCC(p + 0x450);
+        break;
+    }
+}

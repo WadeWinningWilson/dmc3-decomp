@@ -1195,3 +1195,40 @@ int func_00286780(char *p, int id) {
     }
     return 0;
 }
+
+extern char D_00598570[];
+extern char D_00599090[];
+extern unsigned char D_005BE148;
+extern char D_00645A30[];
+char *func_001005E0(int, int, char *, char *, int);
+int func_00195D90(char *);
+char *func_002F7DC0(void) {
+    int v;
+    char *o;
+    v = func_00195D90(D_00645A30);
+    if (v != 0) {
+        do {
+            o = func_001005E0(v, 0, D_00599090, D_00598570, 0);
+            if (o != 0 && D_005BE148 == *(unsigned char *)(o + 4)) {
+                return o;
+            }
+            v = func_00195D90(D_00645A30);
+        } while (v != 0);
+    }
+    return 0;
+}
+float func_0021CBE0(char *p, unsigned char k, float d) {
+    if (k == 0) {
+        if (*(unsigned char *)(p + 0x28AC) == 1) {
+            return *(float *)(p + 0x28C4);
+        }
+        if (*(unsigned char *)(p + 0x28AE) == 1 || *(unsigned char *)(p + 0x3C79) == 1 || *(unsigned char *)(p + 0x3C78) == 1) {
+            return *(float *)(p + 0x28C4);
+        }
+    }
+    *(float *)(p + 0x28C4) += d;
+    if (!(*(float *)(p + 0x28C4) <= *(float *)(p + 0x28C8))) {
+        *(float *)(p + 0x28C4) = *(float *)(p + 0x28C8);
+    }
+    return *(float *)(p + 0x28C4);
+}
