@@ -266,6 +266,8 @@ void func_004B9BA0(char *);
 void func_004B9C50(char *);
 void func_0046EC00(char *, int, char *, int, int, float, float);
 void func_0028C740(char *);
+void func_004B8980(char *, char *, short);
+void func_002DAB90(char *, int);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -2838,4 +2840,99 @@ void func_004BA4D0(char *p) {
     }
     func_0041D840(b, p + 0x420, *(float *)(p + 0x50C));
     func_0028C5C0(p + 0x1A0, 0, 1.0f);
+}
+
+int func_0023EDD0(char *p) {
+    if (!(*(int *)(p + 0x2898) & 2)) {
+        return 0;
+    }
+    if ((unsigned char)func_00244DF0(p, 0x8000000F) == 1 || (unsigned char)func_00244DF0(p, 0x80000005) == 1 ||
+        (func_0021CBA0(p) & 8)) {
+        if (*(signed char *)(p + 0x2909) <= 0) {
+            return 0;
+        }
+        if (*(unsigned char *)(p + 0x28AE) == 1 &&
+            (*(signed char *)(p + 0x28A8) == 3 ||
+             (*(signed char *)(p + 0x28A8) == 5 && ((signed char *)(p + 0x3D4C))[*(unsigned char *)(p + 0x3D4A)] == 3)) &&
+            (*(int *)(p + 0x29E4) & 4) && *(unsigned char *)(p + 0x28A9) == 0 && *(float *)(p + 0x291C) <= 0.0f &&
+            (*(unsigned short *)(p + 0x49C0) & ((unsigned short *)D_0066671A)[func_001AE770(D_00666710, 8)]) &&
+            (*(unsigned short *)(p + 0x49C4) & ((unsigned short *)D_0066671A)[func_001AE770(D_00666710, 0x40)])) {
+            *(unsigned char *)(p + 0x28A9) = 1;
+            *(signed char *)(p + 0x2909) = 0;
+            func_0021C7A0(p, 0x25);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void func_0026C4A0(char *p) {
+    switch (*(unsigned char *)(p + 0x284C)) {
+    case 0:
+        func_0021CBB0(p, 1);
+        func_002DAF70(p, 0xE39, 0, 0, *(float *)(*(char **)(p + 0x2844) + 0x384));
+        func_002490F0(p, 0xF, 1, -1, 0, 0, -1.0f);
+        func_002F30B0(0x59, *(char **)(((char **)(p + 0x1384))[func_002D9EB0(p)] + 0x104), p);
+        *(float *)(p + 0x2878) = 40.0f;
+        *(unsigned char *)(p + 0x284D) = 0;
+        *(unsigned char *)(p + 0x284C) = *(unsigned char *)(p + 0x284C) + 1;
+        break;
+    case 1:
+        func_002DB2C0(p);
+        if ((unsigned char)func_002496D0(p) == 4) {
+            D_01DFAB78[0] = D_01DFAB78[0] | 0x2000000;
+            func_0021B790(p, 5);
+            break;
+        }
+        func_002DBAA0(p, *(short *)(p + 0x90), 1.0f);
+        switch (*(unsigned char *)(p + 0x284D)) {
+        case 0:
+            if (!(*(float *)(p + 0x2878) <= 0.0f)) {
+                *(float *)(p + 0x2878) = *(float *)(p + 0x2878) - *(float *)(p + 0x10);
+                if (*(float *)(p + 0x2878) <= 0.0f) {
+                    *(float *)(p + 0x2878) = 0.0f;
+                    *(unsigned char *)(p + 0x284D) = *(unsigned char *)(p + 0x284D) + 1;
+                    func_004B8980(p, *(char **)(((char **)(p + 0x1384))[func_002D9EB0(p)] + 0x104), *(short *)(p + 0x90));
+                }
+            }
+            break;
+        case 1:
+            break;
+        }
+        break;
+    }
+}
+
+void func_002E1750(char *p) {
+    switch (*(unsigned char *)(p + 0x284C)) {
+    case 0:
+        func_0021CB50(p, 2);
+        *(short *)(p + 0x90) = *(short *)(p + 0x2AE4);
+        *(short *)(p + 0x28DC) = *(short *)(p + 0x90) + 0x8000;
+        func_002490F0(p, 1, 0xD, -1, 1, 0, -1.0f);
+        func_002DBD00(p);
+        func_002DBCC0(p, 1, *(float *)(*(char **)(p + 0x283C) + 0x30), *(float *)(*(char **)(p + 0x283C) + 0x34));
+        func_002DBD20(p, 0.0f, 0.0f);
+        *(unsigned char *)(p + 0x284C) = *(unsigned char *)(p + 0x284C) + 1;
+        break;
+    case 1:
+        func_002496D0(p);
+        if (*(float *)(p + 0x64) < 0.0f && func_0023DF80(p, *(float *)(p + 0x64)) != 0) {
+            func_002490F0(p, 1, 0xE, -1, 2, 3, -1.0f);
+            func_0021CBB0(p, 1);
+            func_0021CB60(p, 2);
+            func_0021CB50(p, 1);
+            *(unsigned char *)(p + 0x284C) = *(unsigned char *)(p + 0x284C) + 1;
+            break;
+        }
+        func_002DB880(p, *(short *)(p + 0x28DC));
+        break;
+    case 2:
+        if ((unsigned char)func_002496D0(p) == 4) {
+            func_0021B790(p, 0xA);
+        } else {
+            func_002DAB90(p, 3);
+        }
+        break;
+    }
 }

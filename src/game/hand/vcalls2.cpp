@@ -190,6 +190,13 @@ extern "C" void func_003F2F60(char *);
 extern "C" int func_0024E780(char *, int, int);
 extern "C" void func_0024E7B0(char *, int, int);
 extern "C" void func_003EF580(char *);
+extern "C" char D_005BCD60[];
+extern "C" void func_0031E570(char *);
+extern "C" void func_002D26A0(char *, int, int);
+extern "C" void func_0024DA80(char *, int, int);
+extern "C" int func_002D65E0(char *);
+extern "C" void func_002D2270(char *, int);
+extern "C" void func_002D6D30(char *);
 
 extern "C" void func_0043F920(char *p) {
     unsigned char r;
@@ -294,5 +301,48 @@ extern "C" void func_003EF340(char *p) {
     }
     if (func_0024E800(p + 0x1FD0) != 0) {
         func_003EF580(p);
+    }
+}
+
+extern "C" void func_002D5A70(char *p) {
+    char *e;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        func_0031E570(p + 0x1D0);
+        *(unsigned char *)(p + 0x1E2) = 3;
+        *(unsigned char *)(p + 0x1E3) = 2;
+    case 1:
+        if ((unsigned char)func_0024E800(p + 0x2F70) == 1) {
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+            func_0031E570(p + 0x1D0);
+            func_002D26A0(p, 3, 0xA);
+            func_0024DA80(p + 0x31E0, 0, 3);
+            *(unsigned char *)(p + 0x3900) = 1;
+        }
+        break;
+    case 2:
+        if ((unsigned char)func_0024E780(p + 0x2F70, 0, 0) == 1) {
+            func_0024E7B0(p + 0x2F70, 0, 0);
+            func_00207480(3, 0x144, p + 0x1EF0, 0x10);
+        }
+        if ((unsigned char)func_0024E780(p + 0x2F70, 0, 0) == 2) {
+            func_0024E7B0(p + 0x2F70, 0, 0);
+            e = *(char **)(p + 0x3914);
+            if (e != 0) {
+                e[0x3B] = 0;
+            }
+        }
+        if ((unsigned char)func_0024E800(p + 0x2F70) == 1) {
+            *(int *)(p + 0x38D4) = 0;
+            *(int *)(p + 0x38D8) = 0;
+            if (func_002D65E0(p) != 0) {
+                func_002D2270(p, 0x17);
+            } else {
+                func_002D2270(p, ((signed char *)D_005BCD60)[*(unsigned char *)(p + 0x38D0)]);
+            }
+            func_002D6D30(p);
+        }
+        break;
     }
 }
