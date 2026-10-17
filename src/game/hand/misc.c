@@ -828,6 +828,9 @@ void func_001AD140(char *);
 void func_0038F300(char *, int);
 void func_0041E120(char *, float);
 void func_0038F2C0(char *, int);
+extern char D_005BE11C[4];
+extern char D_005BE120[4];
+extern char D_005BE124[4];
 
 void func_00421A40(char *p) {
     *(int *)(p + 0x42C) |= 0x2000;
@@ -859,4 +862,16 @@ void func_004B7D90(char *p) {
     __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(p + 0x170) : "memory");
     func_00131760(p + 0x170, p + 0x170, p + 0x80);
     __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(p + 0x170), "r"(p + 0x50) : "memory");
+}
+
+void func_002B47F0(char *p, int k) {
+    D_005BE11C[0] = 0;
+    D_005BE120[0] = 0;
+    D_005BE124[0] = 0;
+    *(int *)(p + 0x294) = *(int *)(p + 0x298);
+    *(unsigned char *)(p + 0x24A2) = 0xFF;
+    *(unsigned char *)(p + 0x24A1) = 0xFF;
+    *(unsigned char *)(p + 0x24A3) = 0xFF;
+    *(unsigned char *)(p + 0x24A0) = k;
+    func_002D8F40(*(int *)(*(char **)D_01CAFF0C + 0xC), *(unsigned char *)(p + 0x24A0));
 }

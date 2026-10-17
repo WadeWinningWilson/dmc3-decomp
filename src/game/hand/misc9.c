@@ -9503,6 +9503,7 @@ void func_003B5DC0(char *, char *, float, float);
 void func_002DFFD0(char *, char *, int, char *, int, float, float, float, float);
 void func_001ABE90(char *, float, float, float);
 void func_001ACCF0(int, float, float, float, float);
+void func_002E7510(char *, int, int, int, float, float, float, float);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -9772,4 +9773,14 @@ void func_0045A200(char *p) {
 
 void func_004971D0(char *p) {
     func_0028C5C0(*(char **)(p + 0xA4), (unsigned char)(*(float *)(p + 0x108) > 0.0f), *(float *)(p + 0xB0));
+}
+
+short func_0024BEE0(char *p) {
+    float d[4];
+    VSUB(d, p + 0x80, p + 0x70);
+    return func_00131D10(d[0], d[2]);
+}
+
+void func_002E74D0(char *p) {
+    func_002E7510(p, 0, 0, 0, 0.0f, 255.0f, 1000.0f, 10000.0f);
 }
