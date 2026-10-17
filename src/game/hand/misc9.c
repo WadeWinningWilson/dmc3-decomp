@@ -11709,6 +11709,7 @@ void func_001323E0(float *);
 char *func_001B0FD0(char *, int, int);
 char *func_0027A570(char *);
 void func_002C31A0(char *, char *, int);
+void func_0037B9C0(char *);
 
 void func_0046F690(char *p) {
     int i;
@@ -12076,4 +12077,20 @@ void func_00316730(char *p, int k) {
     *(int *)(p + 0x114C) = 0;
     *(int *)(p + 0x1150) = k;
     *(unsigned char *)(p + 0x1154) = 0;
+}
+
+void func_0037D240(char *p) {
+    int i;
+    if (*(char **)(*(char **)D_01CAFF0C + 0x20) != 0) {
+        func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), p);
+    }
+    if (*(char **)(p + 0x7814) != 0) {
+        func_001AD140(*(char **)(p + 0x7814));
+    }
+    func_0037B9C0(p);
+    for (i = 1; i < *(int *)(p + 0x6E80); i++) {
+        if (*(char **)(p + i * 4 + 0x6640) != 0) {
+            func_001AD140(*(char **)(p + i * 4 + 0x6640));
+        }
+    }
 }

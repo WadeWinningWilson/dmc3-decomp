@@ -409,6 +409,9 @@ char *func_002FB8E0(int);
 void *func_001282D0(void *, void *, unsigned int);
 float func_0011DA38(float);
 float func_0011D798(float);
+char *func_00279290(char *);
+void func_001A2000(char *, int);
+void func_001A1E70(char *, int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -467,4 +470,16 @@ void func_0034B9A0(float *v, int ang, float s, float y, float t) {
     v[0] = v[0] + t * (s * func_0011DA38(a));
     v[1] = v[1] + y * t;
     v[2] = v[2] + t * (s * func_0011D798(a));
+}
+
+void func_00356570(char *p, unsigned char k, char *l) {
+    int i;
+    int n = *(int *)(l + 0x10);
+    for (i = 0; i < n; i++) {
+        if (*(int *)(l + i * 4 + 0x14) == -1) {
+            func_001A2000(func_00279290(p + k * 0x600 + 0xC0), i);
+        } else {
+            func_001A1E70(func_00279290(p + k * 0x600 + 0xC0), i);
+        }
+    }
 }

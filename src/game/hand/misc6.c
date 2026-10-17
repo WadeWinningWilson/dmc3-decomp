@@ -2923,3 +2923,22 @@ void func_004E0540(char *p, int a, int b, int c, int k) {
     func_002EC050(1, e + 0x30, 0.0f);
     func_0034BA60(0x3A, e + 0x30, 0x1C, 0, 1);
 }
+
+void func_00393DF0(char *p, char *a, char *b) {
+    short k;
+    if (*(signed char *)(b + 5) != 0) {
+        return;
+    }
+    if (*(signed char *)(a + 1) == 2) {
+        func_0034BA60(0x2A, b + 0x10, *(signed char *)(p + 0x46), 0, 1);
+        return;
+    }
+    k = *(short *)(p + 0xAC0);
+    if (k == 0x38 || k == 0x41) {
+        func_0034BA60(0x5F, b + 0x10, *(signed char *)(p + 0x46), 0, 1);
+        return;
+    }
+    if (*(unsigned char *)(a + 0x3D) != 7) {
+        func_0034BA60(0x5E, b + 0x10, *(signed char *)(p + 0x46), 0, 1);
+    }
+}
