@@ -849,6 +849,15 @@ extern "C" char *func_0028C3A0(char *, int, int, int);
 extern "C" float D_005703F8[];
 extern "C" float D_0057040C[];
 extern "C" float D_00570420[];
+extern "C" float func_00132630(float *, char *);
+extern "C" float D_005702E0[];
+extern "C" char D_00569E60[];
+extern "C" unsigned int D_01DF8810[];
+extern "C" unsigned int D_01DF7E50[];
+extern "C" void func_00207A90(unsigned int *);
+extern "C" void func_003F32B0(char *);
+extern "C" char D_00572F60[];
+extern "C" float D_005702F4[];
 
 extern "C" void func_003E6FA0(char *p) {
     func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
@@ -2117,5 +2126,154 @@ extern "C" void func_003F0790(char *p) {
     }
     if (func_0024E800(p + 0x1FD0) != 0) {
         func_001AD140(p);
+    }
+}
+
+static inline float frand2(void) {
+    unsigned int y;
+    if (D_01DF8810[0] >= 0x270) {
+        func_00207A90(D_01DF7E50);
+    }
+    {
+        unsigned int i = D_01DF8810[0];
+        D_01DF8810[0] = i + 1;
+        y = D_01DF7E50[i];
+    }
+    y ^= y >> 11;
+    y ^= (y << 7) & 0x9D2C5680;
+    y ^= (y << 15) & 0xEFC60000;
+    y ^= y >> 18;
+    return 2.3283064e-10f * (float)y;
+}
+
+static inline void hop_pick(char *p, int fwd) {
+    if (fwd) {
+        ((ObjV2F8 *)p)->m2F8(0xE);
+        *(unsigned char *)(p + 0x3434) = 0;
+        *(unsigned char *)(p + 0x3435) = 0;
+        *(unsigned char *)(p + 0x3436) = 0;
+        func_003E6750(p, 0xC, 0, 0);
+    } else {
+        ((ObjV2F8 *)p)->m2F8(0xC);
+        *(unsigned char *)(p + 0x3434) = 0;
+        *(unsigned char *)(p + 0x3435) = 0;
+        *(unsigned char *)(p + 0x3436) = 0;
+        func_003E6750(p, 0xD, 0, 0);
+    }
+}
+
+extern "C" void func_003EC110(char *p) {
+    float a[4];
+    float d[4];
+    float w[256];
+    int k;
+    int n;
+    float r;
+    Rate18 *e;
+    func_003F32B0(p);
+    k = speed_band(p);
+    r = D_005702E0[k];
+    func_003F2D20(p, r * *(float *)(p + 0x10));
+    if ((unsigned char)func_0024E780(p + 0x1FD0, 0, 0) == 1) {
+        *(float *)(p + 0x710) = *(float *)(p + 0x710) - *(float *)(p + 0x10) * (*(float *)(p + 0x6E0) * *(float *)(p + 0x3A10) + *(float *)(p + 0x700) * *(float *)(p + 0x3A18));
+        *(float *)(p + 0x714) = *(float *)(p + 0x714) - *(float *)(p + 0x10) * (*(float *)(p + 0x6E4) * *(float *)(p + 0x3A10) + *(float *)(p + 0x704) * *(float *)(p + 0x3A18));
+        *(float *)(p + 0x718) = *(float *)(p + 0x718) - *(float *)(p + 0x10) * (*(float *)(p + 0x6E8) * *(float *)(p + 0x3A10) + *(float *)(p + 0x708) * *(float *)(p + 0x3A18));
+    }
+    func_003F2F60(p);
+    func_003F32B0(p);
+    if (func_0024E800(p + 0x1FD0) == 0) {
+        return;
+    }
+    *(int *)(p + 0x3A84) = *(int *)(p + 0x3A84) - 1;
+    if (*(int *)(p + 0x3A84) <= 0) {
+        ((ObjV2F8 *)p)->m2F8(0xF);
+        *(unsigned char *)(p + 0x3434) = 0;
+        *(unsigned char *)(p + 0x3435) = 0;
+        *(unsigned char *)(p + 0x3436) = 0;
+        *(int *)(p + 0x2170) = 0;
+        e = (Rate18 *)D_00572F60;
+        k = speed_band(p);
+        n = 0;
+        while (!(e->v[0] < 0.0f)) {
+            w[n] = e->v[k];
+            e++;
+            n++;
+        }
+        *(float *)(p + 0x3A8C) = ((Rate18 *)D_00572F60)[func_0034BBE0(n, (char *)w)].id;
+        return;
+    }
+    if (*(unsigned char *)(p + 0x3A33) < 2) {
+        func_00104B80(a, (float *)(*(char **)(p + 0x3A40) + 0x6E0), (float *)(D_00569E60 + *(unsigned char *)(p + 0x3A33) * 16));
+        VSUBR(d, (char *)a, p + 0x710);
+        d[3] = 0.0f;
+        if (!(func_00132630(d, p + 0x6F0) <= 0.0f)) {
+            hop_pick(p, 1);
+        } else {
+            hop_pick(p, 0);
+        }
+    } else {
+        if (!(frand2() <= 0.5f)) {
+            hop_pick(p, 1);
+        } else {
+            hop_pick(p, 0);
+        }
+    }
+}
+
+extern "C" void func_003EC6E0(char *p) {
+    float a[4];
+    float d[4];
+    float w[256];
+    int k;
+    int n;
+    float r;
+    Rate18 *e;
+    func_003F32B0(p);
+    k = speed_band(p);
+    r = D_005702F4[k];
+    func_003F2D20(p, r * *(float *)(p + 0x10));
+    if ((unsigned char)func_0024E780(p + 0x1FD0, 0, 0) == 1) {
+        *(float *)(p + 0x710) = *(float *)(p + 0x710) + *(float *)(p + 0x10) * (*(float *)(p + 0x6E0) * *(float *)(p + 0x3A10) + *(float *)(p + 0x700) * *(float *)(p + 0x3A18));
+        *(float *)(p + 0x714) = *(float *)(p + 0x714) + *(float *)(p + 0x10) * (*(float *)(p + 0x6E4) * *(float *)(p + 0x3A10) + *(float *)(p + 0x704) * *(float *)(p + 0x3A18));
+        *(float *)(p + 0x718) = *(float *)(p + 0x718) + *(float *)(p + 0x10) * (*(float *)(p + 0x6E8) * *(float *)(p + 0x3A10) + *(float *)(p + 0x708) * *(float *)(p + 0x3A18));
+    }
+    func_003F2F60(p);
+    func_003F32B0(p);
+    if (func_0024E800(p + 0x1FD0) == 0) {
+        return;
+    }
+    *(int *)(p + 0x3A84) = *(int *)(p + 0x3A84) - 1;
+    if (*(int *)(p + 0x3A84) <= 0) {
+        ((ObjV2F8 *)p)->m2F8(0xF);
+        *(unsigned char *)(p + 0x3434) = 0;
+        *(unsigned char *)(p + 0x3435) = 0;
+        *(unsigned char *)(p + 0x3436) = 0;
+        *(int *)(p + 0x2170) = 0;
+        e = (Rate18 *)D_00572F60;
+        k = speed_band(p);
+        n = 0;
+        while (!(e->v[0] < 0.0f)) {
+            w[n] = e->v[k];
+            e++;
+            n++;
+        }
+        *(float *)(p + 0x3A8C) = ((Rate18 *)D_00572F60)[func_0034BBE0(n, (char *)w)].id;
+        return;
+    }
+    if (*(unsigned char *)(p + 0x3A33) < 2) {
+        func_00104B80(a, (float *)(*(char **)(p + 0x3A40) + 0x6E0), (float *)(D_00569E60 + *(unsigned char *)(p + 0x3A33) * 16));
+        VSUBR(d, (char *)a, p + 0x710);
+        d[3] = 0.0f;
+        if (!(func_00132630(d, p + 0x6F0) <= 0.0f)) {
+            hop_pick(p, 1);
+        } else {
+            hop_pick(p, 0);
+        }
+    } else {
+        if (!(frand2() <= 0.5f)) {
+            hop_pick(p, 1);
+        } else {
+            hop_pick(p, 0);
+        }
     }
 }
