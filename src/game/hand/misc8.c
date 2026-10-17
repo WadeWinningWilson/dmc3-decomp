@@ -415,3 +415,71 @@ int func_00414FA0(char *p) {
     }
     return 0;
 }
+
+char *func_00501230(char *p) {
+    int i;
+    char *e;
+    for (i = 0, e = p; i < 6; i++, e += 6) {
+        if (*(unsigned char *)(e + 0x13ED) == 0) {
+            return p + i * 6 + 0x13ED;
+        }
+    }
+    return 0;
+}
+typedef struct { int a; short k; short pad; int v; } K12M;
+int func_00287DE0(K12M *t, short k) {
+    int i;
+    char *e;
+    for (i = 0, e = (char *)t; i < 64; i++, e += 12) {
+        if (*(short *)(e + 4) == k) {
+            return t[i + 1].a;
+        }
+    }
+    return 0;
+}
+char *func_0021B0B0(char *p, short k) {
+    int i;
+    char *e;
+    for (i = 0, e = p; i < 10; i++, e += 2) {
+        if (k == *(short *)e) {
+            return p + i * 12 + 0x14;
+        }
+    }
+    return 0;
+}
+void func_001A26C0(char *p, short d) {
+    short v = *(short *)(p + 0x15C) + d;
+    if (v < 0) {
+        v = 0;
+    }
+    if (v > 255) {
+        v = 255;
+    }
+    *(int *)(p + 0x15C) = v;
+}
+char *func_002F7C10(int, int);
+int func_004FD500(int a, int b) {
+    char *e = func_002F7C10(b, 0x20);
+    if (e != 0) {
+        e -= 208;
+    }
+    if (e != 0) {
+        return *(unsigned char *)(e + 0x2BC) != 0;
+    }
+    return 0;
+}
+void func_00234630(char *p) {
+    char *o;
+    if (*(int *)(p + 0x3860) < 5) {
+        o = 0;
+    } else {
+        o = *(char **)(p + 0x3830) + 0x200;
+    }
+    *(char *)(o + 0x78) = 0;
+    if (*(int *)(p + 0x3860) < 4) {
+        o = 0;
+    } else {
+        o = *(char **)(p + 0x3830) + 0x180;
+    }
+    *(char *)(o + 0x78) = 1;
+}
