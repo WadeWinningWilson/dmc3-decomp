@@ -201,3 +201,11 @@ float func_001FA830(float x, float v0, float x0, float v1, float x1) {
     float t = (x - x0) / (x1 - x0);
     return (1.0f - t) * v0 + t * v1;
 }
+
+void func_001F4170(char *p, unsigned int v) {
+    *(unsigned int *)(p + 0x64) = (v << 3) / 10;
+    *(unsigned int *)(p + 0x68) = v;
+}
+int func_0041D6B0(float *x, float d) {
+    return (*x -= d) <= 0.0f;
+}
