@@ -273,3 +273,16 @@ void func_001A8060(void) {
     D_00661ACC[0] = 0;
     D_00661AD0[0] = 0;
 }
+
+void func_001A8DC0(int a) {
+    char *b;
+    int k = *(signed char *)(D_005BE0D8 + 0xE);
+    if (D_00660620[0] != 0) {
+        b = D_0065F620 + (k << 11);
+        func_00134DE0(b + 0x7F0, b, a);
+        *(int *)(D_005BE0D8 + 0x80) += D_00660620[0];
+        *(int *)(D_005BE0D8 + 0x84) += D_00660624[0];
+        *(int *)(D_005BE0D8 + 0x88) += D_0066062C[0];
+        *(int *)(D_005BE0D8 + 0x8C) += D_00660630[0];
+    }
+}
