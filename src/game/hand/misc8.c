@@ -169,3 +169,35 @@ void func_004DA340(char *p, int v) {
     *(signed char *)(p + 0x57A) = n + 1;
     ((short *)(p + 0x564))[n] = v;
 }
+
+void func_00210850(int, int, int *);
+int func_00210830(int a, int b) {
+    int r;
+    func_00210850(a, b, &r);
+    return r;
+}
+unsigned short func_0022A720(char *p) {
+    return (*(unsigned short *)(p + 0x13298))++;
+}
+char *func_002792A0(char *);
+float func_0027D780(char *p) {
+    return *(float *)(func_002792A0(p + 0x4C0) + 0x12C);
+}
+extern signed char D_005BE134;
+void func_002E8760(void) {
+    if (D_005BE134 != 0) {
+        D_005BE134--;
+    }
+}
+void func_001F41C0(char *p, unsigned int v) {
+    *(unsigned int *)(p + 0x88) = v;
+    *(unsigned int *)(p + 0x90) = (*(unsigned int *)(p + 0x90) & 0xFFFFFF) | (v & 0xFF000000);
+}
+int func_00352CA0(void);
+long long func_00331010(void) {
+    return func_00352CA0();
+}
+float func_001FA830(float x, float v0, float x0, float v1, float x1) {
+    float t = (x - x0) / (x1 - x0);
+    return (1.0f - t) * v0 + t * v1;
+}
