@@ -76,6 +76,9 @@ def gen(name, items):
         k, x = body[i]
         if k == "ins" and x.split()[0] in BRANCH:
             if i + 1 < len(body) and body[i + 1][0] == "ins":
+                op0 = x.split()[0]
+                if op0 in ("beqz", "bnez"):
+                    seq.append(("cond", x))
                 seq.append(body[i + 1])
                 seq.append((k, x))
                 i += 2
@@ -107,7 +110,12 @@ def gen(name, items):
             return "%s + %d" % (b, off)
         raise Fail("addr base " + b)
 
+    pending = {}
     for k, x in seq:
+        if k == "cond":
+            r = x.split(" ", 1)[1].split(",")[0].strip()
+            pending[x] = val(r)
+            continue
         if k == "label":
             while stack and stack[-1] == x:
                 stack.pop()
@@ -124,7 +132,7 @@ def gen(name, items):
             m = re.match(r"\((0x[0-9A-Fa-f]+) >> 16\)", a[1])
             if m:
                 hi[a[0]] = num(m.group(1))
-                regs.pop(a[0], None)
+                regs[a[0]] = str(num(m.group(1)) & 0xFFFF0000)
                 continue
             raise Fail("lui " + x)
         if op == "addiu":
@@ -154,6 +162,11 @@ def gen(name, items):
                     regs[a[0]] = "p + %d" % (int(b[4:]) + imm)
                 else:
                     raise Fail("addiu base")
+            if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+                argset.add(a[0])
+            continue
+        if op == "ori" and a[1] == "$zero":
+            regs[a[0]] = str(num(a[2]))
             if a[0] in ("$a0", "$a1", "$a2", "$a3"):
                 argset.add(a[0])
             continue
@@ -200,7 +213,7 @@ def gen(name, items):
         if op in ("beqz", "bnez"):
             if op != "beqz":
                 raise Fail("bnez")
-            v = val(a[0])
+            v = pending.pop(x) if x in pending else val(a[0])
             lines.append(ind() + "if (%s != 0) {" % v)
             stack.append(a[1])
             continue
