@@ -9484,6 +9484,9 @@ char *func_0023F670(char *, char *, short);
 char *func_002F0A50(char *, char *);
 short func_002DAA60(char *, char *);
 void func_002F1830(char *, char *);
+void func_00205A10(int, int, int, int, int, int, float);
+char *func_002075D0(int, int, char *, int, int);
+void func_001980B0(char *, int, int, int, int);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -9583,4 +9586,16 @@ void func_0023F3E0(char *p) {
         }
         *(int *)(p + 0x3C64) = x;
     }
+}
+
+void func_00205A00(int a, int b, int c, int d) {
+    func_00205A10(a, b, c, d, 0, 0, 0.0f);
+}
+
+void func_002075C0(int a, int b, char *c, int d) {
+    func_002075D0(a, b, c, d, 0x20);
+}
+
+void func_00198140(char *unused, short *s, int a, int b) {
+    func_001980B0(D_00654430, 0, *(unsigned short *)s, a, b);
 }
