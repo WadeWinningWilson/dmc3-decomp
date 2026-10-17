@@ -818,6 +818,10 @@ typedef struct { int w[4]; } __attribute__((aligned(16))) Q16;
 extern "C" Q16 D_00569E80;
 extern "C" float D_00572FE0[];
 extern "C" char D_00572F50[];
+extern "C" void func_00133450(char *, float *, float *);
+extern "C" void func_003EB3D0(char *);
+extern "C" void func_003EA030(char *);
+extern "C" char D_005730A0[];
 
 extern "C" void func_003E6FA0(char *p) {
     func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
@@ -923,4 +927,88 @@ extern "C" void func_003EC600(char *p) {
     k = speed_band(p);
     *(float *)(p + 0x3A10) = D_00572FE0[k];
     *(float *)(p + 0x3A18) = 0.0f;
+}
+
+extern "C" void func_003EADB0(char *p) {
+    float a[4];
+    float b[4];
+    *(float *)(p + 0x710) = *(float *)(p + 0x710) - 10.0f * *(float *)(p + 0x7A0);
+    *(float *)(p + 0x718) = *(float *)(p + 0x718) - 10.0f * *(float *)(p + 0x7A8);
+    b[0] = *(float *)(p + 0x700);
+    b[1] = *(float *)(p + 0x704);
+    b[2] = *(float *)(p + 0x708);
+    a[0] = 0.8f * *(float *)(p + 0x6F0) + 0.2f * *(float *)(p + 0x7A0);
+    a[1] = 0.8f * *(float *)(p + 0x6F4) + 0.2f * *(float *)(p + 0x7A4);
+    a[2] = 0.8f * *(float *)(p + 0x6F8) + 0.2f * *(float *)(p + 0x7A8);
+    func_00133450(p + 0x6E0, a, b);
+    if (func_0024E800(p + 0x1FD0) != 0) {
+        if (*(unsigned char *)(p + 0x35E0) != 0) {
+            func_003EB3D0(p);
+        } else {
+            func_003EA030(p);
+        }
+    }
+}
+
+extern "C" void func_003F3110(char *p) {
+    float a[4];
+    float b[4];
+    a[0] = 0.8f * *(float *)(p + 0x6F0) + 0.2f * *(float *)(p + 0x3578);
+    a[1] = 0.8f * *(float *)(p + 0x6F4) + 0.2f * *(float *)(p + 0x357C);
+    a[2] = 0.8f * *(float *)(p + 0x6F8) + 0.2f * *(float *)(p + 0x3580);
+    a[3] = 0.0f;
+    b[0] = *(float *)(p + 0x700);
+    b[1] = *(float *)(p + 0x704);
+    b[2] = *(float *)(p + 0x708);
+    b[3] = 0.0f;
+    if (a[1] < 0.0f) {
+        a[1] = a[1] * -1.0f;
+    }
+    func_00133450(p + 0x6E0, a, b);
+}
+
+extern "C" void func_003F31E0(char *p) {
+    float a[4];
+    float b[4];
+    if (*(unsigned char *)(p + 0x35E0) != 0) {
+        a[0] = 0.8f * *(float *)(p + 0x6F0) + 0.2f * *(float *)(p + 0x35B0);
+        a[1] = 0.8f * *(float *)(p + 0x6F4) + 0.2f * *(float *)(p + 0x35B4);
+        a[2] = 0.8f * *(float *)(p + 0x6F8) + 0.2f * *(float *)(p + 0x35B8);
+        a[3] = 0.0f;
+        b[0] = *(float *)(p + 0x700);
+        b[1] = *(float *)(p + 0x704);
+        b[2] = *(float *)(p + 0x708);
+        b[3] = 0.0f;
+        if (a[1] < 0.0f) {
+            a[1] = a[1] * -1.0f;
+        }
+        func_00133450(p + 0x6E0, a, b);
+    }
+}
+
+struct Rate18 {
+    float id;
+    float v[5];
+};
+
+extern "C" void func_003ED110(char *p) {
+    float w[256];
+    int k;
+    int n;
+    Rate18 *e;
+    ((ObjV2F8 *)p)->m2F8(0x13);
+    *(unsigned char *)(p + 0x3434) = 0;
+    *(unsigned char *)(p + 0x3435) = 0;
+    *(unsigned char *)(p + 0x3436) = 0;
+    if (*(int *)(p + 0x1F94) != 0) {
+        func_003E6750(p, 0, 0, 0);
+    }
+    e = (Rate18 *)D_005730A0;
+    k = speed_band(p);
+    for (n = 0; !(e->v[0] < 0.0f); n++) {
+        w[n] = e->v[k];
+        e++;
+    }
+    *(float *)(p + 0x3A8C) = ((Rate18 *)D_005730A0)[func_0034BBE0(n, (char *)w)].id;
+    *(unsigned char *)(p + 0x36C8) = 0;
 }
