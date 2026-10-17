@@ -6711,6 +6711,7 @@ void func_004F50B0(char *p) {
 }
 
 extern V4 D_005599D0;
+void func_00105760(char *, char *, float);
 
 void func_0030CCD0(char *p) {
     V4 t;
@@ -6893,4 +6894,29 @@ void func_003E6680(char *p) {
         }
     }
     func_003305E0(D_01DFABA0, 0, 0x5C, (int)(p + 0x50), 0, 0, 0);
+}
+
+typedef struct { short s[4]; } S8;
+
+extern S8 D_005BCD08;
+
+void func_003B6490(char *p, unsigned char k) {
+    float m[16];
+    S8 t;
+    char *o;
+    float a;
+    t = D_005BCD08;
+    a = 6.283185f * ((float)t.s[k] / 65536.0f);
+    UNIT(m);
+    func_00105760((char *)m, (char *)m, a);
+    o = func_00207480(3, 0xC0, (char *)m, 0x10);
+    if (o != 0) {
+        *(char **)(o + 0x90) = *(char **)(*(char **)(p + 0x668) + 0x104);
+        *(unsigned char *)(o + 0x9A) = 0;
+        *(unsigned char *)(o + 0x3A) = 1;
+        *(unsigned char *)(o + 0x9C) = 0;
+        *(unsigned char *)(o + 0x9D) = 0;
+        *(unsigned char *)(o + 0x9E) = 0;
+        *(unsigned char *)(o + 0x9B) = 2;
+    }
 }
