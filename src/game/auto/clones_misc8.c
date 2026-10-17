@@ -612,6 +612,56 @@ void func_00376E40(char *);
 void func_00377260(char *);
 void func_00376B80(char *, int);
 void func_00376B40(char *, int);
+extern signed char D_005BE120;
+extern signed char D_005BE124;
+void func_005069A0(char *, int);
+void func_00506D90(char *);
+void func_00134DE0(int, char *, int);
+void func_00138320(int);
+float func_002A4070(char *);
+void func_0029DCE0(char *, int);
+void func_001ACC30(char *, int, int, int, int);
+int func_003C8130(char *, int);
+void func_003C2D30(char *, int);
+void func_00286040(char *);
+void func_00330BD0(char *, int, char *, int, int);
+void func_001EDAB0(void);
+void func_00134070(int);
+void func_001340C0(int);
+void func_00103548(int);
+void func_00134A30(int, int, int, int);
+void func_0010DF60(int);
+void func_001035E0(int, int);
+void func_0013CDD0(int);
+void func_0013CC30();
+void func_00103C60(void *);
+void func_0010D660(void);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1281,4 +1331,22 @@ void func_004F7060(char *p) {
         func_001AD140(p);
         return;
     }
+}
+
+void func_003C05E0(char *p) {
+    char *q;
+    *(unsigned char *)(p + 0x1BC7) = 0;
+    *(char **)(p + 0x2720) = func_00207480(3, 0xE9, 0, 16);
+    q = *(char **)(p + 0x2720);
+    if (q != 0) {
+        *(int *)(q + 0x90) = *(int *)(*(char **)(p + 0x8B8) + 0x104);
+        q[0x9A] = 1;
+        *(*(char **)(p + 0x2720) + 0x3A) = 1;
+        q = *(char **)(p + 0x2720);
+        q[0x9C] = 0x40;
+        q[0x9D] = 0x20;
+        *(unsigned char *)(q + 0x9E) = 0x80;
+        q[0x9B] = 2;
+    }
+    func_003305E0(D_01DFABA0, 0, 0x5C, (int)(p + 0x50), 0, 0, 0);
 }
