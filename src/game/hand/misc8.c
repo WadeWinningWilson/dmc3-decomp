@@ -274,3 +274,42 @@ void func_003B6330(char *p) {
         *(char *)(o + 0x3A) = 1;
     }
 }
+
+typedef struct { char pad[0xB0]; char a; char pad1; short b; char c; char rest[208 - 0xB5]; } E208c;
+typedef struct { short n; char pad[14]; E208c e[1]; } T208c;
+void func_002088A0(T208c *t, int i, int a, int b, int c) {
+    if (i < t->n) {
+        t->e[i].a = a;
+        t->e[i].b = b;
+        t->e[i].c = c;
+    }
+}
+extern char D_01CAF51F[];
+extern char D_0055A1E0[];
+extern char D_00559BB0[];
+void func_002FF9D0(char *p) {
+    if (*(unsigned char *)D_01CAF51F == 0) {
+        *(char **)(p + 0x40) = D_0055A1E0;
+    } else {
+        *(char **)(p + 0x40) = D_00559BB0;
+    }
+}
+typedef struct { int w[16]; } M64c;
+void func_00300BD0(char *p) {
+    **(M64c **)(p + 0x48) = **(M64c **)(p + 0x3C);
+}
+void func_00387550(char *p) {
+    int k = *(unsigned char *)(p + 5);
+    if (k == 3 || k == 0) {
+        *(char *)(p + 5) = 1;
+        *(float *)(p + 0xDB0) = *(float *)(p + 0xDB8);
+        *(char *)(p + 0xDD0) = 0;
+    }
+}
+float func_001FF0F0(char *a, int b) {
+    char *o = (char *)func_001FEFB0(a, b);
+    if (o == 0) {
+        return -1.0f;
+    }
+    return (float)*(int *)(o + 0x68);
+}
