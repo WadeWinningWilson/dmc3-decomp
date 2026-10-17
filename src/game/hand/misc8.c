@@ -703,3 +703,80 @@ unsigned char func_003AC650(char *p) {
     }
     return r;
 }
+
+typedef struct { float x, y, z, w; } V4h;
+int func_003DD7E0(char *p, int k, V4h *out, float *r) {
+    switch (k) {
+    case 0:
+        *out = *(V4h *)(p + 0x50);
+        out->y += 100.0f;
+        *r = 100.0f;
+        return 1;
+    }
+    return 0;
+}
+int func_003E6500(char *p, int k, V4h *out, float *r) {
+    switch (k) {
+    case 0:
+        *out = *(V4h *)(p + 0x50);
+        out->y += 150.0f;
+        *r = 150.0f;
+        return 1;
+    }
+    return 0;
+}
+void func_0022F0D0(char *);
+void func_0022F610(char *);
+void func_0022F620(char *);
+void func_0022F060(char *p) {
+    switch (*(int *)(p + 0x10)) {
+    case 0:
+        func_0022F0D0(p);
+        break;
+    case 1:
+        func_0022F610(p);
+        break;
+    case 2:
+        func_0022F620(p);
+        break;
+    }
+}
+void func_0019B3D0(int a, char *o) {
+    unsigned char n = 5;
+    int f = *(int *)o;
+    if (f & 0x800) {
+        if ((f & 0x1000) || (f & 0x2000)) {
+            n = 8;
+        } else {
+            n = 7;
+        }
+    } else if ((f & 0x1000) || (f & 0x2000)) {
+        n = 9;
+    }
+    *(char *)(o + 6) = n;
+    *(char *)(o + 5) = n;
+}
+void func_00247510(char *, char *);
+void func_00278060(char *p, char *q) {
+    if (**(unsigned char **)(p + 0xEC) != 0) {
+        if (**(unsigned char **)(p + 0xEC) & 8) {
+            *(char **)(q + 0x40) = p + 0xE0;
+        }
+        if ((unsigned char)(**(unsigned char **)(p + 0xEC) & ~8)) {
+            func_00247510(q + 0x14, p + 0xE0);
+        }
+    }
+}
+void func_002DBC30(char *p, char *o, unsigned char a, unsigned char b) {
+    char *t = *(char **)(p + 0x2840);
+    float *v = (float *)(t + ((unsigned short *)t)[a + b * 2]);
+    *(float *)(o + 0x38) = v[0];
+    *(int *)(o + 0x80) = 0;
+    *(float *)(o + 0x84) = v[1];
+    *(int *)(o + 0x88) = 0;
+    *(float *)(o + 0x8C) = 1.0f;
+    *(float *)(o + 0x70) = v[2];
+    *(float *)(o + 0x74) = v[3];
+    *(float *)(o + 0x78) = v[4];
+    *(float *)(o + 0x7C) = 1.0f;
+}
