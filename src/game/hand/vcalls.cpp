@@ -9353,6 +9353,9 @@ extern "C" float D_00572F38[];
 extern "C" void func_00133890(char *, float *, char *);
 extern "C" int func_0028BFE0(char *);
 extern "C" void func_002E7590(char *);
+extern "C" int func_00131D10(float, float);
+extern "C" char D_00564300[];
+extern "C" char D_00564370[];
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -14501,4 +14504,59 @@ extern "C" void func_0038A500(char *p) {
     ((SubC8CC *)(p + 0x640))->mCC(q);
     ((SubC8CC *)(p + 0x40))->mCC(q);
     ((SubC8CC *)(p + 0xC40))->mCC(q);
+}
+
+class Sub78 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual int m78(short, short);
+};
+
+#define VSUBR(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+extern "C" void func_00504E40(char *p) {
+    char *q = p + 0x12C0;
+    ((SubC8CC *)(p + 0x80))->mCC(q);
+    ((SubC8CC *)(p + 0x680))->mCC(q);
+    ((SubC8CC *)(p + 0xC80))->mCC(q);
+    ((SubC8CC *)(p + 0x13C0))->mCC(p + 0x1340);
+}
+
+extern "C" short func_003B5700(char *p, int i) {
+    float v[4];
+    VSUBR(v, D_00564300 + i * 16, p + 0x50);
+    return ((Sub78 *)(p + 0x130))->m78(func_00131D10(v[0], v[2]), *(short *)(p + 0x90));
+}
+
+extern "C" short func_003B5850(char *p, int i) {
+    float v[4];
+    VSUBR(v, D_00564370 + i * 16, p + 0x50);
+    return ((Sub78 *)(p + 0x130))->m78(func_00131D10(v[0], v[2]), *(short *)(p + 0x90));
 }

@@ -6751,3 +6751,28 @@ void func_002FD660(char *p) {
         *(unsigned char *)(o + 0x9A) = 0;
     }
 }
+
+void func_003B9620(char *p, int a, int b, float *t) {
+    float m[16];
+    if (a && b) {
+        *(unsigned char *)(p + 0x1BA) = 1;
+        *(float *)(p + 0x1D0) = 30.0f;
+        if (*(unsigned char *)(p + 0x1B7) != 0) {
+            *(unsigned char *)(p + 0x1B1) = 1;
+        }
+        UNIT(m);
+        func_00105230((char *)m, (char *)m, t);
+        func_00207480(3, 0x110, (char *)m, 0x20);
+    }
+}
+
+void func_00456B70(char *p, unsigned char k, float *t) {
+    float m[16];
+    UNIT(m);
+    func_00105230((char *)m, (char *)m, t);
+    if (k == 1) {
+        func_002075D0(3, 0x1C, (char *)m, 1, 0x40);
+    } else {
+        func_002075D0(3, 6, (char *)m, 1, 0x40);
+    }
+}
