@@ -4561,6 +4561,10 @@ extern float D_0056EBF0[];
 void func_003C8350(char *);
 int func_003C8470(char *, int, int);
 void func_0023A3E0(char *, unsigned char);
+extern char D_00546740[];
+void func_001A5D40(char *, int);
+extern unsigned char D_00666716[];
+void func_001AE0D0(char *);
 
 void func_0023D330(char *p) {
     *(C4 *)(p + 0x2928) = *(C4 *)(p + 0x2960);
@@ -6657,4 +6661,39 @@ char *func_0040FAD0(char *p, int i) {
 
 char *func_0040FB60(char *p, int i) {
     return func_00207480(3, 0x229, ((char **)(p + 0x108))[i] + 0x450, 0x40);
+}
+
+#define UNIT(e) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(e) : "memory")
+
+void func_003586F0(char *p, char *t) {
+    float m[16];
+    UNIT(m);
+    func_00105230((char *)m, (char *)m, (float *)t);
+    func_00207480(3, 0x9D, (char *)m, 0x20);
+}
+
+void func_00279700(char *p, int a) {
+    Q16 q = *(Q16 *)D_00546740;
+    func_001A9F90(p + 0x40, &q);
+    *(char *)(p + 0x5C0) = 1;
+    *(char *)(p + 0x5C8) = 1;
+    func_001A5D40(p + 0x40, a);
+}
+
+void func_00408A60(char *p, int a, int b, float *t) {
+    float m[16];
+    if (a && b) {
+        UNIT(m);
+        func_00105230((char *)m, (char *)m, t);
+        func_00207480(3, 0x31, (char *)m, 0x20);
+    }
+}
+
+int func_0036DF10(char *out, int a, int b, int c, int d, int v) {
+    if (D_00666716[0] == 1) {
+        func_001AE0D0(D_006663C0);
+        *(int *)out = v;
+        return 1;
+    }
+    return 0;
 }

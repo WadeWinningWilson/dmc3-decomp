@@ -9525,6 +9525,7 @@ extern char D_005AC550[];
 extern char D_005B2530[];
 extern char D_005B3180[];
 extern char D_005B31D0[];
+void func_0028C280(char *);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -9993,4 +9994,45 @@ char *func_00414DD0(char *p, short flags) {
         }
     }
     return p;
+}
+
+char *func_0028C1A0(char *p, short flags) {
+    if (p) {
+        func_0028C280(p);
+        if (flags > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+
+void func_002F8A70(char *p) {
+    float v[4];
+    *(float *)(p + 0x450) = 70.0f;
+    VSUBR(p + 0x400, v, p + 0x50);
+    func_00131650(p + 0x400, p + 0x400);
+    *(float *)(p + 0x3F8) = 1.0f;
+}
+
+void func_00310F80(char *p) {
+    int i;
+    for (i = 0; i < 3; i++) {
+        func_00286040(p + i * 4 + 0x20C4);
+    }
+    func_00206730(p + 0x20D0);
+}
+
+void func_003AAAD0(char *p, int a, int b) {
+    if (a >= 0 && b >= 0) {
+        func_0024DA80(p + 0x4BF0, a, b);
+        func_0024DA80(p + 0x4CC0, a, b);
+    }
+}
+
+void func_003C0950(char *p) {
+    int i;
+    for (i = 0; i < 6; i++) {
+        func_00206730(p + i * 4 + 0x2714);
+    }
+    func_00228350(p + 0xC8);
 }
