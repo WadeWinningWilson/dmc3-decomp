@@ -11708,6 +11708,7 @@ void func_00138330(void);
 void func_001323E0(float *);
 char *func_001B0FD0(char *, int, int);
 char *func_0027A570(char *);
+void func_002C31A0(char *, char *, int);
 
 void func_0046F690(char *p) {
     int i;
@@ -12048,4 +12049,31 @@ char *func_002F7B50(char *a, char *m) {
         break;
     }
     return r;
+}
+
+int func_00304680(char *p, int k, char *m, char *out) {
+    char *e = *(char **)(p + 0x18) + k * 96;
+    char *src = *(char **)(e + 0x28);
+    unsigned char *idx = *(unsigned char **)(e + 0x2C);
+    int i;
+    for (i = 0; i < *(int *)(e + 4); i++) {
+        func_00104B80(out, m + *idx * 64, src);
+        src += 0x10;
+        idx++;
+        out += 0x10;
+    }
+    return 0;
+}
+
+void func_00316730(char *p, int k) {
+    if (k < 0 || !(k < *(unsigned short *)(*(char **)(p + 0x90) + 6))) {
+        return;
+    }
+    *(char **)(p + 0x98) = *(char **)(p + 0x94) + k * 0x410;
+    func_002C31A0(p + 0xA0, *(char **)(p + 0x98), *(unsigned char *)(*(char **)(p + 0x98) + 0x400));
+    func_002C31A0(p + 0x8F0, *(char **)(p + 0x98) + 0x180, *(unsigned char *)(*(char **)(p + 0x98) + 0x400));
+    *(float *)(p + 0x1148) = (float)(*(int *)(*(char **)(p + 0x98) + 0x404) - 1);
+    *(int *)(p + 0x114C) = 0;
+    *(int *)(p + 0x1150) = k;
+    *(unsigned char *)(p + 0x1154) = 0;
 }
