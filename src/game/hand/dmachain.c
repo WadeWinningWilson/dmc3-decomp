@@ -3,53 +3,54 @@
 
 extern char *D_005BE0D8;
 extern char D_0065D4D0[];
-extern int D_0065E4D0[];
-extern int D_0065E4D4[];
-extern int D_0065E4D8[];
-extern int D_0065E4DC[];
-extern int D_0065E4E0[];
+extern unsigned int D_0065E4D0[];
+extern unsigned int D_0065E4D4[];
+extern unsigned int D_0065E4D8[];
+extern unsigned int D_0065E4DC[];
+extern unsigned int D_0065E4E0[];
 extern char D_0065E550[];
-extern int D_0065F550[];
-extern int D_0065F554[];
-extern int D_0065F558[];
-extern int D_0065F55C[];
-extern int D_0065F560[];
+extern unsigned int D_0065F550[];
+extern unsigned int D_0065F554[];
+extern unsigned int D_0065F558[];
+extern unsigned int D_0065F55C[];
+extern unsigned int D_0065F560[];
 extern char D_0065F620[];
-extern int D_00660620[];
-extern int D_00660624[];
-extern int D_00660628[];
-extern int D_0066062C[];
-extern int D_00660630[];
+extern unsigned int D_00660620[];
+extern unsigned int D_00660624[];
+extern unsigned int D_00660628[];
+extern unsigned int D_0066062C[];
+extern unsigned int D_00660630[];
 extern char D_00660640[];
-extern int D_00661640[];
-extern int D_00661644[];
-extern int D_00661648[];
-extern int D_0066164C[];
-extern int D_00661650[];
+extern unsigned int D_00661640[];
+extern unsigned int D_00661644[];
+extern unsigned int D_00661648[];
+extern unsigned int D_0066164C[];
+extern unsigned int D_00661650[];
 extern char D_0065D0B0[];
-extern int D_0065D4B0[];
-extern int D_0065D4B4[];
-extern int D_0065D4B8[];
-extern int D_0065D4BC[];
-extern int D_0065D4C0[];
+extern unsigned int D_0065D4B0[];
+extern unsigned int D_0065D4B4[];
+extern unsigned int D_0065D4B8[];
+extern unsigned int D_0065D4BC[];
+extern unsigned int D_0065D4C0[];
 extern char D_00661660[];
-extern int D_00661A60[];
-extern int D_00661A64[];
-extern int D_00661A68[];
-extern int D_00661A6C[];
-extern int D_00661A70[];
+extern unsigned int D_00661A60[];
+extern unsigned int D_00661A64[];
+extern unsigned int D_00661A68[];
+extern unsigned int D_00661A6C[];
+extern unsigned int D_00661A70[];
 extern char D_00661AE0[];
-extern int D_00661EE0[];
-extern int D_00661EE4[];
-extern int D_00661EE8[];
-extern int D_00661EEC[];
-extern int D_00661EF0[];
+extern unsigned int D_00661EE0[];
+extern unsigned int D_00661EE4[];
+extern unsigned int D_00661EE8[];
+extern unsigned int D_00661EEC[];
+extern unsigned int D_00661EF0[];
 extern char D_00661F00[];
-extern int D_00662300[];
-extern int D_00662304[];
-extern int D_00662308[];
-extern int D_0066230C[];
-extern int D_00662310[];
+extern unsigned int D_00662300[];
+extern unsigned int D_00662304[];
+extern unsigned int D_00662308[];
+extern unsigned int D_0066230C[];
+extern unsigned int D_00662310[];
+void func_00134DE0(char *, char *, int);
 
 void func_001A72B0(void) {
     unsigned int i;
@@ -193,5 +194,41 @@ void func_001A86E0(void) {
     D_00662308[0] = 0;
     D_0066230C[0] = 0;
     D_00662310[0] = 0;
+}
+
+void func_001A8A20(int a) {
+    char *b;
+    if (D_0065E4D0[0] != 0) {
+        b = D_0065D4D0 + (*(signed char *)(D_005BE0D8 + 0xE) << 11);
+        func_00134DE0(b + 0x7F0, b, a);
+        *(int *)(D_005BE0D8 + 0x80) += D_0065E4D0[0];
+        *(int *)(D_005BE0D8 + 0x84) += D_0065E4D4[0];
+        *(int *)(D_005BE0D8 + 0x88) += D_0065E4DC[0];
+        *(int *)(D_005BE0D8 + 0x8C) += D_0065E4E0[0];
+    }
+}
+
+void func_001A8B90(int a) {
+    char *b;
+    if (D_0065F550[0] != 0) {
+        b = D_0065E550 + (*(signed char *)(D_005BE0D8 + 0xE) << 11);
+        func_00134DE0(b + 0x7F0, b, a);
+        *(int *)(D_005BE0D8 + 0x80) += D_0065F550[0];
+        *(int *)(D_005BE0D8 + 0x84) += D_0065F554[0];
+        *(int *)(D_005BE0D8 + 0x88) += D_0065F55C[0];
+        *(int *)(D_005BE0D8 + 0x8C) += D_0065F560[0];
+    }
+}
+
+void func_001A8E70(int a) {
+    char *b;
+    if (D_00661640[0] != 0) {
+        b = D_00660640 + (*(signed char *)(D_005BE0D8 + 0xE) << 11);
+        func_00134DE0(b + 0x7F0, b, a);
+        *(int *)(D_005BE0D8 + 0x80) += D_00661640[0];
+        *(int *)(D_005BE0D8 + 0x84) += D_00661644[0];
+        *(int *)(D_005BE0D8 + 0x88) += D_0066164C[0];
+        *(int *)(D_005BE0D8 + 0x8C) += D_00661650[0];
+    }
 }
 
