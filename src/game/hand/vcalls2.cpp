@@ -117,3 +117,26 @@ extern "C" void func_00481570(char *p) {
         }
     }
 }
+
+extern "C" void func_00481F20(char *);
+extern "C" void func_00481310(char *);
+
+extern "C" void func_00481490(char *p) {
+    unsigned char r;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(float *)(p + 0x2A4) = *(float *)(p + 0x2A4) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x2A4) < 0.0f) {
+            func_00481F20(p);
+            *(unsigned char *)(p + 0x284) = 1;
+            func_003305E0(D_01DFABA0, 8, 0x6B, p + 0x50, 0x28, 0, 0);
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        }
+    case 1:
+        func_00481310(p);
+        r = ((ObjBCr *)(p + 0x740))->mBC(*(float *)(p + 0x10));
+        if (r == 4 || r == 0) {
+            func_004821D0(p);
+        }
+    }
+}

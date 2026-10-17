@@ -6006,3 +6006,40 @@ extern "C" void func_003449C0(char *p) {
     }
     func_001A1E10(func_00279290(p + 0x16C0));
 }
+
+extern "C" void func_00438170(char *, char *, char *, char *);
+
+/* Arms a timed event, snapshots the clock, picks the matching motion frame and enters state 0x17. */
+extern "C" void func_00433570(char *p, int a, int b, int c, int d) {
+    char *g;
+    char *m;
+    char *n;
+    float t;
+    *(int *)(p + 0x134) = a;
+    *(int *)(p + 0x138) = b;
+    *(int *)(p + 0x13C) = c;
+    *(int *)(p + 0x140) = d;
+    g = *(char **)(*(char **)D_01CAFF0C + 4);
+    if (g != 0 && *(ObjT1C **)(g + 0x10) != 0) {
+        t = (*(ObjT1C **)(g + 0x10))->m1C();
+    } else {
+        t = 0.0f;
+    }
+    *(float *)(p + 0x144) = t;
+    *(int *)(p + 0x484C) = ((Sub130 *)(p + 0x130))->m80(*(float *)(p + 0x144));
+    *(short *)(p + 0x160) = 0;
+    *(int *)(p + 0x164) = 0;
+    *(int *)(p + 0x168) = 0;
+    m = p;
+    if (m != 0) {
+        m += 0x40;
+    }
+    n = p;
+    if (n != 0) {
+        n += 0xD0;
+    }
+    func_00438170(p, p + 0x480, n, m);
+    *(unsigned char *)(p + 0x14C) = 0;
+    *(unsigned char *)(p + 0x14D) = 0;
+    ((ObjB *)p)->m2F4(0x17);
+}
