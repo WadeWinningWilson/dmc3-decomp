@@ -1049,3 +1049,68 @@ int func_003AC490(char *p, int k, V4i *out, float *r) {
     }
     return 0;
 }
+
+typedef struct { float x, y, z, w; } V4j;
+int func_0048AAA0(char *p, int k, V4j *out, float *r) {
+    if (!(*(float *)(p + 0x4C4) <= 0.0f)) {
+        switch (k) {
+        case 0:
+            *out = *(V4j *)(p + 0x50);
+            *r = 150.0f;
+            out->y += 150.0f;
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
+}
+void func_003305E0(char *, int, int, int, int, int, int);
+void func_00330DA0(char *p, int k, int c, int d) {
+    int n;
+    if (c != 0) {
+        switch (k) {
+        case 0:
+            n = 10;
+            break;
+        case 1:
+            n = 11;
+            break;
+        case 2:
+            n = 12;
+            break;
+        case 3:
+            n = 13;
+            break;
+        default:
+            return;
+        }
+        func_003305E0(p, 8, n, d, c, 0, c);
+    }
+}
+extern char D_0055E250[];
+extern char D_0055E254[];
+extern char D_0055E258[];
+extern char D_0055E25C[];
+extern char D_0055E260[];
+int func_0036DF10(char *, int, int, int, int, int);
+int func_0036DF70(char *p, int i) {
+    if (i > 15) {
+        return 0;
+    }
+    return func_0036DF10(p, *(int *)(D_0055E250 + i * 20), *(int *)(D_0055E254 + i * 20), *(int *)(D_0055E258 + i * 20), *(int *)(D_0055E25C + i * 20), *(int *)(D_0055E260 + i * 20));
+}
+void func_0024F220(char *p) {
+    unsigned char *c;
+    int v;
+    *(int *)(p + 0x14) += 1;
+    *(int *)(p + 0x14) += 1;
+    c = *(unsigned char **)(p + 0x14);
+    v = c[0] | (c[1] << 8) | (c[2] << 16) | (c[3] << 24);
+    *(unsigned char **)(p + 0x14) = c + 1;
+    *(int *)(p + 0x14) += 1;
+    *(int *)(p + 0x14) += 1;
+    *(int *)(p + 0x14) += 1;
+    if (*(char **)(p + 0xCC) != 0) {
+        *(int *)(*(char **)(p + 0xCC) + 0xD8) = v;
+    }
+}
