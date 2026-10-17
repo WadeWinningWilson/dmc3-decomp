@@ -2255,6 +2255,74 @@ extern "C" void func_001AD140(char *);
 
 
 
+class ObjFC {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void mB4(int);
+    virtual void e44();
+    virtual void e45();
+    virtual void e46();
+    virtual void e47();
+    virtual void e48();
+    virtual void e49();
+    virtual void e50();
+    virtual void e51();
+    virtual void e52();
+    virtual void e53();
+    virtual void e54();
+    virtual void e55();
+    virtual void e56();
+    virtual void e57();
+    virtual void e58();
+    virtual void e59();
+    virtual void e60();
+    virtual unsigned char mFC();
+};
+
+
+
 extern "C" {
 extern "C" void func_00465AA0(char *p) {
     short d;
@@ -3617,5 +3685,35 @@ extern "C" void func_0043A800(char *p, int) {
 extern "C" void func_004CFCA0(char *p, int) {
     ((ObjA4 *)(p + 0x130))->mA4();
     func_001AD140(p);
+}
+
+extern "C" void func_0045AEC0(ObjFC *o, signed char k) {
+    if (*(unsigned char *)((char *)o + 0x1D) != 3) {
+        switch (k) {
+        case 2:
+            if (o->mFC() == 4) {
+                o->mB4(0x12);
+            }
+            if (o->mFC() == 5) {
+                o->mB4(0x13);
+            }
+            break;
+        }
+    }
+}
+
+extern "C" void func_00497CC0(ObjFC *o, signed char k) {
+    if (*(unsigned char *)((char *)o + 0x1D) != 3) {
+        switch (k) {
+        case 2:
+            if (o->mFC() == 4) {
+                o->mB4(0x12);
+            }
+            if (o->mFC() == 5) {
+                o->mB4(0x13);
+            }
+            break;
+        }
+    }
 }
 }

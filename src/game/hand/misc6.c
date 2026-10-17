@@ -2441,3 +2441,23 @@ void func_002D3720(char *p) {
         break;
     }
 }
+
+void func_002CE1F0(char *p) {
+    *(char *)(p + 0x1E1) = 0;
+    *(char *)(p + 0x1E4) = 0;
+    *(char *)(p + 0x1E5) = 0;
+    *(char *)(p + 0x1E2) = 3;
+    *(char *)(p + 0x1E3) = 4;
+    func_0024DA80(p + 0x2450, 1, 7);
+    func_0024DA80(p + 0x2520, 1, 7);
+    func_0024DA80(p + 0x25F0, 1, 7);
+    func_0024DA80(p + 0x26C0, 1, 7);
+    func_0024DA80(p + 0x2790, 1, 7);
+    func_002CB900(p, 0xF);
+    *(char *)(p + 0x2CE4) = 0xF;
+    *(char *)(p + 0x2CE5) = 0xF;
+    *(char *)(p + 0x2CE6) = 0xF;
+    *(char *)(p + 0x2CE7) = 0xF;
+    *(char *)(p + 0x2CE8) = 0xF;
+    func_00128488(p + 0x5AD, 0, 4);
+}
