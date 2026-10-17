@@ -9256,6 +9256,7 @@ extern "C" void func_002CDFB0(char *);
 extern "C" void func_003A0B30(char *);
 extern "C" void func_003A0BD0(char *);
 extern "C" void func_003A0AB0(char *);
+extern "C" int func_001AFB90(char *, int, int, int);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -10981,6 +10982,125 @@ extern "C" void func_0036C340(char *p) {
         *(float *)(p + 0x100) = *(float *)(p + 0x100) + *(float *)(p + 0xB0);
         if (!(*(float *)(p + 0x100) <= 0.0f)) {
             (*(AnimBE **)(p + 0xA8))->m48(0x388, *(char **)(p + 0x10) + 0x10);
+        }
+        break;
+    }
+}
+
+class Obj40s {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void m2C(char *, char *);
+    virtual void d30();
+    virtual void d34();
+    virtual void m38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void d6C();
+    virtual void d70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void dB4();
+    virtual void dB8();
+    virtual void dBC();
+    virtual void dC0();
+    virtual void dC4();
+    virtual void dC8();
+    virtual void dCC();
+    virtual void dD0();
+    virtual void mD4(int);
+};
+
+#define UNIT(e) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(e) : "memory")
+
+static inline char *res_ent(char *t, unsigned int i) {
+    char *r;
+    if (*(unsigned int *)(t + 4) <= i) {
+        r = 0;
+    } else if (((int *)(t + 8))[i] == 0) {
+        r = 0;
+    } else {
+        r = t + ((int *)(t + 8))[i];
+    }
+    return r;
+}
+
+static inline char *res_get(char *e, unsigned int i) {
+    char *r;
+    if (**(unsigned short **)(e + 8) == 0) {
+        r = res_ent(*(char **)(e + 0xC), i);
+    } else {
+        r = *(char **)(e + 0xC);
+    }
+    return r;
+}
+
+extern "C" void func_0022E510(char *p) {
+    switch (*(int *)(p + 0x38)) {
+    case 0:
+        *(int *)(p + 0x640) = func_001AFB90(D_00666750, 0x397, 0, 8);
+        *(int *)(p + 0x38) = *(int *)(p + 0x38) + 1;
+        UNIT(p + 0x650);
+        break;
+    case 1: {
+        unsigned char r = 1;
+        if (*(unsigned char *)(*(char **)(p + 0x640) + 1) != 0 && *(unsigned char *)(*(char **)(p + 0x640) + 1) != 3) {
+            r = 0;
+        }
+        if (r) {
+            ((Obj40s *)(p + 0x40))->m2C(res_get(*(char **)(p + 0x640), 1), res_get(*(char **)(p + 0x640), 0));
+            ((Obj40s *)(p + 0x40))->m38();
+            ((Obj40s *)(p + 0x40))->mD4(1);
+            D_005BC1A8->m14(0x80000000, 0x3C);
+            *(int *)(p + 0x3C) = 0xB4;
+            *(int *)(p + 0x38) = *(int *)(p + 0x38) + 1;
+        }
+        break;
+    }
+    case 2:
+        if (--*(int *)(p + 0x3C) <= 0) {
+            D_005BC1A8->m18(0x80000000, 0x3C);
+            *(int *)(p + 0x38) = *(int *)(p + 0x38) + 1;
+        }
+        func_00195E20(D_005BE098, p);
+        break;
+    case 3:
+        if (D_005BC1A8->m2C() != 0) {
+            func_001AD140(p);
+        } else {
+            func_00195E20(D_005BE098, p);
         }
         break;
     }
