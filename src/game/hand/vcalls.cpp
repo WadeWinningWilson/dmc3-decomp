@@ -11747,3 +11747,80 @@ extern "C" void func_00420E80(char *p) {
         break;
     }
 }
+
+class SelfAim {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void m6C();
+    virtual void m70();
+    virtual void d74();
+    virtual short m78(short, short);
+};
+
+class AnimA8 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void m18(int);
+};
+
+static inline short aim_ang(char *p) {
+    ((SelfAim *)p)->m6C();
+    ((SelfAim *)p)->m70();
+    return ((SelfAim *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50));
+}
+
+extern "C" void func_00366490(char *p) {
+    short d;
+    *(unsigned char *)(p + 0xCD) = 0;
+    *(unsigned char *)(p + 0xCE) = 0;
+    *(unsigned char *)(p + 0xCF) = 0;
+    d = aim_ang(p) + 0x38E4;
+    if (d > 0 && d < 0x71C7) {
+        switch (mt_rand() & 1) {
+        case 0:
+            (*(AnimA8 **)(p + 0xA8))->m18(8);
+            *(short *)(p + 0xC0) = aim_ang(p) / 100;
+            *(float *)(p + 0xC4) = 25.0f;
+            *(int *)(p + 0xD4) = 3;
+            break;
+        case 1:
+            (*(AnimA8 **)(p + 0xA8))->m18(9);
+            *(short *)(p + 0xC0) = aim_ang(p) / 100;
+            *(float *)(p + 0xC4) = 25.0f;
+            *(int *)(p + 0xD4) = 4;
+            break;
+        }
+    } else {
+        (*(AnimA8 **)(p + 0xA8))->m18(4);
+        *(short *)(p + 0xC0) = aim_ang(p) / 25;
+        *(float *)(p + 0xC4) = 25.0f;
+        *(int *)(p + 0xD4) = 0;
+    }
+}
