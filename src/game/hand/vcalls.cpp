@@ -4406,3 +4406,66 @@ extern "C" void func_003B2F80(char *p) {
     }
     func_003B4F60(p);
 }
+
+class Anim5 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void m24();
+    virtual float m28();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void m40();
+    virtual void d15();
+    virtual void m48(int, char *);
+};
+
+extern "C" char D_01DFABA0[];
+extern "C" void func_00330BD0(char *, int, char *, int, int);
+
+/* Wait for the clip to pass 180, then switch motion and play a sound once; afterwards keep re-triggering. */
+extern "C" void func_0046B4B0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if (!((*(Anim5 **)(p + 0xA8))->m28() < 180.0f)) {
+            (*(Anim5 **)(p + 0xA8))->m40();
+            (*(Anim5 **)(p + 0xA8))->m48(3, *(char **)(p + 0x10) + 0x10);
+            func_00330BD0(D_01DFABA0, 0x19, *(char **)(p + 0x10) + 0x10, 8, 0);
+            *(int *)(p + 0xD4) = 1;
+        }
+        (*(Anim5 **)(p + 0xA8))->m24();
+        break;
+    case 1:
+        (*(Anim5 **)(p + 0xA8))->m48(0x388, *(char **)(p + 0x10) + 0x10);
+        break;
+    }
+}
+
+/* Three-step motion chain on the sub-object at +0xC, ending in a self state change. */
+extern "C" void func_0035C490(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(Sub0C **)(p + 0xC))->m28(0x38);
+        *(unsigned char *)(p + 0xB5) = 1;
+        break;
+    case 1:
+        if ((*(Sub0C **)(p + 0xC))->m0C() != 0x38) {
+            (*(Sub0C **)(p + 0xC))->m28(0x1F);
+            *(unsigned char *)(p + 0xB5) = 2;
+        }
+        break;
+    case 2:
+        if ((*(Sub0C **)(p + 0xC))->m0C() != 0x1F) {
+            ((ObjB4 *)p)->mB4(0x17);
+        }
+        break;
+    }
+}

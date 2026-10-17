@@ -70,6 +70,19 @@ def gen(name, items):
             or ins[t + 3] != "daddu $a0, $s1, $zero" or ins[t + 4] != "jal func_00100580":
         raise Fail("tail shape")
     body = list(zip(kinds[7:t], ins[7:t]))
+    lines, decls = interp(body, "$s1", 2)
+    code = "char *%s(char *p, short flag) {\n    if (p != 0) {\n" % name
+    code += "\n".join(lines) + ("\n" if lines else "")
+    code += "        if (flag > 0) {\n            func_00100580(p);\n        }\n    }\n    return p;\n}\n"
+    return code, decls
+
+
+ARGS = ("$a0", "$a1", "$a2", "$a3", "$t0", "$t1", "$t2", "$t3")
+
+
+def interp(body, preg, depth, live=()):
+    """Symbolically translate a straight-line body (with `if (x != 0)` blocks) in which `preg`
+    holds `p`. `live` names argument registers that already hold `p` on entry."""
     # reorder delay slots: a branch/jal is followed by its delay-slot instruction
     seq, i = [], 0
     while i < len(body):
@@ -85,13 +98,15 @@ def gen(name, items):
                 continue
         seq.append((k, x))
         i += 1
-    regs = {"$s1": "p", "$zero": "0"}
+    regs = {preg: "p", "$zero": "0"}
+    for r in live:
+        regs[r] = "p"
     fnrefs = set()
     hi = {}
     decls = set()
     lines, stack = [], []
-    argset = set()
-    ind = lambda: "    " * (2 + len(stack))
+    argset = set(live)
+    ind = lambda: "    " * (depth + len(stack))
 
     def val(r):
         if r not in regs:
@@ -148,13 +163,13 @@ def gen(name, items):
                 else:
                     decls.add("extern char %s[];" % sym)
                     regs[a[0]] = sym
-                if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+                if a[0] in ARGS:
                     argset.add(a[0])
                 continue
             imm = num(a[2])
             if a[1] == "$zero":
                 regs[a[0]] = str(imm)
-            elif a[1] == "$s1":
+            elif a[1] == preg:
                 regs[a[0]] = "p + %d" % imm if imm else "p"
             else:
                 b = val(a[1])
@@ -162,12 +177,12 @@ def gen(name, items):
                     regs[a[0]] = "p + %d" % (int(b[4:]) + imm)
                 else:
                     raise Fail("addiu base")
-            if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+            if a[0] in ARGS:
                 argset.add(a[0])
             continue
         if op == "ori" and a[1] == "$zero":
             regs[a[0]] = str(num(a[2]))
-            if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+            if a[0] in ARGS:
                 argset.add(a[0])
             continue
         if op == "ori":
@@ -175,7 +190,7 @@ def gen(name, items):
             if not m or not isinstance(hi.get(a[1]), int):
                 raise Fail("ori")
             regs[a[0]] = str(num(m.group(1)))
-            if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+            if a[0] in ARGS:
                 argset.add(a[0])
             continue
         if op == "addu":
@@ -186,27 +201,27 @@ def gen(name, items):
                 regs[a[0]] = "p + %s" % x1
             else:
                 raise Fail("addu")
-            if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+            if a[0] in ARGS:
                 argset.add(a[0])
             continue
         if op == "daddu":
             regs[a[0]] = val(a[1]) if a[2] == "$zero" else None
             if regs[a[0]] is None:
                 raise Fail("daddu")
-            if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+            if a[0] in ARGS:
                 argset.add(a[0])
             continue
         if op == "lw":
             m = re.match(r"(-?0x[0-9A-Fa-f]+|\d+)\((\$\w+)\)", a[1])
             regs[a[0]] = "*(char **)(%s)" % addr(m.group(2), num(m.group(1)))
-            if a[0] in ("$a0", "$a1", "$a2", "$a3"):
+            if a[0] in ARGS:
                 argset.add(a[0])
             continue
         if op in ("sw", "sb", "sh"):
             m = re.match(r"(-?0x[0-9A-Fa-f]+|\d+)\((\$\w+)\)", a[1])
             ty = {"sw": "char *", "sb": "char", "sh": "short"}[op]
             v = val(a[0])
-            if op == "sw" and v == "0":
+            if op == "sw" and v.lstrip("-").isdigit():
                 ty = "int"
             lines.append(ind() + "*(%s *)(%s) = %s;" % (ty, addr(m.group(2), num(m.group(1))), v))
             continue
@@ -219,13 +234,13 @@ def gen(name, items):
             continue
         if op == "jal":
             n = 0
-            for idx, r in enumerate(("$a0", "$a1", "$a2", "$a3")):
+            for idx, r in enumerate(ARGS):
                 if r in argset:
                     n = idx + 1
-            args = [val(r) for r in ("$a0", "$a1", "$a2", "$a3")[:n]]
+            args = [val(r) for r in ARGS[:n]]
             decls.add("void %s();" % a[0])
             lines.append(ind() + "%s(%s);" % (a[0], ", ".join(args)))
-            for r in ("$a0", "$a1", "$a2", "$a3", "$v0", "$v1", "$at"):
+            for r in ARGS + ("$v0", "$v1", "$at"):
                 regs.pop(r, None)
             argset = set()
             continue
@@ -234,10 +249,7 @@ def gen(name, items):
         raise Fail("op " + op)
     if stack:
         raise Fail("unclosed")
-    code = "char *%s(char *p, short flag) {\n    if (p != 0) {\n" % name
-    code += "\n".join(lines) + ("\n" if lines else "")
-    code += "        if (flag > 0) {\n            func_00100580(p);\n        }\n    }\n    return p;\n}\n"
-    return code, decls
+    return lines, decls
 
 
 
