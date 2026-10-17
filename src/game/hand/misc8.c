@@ -634,3 +634,72 @@ void func_0048E970(char *p) {
         break;
     }
 }
+
+char *func_001F3A50(char *, int);
+float func_001F3B40(char *a, int b) {
+    char *o = func_001F3A50(a, b);
+    if (o == 0) {
+        return -1.0f;
+    }
+    if (*(unsigned char *)(o + 0x84) != 1) {
+        return (float)*(int *)(o + 0x80);
+    }
+    return 1000000.0f;
+}
+float func_001FEE60(char *a, int b) {
+    char *o = (char *)func_001FED70(a, b);
+    if (o == 0) {
+        return -1.0f;
+    }
+    if (*(unsigned char *)(o + 0x30) != 1) {
+        return (float)*(int *)(o + 0x20);
+    }
+    return 1000000.0f;
+}
+void func_002F2E30(char *, char *);
+void func_004827C0(char *p) {
+    char *g;
+    *(char *)(p + 0x280) = 1;
+    *(char *)(p + 0x44) = -1;
+    *(char *)(p + 0x45) = 3;
+    *(char *)(p + 0x46) = 0x3B;
+    *(char *)(p + 0x47) = 0x29;
+    g = *(char **)(*(char **)D_01CAFF0C + 0x20);
+    if (g != 0) {
+        func_002F2E30(g, p);
+    }
+}
+int func_001C5F10(char *p) {
+    int v = *(int *)(p + 0x158A4);
+    *(int *)(p + 0x158A4) = v + 16;
+    *(int *)(p + 0x1589C) = v;
+    if (*(int *)(p + 0x158A0) == 0) {
+        *(int *)(p + 0x158A0) = *(int *)(p + 0x1589C);
+    }
+    return *(int *)(p + 0x1589C);
+}
+typedef struct { float x, y, z, w; } V4g;
+int func_0038EAA0(char *p, int k, V4g *out, float *r) {
+    switch (k) {
+    case 0:
+        *out = *(V4g *)(p + 0x50);
+        *r = 150.0f;
+        out->y += 150.0f;
+        return 1;
+    }
+    return 0;
+}
+unsigned char func_003AC650(char *p) {
+    unsigned char r = 0;
+    switch (*(unsigned char *)(p + 0x4BE4)) {
+    case 7:
+    case 8:
+    case 9:
+    case 0x1B:
+    case 0x21:
+    case 0x22:
+        r = 1;
+        break;
+    }
+    return r;
+}

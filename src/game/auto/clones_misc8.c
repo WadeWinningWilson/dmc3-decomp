@@ -75,6 +75,94 @@ int func_00352CA0(void);
 
 
 
+
+
+
+typedef struct { char a; char flag; char rest[206]; } E208;
+typedef struct { short n; char pad[14]; E208 e[1]; } T208;
+
+
+int func_002F9D20(void);
+
+
+
+
+
+
+
+char *func_00207480(int, int, char *, int);
+
+
+typedef struct { char pad[0xB0]; char a; char pad1; short b; char c; char rest[208 - 0xB5]; } E208c;
+typedef struct { short n; char pad[14]; E208c e[1]; } T208c;
+
+extern char D_01CAF51F[];
+extern char D_0055A1E0[];
+extern char D_00559BB0[];
+
+typedef struct { int w[16]; } M64c;
+
+
+
+
+
+void func_0024DA80(char *, int, int);
+
+extern char D_00666750[];
+int func_001AEA60(char *, int, unsigned short);
+void func_001AF080(char *, int);
+
+
+
+extern char *D_005BE0D8;
+
+
+int func_001F9A70(int, char *, float);
+
+
+
+
+
+
+
+
+typedef struct { int a; short k; short pad; int v; } K12M;
+
+
+
+char *func_002F7C10(int, int);
+
+
+
+typedef struct { short k; short pad; int v; } K8;
+
+void func_001A2000(char *, int);
+
+
+typedef struct { char pad[0x50]; char f; char rest[784 - 0x51]; } E784;
+
+
+
+
+
+
+
+
+
+extern short D_00586260[][47];
+
+
+
+char *func_001F3A50(char *, int);
+
+
+void func_002F2E30(char *, char *);
+
+
+typedef struct { float x, y, z, w; } V4g;
+
+
+
 char *func_001EDE90(int a, int b, int id, int c, int d, float f, int e) {
     extern char D_01CB0A00[];
     int func_001F3A50(char *, int);
@@ -194,4 +282,15 @@ void func_0050E880(char *p) {
 long long func_00158C50(void) {
     int func_00158C78(void);
     return func_00158C78();
+}
+
+int func_003F7DF0(char *p, int k, V4g *out, float *r) {
+    switch (k) {
+    case 0:
+        *out = *(V4g *)(p + 0x50);
+        *r = 150.0f;
+        out->y += 150.0f;
+        return 1;
+    }
+    return 0;
 }
