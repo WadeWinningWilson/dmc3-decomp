@@ -635,6 +635,8 @@ void func_0022F840(char *);
 void func_0027BEA0(char *);
 void func_002E74D0(char *);
 void func_002136A0(char *);
+void func_001282D0(char *, char *, int);
+int func_002A67F0(int, int);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -9466,4 +9468,49 @@ int func_00213210(char *p, int arg, int arg2) {
     func_002136A0(p);
     func_00215B70(p);
     return 1;
+}
+
+typedef struct { char b[5]; } SvS5;
+
+typedef struct { char b[15]; } SvS15;
+
+typedef struct { char b[6]; } SvS6;
+
+typedef struct { float f[4]; } SvF4;
+
+typedef struct { float f[2]; } SvF2;
+
+void func_0036F7D0(char *d, char *s) {
+    unsigned char k;
+    char *r;
+    *(int *)(d + 0x1C) = *(int *)(s + 0x14);
+    func_001282D0(d + 0x20, s + 0x18, 0x3B);
+    func_001282D0(d + 0x5B, s + 0x53, 8);
+    func_001282D0(d + 0x64, s + 0x5C, 8);
+    func_001282D0(d + 0x6C, s + 0x64, 4);
+    *(unsigned char *)(d + 0x70) = *(unsigned char *)(s + 0x68);
+    *(SvS5 *)(d + 0x9C) = *(SvS5 *)(s + 0x6C);
+    *(SvS15 *)(d + 0xA1) = *(SvS15 *)(s + 0x71);
+    *(signed char *)(d + 0xB0) = *(signed char *)(s + 0x80);
+    *(signed char *)(d + 0xB1) = *(signed char *)(s + 0x81);
+    *(unsigned char *)(d + 0xB2) = *(unsigned char *)(s + 0x82);
+    *(unsigned char *)(d + 0xB3) = *(unsigned char *)(s + 0x83);
+    *(float *)(d + 0xB4) = *(float *)(s + 0x84);
+    *(float *)(d + 0xB8) = *(float *)(s + 0x88);
+    *(signed char *)(d + 0xBC) = *(signed char *)(s + 0x8C);
+    *(SvS6 *)(d + 0xBD) = *(SvS6 *)(s + 0x8D);
+    *(SvF4 *)(d + 0xC4) = *(SvF4 *)(s + 0x94);
+    *(SvF2 *)(d + 0xD4) = *(SvF2 *)(s + 0xA4);
+    *(SvF4 *)(d + 0xDC) = *(SvF4 *)(s + 0xAC);
+    *(SvF4 *)(d + 0xEC) = *(SvF4 *)(s + 0xBC);
+    func_001282D0(*(char **)(d + 4) + 0x618, s + 0xCC, 8);
+    func_001282D0(*(char **)(d + 4) + 0x680, s + 0xD4, 8);
+    func_001282D0(*(char **)(d + 4) + 0x688, s + 0xDC, 8);
+    func_001282D0(*(char **)(d + 4) + 0x690, s + 0xE4, 0xC);
+    func_001282D0(*(char **)(d + 4) + 0x620, s + 0xF0, 0x60);
+    k = func_002A67F0(*(signed char *)(s + 0xC), *(unsigned char *)(s + 0xD));
+    r = s + k * 0x68;
+    func_001282D0(*(char **)(d + 0x14), r + 0x150, 0x68);
+    func_001282D0(*(char **)(d + 0x14) + 0x68, r + 0x358, 0x68);
+    func_001282D0(d + 0x71, s + k * 21 + 0x560, 0x15);
 }
