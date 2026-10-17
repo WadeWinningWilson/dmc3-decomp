@@ -124,3 +124,34 @@ int func_003B96D0(char *p, int a, int b, int c) {
     }
     return r;
 }
+
+typedef struct { short k; short pad; int v; } KLEnt;
+typedef struct { short n; short pad; KLEnt e[272]; } KLTab272;
+typedef struct { short n; short pad; KLEnt e[128]; } KLTab128;
+int func_001F3A50(KLTab272 *t, short k) {
+    int i;
+    for (i = 0; i < 272; i++) {
+        if (t->e[i].k == k) {
+            return t->e[i].v;
+        }
+    }
+    return 0;
+}
+int func_001FED70(KLTab128 *t, short k) {
+    int i;
+    for (i = 0; i < 128; i++) {
+        if (t->e[i].k == k) {
+            return t->e[i].v;
+        }
+    }
+    return 0;
+}
+int func_001FEFB0(KLEnt *t, short k) {
+    int i;
+    for (i = 0; i < 500; i++) {
+        if (t[i].k == k) {
+            return t[i].v;
+        }
+    }
+    return 0;
+}
