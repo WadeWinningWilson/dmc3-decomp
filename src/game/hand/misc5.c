@@ -938,6 +938,7 @@ void func_00482580(char *p) {
 
 int func_0038F490(char *);
 void func_0038F830(char *);
+void func_00387550(char *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -973,5 +974,26 @@ void func_0041F600(char *p) {
         } else {
             func_0038F2C0(p, 3);
         }
+    }
+}
+
+void func_00387870(char *p) {
+    if (!(*(float *)(p + 0xCA4) <= *(float *)(p + 0xD74))) {
+        *(float *)(p + 0xCA4) = *(float *)(p + 0xCA4) - 20.0f * *(float *)(p + 0x10);
+    } else {
+        if (*(signed char *)(p + 0xDCC) == 0) {
+            *(float *)(p + 0xD80) = *(float *)(p + 0xD80) + 3.0f * *(float *)(p + 0x10);
+            *(float *)(p + 0xD88) = *(float *)(p + 0xD88) + 3.0f * *(float *)(p + 0x10);
+            *(signed char *)(p + 0xDCC) = 1;
+            func_003305E0(D_01DFABA0, 8, 0xA3, p + 0xCE0, 0x21, 0, 0);
+        }
+        *(float *)(p + 0xCA4) = *(float *)(p + 0xD74);
+    }
+    *(float *)(p + 0xDB0) = *(float *)(p + 0xDB0) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0xDB0) < 0.0f) {
+        *(signed char *)(p + 0xDCC) = 0;
+        func_00387550(p);
+        *(unsigned char *)(p + 0xDCD) = 1;
+        *(int *)(p + 0xDC4) = 0;
     }
 }

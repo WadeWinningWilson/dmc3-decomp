@@ -184,6 +184,94 @@ void func_0048C070(char *);
 
 
 
+unsigned int func_002F3020(char *, int);
+float func_0041DB20(char *);
+unsigned int func_002F2FC0(char *, int);
+
+static inline unsigned char has_8000(char *p) {
+    return (*(int *)(p + 0x42C) & 0x8000) != 0;
+}
+
+
+
+void func_0038F300(char *, int);
+void func_0041DBA0(char *, char *);
+void func_0041D9E0(float *, float *, char *);
+void func_0038F2C0(char *, int);
+
+
+
+extern unsigned char D_00569230[];
+extern char D_00569120[];
+extern float D_00569280[];
+void func_003B9E90(char *, char *, unsigned char, float);
+
+static inline int state_is(unsigned char *o, int st) {
+    return o[0x1B5] == st;
+}
+
+/* Wakes up to the level's count of idle slot objects with random presets and staggered delays. */
+
+
+void func_0021CBB0(unsigned char *);
+int func_002DAA00(unsigned char *, int);
+void func_002DBAA0(unsigned char *, short, float);
+
+
+
+typedef struct Rec0B40 {
+    unsigned char active;
+    char pad0[0xAFF];
+    float pos[4];
+    float rot[4];
+    char pad1[0x14];
+    unsigned char alpha;
+    char pad2[0xB];
+} Rec0B40;
+typedef struct RecTbl {
+    char pad[0x100];
+    Rec0B40 e[1];
+} RecTbl;
+extern char D_0056A110[];
+
+
+
+typedef struct RecA0 {
+    unsigned char active;
+    char pad0[0x4F];
+    float pos[4];
+    float dir[4];
+    char pad1[0x10];
+    float rot[4];
+    char pad2[0x10];
+} RecA0;
+typedef struct RecA0Tbl {
+    char pad[0xE0];
+    RecA0 e[1];
+} RecA0Tbl;
+extern char D_00581AD0[];
+
+
+
+typedef struct InputTbl {
+    char pad[0x5D];
+    unsigned char st[1][5];
+} InputTbl;
+
+
+
+
+
+
+
+int func_0038F490(char *);
+void func_0038F830(char *);
+void func_00387550(char *);
+
+
+
+
+
 void func_0048B020(unsigned char *p) {
     extern Rng2C D_0056DD10[];
     Rng2C *t = &D_0056DD10[p[5]];
@@ -292,4 +380,26 @@ int func_0019E4C0(char *p) {
         return 1;
     }
     return 0;
+}
+
+void func_004DC3E0(char *p) {
+    void func_004DBF00(char *);
+    if (!(*(float *)(p + 0xCA4) <= *(float *)(p + 0xD74))) {
+        *(float *)(p + 0xCA4) = *(float *)(p + 0xCA4) - 20.0f * *(float *)(p + 0x10);
+    } else {
+        if (*(signed char *)(p + 0xDCC) == 0) {
+            *(float *)(p + 0xD80) = *(float *)(p + 0xD80) + 3.0f * *(float *)(p + 0x10);
+            *(float *)(p + 0xD88) = *(float *)(p + 0xD88) + 3.0f * *(float *)(p + 0x10);
+            *(signed char *)(p + 0xDCC) = 1;
+            func_003305E0(D_01DFABA0, 8, 0xA3, p + 0xCE0, 0x21, 0, 0);
+        }
+        *(float *)(p + 0xCA4) = *(float *)(p + 0xD74);
+    }
+    *(float *)(p + 0xDB0) = *(float *)(p + 0xDB0) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0xDB0) < 0.0f) {
+        *(signed char *)(p + 0xDCC) = 0;
+        func_004DBF00(p);
+        *(unsigned char *)(p + 0xDCD) = 1;
+        *(int *)(p + 0xDC4) = 0;
+    }
 }
