@@ -5364,3 +5364,19 @@ extern "C" int func_0022D540(char *p) {
     }
     return 0;
 }
+
+extern "C" int func_004D2D20(char *, int);
+
+/* Grab-release check: if armed and the partner no longer holds, restore the hit scale and enter 0x17. */
+extern "C" int func_004D2D90(char *p) {
+    if (*(unsigned char *)(p + 0xB2C8) != 1) {
+        return 1;
+    }
+    if ((unsigned char)func_004D2D20(p, *(signed char *)(p + 0xB154)) == 1) {
+        return 1;
+    }
+    *(float *)(p + 0x168) = 1.0f + (*(float **)(*(char **)(p + 0x138) + 0x14))[*(int *)(p + 0xB2C0)];
+    ((ObjB *)p)->m2F8(0x17);
+    return 0;
+}
+

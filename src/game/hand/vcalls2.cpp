@@ -97,3 +97,23 @@ extern "C" void func_0043F570(char *p) {
         break;
     }
 }
+
+extern "C" char D_01DFABA0[];
+extern "C" void func_003305E0(char *, int, int, char *, int, int, int);
+extern "C" void func_00481E00(char *, int);
+extern "C" void func_004821D0(char *);
+
+extern "C" void func_00481570(char *p) {
+    unsigned char r;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        func_00481E00(p, 0);
+        func_003305E0(D_01DFABA0, 8, 0x71, p + 0x50, 0x28, 0, 0);
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+    case 1:
+        r = ((ObjBCr *)(p + 0x740))->mBC(*(float *)(p + 0x10));
+        if (r == 4 || r == 0) {
+            func_004821D0(p);
+        }
+    }
+}

@@ -751,6 +751,23 @@ void func_0038F300(char *, int);
 void func_0038F360(char *);
 void func_0041E120(char *, float);
 void func_0038F2C0(char *, int);
+extern char D_005BDD78[4];
+extern char D_00587160[];
+unsigned int func_003101B0(char *, int, int);
+void func_0030FD40(char *, int, int, int, int, int, int, int);
+void func_00228260(char *);
+void func_0050E000(char *);
+void func_0050E160(char *);
+void func_0050E420(char *);
+void func_0050E5B0(char *);
+
+
+
+
+
+
+
+
 
 
 
@@ -1445,4 +1462,22 @@ void func_004190D0(char *p) {
         break;
     }
     *(int *)(p + 0x110) = *(int *)(p + 0x110) | 0x10000000;
+}
+
+void func_003C0520(char *p) {
+    char *q;
+    *(unsigned char *)(p + 0x1BC7) = 1;
+    *(char **)(p + 0x271C) = func_00207480(3, 0xDC, 0, 16);
+    q = *(char **)(p + 0x271C);
+    if (q != 0) {
+        *(int *)(q + 0x90) = *(int *)(*(char **)(p + 0x8B8) + 0x104);
+        q[0x9A] = 1;
+        *(*(char **)(p + 0x271C) + 0x3A) = 1;
+        q = *(char **)(p + 0x271C);
+        q[0x9C] = 0x40;
+        q[0x9D] = 0x20;
+        *(unsigned char *)(q + 0x9E) = 0x80;
+        q[0x9B] = 2;
+    }
+    func_003305E0(D_01DFABA0, 0, 0x5A, (int)(p + 0x50), 0, 0, 0);
 }
