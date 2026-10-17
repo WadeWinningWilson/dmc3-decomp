@@ -288,6 +288,66 @@ int func_0024E820(char *, int);
 
 
 
+extern char D_005A9980[];
+extern char D_005A99B0[];
+extern char D_005A9A10[];
+void func_0023ACD0(void);
+
+
+short func_004838E0(void);
+signed char func_00483960(char *, int);
+short func_004844D0(char *, int, int);
+
+
+void func_002E9A50(char *);
+void func_002EA330(char *);
+
+
+
+
+
+typedef struct { float x, y, z, w; } V4f;
+void func_003008D0(void);
+
+extern char D_005AB870[];
+extern char D_005A7AE0[];
+extern char D_005A7910[];
+
+int func_0022CBA0(char *);
+void func_0022CBB0(char *, char *);
+int func_0012B1A0(char *, int *);
+extern int D_005BDA80;
+int func_0044C8B0(void);
+
+
+
+int func_00220860(char *, int, int, float);
+void func_002497E0(void);
+void func_00249860(char *);
+
+extern int D_005BDA98;
+int func_00450800(void);
+
+
+
+extern char D_00598570[];
+extern char D_00599090[];
+extern int D_005BC5F8;
+extern char D_00645A30[];
+char *func_001005E0(int, int, char *, char *, int);
+int func_00195D90(char *);
+
+
+extern char D_005AFE30[];
+extern char D_005AFE54[];
+extern char D_005AFED4[];
+extern char D_005AFF68[];
+void func_004FE840(char *, int);
+
+void func_002075C0(int, int, char *, int);
+void func_004F6390(char *, char *, int, int);
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -474,6 +534,46 @@ char *func_004BE440(char *p, short flag) {
         *(char **)(p + 160) = D_005B8EE4;
         func_0028C1A0(p + 336, -1);
         func_00253000(p, 0);
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+
+char *func_004D8600(char *p, short flag) {
+    extern char D_005B9410[];
+    extern char D_005B9434[];
+    extern char D_005B94B4[];
+    extern char D_005B9548[];
+    void func_0024FEA0(char *, int);
+    if (p != 0) {
+        *(char **)p = D_005B9410;
+        *(char **)(p + 64) = D_005B9434;
+        *(char **)(p + 160) = D_005B94B4;
+        *(char **)(p + 208) = D_005B9548;
+        func_0028C1A0(p + 320, -1);
+        func_0024FEA0(p, 0);
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+
+char *func_004F9310(char *p, short flag) {
+    extern char D_005BA990[];
+    extern char D_005BA9B4[];
+    extern char D_005BAA34[];
+    extern char D_005BAAC8[];
+    void func_0024FEA0(char *, int);
+    if (p != 0) {
+        *(char **)p = D_005BA990;
+        *(char **)(p + 64) = D_005BA9B4;
+        *(char **)(p + 160) = D_005BAA34;
+        *(char **)(p + 208) = D_005BAAC8;
+        func_0028C1A0(p + 320, -1);
+        func_0024FEA0(p, 0);
         if (flag > 0) {
             func_00100580(p);
         }
