@@ -7020,3 +7020,62 @@ extern "C" void func_003F01B0(char *p) {
         func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8FC) + 0x104), 0x10);
     }
 }
+class CamV {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void m14(char *, char *);
+    virtual float m18();
+    virtual float m1C();
+    virtual void d6();
+    virtual void d7();
+    virtual float m28();
+};
+
+extern "C" void func_002A6C10(char *, char *, char *);
+
+static inline unsigned char gsa(char *g) {
+    if (*(unsigned char *)(g + 0x1A) == 1) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+static inline unsigned char gsb(char *g) {
+    if (*(int **)(g + 8) != 0 && **(int **)(g + 8) != 0) {
+        return 1;
+    }
+    if (*(int *)(g + 0x1C) - *(int *)(g + 0x20) != 0) {
+        return 1;
+    }
+    if (*(unsigned char *)(g + 0x1A) == 1) {
+        return 1;
+    }
+    return 0;
+}
+
+static inline unsigned char gsc(char *g) {
+    if (g != 0) {
+        return gsb(g);
+    }
+    return 0;
+}
+
+extern "C" void func_002A6CA0(char *p, int a1) {
+    *(unsigned char *)(p + 0x90) = 0;
+    *(int *)(p + 0xA0) = a1;
+    *(unsigned char *)(p + 0xA4) = 0;
+    *(float *)(p + 0xA8) = 10000000.0f;
+    *(float *)(p + 0xAC) = 10000000.0f;
+    ((CamV *)p)->m14(p + 0x80, p + 0x70);
+    *(float *)(p + 0x20) = ((CamV *)p)->m18();
+    *(float *)(p + 0x24) = ((CamV *)p)->m1C();
+    func_002A6C10(p, p + 0x70, p + 0x80);
+    if (gsc(*(char **)(*(char **)D_01CAFF0C + 0x20))) {
+        *(float *)(p + 0x9C) = ((CamV *)p)->m28();
+    } else {
+        *(float *)(p + 0x9C) = 1.0f;
+    }
+}
