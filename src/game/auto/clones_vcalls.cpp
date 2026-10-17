@@ -5348,6 +5348,18 @@ extern "C" char *func_001AED80(char *, int, unsigned short, int);
 extern "C" int func_002DA0B0(char *, int);
 extern "C" void func_001A2000(char *, int);
 extern "C" void func_0028BF50(char *);
+extern "C" int D_005BE1A4;
+extern "C" int D_01CB0514[];
+extern "C" char D_006011CC[];
+extern "C" char D_00631550[];
+extern "C" char *func_004FF3D0();
+extern "C" int func_004FFAB0(char *);
+extern "C" void func_0021D000(char *, int);
+extern "C" void func_0020E570(char *);
+extern "C" void func_0020E580(char *);
+extern "C" void func_00253920(char *);
+extern "C" void func_00331350(char *);
+extern "C" void func_0013E020(char *, int, int);
 
 
 
@@ -6536,6 +6548,21 @@ public:
     virtual void dE8();
     virtual void mEC(int);
 };
+
+
+
+
+
+class ObjE18 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void m18();
+};
+
+
 
 
 
@@ -8404,6 +8431,51 @@ extern "C" void func_004A7250(char *p) {
             }
             *(int *)(p + 0xD4) = 3;
         }
+        break;
+    case 3:
+        if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
+            ((SelfBE *)p)->mEC(0xE);
+        }
+        (*(AnimBE **)(p + 0xA8))->m24();
+        break;
+    }
+}
+
+extern "C" void func_0049DDC0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if (36.0f == (*(AnimBE **)(p + 0xA8))->m28()) {
+            (*(AnimBE **)(p + 0xA8))->m1C(0x16);
+        }
+        if ((*(AnimBE **)(p + 0xA8))->m30() != 0) {
+            *(unsigned char *)(p + 0xCD) = 0;
+            *(unsigned char *)(p + 0xCF) = 4;
+            (*(AnimBE **)(p + 0xA8))->m1C(0xD);
+            (*(AnimBE **)(p + 0xA8))->m44();
+            (*(AnimBE **)(p + 0xA8))->m48(0xA, *(char **)(p + 0x10) + 0x10);
+            func_00330BD0(D_01DFABA0, 0x27, *(char **)(p + 0x10) + 0x10, 6, 0);
+            *(int *)(p + 0xD4) = 1;
+        }
+        if (*(float *)(*(char **)(p + 0x10) + 0x24) < 0.0f) {
+            *(float *)(*(char **)(p + 0x10) + 0x34) = -1.0f;
+        }
+        ((SelfBE *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+        break;
+    case 1:
+        if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
+            (*(AnimBE **)(p + 0xA8))->m1C(0x17);
+            *(int *)(p + 0xD4) = 2;
+            *(float *)(p + 0x104) = 45.0f + 45.0f * frand();
+        }
+        (*(AnimBE **)(p + 0xA8))->m24();
+        break;
+    case 2:
+        if (!((*(AnimBE **)(p + 0xA8))->m28() < *(float *)(p + 0x104))) {
+            *(unsigned char *)(p + 0xCF) = 2;
+            (*(AnimBE **)(p + 0xA8))->m1C(6);
+            *(int *)(p + 0xD4) = 3;
+        }
+        (*(AnimBE **)(p + 0xA8))->m24();
         break;
     case 3:
         if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
