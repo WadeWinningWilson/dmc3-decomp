@@ -12261,3 +12261,30 @@ void func_001F36E0(char *u, char *m, char *pos, char *up) {
     *(float *)(m + 0x2C) = 0.0f;
     QCOPYW1V4(m + 0x30, pos);
 }
+
+void func_001F37B0(char *u, char *m, char *pos, char *up) {
+    float d[4];
+    VSUBR(d, pos, *(char **)((char *)D_005BE09C + 0x23C) + 0x70);
+    func_00131650(m + 0x10, up);
+    OPCROSS(m, m + 0x10, d);
+    func_00131650(m, m);
+    OPCROSS(m + 0x20, m, m + 0x10);
+    *(float *)(m + 0xC) = 0.0f;
+    *(float *)(m + 0x1C) = 0.0f;
+    *(float *)(m + 0x2C) = 0.0f;
+    QCOPYW1V4(m + 0x30, pos);
+}
+
+float func_001F7280(char *s, float t) {
+    if (t < 0.0f) {
+        t = -t;
+    }
+    if (t < 1.0f) {
+        return (4.0f + (t * (3.0f * t * t) - 6.0f * t * t)) / 6.0f;
+    }
+    if (t < 2.0f) {
+        float d = t - 2.0f;
+        return d * (-d * d) / 6.0f;
+    }
+    return 0.0f;
+}
