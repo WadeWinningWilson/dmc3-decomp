@@ -3575,3 +3575,8 @@ extern "C" void func_002C4BA0(Obj130 *o) {
         break;
     }
 }
+
+extern "C" void func_00202860(char *p) {
+    ((SubCCc *)(p + 0x40))->mCC(p + 0x4C0);
+}
+
