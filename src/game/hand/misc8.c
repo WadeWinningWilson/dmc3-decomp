@@ -209,3 +209,68 @@ void func_001F4170(char *p, unsigned int v) {
 int func_0041D6B0(float *x, float d) {
     return (*x -= d) <= 0.0f;
 }
+
+typedef struct { char a; char flag; char rest[206]; } E208;
+typedef struct { short n; char pad[14]; E208 e[1]; } T208;
+void func_00208870(T208 *t, int i) {
+    if (i < t->n) {
+        t->e[i].flag = 0;
+    }
+}
+void func_00208830(T208 *t, int i) {
+    if (i < t->n) {
+        t->e[i].flag = 1;
+    }
+}
+int func_002F9D20(void);
+int func_002F9E90(void) {
+    int r = func_002F9D20();
+    return r < 0 ? r : 0;
+}
+void func_003E6260(char *p) {
+    if (*(unsigned char *)(p + 4) != 0) {
+        *(char *)(p + 0x3B92) = 1;
+        if (*(unsigned char *)(p + 0x14D) != 3) {
+            *(volatile unsigned char *)(p + 0x3A4D);
+        }
+    }
+}
+void func_004B7F80(char *p, short v) {
+    short o = *(short *)(p + 0xA58);
+    if (o != v) {
+        *(short *)(p + 0xA5A) = o;
+        *(short *)(p + 0xA58) = v;
+        *(char *)(p + 7) = 0;
+        *(char *)(p + 6) = 0;
+        *(char *)(p + 5) = 0;
+    }
+}
+void func_004DBF00(char *p) {
+    int k = *(unsigned char *)(p + 5);
+    if (k == 3 || k == 0) {
+        *(char *)(p + 5) = 1;
+        *(float *)(p + 0xDB0) = *(float *)(p + 0xDB8);
+    }
+}
+void func_0019AA40(int a, char *o) {
+    unsigned char n = 4;
+    int f = *(int *)o;
+    if ((f & 0x1000) || (f & 0x2000)) {
+        n = 12;
+    }
+    *(char *)(o + 6) = n;
+    *(char *)(o + 5) = n;
+}
+long long func_001B31A0(int a, char *b) {
+    return ((long long)(*(short *)(b + 0xA) - 1) << 14) | 0xA | ((long long)(*(short *)(b + 0xC) - 1) << 34);
+}
+float func_0038CA90(float a, float b, float c) {
+    return (b * b + c * c - a * a) / (2.0f * b * c);
+}
+char *func_00207480(int, int, char *, int);
+void func_003B6330(char *p) {
+    char *o = func_00207480(3, 0x7B, p + 0x440, 16);
+    if (o != 0) {
+        *(char *)(o + 0x3A) = 1;
+    }
+}
