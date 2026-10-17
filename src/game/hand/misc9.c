@@ -10802,6 +10802,13 @@ void func_001A0270(char *, unsigned int, int, int, int);
 int func_001A1D60(char *, unsigned int, int);
 void func_001AF0B0(char *, char *);
 void func_00123028(int, int, char *);
+extern int D_01CAF560[];
+extern unsigned char D_005D0E53[];
+extern unsigned char D_005D0E51[];
+extern int D_005D0E54[];
+void func_0020E8D0(char *, int, int, int);
+void func_0022A870(char *);
+int func_002E76D0(char *, float *);
 
 void func_001AA740(char *p, int a, int b) {
     int i;
@@ -11334,4 +11341,62 @@ unsigned short func_001AD8B0(char *p, unsigned char *b, int k) {
         v = n;
     }
     return v;
+}
+
+#define QCOPYW1(d, s) __asm__ volatile("lqc2 $vf10, 0x0(%1)\n\tvmove.w $vf10, $vf0\n\tsqc2 $vf10, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_0020A270(char *p) {
+    char *e = *(char **)(p + 0xC);
+    switch (*(unsigned char *)e) {
+    case 3:
+        func_0020E8D0(p, 0, *(short *)(e + 4), *(short *)(e + 8));
+        break;
+    case 2:
+        func_0020E8D0(p, 1, *(short *)(e + 4), 0);
+        break;
+    case 4:
+        func_0020E8D0(p, 2, *(short *)(e + 4), 0);
+        break;
+    case 5:
+        func_0020E8D0(p, 3, 0, 0);
+        break;
+    }
+}
+
+void func_002290E0(char *p) {
+    int i;
+    char *e = p;
+    for (i = 0; i < 100; i++) {
+        p = e;
+        switch (*(unsigned char *)(p + 0x50)) {
+        case 3:
+            *(unsigned char *)(p + 0x50) = 0;
+            func_0022A870(p + 0x50);
+            break;
+        case 2:
+            *(F4 *)(p + 0x130) = *(F4 *)(p + 0x120);
+            func_00105300(p + 0xB0, p + 0x70);
+            break;
+        }
+        e += 0x310;
+    }
+}
+
+void func_001B6580(char *p, char *q) {
+    float v[4];
+    q = q ? q : p;
+    if (*(char **)(q + 0x38) != 0) {
+        int r;
+        QCOPYW1(v, *(char **)(q + 0x38));
+        r = func_002E76D0(D_01CAF520, v);
+        if (r != 0xFF) {
+            D_005D0E53[0] = r;
+            D_005D0E51[0] = 1;
+            D_005D0E54[0] = D_01CAF560[0];
+        } else {
+            D_005D0E51[0] = 0;
+        }
+    } else {
+        D_005D0E51[0] = 0;
+    }
 }
