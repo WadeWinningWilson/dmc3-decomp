@@ -399,6 +399,9 @@ int func_001980B0(char *p, short a, short b, int c, int k) {
 typedef struct { short a; signed char c; signed char d; short e; } ret6;
 
 ret6 func_00483CF0(char *, int, int);
+void func_00131650(char *, char *);
+float func_00132630(float *, char *);
+void func_00132580(float *, char *, float);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -406,4 +409,19 @@ void func_00483760(char *p) {
         ret6 s = func_00483CF0(p, *(signed char *)(p + 0xD2), *(short *)(p + 0xD0));
         ((int *)p)[s.c] |= 1 << s.d;
     }
+}
+
+#define VSUB(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+#define VADD(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+int func_001C1510(char *u, char *out, char *o, char *a, char *b) {
+    float d1[4];
+    float d2[4];
+    VSUB(d1, a, o);
+    func_00131650((char *)d1, (char *)d1);
+    VSUB(d2, b, o);
+    func_00132580(d2, (char *)d1, func_00132630(d2, (char *)d1));
+    VADD(out, d2, o);
+    return 1;
 }

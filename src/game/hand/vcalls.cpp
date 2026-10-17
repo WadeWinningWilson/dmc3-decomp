@@ -14790,3 +14790,24 @@ extern "C" void func_0037B920(Obj1E0 *p) {
         func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), p);
     }
 }
+
+extern "C" unsigned char func_0021C6D0(char *p) {
+    unsigned char r = 0;
+    unsigned int i;
+    for (i = 0; i < 16; i++) {
+        if (*(unsigned char *)(p + i + 0x24DB) == 2) {
+            r = 1;
+        }
+    }
+    if (r == 1) {
+        *(int *)(p + 0x3E98) = 0;
+    }
+    for (i = 0; i < 16; i++) {
+        (p + i)[0x24DB] = 0;
+    }
+    *(unsigned char *)(p + 0x299C) = 0;
+    *(unsigned char *)(p + 0x2905) = 0;
+    *(int *)(p + 0x2910) = 0;
+    *(int *)(p + 0x29A8) = 0;
+    return r;
+}
