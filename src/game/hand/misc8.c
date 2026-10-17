@@ -1232,3 +1232,31 @@ float func_0021CBE0(char *p, unsigned char k, float d) {
     }
     return *(float *)(p + 0x28C4);
 }
+
+char *func_002871E0(char *p, unsigned char k, int id) {
+    char *v;
+    for (v = *(char **)(p + 0x394); v != 0; v = *(char **)(v + 8)) {
+        if (*(unsigned char *)(v + 0x11) == k && *(int *)(v + 0x14) == id) {
+            return v;
+        }
+    }
+    for (v = *(char **)(p + 0x388); v != 0; v = *(char **)(v + 8)) {
+        if (*(unsigned char *)(v + 0x11) == k && *(int *)(v + 0x14) == id) {
+            return v;
+        }
+    }
+    return 0;
+}
+float func_003216D0(char *p) {
+    float v = *(float *)(p + 0x14);
+    if (*(unsigned char *)(p + 0x8C) != 0) {
+        v += *(float *)(*(char **)(*(char **)(p + 8) + 0x1C) + 0x1C) * (float)*(unsigned int *)(p + 0x90);
+    }
+    if (!(v <= 1199.0f)) {
+        v = 1199.0f;
+    }
+    if (v < 0.0f) {
+        v = 0.0f;
+    }
+    return v;
+}
