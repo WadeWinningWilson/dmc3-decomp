@@ -12437,3 +12437,20 @@ void func_00375EF0(char *p) {
     func_0041D670(p + 0x944);
     func_0041D670(p + 0x8E0);
 }
+
+#define VADDIP(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+extern V4 D_00563FA0;
+
+void func_0039D980(char *p) {
+    float m[16];
+    V4 v;
+    float a;
+    v = D_00563FA0;
+    a = 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f);
+    UNIT(m);
+    func_00105760((char *)m, (char *)m, a);
+    func_00104B80((char *)&v, (char *)m, (char *)&v);
+    VADDIP(&v, p + 0x50);
+    func_004D6C20(*(int *)(p + 0xB10), p, 3, *(short *)(p + 0x90), (char *)&v, 0);
+}
