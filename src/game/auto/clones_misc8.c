@@ -11,6 +11,27 @@ int func_001FEFB0(char *, int);
 char *func_001B4320(int, int, int, int, int, float, int);
 
 
+
+
+unsigned char func_003AC6C0(char *);
+
+char *func_00279290(char *);
+void func_001A39C0(char *, int, int, int, int);
+
+float func_001324E0(char *);
+
+
+float func_00131D10(float, float);
+
+extern char D_00645EB0[];
+void func_00286780(char *, int);
+void func_0013D5D0(char *);
+
+void func_001A0050(int, int, int, int, int);
+
+void func_001A1E10(char *);
+
+
 char *func_001EDE90(int a, int b, int id, int c, int d, float f, int e) {
     extern char D_01CB0A00[];
     int func_001F3A50(char *, int);
@@ -33,4 +54,55 @@ char *func_00205A10(int a, int b, int id, int c, int d, float f, int e) {
         *(short *)(o + 0x3E) = id;
     }
     return o;
+}
+
+float func_001F36B0(char *p) {
+    char *o = *(char **)(p + 0xA0);
+    if (*(unsigned char *)(o + 0x84) != 1) {
+        return (float)*(int *)(o + 0x80);
+    }
+    return 1000000.0f;
+}
+
+void func_00233A10(char *p) {
+    func_001A39C0(func_00279290(p + 0x40), 0, 0, 0, 0);
+}
+
+float func_004FEC90(char *p, char *v) {
+    char stk[0x10] __attribute__((aligned(16)));
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%1)" : : "r"(v), "r"(stk), "r"(p + 0x50) : "memory");
+    return func_001324E0(stk);
+}
+
+void func_0027B400(char *p) {
+    func_00286780(D_00645EB0, *(int *)(p + 0xC));
+    *(int *)(p + 0xC) = 0;
+    func_0013D5D0(p + 0x14);
+    *(char *)(p + 0xA) = 0;
+}
+
+float func_002A6FB0(char *p) {
+    float v = *(float *)(*(char **)(p + 0xA0) + 4);
+    return 0.0f == v ? 1.0f : v;
+}
+
+void func_002EE3E0(char *p, float *out) {
+    *out = (float)*(int *)(p + 0x448);
+}
+
+void func_0031E2D0(char *p, int a, int b, int c) {
+    void func_001A0110(int, int, int, int, int);
+    if (*(unsigned char *)(p + 0x1C) != 0) {
+        func_001A0110(*(int *)(p + 0x14), *(int *)(p + 0x18), a, b, c);
+    }
+}
+
+int func_003AC760(char *p) {
+    return func_003AC6C0(p) == 0 ? 2 : 0;
+}
+
+void func_003C4F30(char *p) {
+    void func_001A1F90(char *);
+    func_001A1F90(func_00279290(p + 0x680));
+    func_001A1F90(func_00279290(p + 0xC80));
 }
