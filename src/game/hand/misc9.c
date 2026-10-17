@@ -12457,6 +12457,8 @@ void func_0039D980(char *p) {
 }
 
 extern V4 D_005646A0;
+void func_001051C8(float *, float *, float);
+void func_00105090(char *, float *, float *);
 
 void func_003B61F0(char *p) {
     float m[16];
@@ -12480,4 +12482,22 @@ void func_0041D9E0(char *a, char *b, char *out) {
     r[3] = 1.0f;
     r[2] = 0.0f;
     QCOPY(out, r);
+}
+
+void func_0041E270(char *out, char *b, float s, float t) {
+    float u[4];
+    float w[4];
+    float y0;
+    float y1;
+    QCOPY(u, out);
+    y0 = u[1];
+    u[1] = 0.0f;
+    QCOPY(w, b);
+    y1 = w[1];
+    w[1] = 0.0f;
+    func_001051C8(u, u, s);
+    func_001051C8(w, w, 1.0f - s);
+    u[1] = y0 * t;
+    w[1] = y1 * (1.0f - t);
+    func_00105090(out, u, w);
 }

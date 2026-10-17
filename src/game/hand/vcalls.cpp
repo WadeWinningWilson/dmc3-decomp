@@ -16121,3 +16121,17 @@ extern "C" void func_00415C80(char *p) {
         }
     }
 }
+
+extern "C" void func_0041DBA0(char *p, char *ob) {
+    ObjPosC4 *o = (ObjPosC4 *)ob;
+    float m2[16];
+    float m[16];
+    float a[4];
+    float *src = o->mC4();
+    QCOPYA(p + 0x60, src);
+    SETPOSA(m2, p + 0x60);
+    func_00105760(m, m2, 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f));
+    GETPOSA(a, m);
+    VADDIPA(p + 0x50, a);
+    *(float *)(p + 0x5C) = 1.0f;
+}
