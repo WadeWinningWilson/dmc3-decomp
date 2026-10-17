@@ -7625,3 +7625,97 @@ extern "C" void func_003EFFC0(char *p) {
         func_00207480(0, 0x2C, *(int *)(*(char **)(p + 0x8FC) + 0x104), 0x10);
     }
 }
+struct Ent340 {
+    char pad[0x15C];
+    int f15C;
+    char pad2[0x340 - 0x160];
+};
+
+static inline void ent_clr(char *m, unsigned int i) {
+    if (i < *(unsigned short *)(m + 0xA8)) {
+        (*(Ent340 **)(m + 0xBC))[i].f15C = 0;
+    }
+}
+
+extern "C" void func_001A2180(char *, int, int);
+extern "C" void func_0043EB20(char *, int);
+extern "C" int D_00575840[];
+extern "C" float D_00575A6C[];
+extern "C" float D_00575ACC[];
+
+extern "C" void func_003F0FE0(char *p) {
+    char *m;
+    int i;
+    ((ObjB *)p)->m2F8(0x47);
+    func_003E6750(p, 0, 0, 0);
+    *(unsigned char *)(p + 0x3437) = 2;
+    *(unsigned char *)(p + 0x3438) = 2;
+    *(float *)(p + 0x3A8C) = 120.0f;
+    func_001A2180(func_00279290(p + 0x980), 0x40, 1);
+    func_001A2180(func_00279290(p + 0xF80), 0x40, 1);
+    m = func_00279290(p + 0x980);
+    for (i = 0; i < *(unsigned short *)(m + 0xA8); i++) {
+        ent_clr(m, i);
+    }
+    m = func_00279290(p + 0xF80);
+    for (i = 0; i < *(unsigned short *)(m + 0xA8); i++) {
+        ent_clr(m, i);
+    }
+}
+
+extern "C" void func_003F1210(char *p) {
+    char *m;
+    int i;
+    ((ObjB *)p)->m2F8(0x48);
+    func_003E6750(p, 0, 0, 0);
+    *(unsigned char *)(p + 0x3437) = 2;
+    *(unsigned char *)(p + 0x3438) = 2;
+    *(float *)(p + 0x3A8C) = 120.0f;
+    func_001A2180(func_00279290(p + 0x980), 0x40, 1);
+    func_001A2180(func_00279290(p + 0xF80), 0x40, 1);
+    m = func_00279290(p + 0x980);
+    for (i = 0; i < *(unsigned short *)(m + 0xA8); i++) {
+        ent_clr(m, i);
+    }
+    m = func_00279290(p + 0xF80);
+    for (i = 0; i < *(unsigned short *)(m + 0xA8); i++) {
+        ent_clr(m, i);
+    }
+}
+
+static inline unsigned char lt_i(float a, int *q) {
+    return a < (float)*q;
+}
+
+extern "C" void func_0043FF40(char *p) {
+    char *g;
+    float t;
+    int i;
+    int *q;
+    int v;
+    func_0043EB20(p, 0);
+    g = *(char **)(*(char **)D_01CAFF0C + 4);
+    if (g != 0 && *(ObjT1C **)(g + 0x10) != 0) {
+        t = (*(ObjT1C **)(g + 0x10))->m1C();
+    } else {
+        t = 0.0f;
+    }
+    *(float *)(p + 0x7F0) = t;
+    *(unsigned char *)(p + 0x7C2) = 4;
+    for (i = 0, q = D_00575840; i < 4; i++, q++) {
+        if (!!(*(float *)(p + 0x7F0) < (float)*q)) {
+            *(unsigned char *)(p + 0x7C2) = i;
+            break;
+        }
+    }
+    v = func_001AEA60(D_00666750, 6, 3);
+    if (*(signed char *)(p + 0x7C1) == 0) {
+        *(int *)(p + 0x800) = func_0031B860(v, p + 0x7F4, 5, D_00575A6C[0]);
+    } else {
+        *(int *)(p + 0x800) = func_0031B860(v, p + 0x7F4, 4, D_00575ACC[0]);
+    }
+    g = *(char **)(*(char **)D_01CAFF0C + 0x20);
+    if (g != 0) {
+        func_002F2E30(g, p);
+    }
+}

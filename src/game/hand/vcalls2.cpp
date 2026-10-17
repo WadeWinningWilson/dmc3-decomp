@@ -182,6 +182,9 @@ extern "C" void func_00421B00(char *p) {
 }
 
 extern "C" void func_0043FA30(char *, int);
+extern "C" void func_0038F540(char *);
+extern "C" void func_0041D6E0(char *, char *, int, float);
+extern "C" void func_0038F830(char *);
 
 extern "C" void func_0043F920(char *p) {
     unsigned char r;
@@ -207,5 +210,57 @@ extern "C" void func_0043F920(char *p) {
             func_00440090(p, 0);
         }
         break;
+    }
+}
+
+class AnimF {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual float m28(int);
+};
+
+static inline unsigned char f1000(char *p) {
+    return (*(int *)(p + 0x42C) & 0x1000) != 0;
+}
+
+extern "C" void func_0041F950(char *p) {
+    float f;
+    char *b;
+    *(int *)(p + 0x42C) = *(int *)(p + 0x42C) | 0x2000;
+    *(int *)(p + 0x110) = *(int *)(p + 0x110) | 0x80000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(float *)(p + 0x454) = 300.0f;
+        func_0038F300(p, -1);
+        if (!f1000(p)) {
+            func_00207480(3, 0x194, p + 0x3D0, 0x10);
+        }
+        *(int *)(p + 0x42C) = *(int *)(p + 0x42C) & ~0x1000;
+        func_0038F540(p);
+        *(float *)(p + 0x60) = 10.0f;
+        *(float *)(p + 0x64) = 0.0f;
+        *(float *)(p + 0x68) = 0.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+        *(unsigned char *)(p + 6) = 1;
+    case 1:
+        f = ((AnimF *)(p + 0x604))->m28(0);
+        *(float *)(p + 0x414) = f;
+        if (11.0f < f && f < 40.0f) {
+            b = p;
+            if (b != 0) {
+                b += 0x40;
+            }
+            func_0041D6E0(b, p + 0x60, 1, *(float *)(p + 0x10));
+        }
+        if ((unsigned char)func_0024E800(p + 0xC20) == 1) {
+            func_0038F830(p);
+        }
     }
 }
