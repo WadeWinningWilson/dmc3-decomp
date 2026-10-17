@@ -5924,3 +5924,47 @@ extern "C" void func_004A2CF0(char *p) {
     ((ObjE4 *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
     *(int *)(p + 0xD4) = 0;
 }
+
+class ObjSnd {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void m14(unsigned int, int);
+};
+
+extern "C" ObjSnd *D_005BC1A8;
+extern "C" char D_005D0E70[];
+extern "C" char D_005D0E78[];
+extern "C" char D_006011B4[];
+extern "C" int func_00486460(char *);
+extern "C" void func_0013D900(char *, int);
+extern "C" void func_0013DC30(char *, int, int);
+extern "C" void func_0013E040(char *, int, int);
+
+/* Mode switch: aborts to state 2 when flagged, otherwise on confirm arms the stage and fades. */
+extern "C" void func_0022F620(char *p) {
+    char *q;
+    if (*(unsigned char *)(p + 8) != 0) {
+        *(int *)(p + 0x28) = -1;
+        *(int *)(p + 0xC) = 2;
+        *(int *)(p + 0x10) = 0;
+        *(int *)(p + 0x14) = 0;
+        return;
+    }
+    if ((unsigned char)func_00486460(p + 0x34) == 1) {
+        *(unsigned char *)(*(char **)(p + 0x1C) + 0x1900) = 1;
+        q = *(char **)(p + 0x1C);
+        *(unsigned char *)(q + 4) = 1;
+        *(signed char *)(q + 0x1903) = -1;
+        *(unsigned char *)(q + 0x1900) = 1;
+        *(unsigned char *)(q + 0x1901) = 0;
+        *(int *)(p + 0x10) = 0;
+        *(int *)(p + 0x14) = 2;
+        *(int *)(p + 0x18) = 0x708;
+        func_0013D900(D_005D0E70, -1);
+        func_0013DC30(D_005D0E78, 0x1C, 0);
+        func_0013E040(D_006011B4, 0x3C, 1);
+        D_005BC1A8->m14(0x80000000, 5);
+    }
+}
