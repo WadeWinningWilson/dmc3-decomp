@@ -381,6 +381,131 @@ void func_00286B90(char *, int, int);
 extern unsigned char D_0056C030[][44];
 
 
+extern char D_005B5A80[];
+extern char D_005B5AA4[];
+extern char D_005B5B24[];
+extern char D_005B5BB8[];
+extern char D_005B5C84[];
+extern char D_005B5D3C[];
+void func_0031E4E0(char *, int);
+void func_0024FEA0(char *, int);
+
+extern char D_005B74C0[];
+extern char D_005B74E4[];
+extern char D_005B7564[];
+
+
+
+void func_003B92A0(char *);
+void func_003BA400(char *);
+
+unsigned char func_002242C0(void);
+int func_0024DB10(char *, int, int, int, int, int, int);
+
+
+extern char D_005B08A0[];
+extern char D_005B08C4[];
+extern char D_005B0944[];
+extern char D_005A8DD0[];
+extern char D_005A8DF4[];
+extern char D_005A8E74[];
+void func_0031DD00(char *, int);
+void func_0024F810(char *, int);
+
+unsigned char func_002077F0(char *);
+
+void func_0028C790(char *, int);
+
+
+extern char D_005B84B0[];
+extern char D_005B84D4[];
+extern char D_005B8554[];
+extern char D_005B85E8[];
+void func_002E83B0(char *, int);
+
+unsigned char func_0021D1D0(char *);
+
+extern char D_01CAFF0C[];
+void func_00208830(int, int);
+void func_00453AE0(char *);
+
+extern float D_00577D10[][3];
+float func_001324B0(float *, int);
+
+
+static inline unsigned char is_zero8(char *q) {
+    return *(unsigned char *)q == 0;
+}
+
+void func_001F87B0(char *, int, char *, float);
+void func_001B3600(char *, char *, char *, char *);
+
+
+
+
+
+
+
+
+
+
+
+
+
+extern char D_005B9A90[];
+extern char D_005B9AB4[];
+extern char D_005B9B34[];
+extern char D_005B9BC8[];
+void func_002047C0(void);
+void func_00401030(char *, int);
+void func_0027A660(char *, int);
+
+extern char D_005BA850[];
+extern char D_005BA874[];
+extern char D_005BA8F4[];
+extern char D_005A78F8[];
+extern char D_005A77A0[];
+
+extern char D_005BB140[];
+extern char D_005A6F50[];
+
+typedef struct { short k; short pad; int a; int b; } K12;
+typedef struct { short n; short pad; K12 e[64]; } K12Tab;
+int func_00287D90(K12Tab *, int, int, int);
+
+extern char D_01CAFF0C[];
+int func_002F2FC0(int, int);
+void func_003FA770(char *, char *, char *, float *, float *);
+
+
+void func_003F85D0(char *, int);
+void func_00424EB0(char *, int);
+void func_004252D0(char *, int);
+void func_004254B0(char *, int);
+void func_003F8E90(char *, int);
+void func_003F94A0(char *, int);
+void func_003F9700(char *, int);
+
+
+extern char D_005455A6[];
+extern char D_00666750[];
+unsigned char func_001AF500(char *, int, int, int);
+unsigned char func_001AF690(char *, int, int, int);
+unsigned char func_001AF800(char *, int, int, int);
+unsigned char func_001AF9E0(char *, int, int, int);
+
+int func_0019F6C0(int, int, int);
+void func_0019F8B0(int, char *, int, int);
+int func_001A1CB0(int, int, int);
+
+
+
+
+float func_0041E060(char *);
+
+
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -631,4 +756,511 @@ int func_00206850(KTab *t, int v, int k) {
 short func_0048B150(char *p) {
     extern unsigned char D_0056DD30[][44];
     return (short)(unsigned short)(short)(int)(0.5f + 65536.0f * (*(float *)(p + 16) * (unsigned int)D_0056DD30[*(unsigned char *)(p + 5)][*(unsigned char *)(p + 1099)]) / 360.0f);
+}
+
+void func_0020FA50(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00228260(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_002282B0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00228300(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00228350(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00286040(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00286090(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_002860E0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_002D8470(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00303820(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00303870(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_0032E9B0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_0034AC40(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003775C0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00377610(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00382AA0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00382AF0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00382B40(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00382B90(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00382BE0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_0038FE50(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003A2820(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003AD570(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003AD5C0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003B6D30(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003BA960(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003C8F90(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003DDDC0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003F3A90(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003F3AE0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_003FB560(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_0043C3C0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_0046FCF0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00476BD0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_0048D820(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_004D4980(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_004E28B0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_004F93B0(char **h) {
+    char *o = *h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *h = 0;
+            break;
+        }
+    }
+}
+
+void func_00382A50(char *h) {
+    char *o = *(char **)h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *(char **)h = 0;
+            break;
+        }
+    }
 }

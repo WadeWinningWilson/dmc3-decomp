@@ -248,7 +248,7 @@ def defined():
         if p.suffix not in (".c", ".cpp") or p == OUT:
             continue
         for l in p.read_text(errors="replace").splitlines():
-            m = re.match(r"^[^ #/].*?\b(func_[0-9A-F]{8})\(.*\{\s*$", l)
+            m = re.match(r"^[^ #/].*?\b(func_[0-9A-F]{8})\(.*\{", l)
             if m and "\x08" not in m.group(0):
                 out.add(m.group(1))
     # addresses already named in the symbol files (C++ placeholders, library names)

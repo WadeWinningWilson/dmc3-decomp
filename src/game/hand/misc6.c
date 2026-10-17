@@ -2308,3 +2308,16 @@ void func_004B9AB0(char *p) {
     *(float *)(p + 1252) = func_0041E060(b);
     *(float *)(p + 1260) = 1.0f;
 }
+
+void func_00206730(char *h) {
+    char *o = *(char **)h;
+    if (o != 0) {
+        switch (*(unsigned char *)(o + 0x18)) {
+        case 3:
+        case 4:
+        case 0:
+            *(char **)h = 0;
+            break;
+        }
+    }
+}
