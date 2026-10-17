@@ -133,3 +133,39 @@ int func_00287D90(K12L *t, short k) {
     }
     return 0;
 }
+
+void func_00199270(char *p) {
+    char *o = *(char **)(p + 0x10C);
+    *(long long *)(o + 0) = 0;
+    *(long long *)(o + 8) = 0;
+}
+float func_001B46C0(char *p) {
+    return (float)*(int *)(*(char **)(p + 0x440) + 0x68);
+}
+float func_001B4C80(char *p) {
+    return (float)*(int *)(*(char **)(*(char **)(p + 0x4A0) + 0x440) + 0x68);
+}
+int func_0034C1C0(int a, int lim, int d) {
+    int v = a + d;
+    return v < lim ? v : lim;
+}
+int func_0034C1E0(int a, int lim, int d) {
+    int v = a - d;
+    return lim < v ? v : lim;
+}
+void func_0031DAF0(char *p, unsigned char k, int v) {
+    ((char *)(p + 0x1E8C))[k] = 1;
+    ((char *)(p + 0x1EAC))[k] = v;
+}
+extern long long D_0053F970[];
+void func_001A99A0(long long *out, int i) {
+    *out = D_0053F970[i];
+}
+int func_0021CB80(char *p) {
+    return *(int *)(p + 0x2894) = *(int *)(*(char **)(p + 0x2834) + (*(unsigned char *)(p + 0x2848) << 3));
+}
+void func_004DA340(char *p, int v) {
+    signed char n = *(signed char *)(p + 0x57A);
+    *(signed char *)(p + 0x57A) = n + 1;
+    ((short *)(p + 0x564))[n] = v;
+}
