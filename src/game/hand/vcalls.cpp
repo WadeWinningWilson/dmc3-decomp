@@ -9344,6 +9344,7 @@ extern "C" float D_0057031C[];
 extern "C" char D_00572F60[];
 extern "C" void func_003F32B0(char *);
 extern "C" void func_003F2D20(char *, float);
+extern "C" float D_005702CC[];
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -14143,5 +14144,38 @@ extern "C" void func_00359EB0(char *p, char *h, int a) {
             break;
         }
         ((HitRx *)p)->m68(h, a);
+    }
+}
+
+extern "C" void func_003EBB80(char *p) {
+    float w[256];
+    int k;
+    int n;
+    Rate18 *e;
+    float r;
+    func_003F32B0(p);
+    k = speed_band(p);
+    r = D_005702CC[k];
+    func_003F2D20(p, r * *(float *)(p + 0x10));
+    func_003F2E90(p);
+    func_003F2F60(p);
+    if (func_0024E800(p + 0x1FD0) != 0) {
+        *(int *)(p + 0x3A84) = *(int *)(p + 0x3A84) - 1;
+        if (*(int *)(p + 0x3A84) <= 0) {
+            ((ObjV2F8 *)p)->m2F8(9);
+            *(unsigned char *)(p + 0x3434) = 0;
+            *(unsigned char *)(p + 0x3435) = 0;
+            *(unsigned char *)(p + 0x3436) = 0;
+            *(int *)(p + 0x2170) = 0;
+            e = (Rate18 *)D_00572F60;
+            k = speed_band(p);
+            for (n = 0; !(e->v[0] < 0.0f); n++) {
+                w[n] = e->v[k];
+                e++;
+            }
+            *(float *)(p + 0x3A8C) = ((Rate18 *)D_00572F60)[func_0034BBE0(n, (char *)w)].id;
+        } else {
+            func_003E6750(p, 2, 0, 0);
+        }
     }
 }
