@@ -10797,6 +10797,8 @@ int func_001B3B30(char *, char *, int, int, unsigned int *);
 void func_002DA130(char *, int, int);
 int func_00437920(char *, char *, float *);
 int func_00437840(char *, char *, float *);
+int func_0019F770(char *, unsigned int, int);
+void func_001A0270(char *, unsigned int, int, int, int);
 
 void func_001AA740(char *p, int a, int b) {
     int i;
@@ -11129,4 +11131,89 @@ int func_004377A0(char *a, char *b, unsigned char *out) {
         r = r2;
     }
     return r;
+}
+
+int func_0019F6C0(char *p, unsigned int i, int a) {
+    int r;
+    if (!(i < *(unsigned short *)(p + 0xA8))) {
+        return -1;
+    }
+    r = 0;
+    switch (func_001A97E0(*(char **)(p + 0xC0))) {
+    case 0x10000000:
+    case 0x20000000:
+        r = func_0019F770(p, i, a);
+        break;
+    case 0x30000000:
+        break;
+    }
+    return r;
+}
+
+void func_001A0110(char *p, unsigned int i, int a, int b, int c) {
+    if (i < *(unsigned short *)(p + 0xA8)) {
+        switch (func_001A97E0(*(char **)(p + 0xC0))) {
+        case 0x10000000:
+        case 0x20000000:
+            func_001A0270(p, i, a, b, c);
+            break;
+        case 0x30000000:
+            break;
+        }
+    }
+}
+
+void func_00198FE0(char *p, int f) {
+    char *h = *(char **)(p + 0xC0);
+    short z = 0;
+    *(short *)(p + 0x18E) = 0;
+    *(short *)(p + 0xB8) = 0;
+    *(int *)(p + 0xB4) = z;
+    *(int *)(p + 0xA4) = *(int *)(h + 0x14);
+    *(short *)(p + 0xA8) = *(unsigned char *)(h + 0x10);
+    *(short *)(p + 0xAA) = *(unsigned char *)(h + 0x11);
+    *(short *)(p + 0xAC) = **(int **)(p + 0xC4);
+    *(short *)(p + 0xBA) = *(unsigned char *)(h + 0x13);
+    *(int *)(p + 0xA0) = func_001A97E0(*(char **)(p + 0xC0));
+    *(int *)(p + 0xA0) |= 1;
+    *(int *)(p + 0xA0) |= f;
+    UNIT(p + 0x120);
+}
+
+int func_00197B30(char *p) {
+    int m;
+    int n;
+    if (*(short *)(p + 0x18) < 0 || *(short *)(p + 0x38) > 0) {
+        return 0;
+    }
+    switch (*(short *)(p + 0x18)) {
+    case 0:
+    case 1:
+        m = 4;
+        break;
+    case 2:
+        m = 2;
+        break;
+    default:
+        return 0;
+    }
+    switch (*(short *)(p + 4)) {
+    case 0x13:
+        n = 0x100;
+        break;
+    case 0x14:
+        n = 0x10;
+        break;
+    default:
+        return 0;
+    }
+    return m * n;
+}
+
+void func_004D1AF0(char *p, char *r, short a) {
+    float v = *(float *)(p + 0xB284);
+    if (!(v < *(float *)(r + 0)) && v < *(float *)(r + 4)) {
+        *(short *)(p + 0xB150) = a + (*(short *)(p + 0x160) - *(short *)(p + 0x90));
+        func_0034B8C0((short *)(p + 0x90), (short *)(p + 0xB150), (int)((float)*(short *)(r + 8) * *(float *)(p + 0x10)));
+    }
 }
