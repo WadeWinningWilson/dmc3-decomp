@@ -105,3 +105,22 @@ int func_0039D440(char *p, int k) {
     }
     return r;
 }
+
+unsigned char func_003AC650(int);
+int func_003B99E0(char *, int, int, int);
+int func_003B9B90(char *, int, int, int);
+int func_003B96D0(char *p, int a, int b, int c) {
+    int r;
+    if (a != 0 && b != 0) {
+        if (*(unsigned char *)(p + 436) != 0) {
+            if (func_003AC650(*(int *)(p + 476)) == 0) {
+                r = func_003B99E0(p, a, b, c);
+            } else {
+                r = func_003B9B90(p, a, b, c);
+            }
+        } else {
+            r = func_003B99E0(p, a, b, c);
+        }
+    }
+    return r;
+}

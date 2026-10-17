@@ -1647,3 +1647,50 @@ unsigned char func_003A1180(char *p) {
     *(float *)(p + 100) = v;
     return r;
 }
+
+char *func_001B0FD0(char *, int, int);
+int func_0030E500(char *, int);
+int func_0030E450(char *p, int n, int a) {
+    int i;
+    int off;
+    *(char **)p = func_001B0FD0(p + 4, n << 3, 0);
+    *(int *)(p + 20) = n;
+    i = 0;
+    if (0 < *(int *)(p + 20)) {
+        off = 0;
+        do {
+            i++;
+            *(short *)(*(char **)p + off) = -1;
+            *(int *)(*(char **)p + off + 4) = 0;
+            off += 8;
+        } while (i < *(int *)(p + 20));
+    }
+    i = func_0030E500(p, a);
+    *(char *)(p + 28) = 0;
+    return i;
+}
+void func_00286B90(char *, int, int);
+void func_00287120(char *p, int k) {
+    if (*(int *)(p + 928) == 12) {
+        func_00286B90(p, 5, k);
+        func_00286B90(p, 6, 28);
+    } else if (k == 27) {
+        func_00286B90(p, 5, 0);
+        func_00286B90(p, 6, 27);
+    } else {
+        func_00286B90(p, 5, k);
+        func_00286B90(p, 6, k);
+    }
+}
+void func_004B9BA0(char *p) {
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(*(char **)(p + 208) + 80), "r"(p + 80) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(*(char **)(p + 208) + 128), "r"(p + 128) : "memory");
+    *(short *)(p + 144) = (short)(unsigned short)(short)(int)(0.5f + 65536.0f * *(float *)(p + 132) / 6.283185005187988f);
+    if (*(int *)(p + 1276) == 2) {
+        *(float *)(p + 84) += 150.0f;
+    }
+}
+extern unsigned char D_0056C030[][44];
+short func_0038F490(char *p) {
+    return (short)(unsigned short)(short)(int)(0.5f + 65536.0f * (*(float *)(p + 16) * (unsigned int)D_0056C030[*(unsigned char *)(p + 5)][*(unsigned char *)(p + 1051)]) / 360.0f);
+}

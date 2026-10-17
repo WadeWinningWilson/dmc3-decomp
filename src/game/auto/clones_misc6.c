@@ -358,6 +358,29 @@ int func_001F3A50(KTab *, int);
 int func_001FED70(KTab *, int);
 
 
+extern char D_00543B00[];
+extern char D_00543BF0[];
+
+
+extern char D_005B26D0[];
+extern char D_005B37F0[];
+extern char D_005A6F50[];
+
+
+
+void func_00474E80(char *, int);
+
+
+
+char *func_001B0FD0(char *, int, int);
+int func_0030E500(char *, int);
+
+void func_00286B90(char *, int, int);
+
+
+extern unsigned char D_0056C030[][44];
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -603,4 +626,9 @@ int func_00206850(KTab *t, int v, int k) {
     t->e[t->n].v = v;
     t->n += 1;
     return 1;
+}
+
+short func_0048B150(char *p) {
+    extern unsigned char D_0056DD30[][44];
+    return (short)(unsigned short)(short)(int)(0.5f + 65536.0f * (*(float *)(p + 16) * (unsigned int)D_0056DD30[*(unsigned char *)(p + 5)][*(unsigned char *)(p + 1099)]) / 360.0f);
 }
