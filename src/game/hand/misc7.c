@@ -416,6 +416,7 @@ extern char *D_0057B060[];
 extern unsigned char D_01CAFF3C[];
 void func_0046F9A0(char *);
 extern char *D_005BE0D8;
+char *func_00277610(char *, float *, int, int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -523,4 +524,21 @@ void func_00197910(char *p, char *q) {
         *(unsigned short *)(q + 6) = *(unsigned short *)(D_005BE0D8 + 0x48);
     }
     *(short *)(q + 0x18) = -1;
+}
+
+#define QCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_001AA4B0(char *p, char *m, char *src, int flags) {
+    float v[4];
+    char *r;
+    int i;
+    if (m != 0) {
+        func_00128488(p + 0x2C0, 0, 0xC0);
+        QCOPY(v, src + 0x30);
+        v[3] = 1.0f;
+        r = func_00277610(m, v, flags | 4, 0);
+        for (i = 0; i < *(int *)(m + 4); i++) {
+            func_001282D0(p + i * 48 + 0x2C0, r + i * 48, 0x30);
+        }
+    }
 }

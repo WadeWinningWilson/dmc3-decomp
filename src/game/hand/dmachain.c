@@ -74,6 +74,8 @@ extern unsigned int D_0065F5FC[];
 extern unsigned int D_0065F5F8[];
 extern unsigned int D_0065F5F4[];
 extern unsigned int D_0065F5F0[];
+void func_00138300(void);
+void func_00138310(int);
 
 void func_001A72B0(void) {
     unsigned int i;
@@ -322,4 +324,19 @@ void func_001A78D0(void) {
     D_0065F5F8[0] = 0;
     D_0065F5F4[0] = 0;
     D_0065F5F0[0] = 0;
+}
+
+void func_001A8F20(int a) {
+    char *b;
+    if (D_00661A60[0] != 0) {
+        int k = *(signed char *)(D_005BE0D8 + 0xE);
+        func_00138300();
+        b = D_00661660 + (k << 9);
+        func_00134DE0(b + 0x1F0, b, a);
+        func_00138310(a);
+        *(int *)(D_005BE0D8 + 0x80) += D_00661A60[0];
+        *(int *)(D_005BE0D8 + 0x84) += D_00661A64[0];
+        *(int *)(D_005BE0D8 + 0x88) += D_00661A6C[0];
+        *(int *)(D_005BE0D8 + 0x8C) += D_00661A70[0];
+    }
 }
