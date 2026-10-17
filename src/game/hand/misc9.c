@@ -11710,6 +11710,7 @@ char *func_001B0FD0(char *, int, int);
 char *func_0027A570(char *);
 void func_002C31A0(char *, char *, int);
 void func_0037B9C0(char *);
+char *func_002FF740(short, char *);
 
 void func_0046F690(char *p) {
     int i;
@@ -12093,4 +12094,14 @@ void func_0037D240(char *p) {
             func_001AD140(*(char **)(p + i * 4 + 0x6640));
         }
     }
+}
+
+void func_0039D4C0(char *p, int a) {
+    char *o = a ? p + 0x1380 : p + 0xD80;
+    char **slot = a ? (char **)(p + 0x2F08) : (char **)(p + 0x2F00);
+    int id = a ? 0xE : 0xD;
+    *slot = func_002FF740((short)id, *(char **)(func_00279290(o) + 0x108));
+    slot = a ? (char **)(p + 0x2F0C) : (char **)(p + 0x2F04);
+    id = a ? 0x10 : 0xF;
+    *slot = func_002FF740((short)id, *(char **)(func_00279290(o) + 0x108));
 }

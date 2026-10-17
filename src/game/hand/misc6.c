@@ -2448,6 +2448,7 @@ void func_002DAB90(char *, int);
 char *func_0027A710(char *);
 char *func_00207470(int, int, char *);
 void func_002EC050(int, char *, float);
+extern int D_005BE09C;
 void func_002D3720(char *p) {
     int k = *(unsigned char *)(p + 5);
     switch (k) {
@@ -2940,5 +2941,20 @@ void func_00393DF0(char *p, char *a, char *b) {
     }
     if (*(unsigned char *)(a + 0x3D) != 7) {
         func_0034BA60(0x5E, b + 0x10, *(signed char *)(p + 0x46), 0, 1);
+    }
+}
+
+#define QCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_003A1FA0(char *p, int k, int flag) {
+    float v[4];
+    if ((unsigned char)func_003A2080(p, p + 0x2F34, 1.0f, 0.0f) == 1) {
+        if (flag == 0) {
+            func_0034BA60(k, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+        } else {
+            QCOPY(v, *(char **)((char *)D_005BE09C + 0x23C) + 0x70);
+            func_0034BA60(k, (char *)v, *(signed char *)(p + 0x46), 0, 1);
+        }
+        *(float *)(p + 0x2F34) = *(float *)(p + 0x2F30);
     }
 }
