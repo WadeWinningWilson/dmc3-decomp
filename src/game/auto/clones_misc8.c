@@ -636,6 +636,13 @@ void func_0013CDD0(int);
 void func_0013CC30();
 void func_00103C60(void *);
 void func_0010D660(void);
+extern char D_0066671A[];
+extern char D_00666710[];
+unsigned short func_001AE770(char *, int);
+void func_0021C7A0(char *, int);
+void func_002CEEA0(char *, int);
+void func_002FFC60(char *);
+void func_00300020(char *);
 
 
 
@@ -722,6 +729,18 @@ void func_0010D660(void);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+typedef struct { char pad[0xC]; int v; char rest[0xA0]; } R176;
 
 
 
@@ -1349,4 +1368,19 @@ void func_003C05E0(char *p) {
         q[0x9B] = 2;
     }
     func_003305E0(D_01DFABA0, 0, 0x5C, (int)(p + 0x50), 0, 0, 0);
+}
+
+void func_001BDFC0(char *p) {
+    char *q;
+    *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+    func_001B4A50(p, 1, 0x10);
+    q = *(char **)(p + 0x440);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0xD0), "r"(q) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0xE0), "r"(q + 0x10) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0xF0), "r"(q + 0x20) : "memory");
+    *(unsigned char *)(p + 0x454) = 0;
+    *(char **)(p + 0x45C) = q + 0x48;
+    *(float *)(p + 0x458) = *(short *)(q + 0x48);
+    *(unsigned char *)(p + 0x455) = 0;
+    func_001F8910(p + 0x444, p + 0x444, *(char **)(p + 0x45C), *(char **)(p + 0x45C) + 0x14, 4, 4, 0.0f);
 }

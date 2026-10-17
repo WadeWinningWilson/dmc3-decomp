@@ -5318,3 +5318,49 @@ extern "C" void func_0036F540(char *p) {
     ((ObjB4C8 *)(p + 0xB80))->mC8(p + 0x18D0);
     func_001A1F90(func_00279290(p + 0x1180));
 }
+
+extern "C" float D_01DF5D24[];
+
+/* Like the rate update above, but mode 0 first scales the global rate by the track gain at +0x30. */
+extern "C" int func_00228470(char *p) {
+    float a = *(float *)(p + 0x10);
+    if ((a < 0.0f ? -a : a) <= 0.0001f) {
+        return 0;
+    }
+    switch (*(unsigned char *)(p + 0x20)) {
+    case 0:
+        D_01DF5D24[0] = D_01DF5D24[0] * *(float *)(p + 0x30);
+        break;
+    case 1:
+        break;
+    }
+    *(float *)(p + 0x28) = *(float *)(p + 0x10) * ((ObjRate *)p)->m14();
+    return 1;
+}
+
+class ObjSel {
+public:
+    virtual void d0();
+    virtual void mC();
+    virtual void d2();
+    virtual void m14(char *);
+};
+
+extern "C" char D_01CAFF30[];
+extern "C" char D_01CAFF3C[];
+extern "C" char D_0054A0E0[];
+extern "C" void func_0036F7D0(char *, char *);
+extern "C" void func_0036FCF0(char *);
+
+/* Opens the menu: copies the current selection, resets the list and loads the entry text. */
+extern "C" int func_0022D540(char *p) {
+    switch (*(unsigned char *)(p + 0xD)) {
+    case 0:
+    func_0036F7D0(p + 0x30, D_01CAFF30);
+    func_0036FCF0(p + 0x30);
+    ((ObjSel *)(p + 0xC44))->mC();
+    ((ObjSel *)(p + 0xC44))->m14(*(unsigned char *)D_01CAFF3C * 0x84 + (D_0054A0E0 + *(int *)D_01CAFF30 * 0x298) + 4);
+    return 1;
+    }
+    return 0;
+}
