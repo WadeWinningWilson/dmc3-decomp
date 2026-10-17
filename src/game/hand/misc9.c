@@ -12398,3 +12398,42 @@ void func_002D8BA0(char *p) {
     c = (char *)(func_002D9EB0(p) * 4) + (int)p;
     func_0038C2F0(p + 0x23F0, *(int *)(a + 0x13BC), *(int *)(b + 0x13C0), *(int *)(c + 0x13C4), 4, 2);
 }
+
+float func_0034C200(float *t, int n, float x) {
+    int i;
+    if (x <= t[0]) {
+        return t[1];
+    }
+    if (!(x < t[n * 2 - 2])) {
+        return t[n * 2 - 1];
+    }
+    for (i = 0; i < n - 1; i++) {
+        if (t[i * 2] <= x && x <= t[i * 2 + 2]) {
+            float *e = &t[i * 2];
+            float r = (x - e[0]) / (e[2] - e[0]);
+            return (1.0f - r) * e[1] + r * e[3];
+        }
+    }
+    return 0.0f;
+}
+
+void func_00375EF0(char *p) {
+    unsigned char i;
+    *(int *)(p + 0x110) = 0;
+    if (*(char **)(p + 0x3C50) != 0) {
+        func_001AD140(*(char **)(p + 0x3C50));
+        *(char **)(p + 0x3C50) = 0;
+    }
+    if (*(char **)(*(char **)D_01CAFF0C + 0x20) != 0) {
+        func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), p);
+    }
+    for (i = 0; i < 8; i++) {
+        func_0041D670(p + i * 4 + 0x914);
+    }
+    func_0041D670(p + 0x934);
+    func_0041D670(p + 0x938);
+    func_0041D670(p + 0x93C);
+    func_0041D670(p + 0x940);
+    func_0041D670(p + 0x944);
+    func_0041D670(p + 0x8E0);
+}

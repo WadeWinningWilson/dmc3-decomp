@@ -418,6 +418,8 @@ void func_0046F9A0(char *);
 extern char *D_005BE0D8;
 char *func_00277610(char *, float *, int, int);
 void func_002CB900(char *, int);
+extern float D_0059E5C0[];
+void func_001A3BD0(char *, int, float, float);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -580,4 +582,15 @@ void func_002CB130(char *p) {
     *(unsigned char *)(p + 0x2CE7) = 0x21;
     *(unsigned char *)(p + 0x2CE8) = 0x21;
     func_00128488(p + 0x5AD, 0, 0x14);
+}
+
+void func_003564A0(char *p, unsigned char k, char *l) {
+    int i;
+    for (i = 0; i < *(int *)(l + 0x10); i++) {
+        int v = *(int *)(l + i * 4 + 0x14);
+        if (v != -1) {
+            float *e = &D_0059E5C0[v * 2];
+            func_001A3BD0(func_00279290(p + k * 0x600 + 0xC0), i, e[0], e[1]);
+        }
+    }
 }
