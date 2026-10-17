@@ -4868,3 +4868,157 @@ extern "C" void func_0030C290(char *p) {
         break;
     }
 }
+
+class Sub980 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual float m80(int);
+};
+
+class ObjBC {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void mBC(float);
+};
+
+extern "C" void func_003F2F90(char *);
+extern "C" void * func_002075D0(int, int, char *, int, int);
+extern "C" void func_0044E700(char *, int, int);
+
+/* Enters attack state 0x25 with its phase bytes, timer 22.4 and motion 0x16; arms a 180 delay once. */
+extern "C" void func_003EF700(char *p) {
+    ((ObjB *)p)->m2F8(0x25);
+    *(unsigned char *)(p + 0x3434) = 1;
+    *(unsigned char *)(p + 0x3435) = 3;
+    *(unsigned char *)(p + 0x3436) = 6;
+    *(float *)(p + 0x3A14) = 22.4f;
+    func_003E6750(p, 0x16, 0, 0);
+    func_003F2F90(p);
+    if (*(unsigned char *)(p + 0x3A9C) == 0) {
+        *(float *)(p + 0x3A94) = 180.0f;
+    }
+    *(unsigned char *)(p + 0x3A9C) = 1;
+}
+
+/* Past frame 40 of the current motion, switch to state 0x39. */
+extern "C" void func_003EFAE0(char *p) {
+    if (!(((Sub980 *)func_002792A0(p + 0x980))->m80(0) <= 40.0f)) {
+        ((ObjB *)p)->m2F8(0x39);
+        *(unsigned char *)(p + 0x3434) = 0;
+        *(unsigned char *)(p + 0x3435) = 3;
+        *(unsigned char *)(p + 0x3436) = 8;
+        *(unsigned char *)(p + 0x3A80) = 0;
+        return;
+    }
+}
+
+/* Spawns the trail effect at +0x4A4 (self-destructs on failure) and restarts the helper. */
+extern "C" void func_0042CBF0(char *p) {
+    *(void **)(p + 0x4A4) = func_002075D0(3, 0x16C, p + 0x420, 1, 16);
+    if (*(void **)(p + 0x4A4) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    *(unsigned char *)(p + 0x4A8) = 0;
+    *(unsigned char *)(p + 0x4A9) = 0;
+    *(int *)(p + 0x4AC) = 0;
+    *(float *)(p + 0x4B0) = 50.0f;
+    if (*(ObjRel2 **)(p + 0x4B4) != 0) {
+        (*(ObjRel2 **)(p + 0x4B4))->m10(0);
+    }
+}
+
+extern "C" void func_0044EDA0(char *p) {
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+        func_0044E700(p, 0, 1);
+        func_0044E700(p, 1, 1);
+        func_0044E700(p, 2, 1);
+    case 1:
+        ((ObjBC *)(p + 0x200))->mBC(*(float *)(p + 0x10));
+    }
+}
+
+extern "C" void func_0046E3A0(char *p) {
+    switch (*(int *)(p + 0xD4)) {
+    case 0:
+        if (!((*(Anim5 **)(p + 0xA8))->m28() < 70.0f)) {
+            ((ObjV *)p)->mEC(0xE);
+        }
+        (*(Anim5 **)(p + 0xA8))->m24();
+    }
+}
