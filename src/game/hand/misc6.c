@@ -1082,3 +1082,73 @@ void func_0029D0A0(char *p) {
     *(float *)(p + 43404) = 1000.0f;
     *(float *)(p + 43648) = 1000.0f;
 }
+
+extern char D_005A79B0[];
+extern char D_005A6F50[];
+void func_002791E0(char *, int);
+char *func_0022E800(char *p, short flag) {
+    if (p != 0) {
+        *(char **)p = D_005A79B0;
+        func_002791E0(p + 64, -1);
+        if (p != 0) {
+            *(char **)p = D_005A6F50;
+            func_0013D240(p + 36, -1);
+        }
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+extern char D_005B5610[];
+extern char D_005B56C8[];
+void func_0031E440(char *, int);
+void func_00320590(char *, int);
+char *func_00459930(char *p, short flag) {
+    if (p != 0) {
+        *(char **)p = D_005B5610;
+        *(char **)(p + 160) = D_005B56C8;
+        func_0031E440(p + 160, 0);
+        func_00320590(p, 0);
+        if (flag > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
+}
+void func_00387B20(char *p) {
+    float v;
+    if (*(float *)(p + 3236) < *(float *)(p + 3444) + *(float *)(p + 3496)) {
+        *(float *)(p + 3236) += 10.0f;
+    } else {
+        func_001AD140(p);
+    }
+    v = *(float *)(p + 3504);
+    if (v > 0.0f) {
+        *(float *)(p + 3504) = v - *(float *)(p + 16);
+    }
+}
+float func_00132470(float *, float *);
+int func_001BE300(int p0, float *a, float *b, float *out) {
+    if (func_00132470(a, b) - b[4] < 0.0f) {
+        if (out != 0) {
+            __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(a), "r"(out) : "memory");
+        }
+        return 1;
+    }
+    return 0;
+}
+extern float D_00568110[][6];
+void func_00505570(char *p) {
+    float s;
+    *(unsigned char *)(p + 5) += 1;
+    s = D_00568110[*(int *)(p + 1272)][*(int *)(p + 1276)];
+    *(float *)(p + 496) = *(float *)(p + 464) * s;
+    *(float *)(p + 500) = *(float *)(p + 468) * s;
+    *(float *)(p + 504) = *(float *)(p + 472) * s;
+    *(float *)(p + 508) = 0.0f;
+    *(float *)(p + 536) = 10.0f;
+    *(float *)(p + 540) = 0.0f;
+    *(float *)(p + 544) = 10.0f;
+    *(char *)(p + 1280) = 0;
+}
