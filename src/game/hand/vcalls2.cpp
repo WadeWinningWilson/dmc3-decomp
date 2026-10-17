@@ -833,6 +833,8 @@ extern "C" int func_001ACCF0(int, float, float, float, float);
 extern "C" char *func_003F3420(char *, char *);
 extern "C" void func_003EB530(char *, int, int);
 extern "C" char *func_002792A0(char *);
+extern "C" char *func_00279290(char *);
+extern "C" void func_001A2180(char *, int, int);
 
 extern "C" void func_003E6FA0(char *p) {
     func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
@@ -1568,5 +1570,38 @@ extern "C" void func_003EFDD0(char *p) {
         *(unsigned char *)(p + 0x3435) = 3;
         *(unsigned char *)(p + 0x3436) = 3;
         func_003E6750(p, 0x19, 0, 0);
+    }
+}
+
+static inline void node_clr(char *m, unsigned int i) {
+    if (i < *(unsigned short *)(m + 0xA8)) {
+        *(int *)(*(char **)(m + 0xBC) + i * 0x340 + 0x15C) = 0;
+    }
+}
+
+extern "C" void func_003F0D90(char *p) {
+    float m[16];
+    char *e;
+    char *mdl;
+    int i;
+    ((ObjV2F8 *)p)->m2F8(0x46);
+    func_003E6750(p, 0x22, 0, 0);
+    *(unsigned char *)(p + 0x3437) = 2;
+    *(unsigned char *)(p + 0x3438) = 2;
+    UNIT(m);
+    e = func_00207480(3, 0x2C0, (char *)m, 0x10);
+    if (e != 0) {
+        *(char **)(e + 0x90) = *(char **)(*(char **)(p + 0x850) + 0x104);
+        *(unsigned char *)(e + 0x9A) = 1;
+    }
+    func_001A2180(func_00279290(p + 0x980), 0x40, 1);
+    func_001A2180(func_00279290(p + 0xF80), 0x40, 1);
+    mdl = func_00279290(p + 0x980);
+    for (i = 0; i < *(unsigned short *)(mdl + 0xA8); i++) {
+        node_clr(mdl, i);
+    }
+    mdl = func_00279290(p + 0xF80);
+    for (i = 0; i < *(unsigned short *)(mdl + 0xA8); i++) {
+        node_clr(mdl, i);
     }
 }
