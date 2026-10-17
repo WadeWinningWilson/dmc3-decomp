@@ -3192,3 +3192,18 @@ extern "C" void func_0050ED10(Obj130b *o) {
         break;
     }
 }
+
+extern "C" void func_0034F270(char *p) {
+    int i;
+    char *a = p;
+    char *o = p;
+    for (i = 0; i < 18; i++, a += 128, o += 1536) {
+        ((SubCCc *)(o + 64))->mCC(a + 27776);
+    }
+    if (*(unsigned char *)(p + 5) == 2 && *(unsigned char *)(p + 0x10000 - 31870) != 0) {
+        ((SubCCc *)(p + 32000))->mCC(p + 0x8340);
+    }
+    if (*(int *)(p + 31744) != 0) {
+        ((SubCCc *)(p + 30080))->mCC(p + 31680);
+    }
+}
