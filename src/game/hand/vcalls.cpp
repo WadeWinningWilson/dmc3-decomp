@@ -9263,6 +9263,11 @@ extern "C" int func_0038F490(char *);
 extern "C" void func_0038F830(char *);
 extern "C" void func_0038F2C0(char *, int);
 extern "C" void func_0041D820(char *, float, float);
+extern "C" short D_0054A0C0[];
+extern "C" void func_00456190(char *);
+extern "C" char *func_0027A710(char *);
+extern "C" void func_001A2050(char *);
+extern "C" void func_001A20C0(char *, int);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -11380,6 +11385,111 @@ extern "C" void func_00420640(char *p) {
         func_0041D6E0(up(p, 0x40), p + 0x60, 1, *(float *)(p + 0x10));
         if ((unsigned char)func_0041E120(up(p, 0x40), 0.0f) == 1) {
             func_0038F2C0(p, 0x11);
+        }
+        break;
+    }
+}
+
+class Obj200d {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void d6C();
+    virtual void d70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void mB4(int, int, int, int);
+    virtual void dB8();
+    virtual int mBC(float);
+};
+
+static inline void room_mark() {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    short id = *(short *)D_01CAFF38;
+    unsigned short v = (short)(D_0054A0C0[id / 100] + id % 100) | 0x200;
+    int i;
+    char *q;
+    for (i = 0, q = g; i < 0x30; i++, q += 2) {
+        if (*(unsigned short *)(q + 0x620) == v) {
+            break;
+        }
+        if (*(unsigned short *)(q + 0x620) == 0) {
+            ((unsigned short *)(g + 0x620))[i] = v;
+            break;
+        }
+    }
+}
+
+extern "C" void func_004554E0(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        func_00456190(p);
+        ((Obj200d *)(p + 0x200))->mB4(1, 0, 0, 0);
+        func_001A2050(func_0027A710(p + 0x200));
+        func_001A20C0(func_0027A710(p + 0x200), 2);
+        func_001A20C0(func_0027A710(p + 0x200), 0xA);
+        func_001A20C0(func_0027A710(p + 0x200), 0xB);
+        func_001A20C0(func_0027A710(p + 0x200), 0xC);
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        break;
+    case 1:
+        if (*(char **)(p + 0x690) != 0) {
+            *(unsigned char *)(*(char **)(p + 0x690) + 0x90) = 0;
+        }
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        break;
+    case 2:
+        if (*(char **)(p + 0x690) == 0) {
+            room_mark();
+        }
+        {
+            unsigned char r = ((Obj200d *)(p + 0x200))->mBC(*(float *)(p + 0x10));
+            if (r == 4 || r == 0) {
+                *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+            }
+        }
+        break;
+    case 3:
+        if (*(char **)(p + 0x690) == 0) {
+            room_mark();
+            func_001AD140(p);
         }
         break;
     }
