@@ -6868,3 +6868,29 @@ void func_0029D120(char *p) {
     *(unsigned char *)(p + 0xA993) = 0;
     *(unsigned char *)(p + 0xA991) = 0;
 }
+
+static inline void fx_follow(char *o, char *t) {
+    *(char **)(o + 0x90) = t;
+    *(unsigned char *)(o + 0x9A) = 1;
+}
+
+static inline void fx_color(char *o, int r, int g, int b) {
+    *(unsigned char *)(o + 0x9C) = r;
+    *(unsigned char *)(o + 0x9D) = g;
+    *(unsigned char *)(o + 0x9E) = b;
+    *(unsigned char *)(o + 0x9B) = 2;
+}
+
+void func_003E6680(char *p) {
+    float m[16];
+    func_00206730(p + 0x3BE4);
+    if (*(char **)(p + 0x3BE4) == 0) {
+        *(char **)(p + 0x3BE4) = func_00207480(3, 0xE9, (char *)m, 0x10);
+        if (*(char **)(p + 0x3BE4) != 0) {
+            *(unsigned char *)(*(char **)(p + 0x3BE4) + 0x3A) = 1;
+            fx_follow(*(char **)(p + 0x3BE4), p + 0x6E0);
+            fx_color(*(char **)(p + 0x3BE4), 0x40, 0x20, 0x80);
+        }
+    }
+    func_003305E0(D_01DFABA0, 0, 0x5C, (int)(p + 0x50), 0, 0, 0);
+}

@@ -11715,6 +11715,12 @@ char *func_002F7C10(int, int);
 void func_003B5F70(char *);
 void func_003B60F0(char *);
 void func_003B65A0(char *);
+extern float D_00577D10[];
+extern float D_00577D14[];
+extern float D_00577D18[];
+extern float D_00577DD0[];
+extern float D_00577DD4[];
+extern float D_00577DD8[];
 
 void func_0046F690(char *p) {
     int i;
@@ -12151,5 +12157,19 @@ void func_003AEE40(char *p) {
     func_003B65A0(p);
     if (*(char **)(p + 0x21E4) != 0) {
         func_001AD140(*(char **)(p + 0x21E4));
+    }
+}
+
+void func_004376E0(char *p, float *out, int i, unsigned char k) {
+    if (k == 1) {
+        out[0] = D_00577D10[i * 3];
+        out[1] = D_00577D14[i * 3];
+        out[2] = D_00577D18[i * 3];
+        out[3] = 1.0f;
+    } else {
+        out[0] = D_00577DD0[i * 3];
+        out[1] = D_00577DD4[i * 3];
+        out[2] = D_00577DD8[i * 3];
+        out[3] = 1.0f;
     }
 }

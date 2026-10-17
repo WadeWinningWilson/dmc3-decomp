@@ -15287,6 +15287,7 @@ extern "C" void func_0024DDF0(char *);
 extern "C" void func_0024E860(char *);
 extern "C" void func_0024E9B0(char *);
 extern "C" void func_00105760(float *, float *, float);
+extern "C" int func_00201770(char *, float *, float *, float *, int);
 
 extern "C" void func_0037D190(Obj1FC *o) {
     char *p = (char *)o;
@@ -15527,4 +15528,30 @@ extern "C" void func_0033B710(char *p) {
     func_00105760(m, m2, 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f));
     GETPOS(a, m);
     VADDIP(p + 0x50, a);
+}
+
+static inline unsigned char stage_ok() {
+    unsigned char r;
+    if (*(int *)(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x55C) == 0) {
+        r = 0;
+    } else {
+        r = 1;
+    }
+    return r;
+}
+
+extern "C" float func_0041E060(char *p) {
+    float v[4];
+    float out[4];
+    float buf[16];
+    float r;
+    if (stage_ok()) {
+        QCOPY(v, p + 0x10);
+        v[1] = v[1] + 130.0f;
+        v[3] = 1.0f;
+        if ((unsigned char)func_00201770(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, v, out, buf, 0) == 1) {
+            return out[1];
+        }
+    }
+    return 0.0f;
 }
