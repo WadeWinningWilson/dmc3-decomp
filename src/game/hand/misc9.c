@@ -11619,3 +11619,33 @@ void func_0030E240(char *p) {
         break;
     }
 }
+
+extern V4 D_0055C280;
+
+void func_00330140(char *o, char *a, char *b, char *c) {
+    V4 t;
+    t = D_0055C280;
+    func_00131650(b, b);
+    func_00131650(c, c);
+    QCOPY(o + 0x10, a);
+    QCOPY(o + 0x20, b);
+    QCOPY(o + 0x40, c);
+    QCOPY(o + 0x30, &t);
+}
+
+int func_00356B20(char *p) {
+    char *e = D_01CAFF3C[0] * 132 + ((char *)D_0054A0E0 + D_01CAFF30[0] * 0x298) + 0x10;
+    switch (*(unsigned char *)(p + 0x7AFC)) {
+    case 0:
+        return *(int *)(e + 0x70);
+    case 1:
+        return *(int *)(e + 0x6C);
+    case 2:
+        return *(int *)(e + 0x68);
+    case 3:
+        return *(int *)(e + 0x64);
+    case 4:
+        return *(int *)(e + 0x60);
+    }
+    return 0;
+}
