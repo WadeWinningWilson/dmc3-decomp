@@ -860,6 +860,10 @@ void func_0030E580(char *, int);
 void func_001AAE30(char *, char *, int, int, int);
 void func_001AB200(char *, int);
 void func_001AB220(char *, int, int);
+int func_0023E960(char *);
+int func_00245C40(char *);
+int func_0023EDD0(char *);
+void func_0023EF80(char *);
 
 
 
@@ -944,6 +948,65 @@ void func_001AB220(char *, int, int);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+typedef struct { unsigned char r, g, b, a; } C4;
+typedef struct { float x, y, z, w; } F4u;
+typedef struct { float x, y, z; } F3u;
+void func_002CDFB0(char *);
+void func_0038B130(char *);
+int func_003B9390(char *);
+extern char D_005AB530[];
+extern char D_005AB500[];
+void func_00221240(char *);
+void func_002CB900(char *, int);
+void func_002F44B0(char *);
+void func_0032FDB0(char *);
+int func_002F9800(char *, int);
+extern char D_005A7AB0[];
+extern char D_00599B28[];
+extern int D_01CAFF14[];
+void func_001282D0(char *, char *, int);
+void func_00100450(char *, void *, void *, int, int);
+void func_0023B880();
+void func_00202ED0();
+int func_00277EF0(char *, float);
+void func_0024F480(char *, int);
+extern char D_005AC730[];
+void func_002CD800(char *);
 
 
 
@@ -1732,5 +1795,30 @@ void func_004F6F80(char *p) {
             *(unsigned char *)(p + 0xBF0) = 0;
             break;
         }
+    }
+}
+
+void func_0048A8E0(char *p) {
+    char *q;
+    char *e;
+    if (*(int *)(p + 0x440) == 0) {
+        *(char **)(p + 0x440) = func_00207480(3, 0x2D1, 0, 16);
+        q = *(char **)(p + 0x440);
+        if (q != 0) {
+            *(int *)(q + 0x90) = *(int *)(*(char **)(p + 0x560) + 0x104);
+            q[0x9A] = 1;
+            *(*(char **)(p + 0x440) + 0x3A) = 1;
+        }
+        e = func_00207480(3, 0xDC, 0, 16);
+        if (e != 0) {
+            *(int *)(e + 0x90) = *(int *)(*(char **)(p + 0x560) + 0x104);
+            e[0x9A] = 1;
+            e[0x3A] = 1;
+            e[0x9C] = 0x40;
+            e[0x9D] = 0x20;
+            *(unsigned char *)(e + 0x9E) = 0x80;
+            e[0x9B] = 2;
+        }
+        func_003305E0(D_01DFABA0, 0, 0x5A, (int)(p + 0x50), 0, 0, 0);
     }
 }
