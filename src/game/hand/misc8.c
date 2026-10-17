@@ -483,3 +483,33 @@ void func_00234630(char *p) {
     }
     *(char *)(o + 0x78) = 1;
 }
+
+typedef struct { short k; short pad; int v; } K8;
+int func_0030E980(char *p, int k) {
+    int i;
+    char *e;
+    K8 *t;
+    int n;
+    n = *(int *)(p + 0x14);
+    i = 0;
+    if (0 < n) {
+        t = *(K8 **)p;
+        e = (char *)t;
+        do {
+            if (k == *(short *)e) {
+                return t[i].v;
+            }
+            i++;
+            e += 8;
+        } while (i < n);
+    }
+    return 0;
+}
+void func_001A2000(char *, int);
+void func_003ABE80(char *p, unsigned char k) {
+    if (k == 1) {
+        func_001A2000(func_00279290(p + 0x880), 1);
+    } else {
+        func_001A1E70(func_00279290(p + 0x880), 1);
+    }
+}
