@@ -2890,3 +2890,7 @@ void func_0026B010(char *p) {
         break;
     }
 }
+
+void func_0038EB10(char *p) {
+    func_0034BA60(0x18, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+}

@@ -2277,3 +2277,14 @@ extern "C" void func_003EC6E0(char *p) {
         }
     }
 }
+
+class Tc10 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void m10(int, int, int, int);
+};
+
+extern "C" void func_002E8350(char *p, int a, int b, int c) {
+    (*(Tc10 **)(p + 0x18))->m10(a, b, c, *(int *)(p + 0x1C));
+}

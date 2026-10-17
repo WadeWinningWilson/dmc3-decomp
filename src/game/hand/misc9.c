@@ -9496,6 +9496,8 @@ void func_003528C0(unsigned long long);
 void func_0027C040(char *, unsigned char);
 void func_002477F0(char *, float);
 void func_00131990(char *, char *, char *, char *, float);
+void func_00332890(char *, char *, int, int, float, float, float, float, float);
+void func_002EC070(int, int, int, float, float);
 
 void func_0036F7D0(char *d, char *s) {
     unsigned char k;
@@ -9643,4 +9645,35 @@ void func_0023A8D0(char *p, float x) {
 
 void func_0024BF20(char *p) {
     func_00131990(p + 0x30, p + 0x70, p + 0x80, p + 0x10, *(float *)(p + 0x24));
+}
+
+int func_00277ED0(char *p) {
+    return func_00277EF0(p, 1.0f);
+}
+
+void func_002D9080(char *p) {
+    *(signed char *)(p + 0x24F2) = *(signed char *)(p + 0x24F1);
+    *(unsigned char *)(p + 0x24F1) = 0;
+    func_002D8F40((int)p, *(unsigned char *)(p + 0x24F1));
+}
+
+void func_002DFFB0(char *p, char *q, int c, float x, float y, float z) {
+    func_00332890(p + 0x3D90, q, c, 1, *(float *)(q + 0x28), *(float *)(q + 0x24), x, y, z);
+}
+
+void func_002EB870(int a, int b, int c, float x) {
+    func_002EB890(a, b, c, x, x / 4.0f);
+}
+
+void func_002EC050(int a, int b, int c, float x) {
+    func_002EC070(a, b, c, x, x / 4.0f);
+}
+
+float func_0034B980(char *q) {
+    return func_00132470(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, q);
+}
+
+void func_00358400(char *p) {
+    *(float *)(p + 0x7E8) = *(float *)(p + 0x7E8) + *(float *)(p + 0x10);
+    func_001AD140(p);
 }
