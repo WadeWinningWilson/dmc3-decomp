@@ -841,6 +841,13 @@ extern "C" float D_00573330[];
 extern "C" float func_0011D798(float);
 extern "C" void func_00104E78(float *, char *);
 extern "C" void func_00104B80(float *, float *, float *);
+extern "C" float D_00573080[];
+extern "C" float D_005703E4[];
+extern "C" void func_0028C8E0(char *, int);
+extern "C" void func_0028C910(char *);
+extern "C" char *func_0028C3A0(char *, int, int, int);
+extern "C" float D_005703F8[];
+extern "C" float D_0057040C[];
 
 extern "C" void func_003E6FA0(char *p) {
     func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
@@ -1747,4 +1754,85 @@ extern "C" void func_003ED420(char *p) {
     *(float *)(p + 0x3670) = *(float *)(p + 0x3630) + dir[0];
     *(float *)(p + 0x3674) = *(float *)(p + 0x3634) + dir[1];
     *(float *)(p + 0x3678) = *(float *)(p + 0x3638) + dir[2];
+}
+
+extern "C" void func_003F19B0(char *p) {
+    int k1;
+    int k;
+    float r;
+    char *e;
+    if (*(signed char *)(p + 0x1FC4) != 0) {
+        k1 = speed_band(p);
+        if (((Sub80 *)func_002792A0(p + 0x980))->m80(0) < D_00573080[k1]) {
+            k = speed_band(p);
+            r = D_005703E4[k];
+            func_003F2D20(p, r * *(float *)(p + 0x10));
+        }
+    }
+    if (*(signed char *)(p + 0x1FC5) != 0) {
+        func_003F2E90(p);
+    }
+    if (*(signed char *)(p + 0x1FC6) != 0) {
+        func_003F2F60(p);
+    }
+    switch ((unsigned char)func_0024E780(p + 0x1FD0, 0, 4)) {
+    case 1:
+        func_0024E7B0(p + 0x1FD0, 0, 4);
+        func_0028C8E0(p + 0x2180, 0);
+        *(int *)(p + 0x2258) = 0x40;
+        func_0028C910(p + 0x2180);
+        e = func_0028C3A0(p + 0x2180, 9, 4, *(int *)(*(char **)(p + 0x8C8) + 0x104));
+        if (e != 0) {
+            e[2] = 1;
+        }
+        break;
+    case 2:
+        func_0024E7B0(p + 0x1FD0, 0, 4);
+        func_0028C8E0(p + 0x2180, 0);
+        *(int *)(p + 0x2258) = 0x40;
+        func_0028C910(p + 0x2180);
+        e = func_0028C3A0(p + 0x2180, 9, 4, *(int *)(*(char **)(p + 0x818) + 0x104));
+        if (e != 0) {
+            e[2] = 1;
+        }
+        break;
+    }
+    if (func_0024E800(p + 0x1FD0) != 0) {
+        func_003E9930(p);
+    }
+}
+
+extern "C" void func_003F2AB0(char *p) {
+    int k;
+    float r;
+    if (!((unsigned int)(unsigned char)func_0024E780(p + 0x1FD0, 0, 0) < 2U)) {
+        *(float *)(p + 0x710) = *(float *)(p + 0x710) + *(float *)(p + 0x700) * (*(float *)(p + 0x3A18) * *(float *)(p + 0x10));
+        *(float *)(p + 0x714) = *(float *)(p + 0x714) + *(float *)(p + 0x704) * (*(float *)(p + 0x3A18) * *(float *)(p + 0x10));
+        *(float *)(p + 0x718) = *(float *)(p + 0x718) + *(float *)(p + 0x708) * (*(float *)(p + 0x3A18) * *(float *)(p + 0x10));
+        *(float *)(p + 0x3A18) = *(float *)(p + 0x3A18) + 2.0f * *(float *)(p + 0x10);
+        if (!(*(float *)(p + 0x3A18) <= 100.0f)) {
+            *(float *)(p + 0x3A18) = 100.0f;
+        }
+        if (*(float *)(p + 0x3A18) < 10.0f) {
+            k = speed_band(p);
+            r = D_005703F8[k];
+            func_003F2D20(p, r * *(float *)(p + 0x10));
+        } else {
+            k = speed_band(p);
+            r = D_0057040C[k];
+            func_003F2D20(p, r * *(float *)(p + 0x10));
+        }
+        if (*(char **)(p + 0x21FC) != 0 && (*(int *)(*(char **)(p + 0x21FC) + 8) & 0x1000)) {
+            *(float *)(p + 0x3A8C) = 60.0f;
+            return;
+        }
+        *(float *)(p + 0x3A8C) = *(float *)(p + 0x3A8C) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x3A8C) < 0.0f) {
+            ((ObjV2F8 *)p)->m2F8(0x50);
+            func_003E6750(p, 0x2E, 0, 0);
+        }
+    }
+    if (func_0024E810(p + 0x1FD0) == 0) {
+        func_003F2E90(p);
+    }
 }
