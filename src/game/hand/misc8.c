@@ -780,3 +780,36 @@ void func_002DBC30(char *p, char *o, unsigned char a, unsigned char b) {
     *(float *)(o + 0x78) = v[4];
     *(float *)(o + 0x7C) = 1.0f;
 }
+
+void func_0037B280(char *);
+void func_0037B560(char *);
+void func_0037B8C0(char *);
+void func_0037B210(char *p) {
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        func_0037B280(p);
+        break;
+    case 1:
+        func_0037B560(p);
+        break;
+    case 2:
+        func_0037B8C0(p);
+        break;
+    }
+}
+void func_00385810(char *, int);
+void func_00385A60(char *p) {
+    *(char *)(p + 0x44) = 1;
+    switch (*(unsigned char *)(p + 0x54)) {
+    case 0:
+    case 1:
+    case 2:
+        break;
+    case 3:
+        if (*(unsigned char *)(p + 4) > 0) {
+            *(char *)(p + 0x57) = 1;
+            func_00385810(p, 0);
+        }
+        break;
+    }
+}
