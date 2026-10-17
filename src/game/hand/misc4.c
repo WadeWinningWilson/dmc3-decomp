@@ -379,6 +379,16 @@ int func_0027A900(char *p, int a, int id, int b) {
 
 void func_00199730(char *, char *, char *, int);
 void func_00199720(char *, char *, int);
+void func_003AAB30(int, int, char *, unsigned char);
+void func_003B9F50(char *);
+void func_003B92A0(char *);
+char *func_00207480(int, int, char *, int);
+void func_003BA4E0(char *);
+void func_0034BA60(int, char *, int, int, int);
+int func_003B9390(char *);
+void func_003BA070(char *, int, int);
+int func_003AD2F0(char *);
+void func_003B9D20(char *);
 
 int func_002794A0(char *p, int a, int id, int b) {
     char *src;
@@ -435,4 +445,61 @@ int func_002794A0(char *p, int a, int id, int b) {
     }
     p[0xA] = 1;
     return 1;
+}
+
+typedef struct { float v[4]; } F4u;
+
+void func_003B8EF0(char *p) {
+    int i;
+    int f;
+    char *q;
+    char *e;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        if (*(unsigned char *)(p + 0x1B4) != 0) {
+            func_003AAB30(*(int *)(p + 0x1DC), *(unsigned char *)(p + 0x1BC), p + 0x230, *(unsigned char *)(p + 0x1B2));
+        } else {
+            *(F4u *)(p + 0x230) = *(F4u *)(p + 0x200);
+        }
+        *(float *)(p + 0x1D4) = *(float *)(p + 0x1D4) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x1D4) < 0.0f) {
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+            func_003B9F50(p);
+            func_003B92A0(p);
+            func_00207480(3, 1, p + 0x250, 0x10);
+            func_003BA4E0(p);
+            func_0034BA60(0x1D, p + 0x50, *(signed char *)(*(char **)(p + 0x1DC) + 0x46), 0, 1);
+        } else {
+            func_003B9390(p);
+        }
+        break;
+    case 1:
+        for (i = 0, q = p; i <= 2; i++, q += 4) {
+            e = *(char **)(q + 0x31C);
+            f = 0;
+            if (e != 0) {
+                f = *(int *)(e + 8);
+            }
+            if (f & 0x20000) {
+                func_003BA070(p, 1, 1);
+                return;
+            }
+        }
+        if ((unsigned char)func_003AD2F0(*(char **)(p + 0x1DC)) == 1) {
+            func_003BA070(p, 1, 1);
+            return;
+        }
+        switch (func_003B9390(p)) {
+        case 0:
+            break;
+        case 1:
+            func_003BA070(p, 1, 1);
+            return;
+        case -1:
+            func_003BA070(p, 1, 1);
+            return;
+        }
+        break;
+    }
+    func_003B9D20(p);
 }
