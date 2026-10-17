@@ -448,6 +448,12 @@ int func_002794A0(char *p, int a, int id, int b) {
 }
 
 typedef struct { float v[4]; } F4u;
+extern int D_005BE1AC;
+void func_00376E40(char *);
+void func_00376B80(char *, int);
+void func_00376B40(char *, int);
+void func_0041DBA0(char *, char *);
+int func_0024E800(char *);
 
 void func_003B8EF0(char *p) {
     int i;
@@ -502,4 +508,51 @@ void func_003B8EF0(char *p) {
         break;
     }
     func_003B9D20(p);
+}
+
+void func_004ADC50(char *p) {
+    func_00376E40(p);
+    *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) | 0x4000000;
+    *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) | 0x800000;
+    *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) | 0x20000000;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        func_0034BA60(0x49, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+        *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) | 0x1000000;
+        *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) & ~0x1000;
+        *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) | 0x2000;
+        *(float *)(p + 0x54) = *(float *)(p + 0x54) + 470.0f;
+        func_00207480(1, 0x26D, p + 0x8A0, 0x10);
+        func_00376B80(p, -1);
+        *(float *)(p + 0x95C) = 64.0f;
+        *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) | 0x80000000;
+        *(unsigned char *)(p + 6) = 1;
+    case 1:
+        if (*(float *)(p + 0x95C) < 64.0f) {
+            *(float *)(p + 0x95C) = *(float *)(p + 0x95C) + 2.0f;
+        }
+        func_0041DBA0(p, p + 0xC00);
+        if ((unsigned char)func_0024E800(p + 0x2B20) == 1) {
+            *(float *)(p + 0x95C) = 64.0f;
+            *(unsigned int *)(p + 0x8FC) = *(unsigned int *)(p + 0x8FC) & ~0x4000;
+            *(unsigned char *)(p + 0x975) = *(unsigned char *)(p + 0x975) + 1;
+            if (*(unsigned char *)(p + 0x8EB) == 0) {
+                if (*(unsigned char *)(p + 0x975) % 3 == 0 || *(unsigned char *)(p + 0x975) > 6) {
+                    func_00376B40(p, 4);
+                    func_00376B80(p, -1);
+                } else {
+                    func_00376B40(p, 0x12);
+                }
+            } else {
+                if (*(unsigned char *)(p + 0x975) % 4 == 0 || *(unsigned char *)(p + 0x975) > 8) {
+                    func_00376B40(p, 4);
+                    func_00376B80(p, -1);
+                } else {
+                    func_00376B40(p, 0x12);
+                }
+            }
+            D_005BE1AC = 3;
+        }
+        break;
+    }
 }
