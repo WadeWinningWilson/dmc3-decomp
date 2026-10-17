@@ -404,6 +404,9 @@ float func_00132630(float *, char *);
 void func_00132580(float *, char *, float);
 float func_00131BA0(int);
 float func_00131C20(int);
+char *func_002FB170(int);
+char *func_002FB8E0(int);
+void *func_001282D0(void *, void *, unsigned int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -437,4 +440,22 @@ void func_002DB880(char *p, int a) {
     *(float *)(p + 0x58) = *(float *)(p + 0x58) + *(float *)(p + 0x10) * (*(float *)(p + 0x150) * c);
     *(float *)(p + 0x150) = *(float *)(p + 0x150) + *(float *)(p + 0x154) * *(float *)(p + 0x10);
     *(float *)(p + 0x64) = *(float *)(p + 0x64) + *(float *)(p + 0x74);
+}
+
+int func_002FB930(int a, int b, void *src) {
+    char *h = func_002FB170(a);
+    char *d = func_002FB8E0(*(unsigned char *)(h + 0xA) & 0xF);
+    if (d == 0) {
+        return -1;
+    }
+    *(unsigned char *)(d + 2) = a;
+    *(unsigned char *)(d + 3) = b;
+    *(unsigned short *)(d + 4) = *(unsigned short *)(h + 0x18);
+    *(unsigned short *)(d + 8) = *(unsigned short *)(h + 0x1A);
+    *(unsigned short *)(d + 0xA) = *(unsigned short *)(h + 0x1C);
+    *(unsigned short *)(d + 6) = *(unsigned short *)(h + 0x1E);
+    *(unsigned short *)(d + 0xC) = 1;
+    *(unsigned short *)(d + 0xE) = *(unsigned short *)(d + 6);
+    func_001282D0(d + 0x10, src, 0x30);
+    return 0;
 }

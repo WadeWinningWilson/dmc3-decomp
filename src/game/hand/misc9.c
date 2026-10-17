@@ -501,7 +501,7 @@ void func_0021D3F0(char *, int);
 void func_0023D5B0(char *);
 void func_004BAD60(char *, char *, short, int);
 extern char D_005B67E0[];
-void func_002790E0(char *);
+char *func_002790E0(char *);
 char *func_002791E0(char *, short);
 extern char D_005AF6F0[];
 extern char D_005AF714[];
@@ -11706,6 +11706,8 @@ void func_0023A710(char *, int);
 void func_0023A3C0(char *, signed char);
 void func_00138330(void);
 void func_001323E0(float *);
+char *func_001B0FD0(char *, int, int);
+char *func_0027A570(char *);
 
 void func_0046F690(char *p) {
     int i;
@@ -12018,4 +12020,32 @@ void func_002E9E00(char *p) {
     func_00131700(p + 0xD0, p + 0xD0, (char *)a);
     func_00105230(p + 0xD0, p + 0xD0, (char *)b);
     func_00104C00(p + 0xD0, p + 0x50, p + 0xD0);
+}
+
+char *func_002F7B50(char *a, char *m) {
+    char *r = 0;
+    switch (func_001A97E0(m)) {
+    case 0x10000000:
+    case 0x20000000:
+        func_001B0FD0(a, 0x600, 1);
+        {
+            char *t = *(char **)(a + 4);
+            if (t != 0) {
+                t = func_002790E0(t);
+            }
+            r = t;
+        }
+        break;
+    case 0x30000000:
+        func_001B0FD0(a, 0x440, 1);
+        {
+            char *t = *(char **)(a + 4);
+            if (t != 0) {
+                t = func_0027A570(t);
+            }
+            r = t;
+        }
+        break;
+    }
+    return r;
 }
