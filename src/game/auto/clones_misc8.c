@@ -840,6 +840,40 @@ void func_001ED920(char *);
 void func_001EC140(char *);
 void func_001EC390(char *);
 void func_001EC4F0(char *);
+extern int D_0056EC50[];
+int func_00243FC0(char *, int);
+void func_003AB180(char *);
+void func_003C6880(char *, int);
+void func_001A5C30(char *);
+void func_001A5D00(char *);
+void func_003D29C0(char *);
+extern char D_00586E20[];
+extern char D_0058B5F0[];
+extern char D_01DFA310[];
+extern char D_00666200[];
+extern char D_0053FD30[];
+extern signed char D_00666714[];
+void func_004E3550(char *, int);
+char *func_00287270(char *, int, int);
+void func_00213470(char *, int);
+void func_0030E580(char *, int);
+void func_001AAE30(char *, char *, int, int, int);
+void func_001AB200(char *, int);
+void func_001AB220(char *, int, int);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1673,4 +1707,30 @@ char *func_0050EA20(char *p) {
     func_002E7840(p + 0x2A0);
     func_0028C110(p + 0x340);
     return p;
+}
+
+void func_004F6F80(char *p) {
+    void func_004F73C0(char *, int);
+    extern char D_0058BD40[];
+    *(float *)(p + 0xBAC) = *(float *)(p + 0xBAC) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0xBAC) < 0.0f) {
+        func_004F73C0(p, 1);
+        *(unsigned char *)(p + 0x148) = 1;
+        func_002530C0(p, D_0058BD40);
+        *(unsigned char *)(p + 0xBF0) = 1;
+        *(unsigned char *)(p + 5) = 2;
+    }
+    if (*(unsigned char *)(p + 0xBF0) == 1) {
+        func_00253110(p, p + 0xBD0, 3, *(float *)(p + 0x10));
+        switch (func_002536B0(p, p + 0xBD0)) {
+        case 0:
+            break;
+        case 1:
+            *(unsigned char *)(p + 0xBF0) = 0;
+            break;
+        case -1:
+            *(unsigned char *)(p + 0xBF0) = 0;
+            break;
+        }
+    }
 }

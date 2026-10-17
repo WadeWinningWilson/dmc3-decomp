@@ -5804,3 +5804,123 @@ extern "C" void func_00334AA0(char *p) {
         *(unsigned char *)(p + 0x134C) = 5;
     }
 }
+
+class Anim6 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void m1C(int);
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void m40();
+    virtual void d15();
+    virtual void m48(int, char *);
+};
+
+class ObjE4 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void mE4(char *, char *, char *, char *);
+};
+
+extern "C" void func_00330BD0(char *, int, char *, int, int);
+
+extern "C" void func_0035F500(char *p) {
+    *(unsigned char *)(p + 0xCD) = 0;
+    *(unsigned char *)(p + 0xCE) = 3;
+    *(unsigned char *)(p + 0xCF) = 7;
+    (*(Anim6 **)(p + 0xA8))->m40();
+    (*(Anim6 **)(p + 0xA8))->m1C(0xC);
+    (*(Anim6 **)(p + 0xA8))->m48(0xE, *(char **)(p + 0x10) + 0x10);
+    switch (**(signed char **)(p + 4)) {
+    default:
+        func_00330BD0(D_01DFABA0, 0x27, *(char **)(p + 0x10) + 0x10, 0, 0);
+        break;
+    case 0x19:
+        func_00330BD0(D_01DFABA0, 0x27, *(char **)(p + 0x10) + 0x10, 7, 0);
+        break;
+    }
+    *(int *)(p + 0xD4) = 0;
+}
+
+extern "C" void func_004A2CF0(char *p) {
+    *(unsigned char *)(p + 0xCD) = 1;
+    *(unsigned char *)(p + 0xCE) = 3;
+    *(unsigned char *)(p + 0xCF) = 0;
+    (*(Anim6 **)(p + 0xA8))->m48(0x385, *(char **)(p + 0x10) + 0x10);
+    (*(Anim6 **)(p + 0xA8))->m48(0x3E7, *(char **)(p + 0x10) + 0x10);
+    func_00330BD0(D_01DFABA0, 0x1C, *(char **)(p + 0x10) + 0x10, 6, 0);
+    *(int *)(p + 0xE0) = 0;
+    *(int *)(p + 0xE4) = 0;
+    *(int *)(p + 0xE8) = 0;
+    *(int *)(p + 0xEC) = 0;
+    *(int *)(p + 0xF0) = 0;
+    *(float *)(p + 0xF4) = -0.7f;
+    *(int *)(p + 0xF8) = 0;
+    *(int *)(p + 0xFC) = 0;
+    ((ObjE4 *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+    *(int *)(p + 0xD4) = 0;
+}
