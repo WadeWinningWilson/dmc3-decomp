@@ -518,6 +518,14 @@ void func_003F2F60(char *);
 void func_003E9930(char *);
 
 
+int func_00207060(char *);
+extern signed char D_005BE0B4;
+
+
+typedef struct { signed char k; signed char t; signed char v; } KVB;
+extern KVB D_0056AEE0[];
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -1413,4 +1421,103 @@ void func_003EE350(char *p) {
     if ((*(float *)(p + 0x3A8C) -= *(float *)(p + 0x10)) < 0.0f) {
         func_003E9930(p);
     }
+}
+
+void func_001EE410(char *p) {
+    extern signed char D_005BE0E4;
+    func_001AD100(p);
+    if (func_00207060(p) != 0) {
+        func_001AD140(p);
+    } else if (D_005BE0E4 != 0) {
+        func_001AD140(p);
+    } else {
+        *(volatile unsigned char *)(p + 0x39);
+    }
+}
+
+void func_00206120(char *p) {
+    extern signed char D_005BE0E8;
+    func_001AD100(p);
+    if (func_00207060(p) != 0) {
+        func_001AD140(p);
+    } else if (D_005BE0E8 != 0) {
+        func_001AD140(p);
+    } else {
+        *(volatile unsigned char *)(p + 0x39);
+    }
+}
+
+int func_0037BC00(char *p, char *o) {
+    char *e;
+    int i;
+    int n;
+    n = *(int *)(p + 0x6E58);
+    if (*(int *)(p + 0x6E48) < n) {
+        i = 0;
+        if (0 < n) {
+            e = p;
+            do {
+                if (*(int *)(e + 0x6C60) == 0) {
+                    *(int *)(p + 0x6E48) += 1;
+                    ((char **)(p + 0x6C60))[i] = o;
+                    return i;
+                }
+                i++;
+                e += 4;
+            } while (i < n);
+        }
+    } else {
+        func_001AD140(o);
+    }
+    return -1;
+}
+
+int func_0037BC90(char *p, char *o) {
+    char *e;
+    int i;
+    int n;
+    n = *(int *)(p + 0x6E5C);
+    if (*(int *)(p + 0x6E4C) < n) {
+        i = 0;
+        if (0 < n) {
+            e = p;
+            do {
+                if (*(int *)(e + 0x6C80) == 0) {
+                    *(int *)(p + 0x6E4C) += 1;
+                    ((char **)(p + 0x6C80))[i] = o;
+                    return i;
+                }
+                i++;
+                e += 4;
+            } while (i < n);
+        }
+    } else {
+        func_001AD140(o);
+    }
+    return -1;
+}
+
+int func_0037BD20(char *p, char *o) {
+    char *e;
+    int i;
+    int n;
+    n = *(int *)(p + 0x6E60);
+    if (*(int *)(p + 0x6E50) < n) {
+        i = 0;
+        if (0 < n) {
+            e = p;
+            do {
+                if (*(int *)(e + 0x6CA0) == 0) {
+                    *(int *)(p + 0x6E50) += 1;
+                    ((char **)(p + 0x6CA0))[i] = o;
+                    return i;
+                }
+                i++;
+                e += 4;
+            } while (i < n);
+        }
+    } else {
+        func_001AD140(o);
+    }
+    return -1;
 }

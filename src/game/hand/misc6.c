@@ -2364,3 +2364,61 @@ void func_003EBDA0(char *p) {
         func_003E9930(p);
     }
 }
+
+int func_00207060(char *);
+extern signed char D_005BE0B4;
+void func_001B2780(char *p) {
+    func_001AD100(p);
+    if (func_00207060(p) != 0) {
+        func_001AD140(p);
+    } else if (D_005BE0B4 != 0) {
+        func_001AD140(p);
+    } else {
+        *(volatile unsigned char *)(p + 0x39);
+    }
+}
+int func_0037BB70(char *p, char *o) {
+    char *e;
+    int i;
+    int n;
+    n = *(int *)(p + 0x6E54);
+    if (*(int *)(p + 0x6E44) < n) {
+        i = 0;
+        if (0 < n) {
+            e = p;
+            do {
+                if (*(int *)(e + 0x6C20) == 0) {
+                    *(int *)(p + 0x6E44) += 1;
+                    ((char **)(p + 0x6C20))[i] = o;
+                    return i;
+                }
+                i++;
+                e += 4;
+            } while (i < n);
+        }
+    } else {
+        func_001AD140(o);
+    }
+    return -1;
+}
+typedef struct { signed char k; signed char t; signed char v; } KVB;
+extern KVB D_0056AEE0[];
+int func_00406C60(int p0, signed char k) {
+    int i;
+    KVB *e;
+    if (k == -1) {
+        return -1;
+    }
+    i = 0;
+    if (D_0056AEE0[0].t != 0x3B) {
+        e = D_0056AEE0;
+        do {
+            if (k == e->k) {
+                return D_0056AEE0[i].v;
+            }
+            e++;
+            i++;
+        } while (e->t != 0x3B);
+    }
+    return -1;
+}
