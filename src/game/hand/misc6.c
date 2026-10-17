@@ -2344,3 +2344,23 @@ void func_002CD970(char *p) {
     *(char *)(p + 0x2CE8) = 0x2C;
     func_00128488(p + 0x5AD, 0, 4);
 }
+
+typedef struct { short k; short pad; int v; } KEnt128;
+typedef struct { short n; short pad; KEnt128 e[128]; } KTab128;
+int func_001EDD20(KTab128 *t, short k) {
+    int i;
+    for (i = 0; i < 128; i++) {
+        if (t->e[i].k == k) {
+            return t->e[i].v;
+        }
+    }
+    return 0;
+}
+void func_003F2F60(char *);
+void func_003E9930(char *);
+void func_003EBDA0(char *p) {
+    func_003F2F60(p);
+    if ((*(float *)(p + 0x3A8C) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_003E9930(p);
+    }
+}

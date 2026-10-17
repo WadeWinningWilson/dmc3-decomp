@@ -511,6 +511,13 @@ void func_002CB900(char *, int);
 void func_00128488(char *, int, int);
 
 
+typedef struct { short k; short pad; int v; } KEnt128;
+typedef struct { short n; short pad; KEnt128 e[128]; } KTab128;
+
+void func_003F2F60(char *);
+void func_003E9930(char *);
+
+
 void func_00299B30(char *p) {
     if (func_0024E800(p + 0x8980)) {
         func_002965E0(p, 0xFFFF);
@@ -1368,4 +1375,42 @@ void func_002CF0E0(char *p) {
     *(char *)(p + 0x2CE7) = 0x15;
     *(char *)(p + 0x2CE8) = 0x15;
     func_00128488(p + 0x5AD, 0, 4);
+}
+
+int func_00206800(KTab128 *t, short k) {
+    int i;
+    for (i = 0; i < 256; i++) {
+        if (t->e[i].k == k) {
+            return t->e[i].v;
+        }
+    }
+    return 0;
+}
+
+void func_003EC5B0(char *p) {
+    func_003F2F60(p);
+    if ((*(float *)(p + 0x3A8C) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_003E9930(p);
+    }
+}
+
+void func_003ECB80(char *p) {
+    func_003F2F60(p);
+    if ((*(float *)(p + 0x3A8C) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_003E9930(p);
+    }
+}
+
+void func_003ED0C0(char *p) {
+    func_003F2F60(p);
+    if ((*(float *)(p + 0x3A8C) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_003E9930(p);
+    }
+}
+
+void func_003EE350(char *p) {
+    func_003F2F60(p);
+    if ((*(float *)(p + 0x3A8C) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_003E9930(p);
+    }
 }
