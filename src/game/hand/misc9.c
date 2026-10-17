@@ -607,6 +607,8 @@ void func_00213710(char *);
 void func_00215B70(char *);
 float func_00133BD0(float);
 void func_00277E70(char *);
+int func_001C13B0(char *, int, int, int *);
+void func_00131650(char *, char *);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -9255,4 +9257,40 @@ void func_0024F480(char *p, int sel) {
     if ((unsigned char)func_00277EF0(p + 0x30, dt) == 1) {
         func_00278060(p + 0x30, (char *)D_01CAFF14[0]);
     }
+}
+
+#define VADD(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+int func_001C0EC0(char *ctx, char *pts, char *seg, int unused, int key, float *out) {
+    int idx[2];
+    float w[4];
+    float v[4];
+    float u[4];
+    if (func_001C13B0(ctx, 3, key, idx) == 0) {
+        return 0;
+    }
+    VSUB(v, pts + idx[0] * 16, seg);
+    VSUB(u, seg + 0x10, seg);
+    func_00131650((char *)u, (char *)u);
+    func_00132580(w, (char *)u, func_00132630(v, (char *)u));
+    VADD(w, w, seg);
+    VSUB(v, w, seg);
+    VSUB(u, seg + 0x10, seg);
+    func_00131650((char *)u, (char *)u);
+    if (func_00132630(v, (char *)u) < 0.0f) {
+        QCOPY(w, seg);
+    }
+    VSUB(v, w, seg + 0x10);
+    VSUB(u, seg, seg + 0x10);
+    func_00131650((char *)u, (char *)u);
+    if (func_00132630(v, (char *)u) < 0.0f) {
+        QCOPY(w, seg + 0x10);
+    }
+    if (!(func_00132470(pts + idx[0] * 16, (char *)w) <= *(float *)(seg + 0x20))) {
+        return 0;
+    }
+    if (out != 0) {
+        QCOPY(out, pts + idx[0] * 16);
+    }
+    return 1;
 }
