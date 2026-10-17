@@ -5380,3 +5380,84 @@ extern "C" int func_004D2D90(char *p) {
     return 0;
 }
 
+
+extern "C" char *func_002D9F00(char *, int);
+extern "C" void func_0022C520(char *, char *, char *, char *);
+extern "C" void func_00105300(char *, char *);
+
+/* Re-anchors the two held weapons (+0xB00, +0x1100) to their bones on the owner at +0xE0. */
+extern "C" void func_003C9A70(char *p) {
+    if (*(unsigned char *)(p + 0xD4) != 0) {
+        func_00104C00(p + 0x1780, (int)func_002D9F00(*(char **)(p + 0xE0), *(unsigned char *)(p + 0xD4)), p + 0x1700);
+        ((ObjB4C8 *)(p + 0xB00))->mC8(p + 0x1780);
+    }
+    if (*(unsigned char *)(p + 0xD5) != 0) {
+        func_0022C520(p + 0x200, p + 0x1100, *(char **)(*(char **)(p + 0x1D0) + 0x104), p + 0x980);
+        func_00104C00(p + 0x17C0, (int)func_002D9F00(*(char **)(p + 0xE0), *(unsigned char *)(p + 0xD5)), p + 0x1740);
+        ((ObjB4C8 *)(p + 0x1100))->mC8(p + 0x17C0);
+        func_00105300(p + 0x980, *(char **)(*(char **)(p + 0x1D0) + 0x104));
+    }
+}
+
+class ObjA8 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void mA8(int);
+};
+
+extern "C" void func_001A1E10(char *);
+
+extern "C" void func_0041C3D0(char *p) {
+    func_001A1E10(func_00279290(p + 0x4C0));
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 1:
+    case 2:
+    case 3:
+        ((ObjA8 *)(p + 0x4C0))->mA8(0x11);
+        ((ObjA8 *)(p + 0x4C0))->mA8(0x12);
+    }
+    switch (*(signed char *)(p + 0x3B0)) {
+    case 1:
+        func_001A1E10(func_00279290(p + 0xAC0));
+    }
+    func_001A1E10(func_00279290(p + 0x16C0));
+}
