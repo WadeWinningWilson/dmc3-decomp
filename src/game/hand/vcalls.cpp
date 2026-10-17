@@ -7830,3 +7830,34 @@ extern "C" void func_0027ACE0(char *p, unsigned int a1, int a2, int a3, char *t)
 	sqc2 $vf20, 0x0(%0)" : : "r"(v) : "memory");
     }
 }
+extern "C" void func_00466460(char *p) {
+    *(unsigned char *)(p + 0xCD) = 1;
+    *(unsigned char *)(p + 0xCE) = 3;
+    *(unsigned char *)(p + 0xCF) = 0;
+    (*(Anim6 **)(p + 0xA8))->m48(0x385, *(char **)(p + 0x10) + 0x10);
+    switch (*(int *)(*(char **)(p + 4) + 0x28)) {
+    case 0:
+        break;
+    case 1:
+        (*(Anim6 **)(p + 0xA8))->m48(0x3E2, *(char **)(p + 0x10) + 0x10);
+        break;
+    }
+    (*(Anim6 **)(p + 0xA8))->m48(0x3E7, *(char **)(p + 0x10) + 0x10);
+    func_00330BD0(D_01DFABA0, 0x1C, *(char **)(p + 0x10) + 0x10, 8, 0);
+    *(float *)(*(char **)(p + 0x10) + 0x20) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x24) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x28) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x30) = 0.0f;
+    *(float *)(*(char **)(p + 0x10) + 0x34) = -0.7f;
+    *(float *)(*(char **)(p + 0x10) + 0x38) = 0.0f;
+    *(float *)(p + 0xE0) = 0.0f;
+    *(float *)(p + 0xE4) = 0.0f;
+    *(float *)(p + 0xE8) = 0.0f;
+    *(float *)(p + 0xEC) = 0.0f;
+    *(float *)(p + 0xF0) = 0.0f;
+    *(float *)(p + 0xF4) = -0.7f;
+    *(float *)(p + 0xF8) = 0.0f;
+    *(float *)(p + 0xFC) = 0.0f;
+    ((ObjE4 *)p)->mE4(p + 0xE0, p + 0xF0, *(char **)(p + 0x10) + 0x20, *(char **)(p + 0x10) + 0x30);
+    *(int *)(p + 0xD4) = 0;
+}

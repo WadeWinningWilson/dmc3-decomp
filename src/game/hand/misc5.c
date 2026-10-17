@@ -939,6 +939,14 @@ void func_00482580(char *p) {
 int func_0038F490(char *);
 void func_0038F830(char *);
 void func_00387550(char *);
+extern char D_0056FFB0[];
+void func_003F3A90(char *);
+void func_0028C200(char *, char *, char *, int, char *, char *, char *);
+void func_002E7920(char *, int, int, int, char *, int);
+void func_0028C8E0(char *, int);
+void func_0028C910(char *);
+char *func_0028C3A0(char *, int, int, char *);
+void func_00105300(char *, char *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -996,4 +1004,50 @@ void func_00387870(char *p) {
         *(unsigned char *)(p + 0xDCD) = 1;
         *(int *)(p + 0xDC4) = 0;
     }
+}
+
+#define QCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_0050EDC0(char *p) {
+    char *b;
+    char *e;
+    char *d;
+    char *s;
+    func_003F3A90(p + 0x228);
+    if (*(int *)(p + 0x228) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    *(unsigned char *)(p + 0x2F0) = 2;
+    *(float *)(p + 0x300) = 0.0f;
+    *(float *)(p + 0x304) = 0.0f;
+    *(float *)(p + 0x308) = 0.0f;
+    *(float *)(p + 0x30C) = 1.0f;
+    *(float *)(p + 0x310) = 150.0f;
+    *(unsigned char *)(p + 0x2E4) = 5;
+    *(unsigned char *)(p + 0x2E5) = 0;
+    *(short *)(p + 0x2E6) = 0;
+    func_0028C200(p + 0x340, p + 0x2E4, p + 0x2F0, 3, D_0056FFB0, p, p + 0x2A0);
+    b = p;
+    if (b != 0) {
+        b += 0x40;
+    }
+    func_002E7920(p + 0x2A0, 0, 0, 0, b, 0);
+    func_0028C8E0(p + 0x340, 1);
+    *(int *)(p + 0x418) = 0x20040;
+    *(unsigned char *)(p + 0x343) = 0;
+    func_0028C910(p + 0x340);
+    e = func_0028C3A0(p + 0x340, 0, -1, p + 0x1E0);
+    if (e != 0) {
+        e[2] = 1;
+    }
+    *(unsigned char *)(p + 0x231) = 0;
+    func_00105300(p + 0x1E0, *(char **)(p + 0x228) + 0x3680);
+    d = p + 0x50;
+    s = p + 0x210;
+    QCOPY(d, s);
+    s = p + 0x210;
+    d = p + 0x1D0;
+    QCOPY(d, s);
+    (*(unsigned char *)(p + 4))++;
 }
