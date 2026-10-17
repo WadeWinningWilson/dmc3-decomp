@@ -9303,6 +9303,12 @@ extern "C" unsigned short func_001AE770(char *, int);
 extern "C" int func_002496D0(char *);
 extern "C" void func_0026D0B0(char *);
 extern "C" void func_004BC840(char *, char *, short, int);
+extern "C" char D_00548BB0[];
+extern "C" char *func_003032F0(int, char *);
+extern "C" int func_002242C0(char *);
+extern "C" char *func_002FF740(int, int);
+extern "C" int func_0028B690(char *, unsigned char);
+extern "C" void func_00303870(char *);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -12596,6 +12602,134 @@ extern "C" void func_0049E260(char *p) {
         if ((*(AnimBE **)(p + 0xA8))->m2C() != 0) {
             ((SelfBE *)p)->mEC(0xE);
         }
+        break;
+    }
+}
+
+class Spd1C {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void m1C(float);
+};
+
+static inline void attach(char *e, char *t) {
+    *(char **)(e + 0x90) = t;
+    *(unsigned char *)(e + 0x9A) = 0;
+}
+
+static inline void spd(char *p, float f) {
+    ((Spd1C *)func_002792A0(p + 0x180))->m1C(f);
+}
+
+extern "C" void func_00302B60(char *p) {
+    func_001AD100(p);
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        func_0028B610(p);
+        func_00208050(func_001AED80(D_00666750, 2, *(signed char *)(p + 0x46) * 15 + 3, 2), 1);
+        *(char **)(p + 0x89C) = func_003032F0(*(int *)(*(char **)(p + 0x104) + 0x104), p);
+        if ((unsigned char)func_002242C0(*(char **)(p + 0xE0)) == 0) {
+            *(char **)(p + 0x894) = func_002FF740(3, *(int *)(*(char **)(p + 0x10C) + 0x104));
+        } else {
+            *(char **)(p + 0x894) = 0;
+        }
+        *(char **)(p + 0xE4) = D_00548BB0;
+        *(unsigned char *)(p + 0x8A0) = *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D1);
+        *(unsigned char *)(p + 0xDC) = 0;
+        *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+    case 1:
+        if ((unsigned char)func_0028B8E0(p) == 0) {
+            if (*(char **)(p + 0x898) != 0) {
+                func_001AD140(*(char **)(p + 0x898));
+                *(char **)(p + 0x898) = 0;
+            }
+            return;
+        }
+        if ((unsigned char)func_0028B620(p) == 0) {
+            *(unsigned char *)(p + 0xD8) = 1;
+        } else {
+            *(unsigned char *)(p + 0xD8) = *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D2);
+        }
+        if (!(*(float *)(*(char **)(p + 0xE0) + 0x29A8) <= 0.0f)) {
+            return;
+        }
+        func_0028B980(p, p + 0x850, *(unsigned char *)(p + 0xD8));
+        if (*(unsigned char *)(p + 0xDC) == 1) {
+            char *e = *(char **)(p + 0xE0);
+            if (*(unsigned char *)(e + 0x2848) != 0x11 || *(unsigned char *)(e + 0x2998) != 0x58 || *(unsigned char *)(e + 0x284C) != 3) {
+                ((Obj180b *)(p + 0x180))->mBC(*(float *)(p + 0x10));
+            }
+        }
+        switch (*(signed char *)(p + 0xDA)) {
+        case 0:
+            if (*(unsigned char *)(*(char **)(p + 0xE0) + 0x24EC) != *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D2) ||
+                *(unsigned char *)(p + 0xF8) != *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D2) ||
+                *(unsigned char *)(p + 0xDC) == 1) {
+                ((Obj180b *)(p + 0x180))->mB0(*(int *)(p + 0x890), p + 0x100);
+            }
+            *(unsigned char *)(p + 0xDC) = 0;
+            break;
+        case -1:
+            *(unsigned char *)(p + 0xDC) = 0;
+            break;
+        default:
+            if (*(unsigned char *)(*(char **)(p + 0xE0) + 0x24EC) != *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D2) ||
+                *(unsigned char *)(p + 0xF8) != *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D2)) {
+                ((Obj180b *)(p + 0x180))->mB8(0, *(signed char *)(p + 0xDA), *(unsigned char *)(p + 0xDB), 0, 0);
+                if (*(unsigned char *)(p + 0xD8) == 0x2A) {
+                    spd(p, 10.0f);
+                } else if (*(unsigned char *)(p + 0xD8) == 0x26) {
+                    spd(p, 20.0f);
+                } else if (*(unsigned char *)(p + 0xD8) == 0x25) {
+                    spd(p, 61.0f);
+                } else if (*(unsigned char *)(p + 0xD8) == 0x31) {
+                    spd(p, 7.0f);
+                } else if (*(unsigned char *)(p + 0xD8) == 0x17) {
+                    spd(p, 51.0f);
+                } else if (*(unsigned char *)(p + 0xD8) == 0x1B) {
+                    spd(p, 21.0f);
+                } else if (*(unsigned char *)(p + 0xD8) == 0xD) {
+                    spd(p, 56.0f);
+                } else if (*(unsigned char *)(p + 0xD8) == 0x2E) {
+                    spd(p, 31.0f);
+                }
+                *(unsigned char *)(p + 0xDC) = 1;
+            }
+            break;
+        }
+        *(unsigned char *)(p + 0xF8) = *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D2);
+        if (*(unsigned char *)(p + 0xD8) != 1) {
+            if ((*(unsigned char *)(*(char **)(p + 0xE0) + 0x24EB) & 0x80) && *(int *)(p + 0x894) != 0) {
+                func_003023F0(*(int *)(p + 0x894));
+            }
+            if (*(unsigned char *)(*(char **)(p + 0xE0) + 0x24EB) & 0x40) {
+                if (*(char **)(p + 0x898) == 0) {
+                    *(char **)(p + 0x898) = func_00207480(2, 0xC1, 0, 8);
+                    if (*(char **)(p + 0x898) != 0) {
+                        attach(*(char **)(p + 0x898), *(char **)(*(char **)(p + 0x104) + 0x104));
+                    }
+                }
+            } else if (*(char **)(p + 0x898) != 0) {
+                func_001AD140(*(char **)(p + 0x898));
+                *(char **)(p + 0x898) = 0;
+            }
+        }
+        *(unsigned char *)(p + 0x8A0) = *(unsigned char *)(*(char **)(p + 0xE0) + 0x24D1);
+        func_00104C00(p + 0x810, (int)func_002D9F00(*(char **)(p + 0xE0), *(unsigned char *)(p + 0xD4)), p + 0x850);
+        UNIT(*(char **)(*(char **)(p + 0x100) + 0x100));
+        if ((unsigned char)func_0028B690(p, *(unsigned char *)(p + 0xD8)) == 0 || *(unsigned char *)(*(char **)(p + 0xE0) + 0xD6) == 0) {
+            return;
+        }
+        *(unsigned char *)(p + 0xD1) = 1;
+        func_00303870(p + 0x89C);
+        if (*(char **)(p + 0x89C) != 0) {
+            *(unsigned char *)(*(char **)(p + 0x89C) + 0x40) = 1;
+        }
+        func_0028BF50(p);
         break;
     }
 }
