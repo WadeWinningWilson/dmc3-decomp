@@ -12209,6 +12209,7 @@ unsigned int func_0030FDF0(char *, int, int, int, int, int, int, int);
 extern short D_00541CE0[];
 float func_0011DB20(float);
 void func_001325D0(char *, char *, float);
+void func_0038C2F0(char *, int, int, int, int, int);
 
 int func_00196180(char *p) {
     int r = 1;
@@ -12385,4 +12386,15 @@ void func_002A4AF0(char *p) {
     func_00206730(p + 0xA9D0);
     func_00206730(p + 0xA9D4);
     func_00206730(p + 0xA9D8);
+}
+
+void func_002D8BA0(char *p) {
+    char *a = (char *)(func_002D9EB0(p) * 4) + (int)p;
+    char *b = (char *)(func_002D9EB0(p) * 4) + (int)p;
+    char *c = (char *)(func_002D9EB0(p) * 4) + (int)p;
+    func_0038C2F0(p + 0x23B0, *(int *)(a + 0x13CC), *(int *)(b + 0x13D0), *(int *)(c + 0x13D4), 4, 2);
+    a = (char *)(func_002D9EB0(p) * 4) + (int)p;
+    b = (char *)(func_002D9EB0(p) * 4) + (int)p;
+    c = (char *)(func_002D9EB0(p) * 4) + (int)p;
+    func_0038C2F0(p + 0x23F0, *(int *)(a + 0x13BC), *(int *)(b + 0x13C0), *(int *)(c + 0x13C4), 4, 2);
 }
