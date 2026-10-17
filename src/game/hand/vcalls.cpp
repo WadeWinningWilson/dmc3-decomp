@@ -14053,3 +14053,95 @@ extern "C" void func_003ECE90(char *p) {
         }
     }
 }
+
+class StQ {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual int m10();
+    virtual int m14();
+    virtual int m18();
+};
+
+class AnimA8c {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void m4C(int);
+};
+
+extern "C" void func_0045A8E0(char *p, char *h, int a) {
+    if (*(unsigned char *)(p + 0x1D) != 3) {
+        if (*(signed char *)(h + 2) == 1) {
+            *(float *)(p + 0x38) = *(float *)(p + 0x38) + *(float *)(h + 4) / 2.0f;
+        }
+        hit_copy(p, h);
+        if ((unsigned char)(*(StQ **)(p + 0xC))->m14() == 1) {
+            ((HitRx *)p)->mB4(0x10);
+        }
+        switch ((unsigned char)(*(StQ **)(p + 0xC))->m10()) {
+        case 0:
+            break;
+        case 1:
+            (*(StQ **)(p + 0xC))->m18();
+            break;
+        }
+        ((HitRx *)p)->m68(h, a);
+        switch (*(unsigned char *)(p + 0x10C)) {
+        case 0:
+            (*(AnimA8c **)(p + 0xA8))->m4C(0);
+            break;
+        case 1:
+            (*(AnimA8c **)(p + 0xA8))->m4C(1);
+            break;
+        }
+    }
+}
+
+extern "C" void func_00359EB0(char *p, char *h, int a) {
+    if (*(unsigned char *)(p + 0x1D) != 3) {
+        hit_copy(p, h);
+        if ((unsigned char)(*(StQ **)(p + 0xC))->m14() == 1) {
+            ((HitRx *)p)->mB4(0x10);
+        }
+        switch ((unsigned char)(*(StQ **)(p + 0xC))->m10()) {
+        case 0:
+            (*(StQ **)(p + 0xC))->m18();
+            break;
+        case 1:
+            switch ((unsigned char)(*(StQ **)(p + 0xC))->m18()) {
+            case 0:
+            case 1:
+                break;
+            default:
+                ((HitRx *)p)->mB4(8);
+                break;
+            }
+            break;
+        }
+        switch (*(unsigned char *)(p + 0x10C)) {
+        case 0:
+            (*(AnimA8c **)(p + 0xA8))->m4C(0);
+            break;
+        case 1:
+            (*(AnimA8c **)(p + 0xA8))->m4C(1);
+            break;
+        }
+        ((HitRx *)p)->m68(h, a);
+    }
+}
