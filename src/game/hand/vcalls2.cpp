@@ -837,6 +837,10 @@ extern "C" char *func_00279290(char *);
 extern "C" void func_001A2180(char *, int, int);
 extern "C" float D_00570284[];
 extern "C" float D_00570288[];
+extern "C" float D_00573330[];
+extern "C" float func_0011D798(float);
+extern "C" void func_00104E78(float *, char *);
+extern "C" void func_00104B80(float *, float *, float *);
 
 extern "C" void func_003E6FA0(char *p) {
     func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
@@ -1637,4 +1641,110 @@ extern "C" int func_003F3420(char *p, char *tbl) {
         e++;
     }
     return base[func_0034BBE0(n, (char *)w)].id;
+}
+
+static inline float fsqrt(float x) {
+    float r;
+    __asm__("sqrt.s %0, %1" : "=f"(r) : "f"(x));
+    return r;
+}
+
+extern "C" void func_003F2800(char *p) {
+    float d[4];
+    float t;
+    float vy;
+    float g;
+    float disc;
+    float r;
+    float len;
+    char *pl;
+    float y;
+    float py;
+    ((ObjV2F8 *)p)->m2F8(0x56);
+    *(unsigned char *)(p + 0x3434) = 0;
+    *(unsigned char *)(p + 0x3435) = 4;
+    *(unsigned char *)(p + 0x3436) = 0;
+    func_003E6750(p, 0x2D, 0, 0);
+    *(float *)(p + 0x3A8C) = 250.0f;
+    *(float *)(p + 0x3A18) = 0.0f;
+    *(unsigned char *)(p + 0x3437) = 0;
+    *(unsigned char *)(p + 0x3438) = 0;
+    *(unsigned char *)(p + 0x3A80) = 0;
+    *(unsigned char *)(p + 0x3A81) = 1;
+    g = -2.0f;
+    vy = 40.0f;
+    pl = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    y = *(float *)(p + 0x714);
+    py = *(float *)(pl + 0x54);
+    if (!(py <= y)) {
+        vy = 10.0f;
+        t = vy;
+    } else {
+        {
+            float k2 = 2.0f * g * (y - py);
+            disc = vy * vy - k2;
+        }
+        if (disc < 0.0f) {
+            vy = 15.0f;
+            t = 10.0f;
+        } else {
+            t = (-vy - fsqrt(disc)) / g;
+        }
+    }
+    VSUBR(d, pl + 0x50, p + 0x710);
+    d[1] = 0.0f;
+    len = func_001324E0(d);
+    if (!(len <= 700.0f)) {
+        d[0] = 700.0f * (d[0] / len);
+        d[2] = 700.0f * (d[2] / len);
+    }
+    *(float *)(p + 0x3A10) = d[0] / t;
+    *(float *)(p + 0x3A14) = vy;
+    *(float *)(p + 0x3A18) = d[2] / t;
+    *(unsigned char *)(p + 0x3B93) = 0;
+}
+
+extern "C" void func_003ED420(char *p) {
+    float m[16];
+    float dir[4];
+    float l[4];
+    float len;
+    float c;
+    float r;
+    int k;
+    VSUBR(dir, p + 0x3670, p + 0x3630);
+    dir[3] = 0.0f;
+    len = func_001324E0(dir);
+    if (len <= 0.0f) {
+        return;
+    }
+    dir[0] = dir[0] / len;
+    dir[1] = dir[1] / len;
+    dir[2] = dir[2] / len;
+    func_00104E78(m, p + 0x6E0);
+    func_00104B80(l, m, dir);
+    l[2] = 0.0f;
+    k = speed_band(p);
+    c = func_0011D798(6.2831850f * ((90.0f - D_00573330[k]) / 360.0f));
+    if (!(l[0] <= c)) {
+        l[0] = c;
+    }
+    if (l[0] < -c) {
+        l[0] = -c;
+    }
+    if (!(l[1] <= c)) {
+        l[1] = c;
+    }
+    if (l[1] < -c) {
+        l[1] = -c;
+    }
+    r = func_001324E0(l);
+    l[2] = fsqrt(1.0f - r * r);
+    l[0] = l[0] * len;
+    l[1] = l[1] * len;
+    l[2] = l[2] * len;
+    func_00104B80(dir, (float *)(p + 0x6E0), l);
+    *(float *)(p + 0x3670) = *(float *)(p + 0x3630) + dir[0];
+    *(float *)(p + 0x3674) = *(float *)(p + 0x3634) + dir[1];
+    *(float *)(p + 0x3678) = *(float *)(p + 0x3638) + dir[2];
 }
