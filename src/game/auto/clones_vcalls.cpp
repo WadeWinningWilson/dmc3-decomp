@@ -3922,6 +3922,120 @@ public:
 /* Resets the attack and its target transform, recomputes facing, then stores a tenth of it. */
 
 
+class Anim8 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void m24();
+    virtual void d8();
+    virtual int m2C();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void m40();
+    virtual void d15();
+    virtual void m48(int, char *);
+};
+
+
+
+
+
+extern "C" void func_003C0280(char *, int);
+extern "C" void func_003C0110(char *, int, float);
+extern "C" void func_003C0190(char *, char *, float);
+
+
+
+extern "C" void func_00452980(char *);
+extern "C" void func_0028C5C0(char *, int, float);
+
+
+
+extern "C" char D_00568010[];
+extern "C" void func_0037E690(char *);
+
+/* Advances the active rotor timers, and when the phase timer expires picks the next phase duration. */
+
+
+class ObjFC2 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual unsigned char mFC();
+};
+
+/* True when the current hit kind (via mFC) is 4 or 5 in modes 0 and 2; never while state 3. */
+
+
+/* On a fresh hit, set the knockback phase, push the body along its velocity and maybe enter 0x58. */
+
+
 extern "C" {
 extern "C" void func_00465AA0(char *p) {
     short d;
@@ -5471,5 +5585,55 @@ extern "C" void func_004A0FC0(char *p) {
     *(short *)(p + 0xC0) = ((Obj6C *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50)) / 10;
     *(float *)(p + 0xC4) = 10.0f;
     *(int *)(p + 0xD4) = 0;
+}
+
+extern "C" int func_0045ADB0(char *p, int k) {
+    if (*(unsigned char *)(p + 0x1D) == 3) {
+        return 0;
+    }
+    switch ((signed char)k) {
+    case 0:
+        if (((ObjFC2 *)p)->mFC() == 4) {
+            return 1;
+        }
+        if (((ObjFC2 *)p)->mFC() == 5) {
+            return 1;
+        }
+        break;
+    case 2:
+        if (((ObjFC2 *)p)->mFC() == 4) {
+            return 1;
+        }
+        if (((ObjFC2 *)p)->mFC() == 5) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
+
+extern "C" int func_00497BB0(char *p, int k) {
+    if (*(unsigned char *)(p + 0x1D) == 3) {
+        return 0;
+    }
+    switch ((signed char)k) {
+    case 0:
+        if (((ObjFC2 *)p)->mFC() == 4) {
+            return 1;
+        }
+        if (((ObjFC2 *)p)->mFC() == 5) {
+            return 1;
+        }
+        break;
+    case 2:
+        if (((ObjFC2 *)p)->mFC() == 4) {
+            return 1;
+        }
+        if (((ObjFC2 *)p)->mFC() == 5) {
+            return 1;
+        }
+        break;
+    }
+    return 0;
 }
 }
