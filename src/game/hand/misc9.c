@@ -624,6 +624,8 @@ extern char D_005BC024[4];
 extern char D_005BC028[4];
 extern char D_005BC02C[4];
 extern char D_005BC030[4];
+extern unsigned char D_01CAF681[];
+int func_002D8B10(char *);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -9344,4 +9346,59 @@ void func_00288190(char *p, char *name) {
     } else {
         return;
     }
+}
+
+static inline int btn_hit(int b) {
+    unsigned short m = *(unsigned short *)(D_0066671A + func_001AE770(D_00666710, b) * 2);
+    unsigned short r = func_001AE1E0(D_006663C0, 0);
+    return r & m;
+}
+
+int func_00238E20(char *p) {
+    if (*(unsigned char *)(*(char **)D_01CAFF0C + 8) != 0) {
+        return 0;
+    }
+    if ((unsigned char)func_002D8B10(*(char **)(*(char **)D_01CAFF0C + 0xC)) == 0) {
+        return 0;
+    }
+    if (D_01CAF681[0] != 0) {
+        *(unsigned char *)(p + 0x193F4) = 0;
+        return 1;
+    }
+    if (func_001AE1E0(D_006663C0, 0) & 0x800) {
+        *(unsigned char *)(p + 0x193F4) = 0;
+        return 1;
+    }
+    if (btn_hit(0x1000)) {
+        *(unsigned char *)(p + 0x193F4) = 1;
+        return 1;
+    }
+    if (btn_hit(0x2000)) {
+        *(unsigned char *)(p + 0x193F4) = 3;
+        return 1;
+    }
+    if (btn_hit(0x4000)) {
+        *(unsigned char *)(p + 0x193F4) = 2;
+        return 1;
+    }
+    if (btn_hit(0x8000)) {
+        *(unsigned char *)(p + 0x193F4) = 4;
+        return 1;
+    }
+    return 0;
+}
+
+void func_001C1B40(char *ctx, float *pts, int n, float *out) {
+    int i;
+    out[2] = 0.0f;
+    out[1] = 0.0f;
+    out[0] = 0.0f;
+    for (i = 0; i < n; i++) {
+        out[0] += pts[i * 4 + 0];
+        out[1] += pts[i * 4 + 1];
+        out[2] += pts[i * 4 + 2];
+    }
+    out[0] /= (float)n;
+    out[1] /= (float)n;
+    out[2] /= (float)n;
 }
