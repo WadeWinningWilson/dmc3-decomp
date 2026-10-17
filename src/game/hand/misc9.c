@@ -12207,6 +12207,8 @@ extern unsigned char D_01CB1292[];
 extern int D_00582AD0[];
 unsigned int func_0030FDF0(char *, int, int, int, int, int, int, int);
 extern short D_00541CE0[];
+float func_0011DB20(float);
+void func_001325D0(char *, char *, float);
 
 int func_00196180(char *p) {
     int r = 1;
@@ -12339,4 +12341,31 @@ void func_00211670(char *p) {
             }
         }
     }
+}
+
+void func_0022A9D0(char *p) {
+    float v[4];
+    func_00104B80(p + 0x120, p + 0x20, *(char **)(p + 0x104) + 0x10);
+    func_00104B80(p + 0x130, p + 0x20, *(char **)(p + 0x104) + 0x20);
+    *(unsigned char *)(p + 0x110) = 1;
+    VADD(v, p + 0x120, p + 0x130);
+    *(float *)(p + 0xD0) = v[0] / 2.0f;
+    *(float *)(p + 0xD4) = v[1] / 2.0f;
+    *(float *)(p + 0xD8) = v[2] / 2.0f;
+    *(float *)(p + 0xDC) = 1.0f;
+    *(float *)(p + 0x10) = func_00132470(p + 0x120, p + 0x130);
+}
+
+void func_002482C0(char *p) {
+    float s;
+    QCOPY(p + 0x190, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50);
+    *(float *)(p + 0x194) = *(float *)(p + 0x194) + *(float *)(p + 0xD0);
+    VSUB(p + 0x180, p + 0x70, p + 0x190);
+    *(float *)(p + 0x184) = 0.0f;
+    s = func_0011DB20(*(float *)(p + 0xD4));
+    *(float *)(p + 0x184) = s * func_001324E0(p + 0x180);
+    func_00131650(p + 0x180, p + 0x180);
+    *(float *)(p + 0x18C) = 1.0f;
+    QCOPY(p + 0x1A0, p + 0x190);
+    func_001325D0(p + 0x1A0, p + 0x180, *(float *)(p + 0xD8));
 }

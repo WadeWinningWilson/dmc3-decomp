@@ -15587,3 +15587,22 @@ extern "C" void func_004FF910(char *p) {
         }
     }
 }
+
+extern "C" void func_00231650(char *p) {
+    int i;
+    if (*(signed char *)(p + 0x1000) == 2) {
+        ((ObjD0 *)(p + 0x640))->mD0();
+    } else {
+        ((ObjD0 *)(p + 0x40))->mD0();
+    }
+    for (i = 0; i < 16; i++) {
+        func_0013D5D0(p + i * 16 + 0x38B0);
+    }
+    ((Obj14 *)(p + 0xA80))->m14();
+    {
+        int j;
+        for (j = 0; j < *(int *)(p + 0x1008); j++) {
+            func_0013D5D0(p + j * 16 + 0x100C);
+        }
+    }
+}
