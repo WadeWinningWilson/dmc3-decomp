@@ -9336,6 +9336,9 @@ extern "C" void func_0044CF70(char *, unsigned char, int);
 extern "C" void func_0044D1A0(char *);
 extern "C" void func_0044D210(char *);
 extern "C" char *func_002F7C10(int, int);
+extern "C" char *func_002F2EF0(char *, char *, float);
+extern "C" float func_001324B0(float *, char *);
+extern "C" void func_0021C7A0(char *, int);
 
 extern "C" void func_00394EE0(char *p) {
     char *e;
@@ -13496,4 +13499,134 @@ extern "C" void func_0044CD30(char *p) {
             }
         }
     }
+}
+
+extern "C" void func_002A0140(char *p) {
+    M64 m = *(M64 *)(p + 0x9BB0);
+    ((SubD0 *)(p + 0x1D00))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x2900))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x2F00))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x3500))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x2300))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x3B00))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x4100))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x4700))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x7100))->mCC(*(char **)(*(char **)(p + 0x1BDC) + 0x104));
+    ((SubD0 *)(p + 0x7700))->mCC(*(char **)(*(char **)(p + 0x1BF0) + 0x104));
+    ((SubD0 *)(p + 0x7D00))->mCC(*(char **)(*(char **)(p + 0x1C04) + 0x104));
+    ((SubD0 *)(p + 0x6B00))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x4D00))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x5300))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x5900))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x5F00))->mCC((char *)&m);
+    ((SubD0 *)(p + 0x6500))->mCC((char *)&m);
+}
+
+class Ledge {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void d6C();
+    virtual void d70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void dB4();
+    virtual void dB8();
+    virtual void dBC();
+    virtual void dC0();
+    virtual void dC4();
+    virtual void dC8();
+    virtual void dCC();
+    virtual void dD0();
+    virtual void dD4();
+    virtual void dD8();
+    virtual void dDC();
+    virtual void dE0();
+    virtual void dE4();
+    virtual void dE8();
+    virtual void dEC();
+    virtual void dF0();
+    virtual void dF4();
+    virtual void dF8();
+    virtual void dFC();
+    virtual void d100();
+    virtual int m104(int);
+    virtual void m108(int);
+    virtual void d10C();
+    virtual void d110();
+    virtual void d114();
+    virtual void d118();
+    virtual void d11C();
+    virtual void d120();
+    virtual void d124();
+    virtual void d128();
+    virtual void m12C(float *);
+};
+
+struct V4f {
+    float x;
+    float y;
+    float z;
+    float w;
+};
+
+extern "C" int func_0023EC60(char *p) {
+    Ledge *o;
+    V4f t;
+    if ((unsigned char)func_002242C0(p) == 1 || *(signed char *)(p + 0x46) != 0) {
+        return 0;
+    }
+    if (*(float *)(p + 0x64) < 0.0f && *(float *)(p + 0x54) - *(float *)(p + 0x2924) < 100.0f) {
+        o = (Ledge *)func_002F2EF0(*(char **)(*(char **)D_01CAFF0C + 0x20), p + 0x50, 150.0f);
+        if (o != 0) {
+            o->m12C(&t.x);
+            if (func_001324B0(&t.x, p + 0x50) < 100.0f) {
+                float y = t.y;
+                if (!(*(float *)(p + 0x54) <= y) && *(float *)(p + 0x54) - y < 100.0f && (unsigned char)o->m104(2) == 1) {
+                    *(Ledge **)(p + 0x29D0) = o;
+                    func_0021C7A0(p, 0x1F);
+                    (*(Ledge **)(p + 0x29D0))->m108(2);
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
 }

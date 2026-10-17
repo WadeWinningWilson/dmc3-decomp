@@ -592,6 +592,12 @@ void func_004AE4B0(char *);
 void func_001C1510(char *, float *, char *, char *, char *);
 void func_00131680(float *, char *, char *, float);
 void func_003A0F20(char *);
+void func_00316F30(char *, float *, int);
+void func_003172E0(char *, short *, short *);
+void func_0034B8C0(short *, short *, int);
+void func_003176C0(char *, char *, char *);
+int func_002018A0(char *, char *, char *, char *, char *, int);
+void func_00317740(char *, int);
 
 void func_003ED8E0(char *p) {
     char *e;
@@ -9111,4 +9117,41 @@ void func_00394730(char *p, int k) {
         }
         break;
     }
+}
+
+void func_00317850(char *p) {
+    short a;
+    short b;
+    short c;
+    float pos[4];
+    char buf[0x40];
+    a = 0;
+    b = 0;
+    c = 0;
+    func_00316F30(p, pos, 0);
+    QCOPY(p + 0x190, pos);
+    *(float *)(p + 0x238) = 400.0f;
+    func_003172E0(p, &b, &c);
+    a = 0x38E - *(short *)(p + 0x248);
+    if (*(unsigned char *)(p + 0x2B6) == 0) {
+        func_0034B8C0((short *)(p + 0x248), &a, 0x12);
+        *(float *)(p + 0x210) = 6.2831850f * ((float)*(short *)(p + 0x248) / 65536.0f);
+    }
+    func_0034B8C0((short *)(p + 0x24A), &b, c);
+    *(float *)(p + 0x214) = 6.2831850f * ((float)*(short *)(p + 0x24A) / 65536.0f);
+    func_003176C0(p, p + 0x1A0, p + 0x190);
+    if ((unsigned char)func_002018A0(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, p + 0x190, p + 0x1A0, p + 0x1A0, buf, 8) == 1) {
+        *(float *)(p + 0x224) = *(float *)(p + 0x224) + 3.0f;
+        if (!(*(float *)(p + 0x224) <= 40.0f)) {
+            *(float *)(p + 0x224) = 40.0f;
+        }
+    } else {
+        *(float *)(p + 0x224) = *(float *)(p + 0x224) - 3.0f;
+        if (*(float *)(p + 0x224) < 0.0f) {
+            *(float *)(p + 0x224) = 0.0f;
+        }
+    }
+    *(float *)(p + 0x194) = *(float *)(p + 0x194) + *(float *)(p + 0x224);
+    *(float *)(p + 0x1A4) = *(float *)(p + 0x1A4) + *(float *)(p + 0x224);
+    func_00317740(p, 0);
 }
