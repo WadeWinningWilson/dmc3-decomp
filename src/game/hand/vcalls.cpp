@@ -6513,3 +6513,157 @@ extern "C" void func_0046D5E0(char *p) {
     *(int *)(p + 0x100) = 0;
     *(int *)(p + 0xD4) = 10;
 }
+
+class ObjAC {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void mA8();
+    virtual void mAC();
+};
+
+class ObjCCv {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void mCC(char *);
+};
+
+extern "C" float D_01DF5D30[];
+
+/* Accumulates the meter and edge-triggers the on/off handlers (not in state 3). */
+extern "C" void func_00321E30(char *p) {
+    *(float *)(p + 0x84) = *(float *)(p + 0x84) + *(float *)(p + 0x80) * D_01DF5D30[0];
+    if (*(float *)(p + 0x84) < 0.0f) {
+        *(float *)(p + 0x84) = 0.0f;
+    }
+    *(unsigned char *)(p + 0x8D) = *(unsigned char *)(p + 0x8E);
+    if (!(*(float *)(p + 0x84) <= *(float *)(p + 0x88)) || *(unsigned char *)(p + 0x8C) != 0) {
+        switch (*(unsigned char *)D_01CAFF3C) {
+        case 4:
+            *(unsigned char *)(p + 0x8D) = 1;
+        }
+    }
+    if (*(unsigned char *)(p + 0x8D) != 0) {
+        if (*(unsigned char *)(p + 0x8F) == 0 && *(unsigned char *)(p + 0x1D) != 3) {
+            ((ObjAC *)p)->mA8();
+        }
+    } else {
+        if (*(unsigned char *)(p + 0x8F) != 0 && *(unsigned char *)(p + 0x1D) != 3) {
+            ((ObjAC *)p)->mAC();
+        }
+    }
+    *(unsigned char *)(p + 0x8F) = *(unsigned char *)(p + 0x8D);
+}
+
+extern "C" void func_004539C0(char *p) {
+    switch (*(unsigned char *)(p + 0x11E2)) {
+    case 0:
+        if (*(unsigned char *)(p + 0x11E5) != 0) {
+            ((ObjCCv *)(p + 0x520))->mCC(p + 0x1220);
+        }
+        break;
+    case 1:
+        if (*(unsigned char *)(p + 0x11E5) != 0) {
+            ((ObjCCv *)(p + 0x520))->mCC(p + 0x1220);
+        }
+        if (*(unsigned char *)(p + 0x11E6) != 0) {
+            ((ObjCCv *)(p + 0x960))->mCC(p + 0x1220);
+        }
+        break;
+    case 2:
+        if (*(unsigned char *)(p + 0x11E6) != 0) {
+            ((ObjCCv *)(p + 0x960))->mCC(p + 0x1220);
+        }
+        break;
+    }
+    if (*(unsigned char *)(p + 0x11E5) != 0 || *(unsigned char *)(p + 0x11E6) != 0) {
+        ((ObjCCv *)(p + 0xE0))->mCC(p + 0x1220);
+        ((ObjCCv *)(p + 0xDA0))->mCC(p + 0x1220);
+    }
+}
