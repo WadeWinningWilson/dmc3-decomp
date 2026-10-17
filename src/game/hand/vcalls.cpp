@@ -5786,3 +5786,21 @@ extern "C" void func_00338C30(char *p) {
     }
     func_0033A580(p);
 }
+
+/* Buckets the current motion frame into six phases at +0x134C. */
+extern "C" void func_00334AA0(char *p) {
+    float f = ((Sub130 *)(p + 0x130))->m7C();
+    if (f <= 300.0f) {
+        *(unsigned char *)(p + 0x134C) = 0;
+    } else if (f <= 500.0f) {
+        *(unsigned char *)(p + 0x134C) = 1;
+    } else if (f <= 700.0f) {
+        *(unsigned char *)(p + 0x134C) = 2;
+    } else if (f <= 800.0f) {
+        *(unsigned char *)(p + 0x134C) = 3;
+    } else if (f <= 900.0f) {
+        *(unsigned char *)(p + 0x134C) = 4;
+    } else {
+        *(unsigned char *)(p + 0x134C) = 5;
+    }
+}
