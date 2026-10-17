@@ -3770,3 +3770,9 @@ extern "C" void func_0035A360(ObjFC *o, signed char k) {
         }
     }
 }
+
+extern "C" void func_003B8620(char *p) {
+    char *a = p + 0xC80;
+    ((SubCCc *)(p + 0x640))->mCC(a);
+    ((SubCCc *)(p + 0x40))->mCC(a);
+}

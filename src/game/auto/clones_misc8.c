@@ -32,6 +32,26 @@ void func_001A0050(int, int, int, int, int);
 void func_001A1E10(char *);
 
 
+typedef struct { int w[4]; } __attribute__((aligned(16))) Q16;
+void func_001AD140(char *);
+void func_0028C740(char *);
+
+extern char D_01CAFF0C[];
+int func_0034B800(char *, char *, int, int, float);
+
+extern char D_00546720[];
+void func_001A9F90(char *, Q16 *);
+void func_001A5CE0(char *);
+
+extern char D_01DFABA0[];
+void func_002075D0(int, int, char *, int, int);
+void func_00330B50(char *, int, char *, int);
+
+void func_001A1E70(char *, int);
+
+typedef struct { int a; short k; short pad; int v; } K12L;
+
+
 char *func_001EDE90(int a, int b, int id, int c, int d, float f, int e) {
     extern char D_01CB0A00[];
     int func_001F3A50(char *, int);
@@ -105,4 +125,45 @@ void func_003C4F30(char *p) {
     void func_001A1F90(char *);
     func_001A1F90(func_00279290(p + 0x680));
     func_001A1F90(func_00279290(p + 0xC80));
+}
+
+void func_002796B0(char *p) {
+    extern char D_00546730[];
+    void func_001A5D20(char *);
+    Q16 q = *(Q16 *)D_00546730;
+    func_001A9F90(p + 0x40, &q);
+    *(char *)(p + 0x5C0) = 1;
+    *(char *)(p + 0x5C8) = 1;
+    func_001A5D20(p + 0x40);
+}
+
+void func_003B66F0(char *p) {
+    void func_001A2000(char *, int);
+    int i;
+    for (i = 8; i <= 16; i++) {
+        func_001A2000(func_00279290(p + 0x700), i);
+    }
+}
+
+int func_00427DE0(char *p) {
+    return (unsigned char)func_0034B800(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, p + 0x50, *(short *)(p + 0x90), 0x4000, 170.0f) == 1;
+}
+
+void func_005058F0(char *p) {
+    if (*(char **)(p + 0x228) != 0) {
+        func_001AD140(*(char **)(p + 0x228));
+    }
+    func_0028C740(p + 0x230);
+}
+
+void func_00507A00(char *p) {
+    if (*(char **)(p + 0x218) != 0) {
+        func_001AD140(*(char **)(p + 0x218));
+    }
+    func_0028C740(p + 0x220);
+}
+
+void func_0050E880(char *p) {
+    func_002075D0(3, 0x203, p + 0x150, 1, 8);
+    func_00330B50(D_01DFABA0, 9, p + 0x50, 7);
 }
