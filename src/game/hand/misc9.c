@@ -11722,6 +11722,8 @@ extern float D_00577DD0[];
 extern float D_00577DD4[];
 extern float D_00577DD8[];
 void func_004E29F0(char *, char *, int, float);
+extern unsigned int D_01CB0520[];
+int func_00196250(char *, int, int);
 
 void func_0046F690(char *p) {
     int i;
@@ -12191,4 +12193,40 @@ int func_004E2930(char *o, char *m, int n) {
         func_004E29F0(o, (char *)w, i, 15.0f + 5.0f * (float)(i + 1));
     }
     return 1;
+}
+
+typedef struct { float a; float b; float c; } ret12;
+
+static inline int bit_on(unsigned int *a, int k) {
+    unsigned int *w = &a[k / 32];
+    return (*w & (1 << (k & 31))) != 0;
+}
+
+ret12 func_0050D630(int, int, int);
+
+int func_00196180(char *p) {
+    int r = 1;
+    int n = *(int *)(p + 0x100) * *(int *)(p + 0x104);
+    int i;
+    for (i = 0; i < n; i++) {
+        char *o = *(char **)(p + i * 4);
+        if (*(short *)(o + 0x18) < 0 || *(short *)(o + 0x38) != 0) {
+            r &= func_00196250(o, 1, 0);
+        } else if (*(short *)(o + 0x14) != 0) {
+            r &= func_00196250(o, 1, 0);
+        } else {
+            r &= func_00196250(o, 0, 0);
+        }
+    }
+    return r;
+}
+
+unsigned char func_0050D720(int a, int b, int c) {
+    unsigned char r = 0;
+    ret12 s = func_0050D630(a, b, c);
+    signed char k = *(signed char *)&s;
+    if (k != -1 && bit_on(D_01CB0520, k) == 1) {
+        r = 1;
+    }
+    return r;
 }

@@ -15566,3 +15566,24 @@ extern "C" void func_0043AFC0(char *p) {
     GETPOS(p + 0x60, m);
     VADDIP(p + 0x50, p + 0x60);
 }
+
+extern "C" void func_004FF910(char *p) {
+    int i;
+    if (*(int *)(p + 0x8C) != 0) {
+        func_001AF080(D_00666750, *(int *)(p + 0x8C));
+        *(int *)(p + 0x8C) = 0;
+    }
+    if (*(int *)(p + 0x90) != 0) {
+        func_001AF080(D_00666750, *(int *)(p + 0x90));
+        *(int *)(p + 0x90) = 0;
+    }
+    for (i = 0; i < 3; i++) {
+        ((ObjD0 *)(p + i * 0x600 + 0xC0))->mD0();
+    }
+    {
+        int j;
+        for (j = 0; j < *(int *)(p + 0x38); j++) {
+            func_0013D5D0(p + j * 16 + 0x3C);
+        }
+    }
+}
