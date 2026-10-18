@@ -12647,3 +12647,28 @@ void func_001C5B00(char *p, char *t) {
         }
     }
 }
+
+typedef struct { int w[16]; } S40;
+
+signed char func_002088E0(char *l, char *a, char *b, short c, unsigned char d, unsigned char e, unsigned char f) {
+    char *t7;
+    char *t6 = l + *(short *)l * 0xD0;
+    *(int *)(t6 + 0xDC) = -1;
+    t7 = t6 + 0x10;
+    *(unsigned char *)(t6 + 0xD9) = 0;
+    *(signed char *)(t6 + 0x10) = *(short *)l;
+    *(unsigned char *)(t6 + 0x11) = 1;
+    *(unsigned char *)(t6 + 0x16) = 1;
+    *(unsigned char *)(t6 + 0x17) = 1;
+    *(S40 *)(t7 + 0x10) = *(S40 *)a;
+    *(float *)(t7 + 0x50) = *(float *)(a + 0x40);
+    *(S40 *)(t7 + 0x60) = *(S40 *)b;
+    *(float *)(t7 + 0xA0) = *(float *)(b + 0x40);
+    *(unsigned char *)(t7 + 0xB0) = 0;
+    *(short *)(t7 + 0xB2) = c;
+    *(unsigned char *)(t7 + 0xB4) = d;
+    *(unsigned char *)(t7 + 2) = e;
+    *(unsigned char *)(t7 + 3) = f;
+    *(short *)l = *(short *)l + 1;
+    return *(signed char *)t7;
+}

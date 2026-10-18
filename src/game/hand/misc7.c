@@ -426,6 +426,7 @@ void func_003305E0(char *, int, int, char *, int, int, int);
 extern int D_0058B1B0[];
 char *func_0027A710(char *);
 void func_001A1F30(char *, int);
+void func_001C6600(char *, int);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -644,5 +645,18 @@ void func_004D9AC0(char *p, int k) {
     }
     if ((unsigned char)k == 1 && *(unsigned char *)(p + 0x57F) == 1) {
         func_003305E0(D_01DFABA0, 8, 0x8D, p + 0x50, 0x2C, 0, 0);
+    }
+}
+
+void func_001C6520(char *p, int a, int b, unsigned long long c) {
+    if (*(int *)(p + 0x15894) != a || *(int *)(p + 0x15890) != b || *(unsigned long long *)(p + 0x15888) != c) {
+        char *q;
+        func_001C6600(p, 0);
+        q = *(char **)(p + 0x158A4);
+        *(char **)(p + 0x158A4) = q + 0x10;
+        *(char **)(p + 0x15898) = q;
+        *(int *)(p + 0x15894) = a;
+        *(int *)(p + 0x15890) = b;
+        *(unsigned long long *)(p + 0x15888) = c;
     }
 }
