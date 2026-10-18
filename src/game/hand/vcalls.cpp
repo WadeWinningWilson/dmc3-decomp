@@ -16974,3 +16974,23 @@ extern "C" int func_004F6390(char *a, char *b, int n, int c) {
     }
     return 1;
 }
+
+#define VADDB(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+extern "C" unsigned char func_001F9A70(float **b, float *p, float r) {
+    return p[0] >= (*b)[2] - r && p[1] >= (*b)[3] - r && p[2] >= (*b)[4] - r && p[0] <= (*b)[5] + r && p[1] <= (*b)[6] + r && p[2] <= (*b)[7] + r;
+}
+
+extern "C" void func_0022AE80(char *p) {
+    float t[4];
+    func_00104B80((float *)(p + 0x120), p + 0x20, (float *)(*(char **)(p + 0x104) + 0x10));
+    func_00104B80((float *)(p + 0x130), p + 0x20, (float *)(*(char **)(p + 0x104) + 0x20));
+    *(float *)(p + 0x140) = *(float *)(*(char **)(p + 0x104) + 0x30) * *(float *)(p + 0x14);
+    VADDB(t, p + 0x120, p + 0x130);
+    *(float *)(p + 0xD0) = t[0] / 2.0f;
+    *(float *)(p + 0xD4) = t[1] / 2.0f;
+    *(float *)(p + 0xD8) = t[2] / 2.0f;
+    *(float *)(p + 0xDC) = 1.0f;
+    *(float *)(p + 0x10) = *(float *)(p + 0x140) + 0.5f * func_00132470(p + 0x120, p + 0x130);
+    *(unsigned char *)(p + 0x110) = 4;
+}
