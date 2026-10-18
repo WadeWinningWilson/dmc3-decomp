@@ -6959,3 +6959,35 @@ void func_004503B0(char *p, float *a, int b) {
         }
     }
 }
+
+void func_002FD6E0(char *p) {
+    float m[16];
+    float v[4];
+    char *e;
+    char *q;
+    v[2] = -6.0f;
+    v[0] = 0.0f;
+    v[3] = 1.0f;
+    v[1] = 0.0f;
+    UNIT(m);
+    func_00105230((char *)m, (char *)m, v);
+    e = func_00207480(1, 0xF4, (char *)m, 0x40);
+    if (e != 0) {
+        *(char **)(e + 0x90) = p + 0x560;
+        *(unsigned char *)(e + 0x9A) = 0;
+    }
+    if (*(char **)(p + 0x878) != 0) {
+        func_001AD140(*(char **)(p + 0x878));
+        *(int *)(p + 0x878) = 0;
+    }
+    if (*(char **)(p + 0x87C) != 0) {
+        func_001AD140(*(char **)(p + 0x87C));
+        *(int *)(p + 0x87C) = 0;
+    }
+    *(char **)(p + 0x878) = func_00207480(1, 0x10B, 0, 0x40);
+    q = *(char **)(p + 0x878);
+    if (q != 0) {
+        *(char **)(q + 0x90) = p + 0x560;
+        *(unsigned char *)(q + 0x9A) = 0;
+    }
+}

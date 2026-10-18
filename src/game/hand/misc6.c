@@ -2973,6 +2973,7 @@ typedef struct { unsigned char x; unsigned char y; } cb2;
 typedef struct { cf4 a; cf4 b; cf2 c; cb2 e; float d[10]; } cam54;
 
 extern cam54 *D_005BC2E4;
+void func_00195D70(char *, int);
 
 void func_002D58C0(char *p) {
     switch (*(unsigned char *)(p + 5)) {
@@ -3023,4 +3024,22 @@ void func_002E0000(char *p, unsigned char k) {
     d->d[8] = e->d[8];
     d->d[9] = e->d[9];
     *(float *)(p + 0x2AA8) = s;
+}
+
+char *func_002F7C10(int a, unsigned char b) {
+    int e;
+    char *r;
+    func_00195D70(D_00645A30, 3);
+    while ((e = func_00195D90(D_00645A30)) != 0) {
+        r = func_001005E0(e, 0, D_00599090, D_00598570, 0);
+        if (r != 0) {
+            if (b == 0 && a == *(int *)(r + 8)) {
+                return r;
+            }
+            if (b == *(unsigned char *)(r + 4) && a == *(int *)(r + 8)) {
+                return r;
+            }
+        }
+    }
+    return 0;
 }
