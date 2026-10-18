@@ -17189,6 +17189,7 @@ typedef struct { unsigned char v[6]; } b6tab;
 
 extern "C" i6tab D_00563EC0;
 extern "C" b6tab D_005BCCC0;
+extern "C" signed char D_00575B10[];
 
 extern "C" void func_0039CDF0(char *p) {
     i6tab t __attribute__((aligned(16))) = D_00563EC0;
@@ -17233,4 +17234,41 @@ extern "C" int func_0039FE70(char *p) {
     }
     *(short *)(p + 0x2DDA) = 0x40;
     return 1;
+}
+
+static inline bool flag_on(char *g, signed char k) {
+    unsigned int w = *(unsigned int *)(g + k / 32 * 4 + 0x64);
+    return (w & (1 << (k & 31))) != 0;
+}
+
+extern "C" void func_0043B080(char *p, int ang, float s) {
+    float m2[16];
+    float m[16];
+    float *src = ((ObjPosC4 *)(p + 0x580))->mC4();
+    QCOPY(p + 0x60, src);
+    *(float *)(p + 0x60) = *(float *)(p + 0x60) * s;
+    *(float *)(p + 0x68) = *(float *)(p + 0x68) * s;
+    SETPOS(m2, p + 0x60);
+    func_00105760(m, m2, 6.283185f * ((float)ang / 65536.0f));
+    GETPOS(p + 0x60, m);
+    VADDIP(p + 0x50, p + 0x60);
+}
+
+extern "C" int func_00445B90(char *p, signed char a, signed char b) {
+    int i;
+    char *g = *(char **)D_01CAFF10;
+    signed char *e;
+    if (a == 1 && b == 1) {
+        b = 2;
+    }
+    if (a == 1 && b == 12) {
+        b = 11;
+    }
+    for (i = 0; i < 63; i++) {
+        e = &D_00575B10[i * 2];
+        if (e[0] >= 0 && a == e[0] && b == e[1] && flag_on(g, i) == 1) {
+            return 1;
+        }
+    }
+    return 0;
 }
