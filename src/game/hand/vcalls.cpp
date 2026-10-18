@@ -17194,6 +17194,7 @@ extern "C" void func_0024E830(char *, char *, float *, char *);
 extern "C" unsigned int func_002F1EF0(void);
 extern "C" char *func_002F14E0(char *);
 extern "C" int func_002F1B20(char *, char *, int, int);
+extern "C" void func_00286040(char *);
 
 extern "C" void func_0039CDF0(char *p) {
     i6tab t __attribute__((aligned(16))) = D_00563EC0;
@@ -17457,5 +17458,30 @@ extern "C" void func_002F2D30(char *p, Obj1E0 *ob) {
             *(float *)(p + 0x898) = 0.0f;
         }
         *(int *)(p + 0x8A0) += 1;
+    }
+}
+
+extern "C" void func_003031E0(char *p) {
+    int i;
+    ((ObjSkD0 *)(p + 0x180))->mD0();
+    if (*(unsigned char *)(p + 0xDD) == 1) {
+        ((ObjSk14 *)(p + 0x780))->m14();
+    }
+    func_00286040(p + 0x894);
+    if (*(char **)(p + 0x894) != 0) {
+        func_001AD140(*(char **)(p + 0x894));
+    }
+    func_00303870(p + 0x89C);
+    if (*(char **)(p + 0x89C) != 0) {
+        func_001AD140(*(char **)(p + 0x89C));
+        *(int *)(p + 0x89C) = 0;
+    }
+    func_00206730(p + 0x898);
+    if (*(char **)(p + 0x898) != 0) {
+        func_001AD140(*(char **)(p + 0x898));
+        *(int *)(p + 0x898) = 0;
+    }
+    for (i = 0; i < *(int *)(p + 0x118); i++) {
+        func_0013D5D0(p + i * 16 + 0x11C);
     }
 }
