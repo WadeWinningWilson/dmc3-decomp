@@ -8951,6 +8951,14 @@ static inline unsigned short act_1A79(char *p) {
 }
 
 extern St1A79 D_0065F5F8;
+void func_001B6480(char *, int);
+void func_001B64E0(char *, short *);
+void func_001B64C0(char *, int);
+void func_001B6500(char *, int);
+void func_001B6510(char *, int);
+void func_001B6520(char *, int);
+void func_001B6550(char *, int);
+void func_001B7430(char *, int);
 
 void func_001A79A0(char *p, int n) {
     int k;
@@ -8975,4 +8983,140 @@ void func_001A79A0(char *p, int n) {
             D_0065F5F8.b0[1] += *(int *)(p + 0xB0);
         }
     }
+}
+
+typedef struct { int x0; int y0; int c0; int o0; int x1; int y1; int c1; int o1; } R1B6;
+
+void func_001B6470(char *, R1B6 *);
+extern unsigned char D_01CAFF3E[];
+extern unsigned char D_01CAFF3F[];
+void func_004F9970(int, int, int);
+
+void func_001B69F0(int z, short x, short y, int c, short w, short h, int t2, int t3) {
+    R1B6 r;
+    short uv[4];
+    short ww;
+    if (t3 == 0) return;
+    ww = w + 10;
+    r.x0 = (short)(x - 0x1C - ww / 24);
+    r.y0 = (short)(y - 8 - h / 16);
+    r.c0 = c;
+    r.o0 = 1;
+    r.x1 = (short)(ww / 48 + (x + 0x20 + ww));
+    r.y1 = (short)(h / 32 + (y + 0xC + h));
+    r.c1 = c;
+    r.o1 = 1;
+    func_001B6470(D_01C61820, &r);
+    func_001B6480(D_01C61820, 0);
+    uv[2] = 0x1000;
+    uv[3] = 0x800;
+    uv[0] = 0;
+    uv[1] = 0;
+    func_001B64E0(D_01C61820, uv);
+    func_001B64C0(D_01C61820, t2);
+    func_001B6500(D_01C61820, t3);
+    func_001B6510(D_01C61820, 4);
+    func_001B6520(D_01C61820, 0);
+    func_001B6550(D_01C61820, 1);
+    func_001B7430(D_01C61820, 0);
+}
+
+static inline unsigned char tst_20F(unsigned int *p, int m) {
+    unsigned char r = (*p & m) != 0; return r;
+}
+
+static inline void setf_20F(int id) {
+    char *g = *(char **)D_01CAFF0C;
+    int k = (signed char)id;
+    int m = 1 << (k & 31);
+    int w = k / 32 * 4;
+    if (tst_20F((unsigned int *)((char *)w + (int)*(char **)(g + 4) + 0x6C), m) == 0) {
+        func_004F9970(*(int *)(g + 0x28), id, 3);
+        *(unsigned int *)((char *)w + (int)*(char **)(*(char **)D_01CAFF0C + 4) + 0x6C) |= m;
+    }
+}
+
+void func_0020F7D0(int z, int id) {
+    switch (id) {
+    case 0x15:
+        if (D_01CAFF3E[0] == 1 && D_01CAFF3F[0] == 1) setf_20F(id);
+        break;
+    case 0x17:
+        setf_20F(id);
+        break;
+    default:
+        if (D_01CAFF3F[0] == 1) setf_20F(id);
+        break;
+    }
+}
+
+typedef struct { float v[4]; } V4C2;
+
+typedef struct { V4C2 p; float d[3]; } RayC2;
+
+static inline void mkray_1C2(RayC2 *r, float *a) {
+    r->d[0] = a[4] - a[0];
+    r->d[1] = a[5] - a[1];
+    r->d[2] = a[6] - a[2];
+}
+
+static inline void at_1C2(float *o, RayC2 *r, float *t) {
+    o[0] = r->p.v[0] + r->d[0] * *t;
+    o[1] = r->p.v[1] + r->d[1] * *t;
+    o[2] = r->p.v[2] + r->d[2] * *t;
+}
+
+float func_001C2010(char *, RayC2 *, RayC2 *, float *, float *);
+float func_00104D00(float *, float *);
+
+float func_001C2980(char *o, float *a, float *b, float *o1, float *o2) {
+    RayC2 r1;
+    RayC2 r2;
+    float t1;
+    float t2;
+    float r;
+    r1.p = *(V4C2 *)a;
+    r2.p = *(V4C2 *)b;
+    mkray_1C2(&r1, a);
+    mkray_1C2(&r2, b);
+    r = func_001C2010(o, &r1, &r2, &t1, &t2);
+    if (o1) at_1C2(o1, &r1, &t1);
+    if (o2) at_1C2(o2, &r2, &t2);
+    return r;
+}
+
+#define VSUBR(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+typedef struct { float x, y, z; } V3C3;
+
+int func_002C3680(char *o, float *pt) {
+    float t[4] __attribute__((aligned(16)));
+    float d[32];
+    float best;
+    int i;
+    int bi = 0;
+    t[0] = (*(V3C3 **)(o + 4))[0].x;
+    t[1] = (*(V3C3 **)(o + 4))[0].y;
+    t[2] = (*(V3C3 **)(o + 4))[0].z;
+    t[3] = 1.0f;
+    VSUBR(t, t, pt);
+    best = d[0] = func_00104D00(t, t);
+    for (i = 1; i < *(int *)(o + 8); i++) {
+        t[0] = (*(V3C3 **)(o + 4))[i].x;
+        t[1] = (*(V3C3 **)(o + 4))[i].y;
+        t[2] = (*(V3C3 **)(o + 4))[i].z;
+        t[3] = 1.0f;
+        VSUBR(t, t, pt);
+        d[i] = func_00104D00(t, t);
+        if (!(best <= d[i])) {
+            best = d[i];
+            bi = i;
+        }
+    }
+    if (bi != 0 && *(int *)(o + 8) - 1 > bi) {
+        if (d[bi - 1] < d[bi + 1]) bi--;
+    } else if (!(bi < *(int *)(o + 8) - 1)) {
+        bi = *(int *)(o + 8) - 2;
+    }
+    return bi;
 }
