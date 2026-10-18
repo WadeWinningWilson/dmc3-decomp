@@ -865,6 +865,13 @@ extern "C" float D_005647AC[];
 extern "C" unsigned char D_01CAFF3D[];
 extern "C" int func_0021CAD0(char *);
 extern "C" float D_005BDF14;
+extern "C" int func_003B55B0(char *, int);
+extern "C" float func_003B5650(char *, int, int);
+extern "C" unsigned char func_003B5780(char *, int);
+extern "C" short func_003B5700(char *, int);
+extern "C" float func_003B57C0(char *, int);
+extern "C" unsigned char func_003B58D0(char *, int);
+extern "C" short func_003B5850(char *, int);
 
 extern "C" void func_003E6FA0(char *p) {
     func_0028C5C0(p + 0x2180, (unsigned char)(*(float *)(p + 0x3424) > 0.0f), *(float *)(p + 0x10));
@@ -2426,4 +2433,45 @@ extern "C" int func_004D2610(char *p) {
         }
     }
     return 0;
+}
+
+class BaseD0 {
+public:
+    int x;
+};
+
+extern "C" BaseD0 *func_002F7C10(int, int);
+
+class PadD0 {
+public:
+    char padD0[0xD0];
+};
+
+class DerD0 : public PadD0, public BaseD0 {
+};
+
+extern "C" void func_003B5470(char *p) {
+    int i;
+    DerD0 *e;
+    *(short *)(p + 0x222E) = *(short *)(p + 0x222C);
+    *(short *)(p + 0x222C) = 0;
+    for (i = 0; i < 7; i++) {
+        e = static_cast<DerD0 *>(func_002F7C10(i, 0x20));
+        if (e != 0) {
+            *(unsigned char *)(p + i + 0x221A) = *(unsigned char *)((char *)e + 0x2BC);
+            *(char **)((char *)e + 0x2B4) = p;
+            if (*(unsigned char *)(p + i + 0x221A) != 0) *(short *)(p + 0x222C) = *(short *)(p + 0x222C) + 1;
+        }
+    }
+    *(int *)(p + 0x21FC) = func_003B55B0(p, 0);
+    *(int *)(p + 0x2210) = func_003B55B0(p, 1);
+    if ((bool)*(unsigned char *)(p + 0x2216) == true) {
+        *(float *)(p + 0x2208) = func_003B57C0(p, *(int *)(p + 0x2200));
+        *(unsigned char *)(p + 0x220C) = func_003B58D0(p, *(int *)(p + 0x2200));
+        *(short *)(p + 0x220E) = func_003B5850(p, *(int *)(p + 0x2200));
+    } else {
+        *(float *)(p + 0x2208) = func_003B5650(p, *(int *)(p + 0x2200), 0);
+        *(unsigned char *)(p + 0x220C) = func_003B5780(p, *(int *)(p + 0x2200));
+        *(short *)(p + 0x220E) = func_003B5700(p, *(int *)(p + 0x2200));
+    }
 }

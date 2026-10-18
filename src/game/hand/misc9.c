@@ -12649,6 +12649,12 @@ void func_001C5B00(char *p, char *t) {
 }
 
 typedef struct { int w[16]; } S40;
+extern char D_01DFA310[];
+extern int D_00586A50[];
+int func_004B5C70(char *, int);
+int func_0030E980(char *, int);
+int func_004B5D60(char *, int);
+float func_00132D80(float *, float *);
 
 signed char func_002088E0(char *l, char *a, char *b, short c, unsigned char d, unsigned char e, unsigned char f) {
     char *t7;
@@ -12671,4 +12677,81 @@ signed char func_002088E0(char *l, char *a, char *b, short c, unsigned char d, u
     *(unsigned char *)(t7 + 3) = f;
     *(short *)l = *(short *)l + 1;
     return *(signed char *)t7;
+}
+
+void func_004B5F10(char *p) {
+    int h;
+    int i;
+    int c;
+    int *t;
+    t = D_00586A50;
+    for (i = 0; i < 7; i++) {
+        h = func_0030E980(D_01DFA310, func_004B5C70(p, i));
+        if (h == 0) return;
+        switch (func_004B5D60(p, i)) {
+        case 0:
+        case 2:
+        case 3:
+        case 4:
+            c = *(signed char *)(p + 0x3375) == i ? 0x80A0A0A0 : 0x80303030;
+            break;
+        case 1:
+        default:
+            c = *(signed char *)(p + 0x3375) == i ? 0x804040A0 : 0x80101030;
+            break;
+        }
+        func_0030FDF0(D_01DFA340, h, t[0], t[1], c, 0, 0xFFFFF0, 1);
+        t += 2;
+    }
+}
+
+#define VSUB3(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+#define VMUL3(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvmul.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+#define VMUL3R(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvmul.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+#define VADD3(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+int func_001C15B0(char *o, float *out, float *s, float *q, float *r) {
+    float b[4] __attribute__((aligned(16)));
+    float a[4] __attribute__((aligned(16)));
+    float l;
+    float m;
+    VSUB3(a, q, s);
+    VMUL3R(b, a, a);
+    l = b[2] + (b[0] + b[1]);
+    if (l <= 0.01f) return 0;
+    VSUB3(b, r, s);
+    VMUL3(b, a, b);
+    m = b[2] + (b[0] + b[1]);
+    if (m < 0.01f || l < m) return 0;
+    m = m / l;
+    func_00132580(out, (char *)a, m);
+    VADD3(out, out, s);
+    return 1;
+}
+
+int func_00245EF0(float s, char *u, float *pos, int ang, float *out, char *o, unsigned short m) {
+    float v[4] __attribute__((aligned(16)));
+    float h[4] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    float w[4] __attribute__((aligned(16)));
+    v[0] = pos[0] + s * func_00131BA0(ang);
+    v[1] = pos[1];
+    v[2] = pos[2] + s * func_00131C20(ang);
+    v[3] = 1.0f;
+    if ((unsigned char)func_002018A0(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, (char *)pos, (char *)v, (char *)h, o, m) == 1) {
+        d[0] = func_00131BA0(ang);
+        d[1] = 0.0f;
+        d[2] = func_00131C20(ang);
+        d[3] = 1.0f;
+        w[0] = *(float *)(o + 0x28);
+        w[1] = *(float *)(o + 0x2C);
+        w[2] = *(float *)(o + 0x30);
+        w[3] = 1.0f;
+        *out = func_00132D80(d, w);
+        return 1;
+    }
+    return 0;
 }

@@ -3351,6 +3351,7 @@ void func_00247920(char *, char *, float *);
 void func_00248580(char *);
 void func_0024BF20(char *);
 void func_00387830(char *);
+void func_002282B0(char *);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -3934,5 +3935,29 @@ void func_003D8EA0(char *p, int on) {
                 *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) &= ~(1 << (s & 31));
             }
         }
+    }
+}
+
+void func_003FDFF0(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    unsigned int f;
+    func_002282B0(p + 0x428);
+    if (*(char **)(p + 0x428) == 0) func_001AD140(p);
+    func_001AD100(p);
+    f = *(unsigned int *)(*(char **)(p + 0x1CC) + 8);
+    *(float *)(p + 0x470) = *(float *)(p + 0x470) + *(float *)(p + 0x430) * *(float *)(p + 0x10);
+    *(float *)(p + 0x474) = *(float *)(p + 0x474) + *(float *)(p + 0x434) * *(float *)(p + 0x10);
+    *(float *)(p + 0x478) = *(float *)(p + 0x478) + *(float *)(p + 0x438) * *(float *)(p + 0x10);
+    *(float *)(p + 0x4C0) = *(float *)(p + 0x4C0) - *(float *)(p + 0x10);
+    if ((f & 0x40) != 0 || *(float *)(p + 0x478) < 1300.0f) {
+        func_00207480(3, 0xED, (float *)(p + 0x440), 0x10);
+        v[0] = *(float *)(p + 0x470);
+        v[1] = *(float *)(p + 0x474);
+        v[2] = *(float *)(p + 0x478);
+        v[3] = 1.0f;
+        func_0034BA60(0x1D, (char *)v, *(signed char *)(*(char **)(p + 0x428) + 0x46), 0, 1);
+        func_001AD140(p);
+    } else {
+        func_0028C5C0(p + 0x150, 0, *(float *)(p + 0x10));
     }
 }

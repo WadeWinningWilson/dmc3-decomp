@@ -947,6 +947,10 @@ void func_0028C8E0(char *, int);
 void func_0028C910(char *);
 char *func_0028C3A0(char *, int, int, char *);
 void func_00105300(char *, char *);
+int func_0034B940(char *, char *);
+void func_00131760(float *, float *, float *);
+void func_00104B80(char *, float *, float *);
+void func_00131650(char *, char *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1073,4 +1077,40 @@ int func_0023EB30(char *p) {
         }
     }
     return 0;
+}
+
+#define UNIT(e) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(e) : "memory")
+
+static inline char *plr(unsigned char i) {
+    return ((char **)(*(char **)D_01CAFF0C + 0xC))[i];
+}
+
+void func_003DB8C0(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    short a;
+    if (*(unsigned char *)(p + 0xEFD) == 10) return;
+    *(float *)(p + 0xEC4) = 40.0f;
+    *(unsigned char *)(p + 0xEFD) = 10;
+    *(unsigned char *)(p + 0xF06) = 0;
+    *(unsigned char *)(p + 5) = 0;
+    *(unsigned char *)(p + 0xEFE) = 1;
+    *(unsigned char *)(p + 0xEFF) = 0x80;
+    UNIT(m);
+    a = func_0034B940(p + 0x50, plr(*(unsigned char *)(p + 0xF02)) + 0x50);
+    r[2] = 0.0f;
+    r[0] = -0.6981317f;
+    r[1] = 6.283185f * (a / 65536.0f);
+    r[3] = 1.0f;
+    func_00131760(m, m, r);
+    v[2] = 1.0f;
+    v[3] = 1.0f;
+    v[0] = 0.0f;
+    v[1] = 0.0f;
+    func_00104B80(p + 0x60, m, v);
+    func_00131650(p + 0x60, p + 0x60);
+    *(float *)(p + 0xEDC) = 4.0f;
+    *(float *)(p + 0xEE0) = 0.0f;
+    *(unsigned char *)(p + 0x1E1) = 1;
 }
