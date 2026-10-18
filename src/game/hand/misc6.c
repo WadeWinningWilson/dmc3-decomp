@@ -4117,3 +4117,31 @@ void func_00370EF0(char *p) {
     *(float *)(p + 0x564) = *(float *)(p + 0x564) + 80.0f;
     func_0028C5C0(p + 0x150, 0, 1.0f);
 }
+
+void func_002CEEA0(char *p, int n) {
+    *(unsigned char *)(p + 0x1E1) = 0;
+    *(unsigned char *)(p + 0x1E4) = 0;
+    *(unsigned char *)(p + 0x1E5) = 0;
+    *(unsigned char *)(p + 0x1E2) = 3;
+    *(unsigned char *)(p + 0x1E3) = 2;
+    if ((unsigned char)n > 0) {
+        func_0024DB10(p + 0x2450, 1, 0xB, 0x30, 0, 1, n);
+        func_0024DB10(p + 0x2520, 1, 0xB, 0x30, 0, 1, n);
+        func_0024DB10(p + 0x25F0, 1, 0xB, 0x30, 0, 1, n);
+        func_0024DB10(p + 0x26C0, 1, 0xB, 0x30, 0, 1, n);
+        func_0024DB10(p + 0x2790, 1, 0xB, 0x30, 0, 1, n);
+    } else {
+        func_0024DA80(p + 0x2450, 1, 0xB);
+        func_0024DA80(p + 0x2520, 1, 0xB);
+        func_0024DA80(p + 0x25F0, 1, 0xB);
+        func_0024DA80(p + 0x26C0, 1, 0xB);
+        func_0024DA80(p + 0x2790, 1, 0xB);
+    }
+    func_002CB900(p, 0x13);
+    *(unsigned char *)(p + 0x2CE4) = 0x13;
+    *(unsigned char *)(p + 0x2CE5) = 0x13;
+    *(unsigned char *)(p + 0x2CE6) = 0x13;
+    *(unsigned char *)(p + 0x2CE7) = 0x13;
+    *(unsigned char *)(p + 0x2CE8) = 0x13;
+    func_00128488(p + 0x5AD, 0, 4);
+}

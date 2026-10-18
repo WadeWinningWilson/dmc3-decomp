@@ -1981,6 +1981,8 @@ char *func_004F6850(char *p) {
 typedef struct { short n; char x[0x16]; } T18;
 
 extern T18 D_00541CE0[];
+extern float D_00578C14[];
+unsigned char func_002077F0(int);
 
 int func_00210850(float f, char *o, int k, char **out) {
     int i;
@@ -2012,4 +2014,71 @@ int func_00210850(float f, char *o, int k, char **out) {
         }
     }
     return c;
+}
+
+int func_00458210(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    UNIT(m);
+    switch ((unsigned char)*(unsigned char *)(p + 0x3D4)) {
+    case 0:
+        break;
+    case 1:
+        r[0] = 0.0f;
+        r[1] = (float)*(short *)(p + 0x3D6) / 65536.0f * 6.283185f;
+        r[2] = D_00578C14[*(unsigned char *)(p + 0x3D1) * 2] / 360.0f * 6.283185f;
+        r[3] = 1.0f;
+        func_00131700(m, m, r);
+        break;
+    }
+    *(char **)(p + 0x508) = func_00207480(3, 0x1AE, m, 0x10);
+    {
+        char *o = *(char **)(p + 0x508);
+        if (o == 0) return 0;
+        *(char **)(o + 0x90) = p + 0x440;
+        *(unsigned char *)(o + 0x9A) = 1;
+    }
+    switch (*(unsigned char *)(p + 0x3D4)) {
+    case 0:
+        *(char **)(p + 0x50C) = func_00207480(3, 0x321, 0, 0x10);
+        {
+            char *o = *(char **)(p + 0x50C);
+            if (o == 0) return 0;
+            *(char **)(o + 0x90) = p + 0x4C0;
+            *(unsigned char *)(o + 0x9A) = 1;
+        }
+        break;
+    case 1:
+        break;
+    }
+    return 1;
+}
+
+void func_0032E640(char *p) {
+    int i;
+    int j;
+    int m;
+    unsigned char k;
+    for (i = 0; i < 2; i++) {
+        func_00206730(p + 0x84 + i * 4);
+    }
+    k = *(unsigned char *)(p + 0xA0);
+    if (((unsigned int)(k - 1) <= 1 || k == 3) && *(int *)(p + 0xB8) != 0) {
+        for (j = 0; j < *(unsigned char *)(p + 0xA5); j++) {
+            func_00206730(*(char **)(p + 0xB8) + j * 0x50 + 0x40);
+        }
+    }
+    for (i = 0; i < 2; i++) {
+        if (*(int *)(p + 0x84 + i * 4) != 0 && func_002077F0(*(int *)(p + 0x84 + i * 4)) == 1) {
+            *(int *)(p + 0x84 + i * 4) = 0;
+        }
+    }
+    k = *(unsigned char *)(p + 0xA0);
+    if (((unsigned int)(k - 1) <= 1 || k == 3) && *(int *)(p + 0xB8) != 0) {
+        for (m = 0; m < *(unsigned char *)(p + 0xA5); m++) {
+            if (*(int *)(*(char **)(p + 0xB8) + m * 0x50 + 0x40) != 0 && func_002077F0(*(int *)(p + 0x84)) == 1) {
+                *(int *)(p + 0x84) = 0;
+            }
+        }
+    }
 }

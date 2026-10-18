@@ -7735,6 +7735,18 @@ void func_0019B440(char *, char *);
 void func_0019AA80(char *, char *);
 void func_00199580(char *, int, int);
 void func_001996C0(char *);
+void func_0041E190(float *, float *, float);
+extern float D_00568910[];
+void func_00249990(char *);
+void func_002DBCA0(char *, int);
+void func_002DBD20(char *, float, float);
+void func_002DAD80(char *, int, float);
+void func_002DAE30(char *, short *, short *, int);
+short func_002DACC0(char *);
+void func_002DB880(char *, int);
+extern short D_0054A0C0[];
+void func_00213210(char *, int, int);
+void func_002F5AC0(char *, int, int);
 
 void func_00474E80(char *p, char *o) {
     V4Q t;
@@ -7851,4 +7863,86 @@ void func_002F8DA0(char *p) {
     func_00131700(p + 0x410, p + 0x410, r);
     func_00105230(p + 0x410, p + 0x410, t);
     func_001318E0(p + 0x410, p + 0x410, s);
+}
+
+void func_003D3620(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    v[0] = D_00568910[*(int *)(p + 0xB5C)];
+    v[1] = -30.0f;
+    v[2] = -220.0f;
+    v[3] = 1.0f;
+    QCOPY(p + 0x50, *(char **)(*(char **)(p + 0x194) + 0x104) + 0x30);
+    func_0041E190(v, v, (float)*(short *)(*(char **)(p + 0xD0) + 0x90) / 65536.0f * 6.283185f);
+    VADDR54(p + 0x50, p + 0x50, v);
+    if (!(*(float *)(*(char **)(p + 0xD0) + 0x68) <= 15.0f)) {
+        *(float *)(p + 0x60) = 0.0f;
+        *(float *)(p + 0x64) = 0.0f;
+        *(float *)(p + 0x68) = 5.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+    } else {
+        *(float *)(p + 0x60) = 0.0f;
+        *(float *)(p + 0x64) = 0.0f;
+        *(float *)(p + 0x68) = 10.0f;
+        *(float *)(p + 0x6C) = 1.0f;
+    }
+    *(short *)(p + 0x90) = *(short *)(*(char **)(p + 0xD0) + 0x90) + 0x8000;
+    *(float *)(p + 0x80) = 0.0f;
+    *(float *)(p + 0x84) = (float)*(short *)(p + 0x90) / 65536.0f * 6.283185f;
+    *(float *)(p + 0x88) = 0.0f;
+    *(float *)(p + 0x8C) = 1.0f;
+}
+
+static inline char *func_002217A0_e(char *p) {
+    return (char *)((*(unsigned char *)(p + 0x28A7) != 0) * 0x18) + *(int *)(p + 0x2830);
+}
+
+void func_002217A0(char *p) {
+    func_002498D0(p);
+    func_00249990(p);
+    switch (*(unsigned char *)(p + 0x284C)) {
+    case 0:
+        func_002DBCA0(p, 1);
+        func_002DBD20(p, *(float *)(func_002217A0_e(p) + 4), 0.0f);
+        *(unsigned char *)(p + 0x284C) = *(unsigned char *)(p + 0x284C) + 1;
+    case 1:
+        func_002DAD80(p, 0, 1.0f);
+        func_002DAE30(p, (short *)(p + 0x90), (short *)(p + 0x28E2), (short)(unsigned short)(short)(int)(0.5f + 65536.0f * *(float *)(*(char **)(p + 0x283C) + 0xC0) / 360.0f));
+        *(signed char *)(p + 0x3BA0) = *(signed char *)(p + 0x3B9F);
+        func_00221240(p);
+        if (*(signed char *)(p + 0x3BA0) != *(signed char *)(p + 0x3B9F)) {
+            func_00220860(p, 0, 0, 10.0f);
+        }
+        *(short *)(p + 0x28E2) = func_002DACC0(p) - *(short *)(p + 0x28DC);
+        func_002DAE30(p, (short *)(p + 0x28DC), (short *)(p + 0x28E2), 0x800);
+        func_002DB880(p, *(short *)(p + 0x28DC));
+        break;
+    }
+}
+
+void func_002DC480(char *p) {
+    char buf[0xC0];
+    char *a;
+    char *b;
+    char *e;
+    short t;
+    *(int *)(p + 0x1C) = 0;
+    a = func_00287270(*(char **)(*(char **)(p + 0xC) + 8), 4, *(int *)(p + 0x14));
+    func_0030E580(D_01DFA310, *(int *)(*(char **)(a + 0xC) + 0xC));
+    a = func_00287270(*(char **)(*(char **)(p + 0xC) + 8), 3, *(int *)(p + 0x14));
+    if (func_002DBF70(p) != -1) {
+        b = func_00287270(*(char **)(*(char **)(p + 0xC) + 8), 0, func_002DBF70(p));
+        func_00213210(p + 0x20, *(int *)(a + 0xC), *(int *)(b + 0xC));
+    } else {
+        func_00213210(p + 0x20, *(int *)(a + 0xC), 0);
+    }
+    if (func_002DBF70(p) != -1) {
+        t = func_002DBF70(p);
+        e = *(char **)(*(char **)(p + 0xC) + 4);
+        *(short *)(e + 0x614) = t;
+        t = *(short *)(e + 0x614);
+        *(short *)(e + 0x610) = (short)(D_0054A0C0[t / 100] + t % 100) << 6;
+        *(short *)(e + 0x612) = 0;
+        func_002F5AC0(buf, *(int *)(*(char **)(b + 0xC) + 0xC), 1);
+        *(short *)(*(char **)(*(char **)(p + 0xC) + 4) + 0x614) = -1;
+    }
 }
