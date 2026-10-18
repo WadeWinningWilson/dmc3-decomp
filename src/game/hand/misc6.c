@@ -2990,6 +2990,9 @@ void func_00451890(char *);
 void func_004518A0(char *, int);
 void func_00450DC0(char *);
 void func_0034C3E0(char *);
+void func_00313930(int, int, signed char);
+int func_00206190(char *, int);
+int func_001C35D0(char *, char *, int, float *);
 
 void func_002D58C0(char *p) {
     switch (*(unsigned char *)(p + 5)) {
@@ -3208,4 +3211,76 @@ void func_00456190(char *p) {
         *(unsigned char *)(e + 0x9B) = 1;
     }
     func_002075D0(3, 0x22F, *(int *)(*(char **)(p + 0x1C8) + 0x104), 1, 0x40);
+}
+
+#define VADD(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+void func_00208620(short *tbl, int i, int arg) {
+    char *e;
+    if (i < tbl[0]) {
+        e = (char *)tbl + i * 0xD0 + 0x10;
+        if (*(unsigned char *)(e + 1) != 0 && *(unsigned char *)(e + 0xC9) != 1) {
+            *(unsigned char *)(e + 0xC9) = 1;
+            if (*(int *)(e + 0xCC) != -1) {
+                int s = (short)*(int *)(e + 0xCC);
+                char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+                if (s < 32) {
+                    *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) |= 1 << (s & 31);
+                } else {
+                    s -= 32;
+                    *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) |= 1 << (s & 31);
+                }
+            }
+            if (*(int *)(e + 0xC4) != 0) {
+                func_00313930(*(int *)(e + 0xC4), arg, *(signed char *)(e + 0xC8));
+            }
+        }
+    }
+}
+
+void func_00206590(char *p) {
+    short n;
+    int i;
+    if (*(unsigned char *)(p + 0x3A) == 0) {
+        *(unsigned char *)(p + 0x38) = 2;
+        return;
+    }
+    *(unsigned char *)(p + 0x38) = 3;
+    n = 0;
+    for (i = 0; i < 8; i++) {
+        if (*(unsigned char *)(p + i + 0xC4) == 1) {
+            n++;
+        }
+    }
+    for (i = 0; i < n; i++) {
+        if (*(unsigned char *)(p + i + 0xCC) == 0) {
+            if ((unsigned char)func_00206190(p, i) == 0) {
+                *(unsigned char *)(p + i + 0xCC) = 1;
+            } else {
+                func_001AD140(*(char **)(p + i * 4 + 0xA4));
+                *(unsigned char *)(p + i + 0xCC) = 1;
+            }
+        }
+    }
+}
+
+int func_001C3B40(int a, char *r, int c, int *count, char *out) {
+    float v[4];
+    float t[2];
+    int n;
+    int i;
+    *count = func_001C35D0(r, r + 0x10, c, t);
+    n = 0;
+    for (i = 0; i < *count; i++) {
+        if (0.0f <= t[i] && t[i] <= 1.0f) {
+            v[0] = *(float *)(r + 0x10) * t[i];
+            v[1] = *(float *)(r + 0x14) * t[i];
+            v[2] = *(float *)(r + 0x18) * t[i];
+            v[3] = 0.0f;
+            VADD(out + n * 16, r, v);
+            n++;
+        }
+    }
+    *count = n;
+    return *count > 0;
 }
