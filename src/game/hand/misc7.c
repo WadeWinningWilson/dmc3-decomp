@@ -1127,6 +1127,13 @@ void func_00199740(char *p, char *buf, int a) {
 typedef struct { float x; float y; float z; float w; } cf4;
 
 typedef struct { cf4 c; float r; } sph5;
+extern int D_005BE17C;
+extern int D_005BE174;
+extern int D_005BE180;
+extern char D_01DF95C0[];
+extern char D_01DF9604[];
+extern char D_005588A0[];
+void func_0010F9C0(char *);
 
 int func_001C0040(char *a, float *b, char *c, float *out) {
     float s[8];
@@ -1168,4 +1175,24 @@ int func_0023F760(char *p) {
         *(signed char *)(p + 0x3BA1) = 5;
     }
     return 1;
+}
+
+int func_002FA530(int type, char *src, int len) {
+    if (D_005BE17C == 32) {
+        func_0010F9C0(D_005588A0);
+        return -1;
+    }
+    {
+        int i = D_005BE174;
+        *(int *)(D_01DF95C0 + i * 0x48) = type;
+        *(int *)(D_01DF9604 + i * 0x48) = len;
+        func_00128488(D_01DF95C0 + i * 0x48 + 4, 0, 0x40);
+    }
+    func_001282D0(D_01DF95C0 + D_005BE174 * 0x48 + 4, src, len);
+    D_005BE174 = (D_005BE174 + 1) & 0x1F;
+    D_005BE17C++;
+    if (type == 3) {
+        D_005BE180++;
+    }
+    return D_005BE17C;
 }

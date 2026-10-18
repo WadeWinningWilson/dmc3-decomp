@@ -17191,6 +17191,9 @@ extern "C" i6tab D_00563EC0;
 extern "C" b6tab D_005BCCC0;
 extern "C" signed char D_00575B10[];
 extern "C" void func_0024E830(char *, char *, float *, char *);
+extern "C" unsigned int func_002F1EF0(void);
+extern "C" char *func_002F14E0(char *);
+extern "C" int func_002F1B20(char *, char *, int, int);
 
 extern "C" void func_0039CDF0(char *p) {
     i6tab t __attribute__((aligned(16))) = D_00563EC0;
@@ -17385,4 +17388,74 @@ extern "C" void func_0027D620(char *p) {
     }
     func_0024DD30(p + 0x2160);
     func_0024DD30(p + 0x2230);
+}
+
+static inline char *list_next2(char *p) {
+    int *n = *(int **)(p + 0x1020);
+    char *o = 0;
+    if (n != 0) {
+        o = (char *)n[0];
+        *(int *)(p + 0x1020) = n[1];
+    }
+    return o;
+}
+
+static inline unsigned char kill_remove(char *p, char *o) {
+    int *a = *(int **)(p + 0x834);
+    if (a != 0) {
+        int *c;
+        if ((char *)a[0] == o) {
+            *(int *)(p + 0x834) = a[1];
+            a[1] = *(int *)(p + 0x838);
+            *(int **)(p + 0x838) = a;
+            return 1;
+        }
+        for (c = (int *)a[1]; c != 0; c = (int *)c[1]) {
+            if ((char *)c[0] == o) {
+                a[1] = c[1];
+                c[1] = *(int *)(p + 0x838);
+                *(int **)(p + 0x838) = c;
+                return 1;
+            }
+            a = c;
+        }
+    }
+    return 0;
+}
+
+extern "C" int func_002F1900(char *p, int a) {
+    char *e;
+    char *o;
+    if (*(unsigned char *)(*(char **)D_01CAFF0C + 8) == 1) {
+        return 0;
+    }
+    if (func_002F1EF0() >= 10) {
+        return 0;
+    }
+    e = func_002F14E0(p);
+    if (e != 0 && (unsigned char)func_002F1B20(p, e, a, 0) == 1) {
+        return 1;
+    }
+    *(int *)(p + 0x1020) = *(int *)(p + 0x1018);
+    while ((o = list_next2(p)) != 0) {
+        if ((unsigned char)func_002F1B20(p, o, a, 0) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+extern "C" void func_002F2D30(char *p, Obj1E0 *ob) {
+    char *o = (char *)ob;
+    if (kill_remove(p, o) == 1) {
+        *(int *)(p + 0x1C) -= 1;
+        if (*(signed char *)(o + 0x46) == 0x1B) {
+            *(int *)(p + 0x20) -= 1;
+        }
+        *(float *)(p + 0x898) = *(float *)(p + 0x898) - 1.0f;
+        if (*(int *)(p + 0x1C) == 0) {
+            *(float *)(p + 0x898) = 0.0f;
+        }
+        *(int *)(p + 0x8A0) += 1;
+    }
 }
