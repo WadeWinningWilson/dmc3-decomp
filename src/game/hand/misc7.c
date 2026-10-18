@@ -2459,6 +2459,17 @@ int func_0024D260(char *p) {
 }
 
 typedef struct { float f[4]; } F4_3B9;
+extern char D_005599AC[];
+extern char D_005599A8[];
+extern int D_005BE098;
+int func_0024E780(int, int, int);
+void func_0030BBC0(char *);
+void func_001A29A0(char *);
+void func_00195E20(int *, char *);
+extern char D_00559990[];
+void func_0024E7B0(int, int, int);
+void func_0030B920(char *);
+void func_0030B770(char *);
 
 void func_003B9120(char *p) {
     if (*(unsigned char *)(p + 0x1B4) != 0) {
@@ -2483,4 +2494,52 @@ void func_003B9120(char *p) {
         break;
     }
     func_003B9D20(p);
+}
+
+void func_0030BAC0(char *p) {
+    unsigned char r;
+    int i;
+    r = func_0024E780(*(int *)(p + 0x173C), 0, 1);
+    if (!(*(float *)(p + 0xE8) <= *(float *)D_005599AC)) {
+        *(float *)(p + 0xE8) = *(float *)(p + 0xE8) + *(float *)D_005599A8;
+        if (*(float *)(p + 0xE8) < *(float *)D_005599AC) {
+            *(float *)(p + 0xE8) = *(float *)D_005599AC;
+        }
+    }
+    if (r == 5) {
+        *(unsigned char *)(p + 5) = 3;
+        func_0030BBC0(p);
+    } else {
+        if (*(unsigned char *)(p + 0x1739) == 1) {
+            for (i = 0; i < 3; i++) {
+                func_001A29A0(func_00279290(p + i * 0x600 + 0x180));
+            }
+        }
+        func_00195E20(&D_005BE098, p);
+    }
+}
+
+void func_0030B820(char *p) {
+    unsigned char r;
+    int i;
+    r = func_0024E780(*(int *)(p + 0x173C), 0, 1);
+    if (r == 3) {
+        *(unsigned char *)(p + 5) = 1;
+        func_0024E7B0(*(int *)(p + 0x173C), 0, 1);
+        func_0030B920(p);
+    } else {
+        if (*(float *)(p + 0xE8) < *(float *)D_00559990) {
+            *(float *)(p + 0xE8) = *(float *)(p + 0xE8) + *(float *)(p + 0x1380);
+            if (!(*(float *)(p + 0xE8) <= *(float *)D_00559990)) {
+                *(float *)(p + 0xE8) = *(float *)D_00559990;
+            }
+        }
+        func_0030B770(p);
+        if (*(unsigned char *)(p + 0x1739) == 1) {
+            for (i = 0; i < 3; i++) {
+                func_001A29A0(func_00279290(p + i * 0x600 + 0x180));
+            }
+        }
+        func_00195E20(&D_005BE098, p);
+    }
 }

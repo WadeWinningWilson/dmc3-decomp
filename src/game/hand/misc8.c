@@ -8235,6 +8235,9 @@ extern short D_00582AF0[][20];
 extern short D_00586140[];
 int func_004844D0(char *, signed char, short);
 unsigned char func_004836A0(char *, signed char, int);
+int func_001C13B0(char *, int, int, int *);
+float func_001C2B60(char *, float *, float *, float *, float *);
+void func_001A7230(int, int, int);
 
 int func_004D9280(char *p, char *a, char *r) {
     char buf[0x20];
@@ -8706,5 +8709,168 @@ int func_00483C10(char *p, signed char c, int idx) {
     r = func_004844D0(p, c, v);
     if (func_004836A0(p, c, r) == 0) return -1;
     if (D_00586140[(short)r] == -1) r = -1;
+    return r;
+}
+
+void func_001A16B0(char *p, int idx) {
+    char *o = *(char **)(p + 0xBC) + idx * 0x340;
+    int i;
+    char *t;
+    unsigned int j;
+    char *e;
+    if (*(int *)(o + 0x2C0) != 0) {
+        *(unsigned int *)o &= ~4;
+        *(unsigned int *)(o + 0x2C4) &= ~0xF;
+        for (i = 0; i < *(unsigned char *)(o + 0xC); i++) {
+            t = *(char **)(*(char **)(o + 0x1C) + i * 0x150 + 0x13C);
+            for (j = 0; j < *(unsigned int *)t; j++) {
+                e = *(char **)(t + 4) + j * 0xC0;
+                *(unsigned int *)(e + 0xB0) &= ~0xF;
+                *(unsigned int *)(e + 0xB0) |= 1;
+                *(unsigned int *)(e + 0xB0) &= 0xFDFFFFFF;
+            }
+        }
+    }
+}
+
+int func_001C0DC0(char *a, char *pts, char *seg, int x, int y, float *out) {
+    int idx[2] __attribute__((aligned(8)));
+    float q[2][4] __attribute__((aligned(16)));
+    float s[2][4] __attribute__((aligned(16)));
+    float o2[4] __attribute__((aligned(16)));
+    float o1[4] __attribute__((aligned(16)));
+    if (func_001C13B0(a, 2, y, idx) == 0) return 0;
+    QCOPY(s[0], pts + idx[0] * 16);
+    QCOPY(s[1], pts + idx[1] * 16);
+    QCOPY(q[0], seg);
+    QCOPY(q[1], seg + 0x10);
+    if (!(func_001C2B60(a, s[0], q[0], o1, o2) <= *(float *)(seg + 0x20))) return 0;
+    if (out != 0) QCOPY(out, o1);
+    return 1;
+}
+
+typedef struct { int n; int b4; int b8; int bc; unsigned int c0; } St1A7;
+
+static inline unsigned short act_1A7(char *p) {
+    if (*(int *)(p + 0xB4) == 0 && *(short *)(p + 0xB8) == 0) return 0;
+    return 1;
+}
+
+extern St1A7 D_0065D4B0;
+void func_001A7450(int, int, int);
+
+void func_001A7120(char *p, int n) {
+    if ((unsigned char)act_1A7(p)) {
+        if (n < 0) {
+            n = 30;
+        } else {
+            if (n > 30) n = 30;
+        }
+        func_001A7230(*(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE0), *(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE8), n);
+        D_0065D4B0.b4 += *(int *)(p + 0xB4);
+        D_0065D4B0.b8 += *(short *)(p + 0xB8);
+        D_0065D4B0.n++;
+        D_0065D4B0.bc += *(unsigned short *)(p + 0xA8);
+        D_0065D4B0.c0 += *(int *)(p + 0xB0);
+    }
+}
+
+typedef struct { int n; int b4; int b8; int bc; unsigned int c0; } StA7340;
+
+static inline unsigned short act_A7340(char *p) {
+    if (*(int *)(p + 0xB4) == 0 && *(short *)(p + 0xB8) == 0) return 0;
+    return 1;
+}
+
+extern StA7340 D_0065E4D0;
+void func_001A7840(int, int, int);
+
+void func_001A7340(char *p, int n) {
+    if ((unsigned char)act_A7340(p)) {
+        if (n < 0) {
+            n = 126;
+        } else {
+            if (n > 126) n = 126;
+        }
+        func_001A7450(*(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE0), *(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE8), n);
+        D_0065E4D0.b4 += *(int *)(p + 0xB4);
+        D_0065E4D0.b8 += *(short *)(p + 0xB8);
+        D_0065E4D0.n++;
+        D_0065E4D0.bc += *(unsigned short *)(p + 0xA8);
+        D_0065E4D0.c0 += *(int *)(p + 0xB0);
+    }
+}
+
+typedef struct { int n; int b4; int b8; int bc; unsigned int c0; } StA7730;
+
+static inline unsigned short act_A7730(char *p) {
+    if (*(int *)(p + 0xB4) == 0 && *(short *)(p + 0xB8) == 0) return 0;
+    return 1;
+}
+
+extern StA7730 D_0065F550;
+void func_001A7DA0(int, int, int);
+
+void func_001A7730(char *p, int n) {
+    if ((unsigned char)act_A7730(p)) {
+        if (n < 0) {
+            n = 126;
+        } else {
+            if (n > 126) n = 126;
+        }
+        func_001A7840(*(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE0), *(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE8), n);
+        D_0065F550.b4 += *(int *)(p + 0xB4);
+        D_0065F550.b8 += *(short *)(p + 0xB8);
+        D_0065F550.n++;
+        D_0065F550.bc += *(unsigned short *)(p + 0xA8);
+        D_0065F550.c0 += *(int *)(p + 0xB0);
+    }
+}
+
+typedef struct { int n; int b4; int b8; int bc; unsigned int c0; } StA7C90;
+
+static inline unsigned short act_A7C90(char *p) {
+    if (*(int *)(p + 0xB4) == 0 && *(short *)(p + 0xB8) == 0) return 0;
+    return 1;
+}
+
+extern StA7C90 D_00660620;
+
+void func_001A7C90(char *p, int n) {
+    if ((unsigned char)act_A7C90(p)) {
+        if (n < 0) {
+            n = 126;
+        } else {
+            if (n > 126) n = 126;
+        }
+        func_001A7DA0(*(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE0), *(int *)((char *)(*(signed char *)(D_005BE0D8 + 0xE) * 4) + (int)p + 0xE8), n);
+        D_00660620.b4 += *(int *)(p + 0xB4);
+        D_00660620.b8 += *(short *)(p + 0xB8);
+        D_00660620.n++;
+        D_00660620.bc += *(unsigned short *)(p + 0xA8);
+        D_00660620.c0 += *(int *)(p + 0xB0);
+    }
+}
+
+static inline float lerp_3CC(float a, float b, float t) {
+    return a + (b - a) * t;
+}
+
+unsigned char func_003CC9D0(char *p, unsigned char *out, float *t, float *pos) {
+    float d;
+    unsigned char r;
+    if (*(char **)(D_005BE09C + 0x23C) == 0) return 0;
+    d = func_00132470(*(char **)(D_005BE09C + 0x23C) + 0x70, pos);
+    r = 0;
+    if (d < 200.0f) {
+        r = 1;
+        if (!(d <= 150.0f)) {
+            *t = (d - 150.0f) / 50.0f;
+            *out = (unsigned int)lerp_3CC(48.0f, 127.0f, *t);
+        } else {
+            *t = 0.0f;
+            *out = 0x30;
+        }
+    }
     return r;
 }

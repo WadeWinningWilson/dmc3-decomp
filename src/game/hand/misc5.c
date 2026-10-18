@@ -994,6 +994,12 @@ int func_001B63F0(char *);
 void func_001B6580(char *, char *);
 int func_001B82F0(char *, L1B9 *);
 void func_001AE4F0(int);
+extern int D_005BE098;
+void func_001F87B0(char *, int, float);
+void func_001B3600(char *, char *, char *, char *);
+int func_001EBCB0(char *, float);
+void func_001B31E0(char *, unsigned char);
+void func_00195E20(char *, char *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1369,4 +1375,31 @@ signed char func_002DA0B0(char *p, signed char k) {
     signed char idx = find_2DA(p, k);
     if (idx != -1) return *(signed char *)((char *)idx + (int)p + 0x3D68);
     return 4;
+}
+
+static inline unsigned char z_1BD(unsigned char v) {
+    return v == 0;
+}
+
+void func_001BD2F0(char *p) {
+    char *s = *(char **)(p + 0x440);
+    float d = *(float *)(*(char **)(p + 0x4A0) + 0x10);
+    char *t;
+    *(float *)(p + 0x10) = d;
+    *(float *)(p + 0xBC) = *(float *)(p + 0xBC) + d;
+    t = *(char **)(p + 0x4A0);
+    if (z_1BD(*(unsigned char *)(t + 0x38)) != 1) {
+        func_001AD140(p);
+        return;
+    }
+    if (*(unsigned char *)(t + 0x39) != 0) return;
+    func_001F87B0(p + 0x444, 4, *(float *)(p + 0x10));
+    func_001B3600(p, s + 0x30, s + 0x36, s + 0x3C);
+    if (*(unsigned char *)(*(char **)(*(char **)(p + 0x4A0) + 0x440) + 0x118) == 0) {
+        func_001EBCB0(p + 0x134, *(float *)(p + 0x10));
+        func_001B31E0(p, 0);
+    }
+    if (*(float *)(*(char **)(p + 0x4A0) + 0x40) <= 0.0f && *(unsigned char *)(p + 0x3B) == 0) {
+        func_00195E20((char *)&D_005BE098, p);
+    }
 }
