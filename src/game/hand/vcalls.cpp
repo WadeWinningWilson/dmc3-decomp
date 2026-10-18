@@ -16590,6 +16590,11 @@ extern "C" int func_0034B800(float *, char *, short, int, float);
 extern "C" void func_002E2BD0(char *);
 extern "C" float D_00577DD0[][3];
 extern "C" float D_00577D10[][3];
+extern "C" void func_004D74E0(char *);
+extern "C" void func_004D75A0(char *);
+extern "C" void func_004D79D0(char *);
+extern "C" void func_004D7DB0(char *);
+extern "C" void func_004D8120(char *);
 
 extern "C" ObjEn198 *func_002F2850(char *p, signed char *a) {
     char it[4];
@@ -16881,4 +16886,52 @@ extern "C" int func_00437920(char *a, char *pos, float *best) {
         }
     }
     return r;
+}
+
+extern "C" void func_0044A010(char *p) {
+    int i;
+    if (*(int *)(p + 0x3C) != 0) {
+        func_001AF080(D_00666750, *(int *)(p + 0x3C));
+        *(int *)(p + 0x3C) = 0;
+    }
+    if (*(int *)(p + 0x40) != 0) {
+        func_001AF080(D_00666750, *(int *)(p + 0x40));
+        *(int *)(p + 0x40) = 0;
+    }
+    if (*(char **)(p + 0x44) != 0) {
+        func_00196C40(D_006480D0, *(char **)(p + 0x44));
+        *(int *)(p + 0x44) = 0;
+    }
+    for (i = 0; i < 4; i++) {
+        ((ObjSkD0 *)(p + i * 0x600 + 0x80))->mD0();
+    }
+    ((ObjSkD0 *)(p + 0x1880))->mD0();
+    ((ObjSkD0 *)(p + 0x1E80))->mD0();
+    ((ObjSkD0 *)(p + 0x2480))->mD0();
+    ((ObjSkD0 *)(p + 0x2A80))->mD0();
+}
+
+extern "C" void func_004D7400(char *p) {
+    char *q = *(char **)(p + 0x508);
+    func_001AD100(p);
+    if (*(unsigned char *)(q + 0x2F3D) == 4) {
+        func_001AD140(p);
+        return;
+    }
+    switch (*(unsigned char *)(p + 0x50C)) {
+    case 0:
+        func_004D74E0(p);
+        break;
+    case 3:
+        func_004D75A0(p);
+        break;
+    case 4:
+        func_004D79D0(p);
+        break;
+    case 5:
+        func_004D7DB0(p);
+        break;
+    }
+    func_004D8120(p);
+    func_0028C5C0(p + 0x140, 0, *(float *)(p + 0x10));
 }
