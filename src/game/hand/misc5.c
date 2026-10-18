@@ -957,6 +957,11 @@ void func_00131700(float *, float *, float *);
 extern float D_00587380[];
 extern float D_00587384[];
 extern float D_00587388[];
+void func_00104D70(float *, float *);
+short func_00131D10(float, float);
+void func_00105668(char *, char *, float);
+void func_00105578(char *, char *, float);
+void func_00105760(char *, char *, float);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1167,4 +1172,30 @@ void func_004BE0D0(char *p, int k, float *out) {
     out[1] = out[1] + *(float *)(e + 0x54);
     out[2] = out[2] + *(float *)(e + 0x58);
     out[3] = 1.0f;
+}
+
+#define VZERO20(d) __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0\n\tsqc2 $vf20, 0x0(%0)" : : "r"(d) : "memory")
+
+#define VSUB(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+void func_003161F0(char *o, char *m, float *pos, int ang, unsigned char f) {
+    float d[4] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    short r;
+    VZERO20(v);
+    v[0] = *(float *)(*(char **)(**(char ***)(o + 8) + 0x104) + 0x30);
+    v[1] = *(float *)(*(char **)(**(char ***)(o + 8) + 0x104) + 0x34);
+    v[2] = *(float *)(*(char **)(**(char ***)(o + 8) + 0x104) + 0x38);
+    VSUB(d, pos, v);
+    d[1] = 0.0f;
+    func_00104D70(d, d);
+    r = func_00131D10(d[0], d[2]);
+    UNIT(m);
+    if (f == 0) {
+        func_00105668(m, m, 0.7853981f);
+    } else {
+        func_00105668(m, m, 1.5707963f);
+    }
+    func_00105578(m, m, 6.283185f * ((float)ang / 65536.0f));
+    func_00105760(m, m, 6.283185f * ((float)r / 65536.0f));
 }

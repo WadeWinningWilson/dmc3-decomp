@@ -3358,6 +3358,7 @@ void func_00105668(char *, char *, float);
 extern int D_0054D9D0[];
 extern unsigned char D_005BCA88;
 extern unsigned char D_005BCA89;
+void func_00133890(float *, float *, float *);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -4144,4 +4145,44 @@ void func_002CEEA0(char *p, int n) {
     *(unsigned char *)(p + 0x2CE7) = 0x13;
     *(unsigned char *)(p + 0x2CE8) = 0x13;
     func_00128488(p + 0x5AD, 0, 4);
+}
+
+#define VSUBR54(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+void func_004D8AB0(char *p) {
+    float w[4] __attribute__((aligned(16)));
+    float u[4] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    int i;
+    char *e;
+    char *r;
+    *(float *)(p + 0x174) = *(float *)(p + 0x174) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0x174) < 0.0f) {
+        for (i = 0; i < 16; i++) {
+            e = *(char **)((char *)(i * 4) + (int)p + 0x1FC);
+            if (e != 0 && **(unsigned char **)(e + 0x104) == 1) {
+                w[0] = *(float *)(e + 0x120);
+                w[1] = *(float *)(e + 0x124);
+                w[2] = *(float *)(e + 0x128);
+                w[3] = 1.0f;
+                VSUBR54(d, p + 0x150, p + 0x160);
+                d[3] = 1.0f;
+                u[1] = 1.0f;
+                u[0] = 0.0f;
+                u[2] = 0.0f;
+                u[3] = 1.0f;
+                UNIT(m);
+                func_00133890(m, d, u);
+                func_00105230(m, m, w);
+                r = func_00207480(3, 0x289, m, 8);
+                if (r != 0) {
+                    *(unsigned char *)(r + 0x3A) = 1;
+                }
+            }
+        }
+        func_001AD140(p);
+    } else {
+        func_0028C5C0(p + 0x180, 0, *(float *)(p + 0x10));
+    }
 }

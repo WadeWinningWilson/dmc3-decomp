@@ -2082,3 +2082,31 @@ void func_0032E640(char *p) {
         }
     }
 }
+
+void func_001EFFE0(char *p, float r) {
+    float a[2];
+    float v[4] __attribute__((aligned(16)));
+    float g[4] __attribute__((aligned(16)));
+    float o[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    a[0] = *(float *)(p + 0x704);
+    a[1] = *(float *)(p + 0x708);
+    if (!(a[0] <= 180.0f)) a[0] = a[0] - 360.0f;
+    if (a[0] < -180.0f) a[0] = a[0] + 360.0f;
+    if (!(a[1] <= 180.0f)) a[1] = a[1] - 360.0f;
+    if (a[1] < -180.0f) a[1] = a[1] + 360.0f;
+    v[1] = 0.0f;
+    v[2] = 0.0f;
+    v[0] = r;
+    v[3] = 1.0f;
+    g[3] = 1.0f;
+    g[0] = 0.0f;
+    g[1] = 6.283185f * (a[0] / 360.0f);
+    g[2] = 6.283185f * (a[1] / 360.0f);
+    UNIT(m);
+    func_00131700(m, m, g);
+    func_00104B80((char *)o, m, v);
+    *(float *)(p + 0x6F8) = o[0];
+    *(float *)(p + 0x6FC) = o[1];
+    *(float *)(p + 0x700) = o[2];
+}

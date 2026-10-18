@@ -7747,6 +7747,7 @@ void func_002DB880(char *, int);
 extern short D_0054A0C0[];
 void func_00213210(char *, int, int);
 void func_002F5AC0(char *, int, int);
+extern float D_0055C7A0[];
 
 void func_00474E80(char *p, char *o) {
     V4Q t;
@@ -7945,4 +7946,36 @@ void func_002DC480(char *p) {
         func_002F5AC0(buf, *(int *)(*(char **)(b + 0xC) + 0xC), 1);
         *(short *)(*(char **)(*(char **)(p + 0xC) + 4) + 0x614) = -1;
     }
+}
+
+void func_0033D430(char *p) {
+    int i;
+    char *e;
+    func_0028C790(p + 0x150, 0);
+    func_0028C790(p + 0x150, 1);
+    func_0028C790(p + 0x150, 2);
+    func_0028C790(p + 0x150, 3);
+    func_0028C790(p + 0x150, 4);
+    func_0028C790(p + 0x150, 5);
+    func_0028C200(p + 0x150, p + 0x370, p + 0x390, 1, D_005BC2E0 + 0x580, p, 0);
+    func_0028C8E0(p + 0x150, 0);
+    func_0028C910(p + 0x150);
+    for (i = 0; i < 5; i++) {
+        *(unsigned char *)(p + i * 4 + 0x370) = 5;
+        *(unsigned char *)(p + i * 4 + 0x371) = 0;
+        *(short *)(p + i * 4 + 0x372) = i;
+        *(unsigned char *)(p + i * 0x50 + 0x390) = 2;
+        *(float *)(p + i * 0x50 + 0x3A0) = D_0055C7A0[i * 4];
+        *(float *)(p + i * 0x50 + 0x3A4) = D_0055C7A0[i * 4 + 1];
+        *(float *)(p + i * 0x50 + 0x3A8) = D_0055C7A0[i * 4 + 2];
+        *(float *)(p + i * 0x50 + 0x3AC) = 1.0f;
+        *(float *)(p + i * 0x50 + 0x3B0) = D_0055C7A0[i * 4 + 3];
+        func_0028C3A0(p + 0x150, i, -1, p + 0xB80);
+        e = *(char **)(p + i * 4 + 0x1CC);
+        if (e != 0) {
+            *(unsigned char *)(e + 2) = 1;
+            *(int *)(e + 0xC) = *(int *)(e + 0xC) & ~0x4000;
+        }
+    }
+    func_0028C5C0(p + 0x150, 0, *(float *)(p + 0x10));
 }
