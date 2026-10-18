@@ -668,6 +668,11 @@ void func_001C6520(char *p, int a, int b, unsigned long long c) {
 typedef struct { int w[13]; } s13t;
 void func_00131760(float *, float *, float *);
 void func_00104B80(char *, float *, float *);
+float func_001F9C40(char *, int);
+extern char D_01DF5D20[];
+char *func_00210240(int);
+void func_001A4240(char *, int, int, float, float);
+int func_0024CD10(char *, unsigned int, int);
 
 static inline char *sub24(char *q) {
     if (*(unsigned int *)(q + 4) < 8) {
@@ -820,4 +825,35 @@ short func_001F8640(char *p, unsigned char k, short id) {
         }
     }
     return -1;
+}
+
+typedef struct { unsigned short a; unsigned short b; int c; int d; } ent12;
+
+extern ent12 D_00546270[];
+int func_0024C320(char *, char *, ent12 *, int);
+
+void func_00233920(char *p) {
+    float t = func_001F9C40(D_01DF5D20, 0x86);
+    char *e = func_00210240(*(int *)(p + 0x200C));
+    float s = *(float *)(e + 0xC) + *(float *)(e + 0x10);
+    if (4680.0f < s && s < 5060.0f) {
+        func_001A4240(func_00279290(p + 0x40), 0, 0, 0.00025f * t, 0.0f);
+    } else {
+        func_001A4240(func_00279290(p + 0x40), 0, 0, 0.0005f * t, 0.0f);
+    }
+}
+
+void func_0024C230(char *p) {
+    ent12 *q = D_00546270;
+    unsigned int i;
+    *(int *)(p + 0x49F0) = 0;
+    *(int *)(p + 0x49F4) = 0;
+    for (i = 0; i < 52; i++) {
+        ent12 *e = q;
+        int d = q->d;
+        q++;
+        if (e->a != 0 && (unsigned char)func_0024CD10(p, i, e->b) == 1 && (unsigned char)func_0024C320(p, p + i * 12 + 0x3E9C, e, d) == 1) {
+            *(unsigned int *)(p + (i >> 5) * 4 + 0x49F0) |= 1 << (i & 31);
+        }
+    }
 }
