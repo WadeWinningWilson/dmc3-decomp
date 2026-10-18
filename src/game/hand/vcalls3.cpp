@@ -123,6 +123,14 @@ struct P278 {
 
 extern "C" void func_002E7920(char *, char *, char *, char *, Sub40 *, int);
 extern P278 *D_005BC2EC;
+extern "C" unsigned char func_002013D0(char *, int, float *, float *, int, int);
+extern "C" bool func_0022A240(int, int, float *, float *, int, int, int, int);
+extern "C" unsigned char func_00200FF0(char *, float *, float *, int, int);
+struct M207 { float m[16]; };
+extern "C" char *func_001B4250(M207 *, int, int, int);
+extern "C" char *func_001EDE80(M207 *, int, int, int);
+extern "C" char *func_001B11B0(M207 *, int, int, int);
+extern "C" char *func_00205A00(M207 *, int, int, int);
 
 extern "C" void func_002780D0(Hit40 *h, char *q) {
     char *p = (char *)h;
@@ -145,4 +153,71 @@ extern "C" void func_002780D0(Hit40 *h, char *q) {
     *(signed char *)(q + 0xA) = *(signed char *)(p + 0x3D4A);
     *(signed char *)(q + 0xB) = *(signed char *)(p + 0x3D4B);
     *(signed char *)(q + 0xC) = *(signed char *)(p + 0x3D49);
+}
+
+#define QCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+extern "C" bool func_002018A0(char *p, int a, float *b, float *c, int d, int e) {
+    float v[4] __attribute__((aligned(16)));
+    bool r = false;
+    if (func_002013D0(p, a, b, c, d, e) == 1) {
+        QCOPY(v, c);
+        r = true;
+    } else {
+        QCOPY(v, b);
+    }
+    r = r | func_0022A240(*(int *)(p + 0x10), a, v, c, d, 0xE, e, 0);
+    r = r | func_0022A240(*(int *)(p + 0x10), a, v, c, d, 0x11, e, 0);
+    if (!r) {
+        QCOPY(c, b);
+    }
+    return r;
+}
+
+extern "C" bool func_00201770(char *p, float *a, float *b, int d, int e) {
+    float v[4] __attribute__((aligned(16)));
+    bool r = false;
+    if (func_00200FF0(p, a, b, d, e) == 1) {
+        QCOPY(v, b);
+        r = true;
+    } else {
+        QCOPY(v, a);
+        v[1] = v[1] - 1500.0f;
+    }
+    r = r | func_0022A240(*(int *)(p + 0x10), (int)a, v, b, d, 0xE, e, 1);
+    r = r | func_0022A240(*(int *)(p + 0x10), (int)a, v, b, d, 0x11, e, 1);
+    if (!r) {
+        QCOPY(b, a);
+    }
+    return r;
+}
+
+#define UNIT(e) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(e) : "memory")
+
+extern "C" char *func_00207480(unsigned char type, int id, M207 *mat, unsigned char fl) {
+    M207 m __attribute__((aligned(16)));
+    char *o;
+    if (mat != 0) {
+        m = *mat;
+    } else {
+        UNIT(&m);
+    }
+    switch (type) {
+    case 0:
+        o = func_001B4250(&m, 0, id, 0);
+        break;
+    case 1:
+        o = func_001EDE80(&m, 0, id, 0);
+        break;
+    case 2:
+        o = func_001B11B0(&m, 0, id, 0);
+        break;
+    case 3:
+        o = func_00205A00(&m, 0, id, 0);
+        break;
+    }
+    if (o != 0) {
+        *(int *)(o + 0xC) |= fl;
+    }
+    return o;
 }

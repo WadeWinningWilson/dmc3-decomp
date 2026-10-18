@@ -1,4 +1,24 @@
 /* Hand-matched functions (fifth file: its callee declarations differ from the others). */
+typedef struct {
+    char pad0[8];
+    char *tex;
+    int c;
+    char pad10[8];
+    int f18;
+    char pad1C[8];
+    int f24;
+    char pad28[4];
+    int f2C;
+    signed char type;
+    char pad31;
+    unsigned short h;
+    unsigned short k;
+    char pad36[7];
+    unsigned char b3D;
+    char pad3E[2];
+    float f;
+    char pad44[0xC];
+} L1B9;
 
 #include "game/mt_rand.h"
 
@@ -964,6 +984,16 @@ void func_00105578(char *, char *, float);
 void func_00105760(char *, char *, float);
 void func_00133890(char *, float *, float *);
 void func_00105230(char *, char *, float *);
+extern char *D_005BE09C;
+extern char D_005BE0C4[4];
+extern unsigned char D_005D0E50[];
+void func_00104C00(char *, char *, char *);
+char *func_001AE4B0(int);
+int func_001B9AB0(char *, char *, float *, char *, int);
+int func_001B63F0(char *);
+void func_001B6580(char *, char *);
+int func_001B82F0(char *, L1B9 *);
+void func_001AE4F0(int);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1275,4 +1305,51 @@ void func_004960F0(char *p) {
         func_00105230(p + 0x3B0, p + 0x3B0, v);
         break;
     }
+}
+
+int func_001B9520(char *a, char *b) {
+    float m[16] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    L1B9 l;
+    char *s;
+    char *t;
+    int r;
+    if (b != 0) {
+        s = b;
+    } else {
+        s = a;
+    }
+    if (*(char **)(s + 4) != 0) {
+        func_00104C00((char *)m, D_005BE09C + 0x140, *(char **)(s + 4));
+        __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(*(char **)(s + 4)) : "memory");
+    } else {
+        __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%3)\n\tlqc2 $vf6, 0x10(%3)\n\tlqc2 $vf7, 0x20(%3)\n\tlqc2 $vf8, 0x30(%3)\n\tsqc2 $vf4, 0x0(%1)\n\tsqc2 $vf5, 0x0(%0)\n\tsqc2 $vf6, 0x10(%0)\n\tsqc2 $vf7, 0x20(%0)\n\tsqc2 $vf8, 0x30(%0)" : : "r"(m), "r"(v), "r"(*(char **)(s + 8)), "r"(D_005BE09C + 0x140) : "memory");
+    }
+    t = func_001AE4B0(*(unsigned short *)(s + 0x34));
+    r = 0;
+    if (func_001B9AB0(D_005BE0C4, t, m, *(char **)(s + 8), *(unsigned short *)(s + 0x34)) == 0) {
+        l.tex = t;
+        l.c = 0;
+        l.f18 = *(int *)(s + 0x18);
+        l.f24 = *(int *)(s + 0x24);
+        l.f2C = *(int *)(s + 0x2C);
+        if (*(unsigned char *)(s + 0x30) == 2) {
+            l.h = *(int *)(t + 0xC) >> (func_001B63F0(a) - 13);
+            if (l.h == 0) {
+                l.h = 1;
+            }
+            D_005D0E50[0] = 1;
+            l.f = *(float *)(s + 0x40);
+            l.type = 2;
+        } else {
+            l.h = *(unsigned short *)(s + 0x32);
+            l.type = *(signed char *)(s + 0x30);
+        }
+        l.k = *(unsigned short *)(s + 0x34);
+        l.b3D = *(unsigned char *)(s + 0x3D);
+        func_001B6580(a, 0);
+        r = func_001B82F0(a, &l);
+    }
+    func_001AE4F0(*(unsigned short *)(s + 0x34));
+    return r;
 }

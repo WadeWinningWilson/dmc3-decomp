@@ -2162,6 +2162,13 @@ void func_00277DA0(char *);
 void func_00277DE0(char *, char *, char *, int);
 void func_00277E70(char *);
 void func_00278060(char *, int);
+extern char D_00645EB0[];
+char *func_002864A0(char *, int);
+void func_00198450(char *, int, int, unsigned short);
+int func_001A4F90(char *);
+void func_00199730(char *, char *, char *, int);
+void func_00199720(char *, char *, int);
+int func_001A5B30(char *, int);
 
 void func_002276B0(char *p) {
     T404 t;
@@ -2309,3 +2316,76 @@ void func_004DBD50(char *p) {
     func_00278060(p + 0x11C0, D_01CAFF14[0]);
     *(unsigned char *)(p + 0xDCD) = 0;
 }
+
+int func_002792E0(char *p, int a, int b) {
+    char *h;
+    unsigned short fl;
+    int n;
+    char *buf;
+    switch (*(unsigned char *)(p + 8)) {
+    case 0:
+        h = func_002864A0(D_00645EB0, b);
+        if (h != 0) {
+            *(int *)(p + 0xC) = b;
+            break;
+        }
+        *(unsigned char *)(p + 8) = 1;
+        break;
+    case 1:
+        break;
+    }
+    fl = 0;
+    switch (*(unsigned char *)(p + 8)) {
+    case 0:
+        break;
+    case 1:
+        fl |= 1;
+        break;
+    }
+    switch (*(unsigned char *)(p + 9)) {
+    case 0:
+        break;
+    case 1:
+        fl |= 2;
+        break;
+    }
+    func_00198450(p + 0x40, a, b, fl);
+    n = func_001A4F90(p + 0x40);
+    if (n <= 0) return 0;
+    buf = func_001B0FD0(p + 0x14, n, -2);
+    if (buf == 0) return 0;
+    func_00130990(buf, n >> 2);
+    switch (*(unsigned char *)(p + 8)) {
+    case 0:
+        func_00199730(p + 0x40, buf, h, 0);
+        break;
+    case 1:
+        func_00199720(p + 0x40, buf, 0);
+        break;
+    }
+    if (func_001A5B30(p + 0x40, n) != 0) return 0;
+    *(unsigned char *)(p + 0xA) = 1;
+    return 1;
+}
+
+int func_001AE770(char *p, unsigned short b) {
+    switch (b) {
+    case 0x1000: return 0;
+    case 0x4000: return 1;
+    case 0x2000: return 2;
+    case 0x8000: return 3;
+    case 0x10: return 4;
+    case 0x40: return 5;
+    case 0x20: return 6;
+    case 0x80: return 7;
+    case 4: return 8;
+    case 1: return 9;
+    case 0x200: return 10;
+    case 8: return 11;
+    case 2: return 12;
+    case 0x400: return 13;
+    case 0x100: return 14;
+    }
+    return 0;
+}
+

@@ -3385,6 +3385,7 @@ void func_0041E1F0(float *, float *, float, float);
 void func_002018A0(char *, char *, char *, char *, char *, int);
 void func_002E3690(char *, int, int, int);
 void func_001A2000(char *, int);
+unsigned char func_002DA0B0(char *, signed char);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -4392,4 +4393,27 @@ void func_00387970(char *p) {
     if (*(short *)(p + 0x1342) != -1) func_00387970_s(*(short *)(p + 0x1342));
     *(float *)(p + 0xDB0) = 10.0f;
     func_003305E0(D_01DFABA0, 8, 0x3E, p + 0xCE0, 0x21, 0, 0);
+}
+
+int func_002443D0(char *p, unsigned char mode, signed char c) {
+    int k;
+    if (c == -1) return 1;
+    switch (mode) {
+    case 0:
+        if (c == *(signed char *)((char *)*(unsigned char *)(p + 0x3D4A) + (int)p + 0x3D4C) && func_002DA0B0(p, c) == 0) return 1;
+        break;
+    case 1:
+        if (c == *(signed char *)((char *)*(unsigned char *)(p + 0x3D4B) + (int)p + 0x3D4C) && func_002DA0B0(p, c) == 0) return 1;
+        break;
+    case 2:
+        if ((c == *(signed char *)((char *)*(unsigned char *)(p + 0x3D4B) + (int)p + 0x3D4C) || c == *(signed char *)((char *)*(unsigned char *)(p + 0x3D4A) + (int)p + 0x3D4C)) && func_002DA0B0(p, c) == 0) return 1;
+        break;
+    }
+    if (c & 0x80) {
+        k = c & 0x7F;
+        if (k == *(signed char *)((char *)*(unsigned char *)(p + 0x3D4B) + (int)p + 0x3D4C) || k == *(signed char *)((char *)*(unsigned char *)(p + 0x3D4A) + (int)p + 0x3D4C)) {
+            if (func_002DA0B0(p, k) == 1 || func_002DA0B0(p, k) == 2 || func_002DA0B0(p, k) == 3) return 1;
+        }
+    }
+    return 0;
 }
