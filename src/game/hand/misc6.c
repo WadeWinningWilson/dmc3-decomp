@@ -2982,6 +2982,14 @@ extern char D_005AADD0[];
 float func_0011DA38(float);
 float func_0011D798(float);
 float func_0034B5E0(float *, char *);
+extern char D_01DFABA0[];
+char *func_002075D0(int, int, int, int, int);
+void func_003305E0(char *, int, int, char *, int, int, int);
+void func_002F43B0(int, unsigned char *);
+void func_00451890(char *);
+void func_004518A0(char *, int);
+void func_00450DC0(char *);
+void func_0034C3E0(char *);
 
 void func_002D58C0(char *p) {
     switch (*(unsigned char *)(p + 5)) {
@@ -3144,4 +3152,60 @@ int func_002CBF50(char *p, short a) {
     v[2] = *(float *)(p + 0x58) + 180.0f * func_0011D798(ang);
     v[3] = 1.0f;
     return !(func_0034B5E0(v, p) < 200.0f);
+}
+
+void func_00450CD0(char *p) {
+    int i;
+    for (i = 0; i < 8; i++) {
+        func_00206730(p + i * 4 + 0x320);
+    }
+    if (*(unsigned char *)(p + 0xE7) != 0) {
+        *(unsigned char *)(p + 0xE7) = 0;
+        func_00451890(p);
+    }
+    if (*(unsigned char *)(p + 0xE8) != 0) {
+        *(unsigned char *)(p + 0xE8) = 0;
+        func_004518A0(p, 0);
+    }
+    if (*(unsigned char *)(p + 0xE9) != 0) {
+        *(unsigned char *)(p + 0xE9) = 0;
+        func_004518A0(p, 1);
+    }
+    switch (*(unsigned char *)(p + 0xEB)) {
+    case 0:
+        break;
+    case 1:
+        func_00450DC0(p);
+        break;
+    case 2:
+        func_0034C3E0(0);
+        break;
+    }
+    func_0028C5C0(p + 0x340, 0, *(float *)(p + 0x10));
+}
+
+void func_00456190(char *p) {
+    unsigned char c[4];
+    char *e;
+    if (*(char **)(p + 0x694) != 0) {
+        *(unsigned char *)(*(char **)(p + 0x694) + 0x3A) = 1;
+        func_001AD140(*(char **)(p + 0x694));
+        *(int *)(p + 0x694) = 0;
+    }
+    func_002F43B0(*(unsigned char *)(p + 0x644), c);
+    func_003305E0(D_01DFABA0, 8, 0x45, p + 0x50, 0x22, 0, 0);
+    e = func_002075D0(3, 0x230, *(int *)(*(char **)(p + 0x1C8) + 0x104), 1, 0x40);
+    if (e != 0) {
+        unsigned char b2 = c[2];
+        unsigned char b1 = c[1];
+        unsigned char b0 = c[0];
+        *(unsigned char *)(e + 0x9C) = b0;
+        *(unsigned char *)(e + 0x9D) = b1;
+        *(unsigned char *)(e + 0x9E) = b2;
+        *(unsigned char *)(e + 0x9B) = 2;
+        *(unsigned char *)(e + 0x9F) = 0x80;
+        *(unsigned char *)(e + 0x9B) = 3;
+        *(unsigned char *)(e + 0x9B) = 1;
+    }
+    func_002075D0(3, 0x22F, *(int *)(*(char **)(p + 0x1C8) + 0x104), 1, 0x40);
 }
