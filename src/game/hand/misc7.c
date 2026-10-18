@@ -4866,6 +4866,14 @@ int func_0013CFC0(char *, int);
 int func_001EBB10(char *, char *, int);
 int func_002F3120(int, int, int, int);
 int func_002F3BB0(int, int, int);
+extern float D_00568C80[];
+extern float D_00568C84[];
+void func_003AAAD0(char *, int, int);
+void func_003ABE80(char *, int);
+void func_002E1B90(char *);
+void func_002D9450(char *, int, int, float);
+void func_002E1AB0(char *, int);
+void func_0021CB60(char *, unsigned int);
 
 void func_00357560(p0, p1) char *p0; int p1; {
     char *v0;
@@ -5077,4 +5085,76 @@ int func_002F30C0(int k, int a, int b, int c) {
         break;
     }
     return r;
+}
+
+void func_003AA990(char *p, signed char k) {
+    *(signed char *)(p + 0x4BE6) = *(signed char *)(p + 0x4BE5);
+    *(signed char *)(p + 0x4BE5) = *(signed char *)(p + 0x4BE4);
+    *(signed char *)(p + 0x4BE4) = k;
+    *(unsigned char *)(p + 0x4E14) = 0;
+    func_003AAAD0(p, 0, *(unsigned char *)(p + 0x4BE4));
+    *(unsigned char *)(p + 6) = 0;
+    switch (*(unsigned char *)(p + 0x4BE4)) {
+    case 12:
+        *(unsigned char *)(p + 0x4E14) = 1;
+        break;
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32: case 33: case 34: case 35: case 36: case 37: case 38:
+        break;
+    }
+    switch (*(unsigned char *)(p + 0x4BE4)) {
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 33: case 34: case 35: case 36: case 37: case 38:
+        func_003ABE80(p, 1);
+        break;
+    case 12: case 13: case 14: case 15: case 32:
+        func_003ABE80(p, 0);
+        break;
+    }
+    switch (*(unsigned char *)(p + 0x4BE4)) {
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23: case 24: case 25: case 26: case 27: case 28: case 29: case 30: case 31: case 32: case 33: case 34: case 36: case 37: case 38:
+        D_00568C80[0] = 70.0f;
+        D_00568C84[0] = 60.0f;
+        break;
+    case 35:
+        *(float *)(p + 0x50D8) = 350.0f;
+        *(float *)(p + 0x50DC) = 300.0f;
+        D_00568C80[0] = 350.0f;
+        D_00568C84[0] = 300.0f;
+        break;
+    }
+    *(unsigned char *)(p + 0x5164) = 0;
+}
+
+void func_002E00E0(char *p, int a, int b, signed char c) {
+    func_002E1B90(p);
+    *(int *)(p + 0x2AEC) = b;
+    *(int *)(p + 0x2AE8) = a;
+    *(unsigned char *)(p + 0x28A9) = 0;
+    func_002D9450(p, 7, 0, 0.0f);
+    func_002E1AB0(p, b);
+    func_0021C7A0(p, 0x29);
+    func_0021CB60(p, 0x10000);
+    if (c == -1) *(signed char *)(p + 0x2AE2) = *(signed char *)(*(char **)(p + 0x2AEC) + 0x18);
+    else *(signed char *)(p + 0x2AE2) = c;
+    switch (*(signed char *)(p + 0x2AE2)) {
+    case -1: case 0:
+    default:
+        if (*(unsigned int *)(p + 0x2898) & 2) *(unsigned char *)(p + 0x2AE1) = 3;
+        else *(unsigned char *)(p + 0x2AE1) = 1;
+        break;
+    case 1:
+        if (*(unsigned int *)(p + 0x2898) & 2) *(unsigned char *)(p + 0x2AE1) = 3;
+        else *(unsigned char *)(p + 0x2AE1) = 2;
+        break;
+    case 2: *(unsigned char *)(p + 0x2AE1) = 3; break;
+    case 3: *(unsigned char *)(p + 0x2AE1) = 3; break;
+    case 4: *(unsigned char *)(p + 0x2AE1) = 5; break;
+    case 5: *(unsigned char *)(p + 0x2AE1) = 5; break;
+    case 6: *(unsigned char *)(p + 0x2AE1) = 6; break;
+    case 7:
+        if (*(unsigned int *)(p + 0x2898) & 2) *(unsigned char *)(p + 0x2AE1) = 3;
+        else *(unsigned char *)(p + 0x2AE1) = 4;
+        break;
+    }
+    if (*(float *)(p + 0x2AD4) <= 0.0f && *(unsigned char *)(p + 0x2AE1) != 3) *(unsigned char *)(p + 0x2AE1) = 3;
+    *(unsigned char *)(p + 0x2998) = 0;
 }

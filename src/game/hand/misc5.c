@@ -1037,6 +1037,11 @@ void func_00212BF0(char *);
 void func_00204AD0(void);
 void func_00204A70(void);
 int func_00210850(char *, int, int *);
+extern char D_01CAFF30[];
+extern signed char D_01CAFF3C[];
+extern unsigned char D_01CAFF3D[];
+extern char *D_01CAFF10[];
+int func_002A67F0(int, int);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1612,3 +1617,35 @@ char *func_00231370(char *p) {
     return p;
 }
 
+void func_0050A5E0(char *x, unsigned char k, char *a, char *b, char *c) {
+    int i;
+    char *q;
+    int v;
+    *a = 1;
+    *b = 1;
+    *c = 1;
+    for (i = 1, q = D_01CAFF30 + k * 21 + 1; i < 21; i++, q++) {
+        if ((unsigned char)func_002A67F0(D_01CAFF3C[0], D_01CAFF3D[0]) == k) {
+            if (D_01CAFF10[0] == 0) v = -1;
+            else v = *(signed char *)(D_01CAFF10[0] + i + 0x71);
+        } else {
+            v = *(signed char *)(q + 0x560);
+        }
+        switch (v) {
+        case -1:
+            *a = 0;
+            *b = 0;
+            *c = 0;
+            break;
+        case 0: case 1: case 2: case 3:
+            *b = 0;
+            *c = 0;
+            break;
+        case 4:
+            *c = 0;
+            break;
+        case 5:
+            break;
+        }
+    }
+}

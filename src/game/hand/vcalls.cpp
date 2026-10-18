@@ -25174,6 +25174,11 @@ extern "C" void func_0037E260(char *);
 extern "C" void func_0037E410(char *);
 extern "C" void func_0037E750(char *);
 extern "C" char D_00564E90[];
+extern "C" int D_0057338C[];
+extern "C" void func_003E79D0(char *, char *, char *, char *);
+extern "C" char *func_003B6EE0(char *);
+extern "C" char *func_003BAA20(char *);
+extern "C" char *func_003B79B0(char *);
 
 extern "C" void func_00253D10(char *p0, char *p1) {
     char *v0;
@@ -26722,6 +26727,1099 @@ extern "C" void func_002D2100(char *p, unsigned int k) {
         *(unsigned char *)(p + 0x37DB) = 9;
         break;
     case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 22:
+        break;
+    }
+}
+
+class Snd45 {
+public:
+    virtual void d0();
+    virtual int mC();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void m28(int);
+};
+
+class Self45 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual float m7C();
+    virtual unsigned int m80(float);
+    virtual void e31();
+    virtual void e32();
+    virtual void e33();
+    virtual void e34();
+    virtual void e35();
+    virtual void e36();
+    virtual void e37();
+    virtual void e38();
+    virtual void e39();
+    virtual void e40();
+    virtual void e41();
+    virtual void e42();
+    virtual void mB4(int);
+};
+
+extern "C" void func_0045CAD0(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(Snd45 **)(p + 0xC))->m28(0x1E);
+        *(unsigned char *)(p + 0xB5) = 1;
+    case 1:
+        if ((*(Snd45 **)(p + 0xC))->mC() != 0x1E) {
+            switch (((Self45 *)p)->m80(((Self45 *)p)->m7C())) {
+            case 0: case 1: case 2: case 3:
+                ((Self45 *)p)->mB4(0x43);
+                break;
+            case 4:
+                ((Self45 *)p)->mB4(0x44);
+                break;
+            case 5:
+                ((Self45 *)p)->mB4(0x45);
+                break;
+            }
+            return;
+        }
+        break;
+    }
+}
+
+class Snd45b {
+public:
+    virtual void d0();
+    virtual int mC();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void m28(int);
+};
+
+class Self45b {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual float m7C();
+    virtual unsigned int m80(float);
+    virtual void e31();
+    virtual void e32();
+    virtual void e33();
+    virtual void e34();
+    virtual void e35();
+    virtual void e36();
+    virtual void e37();
+    virtual void e38();
+    virtual void e39();
+    virtual void e40();
+    virtual void e41();
+    virtual void e42();
+    virtual void mB4(int);
+};
+
+extern "C" void func_0045B520(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(Snd45b **)(p + 0xC))->m28(1);
+        *(unsigned char *)(p + 0xB5) = 1;
+        break;
+    case 1:
+        if ((*(Snd45b **)(p + 0xC))->mC() != 1) {
+            switch (((Self45b *)p)->m80(((Self45b *)p)->m7C())) {
+            case 0: case 1:
+                ((Self45b *)p)->mB4(0x39);
+                break;
+            case 2: case 3:
+                ((Self45b *)p)->mB4(0x43);
+                break;
+            case 4:
+                ((Self45b *)p)->mB4(0x44);
+                break;
+            case 5:
+                ((Self45b *)p)->mB4(0x45);
+                break;
+            }
+        }
+        break;
+    }
+}
+
+extern "C" void func_004D51B0(char *p) {
+    int i;
+    char *q;
+    char *x;
+    for (i = 0, q = p, x = p + 0x4E80; i < 13; i++, q += 0x600) {
+        switch (i) {
+        case 0: case 1: case 2: case 5: case 7: case 9:
+            ((VCC *)(q + 0x40))->mCC(x);
+            break;
+        case 8:
+            if (*(unsigned char *)(p + 0x4F40) == 1) ((VCC *)(q + 0x40))->mCC(x);
+            break;
+        case 10:
+            if (*(unsigned char *)(p + 0x4F41) == 1) ((VCC *)(q + 0x40))->mCC(x);
+            break;
+        case 11:
+            if (*(unsigned char *)(p + 0x4F42) == 1) ((VCC *)(q + 0x40))->mCC(x);
+            break;
+        case 3:
+            if (*(unsigned char *)(p + 0x4F43) == 1) ((VCC *)(q + 0x40))->mCC(x);
+            break;
+        case 4: case 6: case 12:
+            if (*(unsigned char *)(p + 0x4F44) == 1) ((VCC *)(q + 0x40))->mCC(x);
+            break;
+        }
+    }
+}
+
+class X3E {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual float m1C();
+};
+
+class S3E {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual void d75();
+    virtual void d76();
+    virtual void d77();
+    virtual void d78();
+    virtual void d79();
+    virtual void d80();
+    virtual void d81();
+    virtual void d82();
+    virtual void d83();
+    virtual void d84();
+    virtual void d85();
+    virtual void d86();
+    virtual void d87();
+    virtual void d88();
+    virtual void d89();
+    virtual void d90();
+    virtual void d91();
+    virtual void d92();
+    virtual void d93();
+    virtual void d94();
+    virtual void d95();
+    virtual void d96();
+    virtual void d97();
+    virtual void d98();
+    virtual void d99();
+    virtual void d100();
+    virtual void d101();
+    virtual void d102();
+    virtual void d103();
+    virtual void d104();
+    virtual void d105();
+    virtual void d106();
+    virtual void d107();
+    virtual void d108();
+    virtual void d109();
+    virtual void d110();
+    virtual void d111();
+    virtual void d112();
+    virtual void d113();
+    virtual void d114();
+    virtual void d115();
+    virtual void d116();
+    virtual void d117();
+    virtual void d118();
+    virtual void d119();
+    virtual void d120();
+    virtual void d121();
+    virtual void d122();
+    virtual void d123();
+    virtual void d124();
+    virtual void d125();
+    virtual void d126();
+    virtual void d127();
+    virtual void d128();
+    virtual void d129();
+    virtual void d130();
+    virtual void d131();
+    virtual void d132();
+    virtual void d133();
+    virtual void d134();
+    virtual void d135();
+    virtual void d136();
+    virtual void d137();
+    virtual void d138();
+    virtual void d139();
+    virtual void d140();
+    virtual void d141();
+    virtual void d142();
+    virtual void d143();
+    virtual void d144();
+    virtual void d145();
+    virtual void d146();
+    virtual void d147();
+    virtual void d148();
+    virtual void d149();
+    virtual void d150();
+    virtual void d151();
+    virtual void d152();
+    virtual void d153();
+    virtual void d154();
+    virtual void d155();
+    virtual void d156();
+    virtual void d157();
+    virtual void d158();
+    virtual void d159();
+    virtual void d160();
+    virtual void d161();
+    virtual void d162();
+    virtual void d163();
+    virtual void d164();
+    virtual void d165();
+    virtual void d166();
+    virtual void d167();
+    virtual void d168();
+    virtual void d169();
+    virtual void d170();
+    virtual void d171();
+    virtual void d172();
+    virtual void d173();
+    virtual void d174();
+    virtual void d175();
+    virtual void d176();
+    virtual void d177();
+    virtual void d178();
+    virtual void d179();
+    virtual void d180();
+    virtual void d181();
+    virtual void d182();
+    virtual void d183();
+    virtual void d184();
+    virtual void d185();
+    virtual void m2F0(int);
+};
+
+class Y3E {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void m98(int);
+};
+
+extern "C" void func_003E6FD0(char *p, int a, int b, int c, int d) {
+    char *g;
+    char *q;
+    char *r;
+    float t;
+    *(int *)(p + 0x134) = a;
+    *(int *)(p + 0x138) = b;
+    *(int *)(p + 0x13C) = c;
+    *(int *)(p + 0x140) = d;
+    g = *(char **)(*(char **)D_01CAFF0C + 4);
+    if (g && *(X3E **)(g + 0x10)) t = (*(X3E **)(g + 0x10))->m1C();
+    else t = 0.0f;
+    *(float *)(p + 0x144) = t;
+    *(short *)(p + 0x160) = 0;
+    *(int *)(p + 0x164) = 0;
+    *(int *)(p + 0x168) = 0;
+    *(int *)(p + 0x3424) = 0;
+    r = p;
+    if (p) r += 0x40;
+    q = p;
+    if (p) q += 0xD0;
+    func_003E79D0(p, p + 0x7B0, q, r);
+    *(unsigned char *)(p + 0x14C) = 0;
+    *(unsigned char *)(p + 0x14D) = 0;
+    switch (*(unsigned short *)(p + 0x7D2)) {
+    case 0: ((S3E *)p)->m2F0(0x80); break;
+    case 1: ((S3E *)p)->m2F0(0x81); break;
+    case 2: ((S3E *)p)->m2F0(0x82); break;
+    case 3: ((S3E *)p)->m2F0(0x84); break;
+    case 4: ((S3E *)p)->m2F0(0x85); break;
+    case 5: ((S3E *)p)->m2F0(0x86); break;
+    default: ((S3E *)p)->m2F0(0x80); break;
+    }
+    ((Y3E *)(p + 0x130))->m98(D_0057338C[0]);
+}
+
+class Snd45c {
+public:
+    virtual void d0();
+    virtual int mC();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void m28(int);
+};
+
+class Self45c {
+public:
+    virtual void z0();
+    virtual void z1();
+    virtual void z2();
+    virtual void z3();
+    virtual void z4();
+    virtual void z5();
+    virtual void z6();
+    virtual void z7();
+    virtual void z8();
+    virtual void z9();
+    virtual void z10();
+    virtual void z11();
+    virtual void z12();
+    virtual void z13();
+    virtual void z14();
+    virtual void z15();
+    virtual void z16();
+    virtual void z17();
+    virtual void z18();
+    virtual void z19();
+    virtual void z20();
+    virtual void z21();
+    virtual void z22();
+    virtual void z23();
+    virtual void z24();
+    virtual void z25();
+    virtual void z26();
+    virtual void z27();
+    virtual short m78(short, short);
+    virtual float m7C();
+    virtual unsigned int m80(float);
+    virtual void m84();
+    virtual int m88();
+    virtual void z33();
+    virtual void z34();
+    virtual void z35();
+    virtual void z36();
+    virtual void z37();
+    virtual int mA0();
+    virtual void z39();
+    virtual void z40();
+    virtual void z41();
+    virtual void z42();
+    virtual void mB4(int);
+    virtual void z44();
+    virtual void z45();
+    virtual void z46();
+    virtual void z47();
+    virtual void z48();
+    virtual void z49();
+    virtual void z50();
+    virtual void z51();
+    virtual void z52();
+    virtual void z53();
+    virtual void z54();
+    virtual void z55();
+    virtual void z56();
+    virtual void z57();
+    virtual void z58();
+    virtual void z59();
+    virtual void z60();
+    virtual void z61();
+    virtual void z62();
+    virtual void z63();
+    virtual void m108(float);
+};
+
+extern "C" void func_0045BE70(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        *(int *)(p + 0x114) = 0;
+        (*(Snd45c **)(p + 0xC))->m28(0xF);
+        *(unsigned char *)(p + 0xB5) = 1;
+    case 1:
+        ((Self45c *)p)->m84();
+        if ((short)(((Self45c *)p)->m78(*(short *)(p + 0x30), *(short *)(*(char **)(p + 0x10) + 0x50)) + 0x4000) <= 0) {
+            switch (((Self45c *)p)->m80(((Self45c *)p)->m7C())) {
+            case 0: case 1:
+                ((Self45c *)p)->mB4(0x39);
+                break;
+            case 2: case 3:
+                ((Self45c *)p)->mB4(0x38);
+                break;
+            case 4:
+                ((Self45c *)p)->mB4(0x3C);
+                break;
+            case 5:
+                ((Self45c *)p)->mB4(0x3D);
+                break;
+            }
+            return;
+        }
+        if (((Self45c *)p)->mA0()) {
+            ((Self45c *)p)->mB4(0x28);
+            return;
+        }
+        if (((Self45c *)p)->m88()) ((Self45c *)p)->m108(3.0f);
+        break;
+    }
+}
+
+class Obj31E {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void m20();
+};
+
+class Self31E {
+public:
+    virtual void z0();
+    virtual void z1();
+    virtual void z2();
+    virtual void z3();
+    virtual void z4();
+    virtual void z5();
+    virtual void z6();
+    virtual void z7();
+    virtual void z8();
+    virtual void z9();
+    virtual void m30();
+    virtual void z11();
+    virtual void m38();
+    virtual void z13();
+    virtual void m40();
+    virtual void z15();
+    virtual void m48();
+    virtual void z17();
+    virtual void m50();
+    virtual void z19();
+    virtual void m58();
+    virtual void z21();
+    virtual void m60();
+    virtual void z23();
+    virtual void m68();
+    virtual void z25();
+    virtual void m70();
+    virtual void z27();
+    virtual void m78();
+    virtual void z29();
+    virtual void m80();
+    virtual void z31();
+    virtual void m88();
+    virtual void z33();
+    virtual void m90();
+};
+
+extern "C" void func_0031E590(char *p) {
+    float *z;
+    (*(Obj31E **)(p + 8))->m20();
+    switch (*(unsigned char *)(p + 0x10)) {
+    case 0: ((Self31E *)p)->m30(); break;
+    case 1: ((Self31E *)p)->m38(); break;
+    case 2: ((Self31E *)p)->m40(); break;
+    case 3: ((Self31E *)p)->m48(); break;
+    case 4: ((Self31E *)p)->m50(); break;
+    case 5: ((Self31E *)p)->m58(); break;
+    case 6: ((Self31E *)p)->m60(); break;
+    case 7: ((Self31E *)p)->m68(); break;
+    case 8: ((Self31E *)p)->m70(); break;
+    case 9: ((Self31E *)p)->m78(); break;
+    case 10: ((Self31E *)p)->m80(); break;
+    case 11: ((Self31E *)p)->m88(); break;
+    case 12: ((Self31E *)p)->m90(); break;
+    }
+    if (*(unsigned char *)(p + 0x11) == 0) {
+        *(float *)(*(char **)(p + 0xC) + 0x34) = *(float *)(*(char **)(p + 0xC) + 0x34) + -0.54f;
+        *(float *)(*(char **)(p + 0xC) + 0x34) = *(float *)(*(char **)(p + 0xC) + 0x34) + *(float *)(*(char **)(p + 8) + 0x24);
+        z = (float *)(*(char **)(p + 0xC) + 0x34);
+        if (!(*z <= 0.0f)) *z = 0.0f;
+        *(float *)(*(char **)(p + 0xC) + 0x24) = *(float *)(*(char **)(p + 0xC) + 0x24) + *(float *)(*(char **)(p + 0xC) + 0x34);
+    }
+}
+
+class A476 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void mB4(int, int, int, int);
+};
+
+class B476 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void d49();
+    virtual void d50();
+    virtual void d51();
+    virtual void d52();
+    virtual void d53();
+    virtual void d54();
+    virtual void d55();
+    virtual void d56();
+    virtual void d57();
+    virtual void d58();
+    virtual void d59();
+    virtual void d60();
+    virtual void d61();
+    virtual void d62();
+    virtual void d63();
+    virtual void d64();
+    virtual void d65();
+    virtual void d66();
+    virtual void d67();
+    virtual void d68();
+    virtual void d69();
+    virtual void d70();
+    virtual void d71();
+    virtual void d72();
+    virtual void d73();
+    virtual void d74();
+    virtual void d75();
+    virtual void d76();
+    virtual void d77();
+    virtual void d78();
+    virtual void d79();
+    virtual void d80();
+    virtual void d81();
+    virtual void d82();
+    virtual void d83();
+    virtual void d84();
+    virtual void d85();
+    virtual void d86();
+    virtual void d87();
+    virtual void d88();
+    virtual void d89();
+    virtual void d90();
+    virtual void d91();
+    virtual void d92();
+    virtual void d93();
+    virtual void d94();
+    virtual void d95();
+    virtual void d96();
+    virtual void d97();
+    virtual void d98();
+    virtual void d99();
+    virtual void m198();
+};
+
+extern "C" int func_004764F0(char *p) {
+    int i;
+    switch (*(unsigned char *)(p + 0x19D)) {
+    case 0:
+        *(int *)(p + 0xF20) = 0;
+        (*(unsigned char *)(p + 0x19D))++;
+        break;
+    case 1:
+        *(float *)(p + 0xF20) = *(float *)(p + 0xF20) + *(float *)(p + 0x10);
+        if (!(*(float *)(p + 0xF20) <= 10.0f)) {
+            ((A476 *)(p + 0xA30))->mB4(1, 0, 0, 0);
+            func_003305E0(D_01DFABA0, 8, 0xA0, p + 0xEF0, 0x29, 0, 0);
+            *(int *)(p + 0xF20) = 0;
+            (*(unsigned char *)(p + 0x19D))++;
+        }
+        break;
+    case 2:
+        *(float *)(p + 0xF20) = *(float *)(p + 0xF20) + *(float *)(p + 0x10);
+        if (!(*(float *)(p + 0xF20) <= 10.0f)) {
+            *(int *)(p + 0xF20) = 0;
+            (*(unsigned char *)(p + 0x19D))++;
+        }
+        break;
+    case 3:
+        for (i = 0; i < 3; i++) {
+            if (*(char **)(p + i * 4 + 0xF04) && *(unsigned char *)(p + i + 0xF10) == 0) {
+                (*(B476 **)((char *)(i * 4) + (int)p + 0xF04))->m198();
+                *(unsigned char *)((char *)i + (int)p + 0xF10) = 1;
+                break;
+            }
+        }
+        if (i == 3) {
+            *(int *)(p + 0xF20) = 0;
+            (*(unsigned char *)(p + 0x19D))++;
+        } else {
+            *(unsigned char *)(p + 0x19D) = 2;
+        }
+        break;
+    case 4:
+        *(float *)(p + 0xF20) = *(float *)(p + 0xF20) + *(float *)(p + 0x10);
+        if (!(*(float *)(p + 0xF20) <= 60.0f)) {
+            *(int *)(p + 0xF20) = 0;
+            (*(unsigned char *)(p + 0x19D))++;
+            func_0028C740(p + 0xF30);
+        }
+        break;
+    case 5:
+        return 1;
+    }
+    return 0;
+}
+
+static inline int ok487(char *o) {
+    unsigned char r = 1;
+    if (*(unsigned char *)(o + 1) != 0 && *(unsigned char *)(o + 1) != 3) r = 0;
+    return r;
+}
+
+extern "C" void func_004870B0(char *p) {
+    char *q;
+    switch (*(unsigned int *)(p + 4)) {
+    case 0:
+        if (!(unsigned char)ok487(*(char **)(p + 0x28))) break;
+        if ((*(char **)(p + 0x14) = func_003B6EE0(*(char **)(p + 0x28))) == 0) break;
+        *(int *)(p + 4) = 1;
+    case 1:
+        D_005BC1A8->m14(0x80000000, 5);
+        *(int *)(p + 4) = 2;
+    case 2:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            switch (*(signed char *)(*(char **)(p + 0x14) + 0x1302)) {
+            case -1: case 0:
+                break;
+            case 1:
+                *(signed char *)(p + 0x3A) = 1;
+                D_005BC1A8->m18(0x80000000, 0x3C);
+                *(int *)(p + 4) = 3;
+                break;
+            }
+        }
+        break;
+    case 3:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            switch (*(signed char *)(p + 0x3A)) {
+            case -1: case 0:
+                break;
+            case 1:
+                if (*(unsigned char *)(p + 0x38) == 1) {
+                    func_001AD140(*(char **)(p + 0x14));
+                    *(int *)(p + 0x14) = 0;
+                    *(int *)(p + 4) = 4;
+                } else {
+                    *(unsigned char *)(*(char **)(p + 0x14) + 0x1301) = 0;
+                    *(int *)(p + 4) = 5;
+                }
+                *(int *)(p + 8) = 0;
+                D_01DFA340[0] = 0;
+                break;
+            }
+        }
+        break;
+    case 4:
+        if (*(unsigned int *)(p + 8) < 5) (*(int *)(p + 8))++;
+        else *(int *)(p + 4) = *(int *)(p + 4) + 1;
+        break;
+    case 5:
+        if (*(unsigned char *)(p + 0x38) == 1) {
+            func_001AF080(D_00666750, *(int *)(p + 0x28));
+            *(int *)(p + 0x28) = 0;
+            *(int *)(p + 0x20) = func_001AFB90(D_00666750, 0x1AE, 0, 8);
+            *(int *)(p + 4) = 0;
+        } else {
+            *(unsigned char *)(*(char **)(p + 0xC) + 0x1900) = 1;
+            q = *(char **)(p + 0xC);
+            *(unsigned char *)(q + 4) = 1;
+            *(signed char *)(q + 0x1903) = -1;
+            *(unsigned char *)(q + 0x1900) = 1;
+            *(unsigned char *)(q + 0x1901) = 0;
+            *(int *)(p + 4) = 2;
+        }
+        D_005BC1A8->m14(0x80000000, 5);
+        *(int *)p = 0;
+        break;
+    case 6:
+        break;
+    }
+}
+
+extern "C" void func_004875C0(char *p) {
+    char *q;
+    switch (*(unsigned int *)(p + 4)) {
+    case 0:
+        if (!(unsigned char)ok487(*(char **)(p + 0x30))) break;
+        if ((*(char **)(p + 0x1C) = func_003BAA20(*(char **)(p + 0x30))) == 0) break;
+        *(int *)(p + 4) = 1;
+    case 1:
+        D_005BC1A8->m14(0x80000000, 5);
+        *(int *)(p + 4) = 2;
+    case 2:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            switch (*(signed char *)(*(char **)(p + 0x1C) + 0x2502)) {
+            case -1:
+                break;
+            case 15:
+                *(signed char *)(p + 0x3A) = 15;
+                D_005BC1A8->m18(0x80000000, 0x3C);
+                *(int *)(p + 4) = 3;
+                break;
+            }
+        }
+        break;
+    case 3:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            switch (*(signed char *)(p + 0x3A)) {
+            case -1:
+                break;
+            case 15:
+                if (*(unsigned char *)(p + 0x38) == 1) {
+                    func_001AD140(*(char **)(p + 0x1C));
+                    *(int *)(p + 0x1C) = 0;
+                    *(int *)(p + 4) = 4;
+                } else {
+                    *(unsigned char *)(*(char **)(p + 0x1C) + 0x2500) = 0;
+                    *(int *)(p + 4) = 5;
+                }
+                *(int *)(p + 8) = 0;
+                D_01DFA340[0] = 0;
+                break;
+            }
+        }
+        break;
+    case 4:
+        if (*(unsigned int *)(p + 8) < 5) (*(int *)(p + 8))++;
+        else *(int *)(p + 4) = *(int *)(p + 4) + 1;
+        break;
+    case 5:
+        if (*(unsigned char *)(p + 0x38) == 1) {
+            func_001AF080(D_00666750, *(int *)(p + 0x30));
+            *(int *)(p + 0x30) = 0;
+            *(int *)(p + 0x20) = func_001AFB90(D_00666750, 0x1AE, 0, 8);
+            *(int *)(p + 4) = 0;
+        } else {
+            *(unsigned char *)(*(char **)(p + 0xC) + 0x1900) = 1;
+            q = *(char **)(p + 0xC);
+            *(unsigned char *)(q + 4) = 1;
+            *(signed char *)(q + 0x1903) = -1;
+            *(unsigned char *)(q + 0x1900) = 1;
+            *(unsigned char *)(q + 0x1901) = 0;
+            *(int *)(p + 4) = 2;
+        }
+        D_005BC1A8->m14(0x80000000, 5);
+        *(int *)p = 0;
+        break;
+    case 6:
+        break;
+    }
+}
+
+extern "C" void func_00487330(char *p) {
+    char *q;
+    switch (*(unsigned int *)(p + 4)) {
+    case 0:
+        if (!(unsigned char)ok487(*(char **)(p + 0x2C))) break;
+        if ((*(char **)(p + 0x18) = func_003B79B0(*(char **)(p + 0x2C))) == 0) break;
+        *(int *)(p + 4) = 1;
+    case 1:
+        D_005BC1A8->m14(0x80000000, 5);
+        *(int *)(p + 4) = 2;
+    case 2:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            switch (*(signed char *)(*(char **)(p + 0x18) + 0xD02)) {
+            case -1: case 0: case 1: case 2: case 3:
+                break;
+            case 4:
+                *(signed char *)(p + 0x3A) = 4;
+                D_005BC1A8->m18(0x80000000, 0x3C);
+                *(int *)(p + 4) = 3;
+                break;
+            }
+        }
+        break;
+    case 3:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            switch (*(signed char *)(p + 0x3A)) {
+            case -1: case 0: case 1: case 2: case 3:
+                break;
+            case 4:
+                if (*(unsigned char *)(p + 0x38) == 1) {
+                    func_001AD140(*(char **)(p + 0x18));
+                    *(int *)(p + 0x18) = 0;
+                    *(int *)(p + 4) = 4;
+                } else {
+                    *(unsigned char *)(*(char **)(p + 0x18) + 0xD00) = 0;
+                    *(int *)(p + 4) = 5;
+                }
+                *(int *)(p + 8) = 0;
+                D_01DFA340[0] = 0;
+                break;
+            }
+        }
+        break;
+    case 4:
+        if (*(unsigned int *)(p + 8) < 5) (*(int *)(p + 8))++;
+        else *(int *)(p + 4) = *(int *)(p + 4) + 1;
+        break;
+    case 5:
+        if (*(unsigned char *)(p + 0x38) == 1) {
+            func_001AF080(D_00666750, *(int *)(p + 0x2C));
+            *(int *)(p + 0x2C) = 0;
+            *(int *)(p + 0x20) = func_001AFB90(D_00666750, 0x1AE, 0, 8);
+            *(int *)(p + 4) = 0;
+        } else {
+            *(unsigned char *)(*(char **)(p + 0xC) + 0x1900) = 1;
+            q = *(char **)(p + 0xC);
+            *(unsigned char *)(q + 4) = 1;
+            *(signed char *)(q + 0x1903) = -1;
+            *(unsigned char *)(q + 0x1900) = 1;
+            *(unsigned char *)(q + 0x1901) = 0;
+            *(int *)(p + 4) = 2;
+        }
+        D_005BC1A8->m14(0x80000000, 5);
+        *(int *)p = 0;
+        break;
+    case 6:
         break;
     }
 }

@@ -2344,6 +2344,8 @@ public:
     virtual void d4();
     virtual void m1C(unsigned int, int, int);
     virtual void m20(unsigned int, int, int);
+    virtual void d7();
+    virtual void m28(int, int, int);
 };
 
 extern "C" Snd29C *D_005BC1A8;
@@ -2352,6 +2354,11 @@ extern "C" void func_004E1020(char *);
 extern "C" void func_004E1520(char *);
 extern "C" void func_004E1690(char *);
 extern "C" void func_004E1990(char *);
+extern "C" int func_0034E640(char *, char *, unsigned char);
+extern "C" int func_0034F1C0(int);
+extern "C" int func_0034F1D0(int);
+extern "C" unsigned char func_00404740(char *, int);
+extern "C" void func_00404720(char *);
 
 extern "C" void func_0029CD10(char *p) {
     float v[4] __attribute__((aligned(16)));
@@ -2489,5 +2496,71 @@ extern "C" void func_004E0BC0(char *p) {
     case 4: func_004E1990(p); break;
     case 5: ((V130 *)p)->m138();
     case 6: ((V130 *)p)->m13C(); break;
+    }
+}
+
+static inline int ok404(char *o) {
+    unsigned char r = 1;
+    if (*(unsigned char *)(o + 1) != 0 && *(unsigned char *)(o + 1) != 3) r = 0;
+    return r;
+}
+
+extern "C" void func_00404180(char *p) {
+    switch (*(unsigned int *)(p + 8)) {
+    case 0:
+        if ((unsigned char)ok404(*(char **)((char *)(*(int *)(p + 0x54) * 8) + (int)p + 0x44)) == 1) {
+            (*(int *)(p + 8))++;
+            *(int *)(p + 0x184) = func_0034E640(*(char **)((char *)(*(int *)(p + 0x54) * 8) + (int)p + 0x44), p + 0x5C, *(unsigned char *)(p + 0x188));
+            *(unsigned char *)(p + 0x188) = 0;
+            if (*(int *)(p + 0x184) == 0) {
+                *(int *)(p + 8) = 8;
+            } else {
+                *(int *)(p + 0x10) = 0xC;
+                D_005BC1A8->m1C(0x80000000, 0xC, 0xFFFFFF);
+            }
+        }
+        break;
+    case 1:
+        if (--*(int *)(p + 0x10) < 0) {
+            (*(int *)(p + 8))++;
+            D_005BC1A8->m28(0, 1, 0xFFFFFF);
+        }
+        break;
+    case 2:
+        if (func_0034F1C0(*(int *)(p + 0x184))) {
+            (*(int *)(p + 8))++;
+            *(unsigned char *)(p + 0x16) = func_00404740(p, func_0034F1D0(*(int *)(p + 0x184)));
+        }
+        break;
+    case 3:
+        *(int *)(p + 4) = 5;
+        (*(int *)(p + 8))++;
+        break;
+    case 4:
+        *(int *)(p + 0x10) = 0x18;
+        D_005BC1A8->m20(0x80000000, 0x18, 0xFFFFFF);
+        (*(int *)(p + 8))++;
+        break;
+    case 5:
+        if (--*(int *)(p + 0x10) < 0) {
+            (*(int *)(p + 8))++;
+            D_005BC1A8->m28(0, 1, 0xFFFFFF);
+            if (*(int *)(p + 0x184)) {
+                func_001AD140(*(char **)(p + 0x184));
+                *(int *)(p + 0x184) = 0;
+            }
+        }
+        break;
+    case 6: case 7:
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 8:
+        func_00404720(p);
+        *(int *)(p + 4) = 8;
+        *(int *)(p + 8) = 0;
+        break;
+    default:
+        *(int *)(p + 8) = 4;
+        break;
     }
 }
