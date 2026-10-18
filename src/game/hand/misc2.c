@@ -442,6 +442,27 @@ typedef struct { float v[4]; } __attribute__((aligned(16))) V4;
 
 extern V4 D_0056A0C0;
 void func_00133890(char *, char *, V4 *);
+extern char D_00666710[];
+extern unsigned short D_0066671A[];
+int func_002DAD40(char *);
+short func_002DACC0(char *);
+void func_002490F0(char *, int, int, int, int, int, float);
+void func_002DA2A0(char *);
+void func_0021C380(char *, int);
+void func_0021CA00(char *, int);
+void func_00332AE0(char *, int, float, float);
+void func_002DFFA0(char *, float);
+int func_002D9EB0(char *);
+void func_00105230(float *, float *, float *);
+int func_002496D0(char *);
+void func_0021CBB0(char *, int);
+unsigned short func_001AE770(char *, int);
+int func_0023DF80(char *, float);
+void func_0021BFC0(char *);
+void func_002DA540(char *);
+void func_002DA3A0(char *, int);
+void func_00430EA0(char *, int);
+void func_002DA650(char *);
 
 void func_003FD410(char *p) {
     V4 m;
@@ -498,4 +519,62 @@ void func_003FD410(char *p) {
     func_002530C0(p, D_00564FC0);
     *(short *)(p + 0x480) = 0;
     p[0x482] = 0;
+}
+
+#define VMOVE224(d, s) __asm__ volatile("lqc2 $vf4, 0x30(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%1)" : : "r"(s), "r"(d) : "memory")
+
+#define VUNIT224(d) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(d) : "memory")
+
+void func_00224FA0(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    switch (*(unsigned char *)(p + 0x284C)) {
+    case 0:
+        if ((unsigned char)func_002DAD40(p) == 2) {
+            p[0x2904] = 4;
+        } else {
+            p[0x2904] = 0;
+            *(short *)(p + 0x90) = func_002DACC0(p);
+        }
+        func_002490F0(p, 0, 0x21, -1, 0, 0, -1.0f);
+        *(short *)(p + 0x28DC) = *(short *)(p + 0x90);
+        p[0x2903] = 6;
+        func_002DA2A0(p);
+        func_0021C380(p, 4);
+        func_0021CA00(p, 1);
+        func_00332AE0(p + 0x3D90, 0x14A, *(float *)(*(char **)(p + 0x283C) + 0x58), *(float *)(*(char **)(p + 0x283C) + 0x54));
+        func_002DFFA0(p, *(float *)(*(char **)(p + 0x283C) + 0x134));
+        VMOVE224(v, *(char **)(*(char **)((char *)(func_002D9EB0(p) * 4) + (int)p + 0x1384) + 0x104));
+        VUNIT224(m);
+        func_00105230(m, m, v);
+        func_00207480(3, 0x14D, m, 8);
+        (*(unsigned char *)(p + 0x284C))++;
+        break;
+    case 1:
+        if ((unsigned char)func_002496D0(p) == 4) {
+            if (*(unsigned char *)(p + 0x2904) == 4) {
+                func_002490F0(p, 0, 0x26, -1, 0, 0, -1.0f);
+            } else {
+                func_002490F0(p, 0, 0x27, -1, 0, 0, -1.0f);
+            }
+            func_0021CBB0(p, 8);
+            if (*(unsigned short *)(p + 0x49C0) & D_0066671A[func_001AE770(D_00666710, 0x40)]) {
+                p[0x2903] = 7;
+                func_002DA2A0(p);
+            }
+            (*(unsigned char *)(p + 0x284C))++;
+        }
+        break;
+    case 2:
+        if (*(float *)(p + 0x64) < 0.0f && func_0023DF80(p, *(float *)(p + 0x64))) {
+            func_0021BFC0(p);
+            break;
+        }
+        func_002DA540(p);
+        func_002DA3A0(p, *(short *)(p + 0x28DC));
+        func_00430EA0(p, 0);
+        func_002496D0(p);
+        func_002DA650(p);
+        break;
+    }
 }
