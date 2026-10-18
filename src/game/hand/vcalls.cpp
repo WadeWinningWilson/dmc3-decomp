@@ -17294,3 +17294,64 @@ extern "C" short func_004D8420(char *p, short lim, int a) {
     }
     return *(short *)(p + 0x90) + (short)d;
 }
+
+extern "C" void func_00211570(char *p) {
+    int i;
+    for (i = 0; i < D_00541CE0[*(unsigned char *)(p + 6) * 12]; i++) {
+        char *e = *(char **)(p + 0x24) + i * 16;
+        if (*(int *)e != 0) {
+            ObjTm1C *o = *(ObjTm1C **)(e + 4);
+            switch (*(unsigned char *)o) {
+            case 0:
+                break;
+            case 1:
+            case 2:
+            case 4:
+            case 3:
+                o->m10();
+                break;
+            }
+        }
+    }
+}
+
+extern "C" void func_00209C00(char *p, unsigned char mode) {
+    int b = 0;
+    int a = 0;
+    char *e;
+    int k;
+    if (mode == 0) {
+        *(int *)(p + 0xC) = *(int *)(p + 4);
+    } else {
+        *(int *)(p + 0xC) = *(int *)(p + 8);
+    }
+    while ((k = *(unsigned char *)(e = *(char **)(p + 0xC))) != 1) {
+        if (k == 7) {
+            a = 0;
+        } else if (k == 13) {
+            switch (*(int *)(e + 4)) {
+            case 0:
+                {
+                    int *q = (int *)(e + 8);
+                    if (*q == -1) {
+                        *q = b++;
+                    }
+                }
+                break;
+            case 1:
+                {
+                    int *q = (int *)(e + 8);
+                    if (*q == -1) {
+                        *q = a++;
+                    }
+                }
+                break;
+            case 2:
+                break;
+            }
+        }
+        *(char **)(p + 0xC) = *(char **)(p + 0xC) + (((*(int *)*(char **)(p + 0xC) >> 8) & 0xFF) + 1) * 4;
+        *(unsigned char *)(p + 0x89) = 0;
+    }
+    *(int *)(p + 0xC) = *(int *)(p + 4);
+}
