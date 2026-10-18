@@ -4845,6 +4845,25 @@ int func_001C3C50(p0) int p0; {
 typedef struct { char pad[16]; int e[4][33]; char rest[120]; } C357;
 
 extern C357 D_0054A0E0[];
+float func_0024B880(float, float, float, float);
+void func_0022CBB0(char *, char *);
+void func_00124F40(char *);
+void func_0022CB30(char *);
+extern char D_01DF5B50[];
+extern char D_005BBB18[8];
+extern char D_00542100[];
+extern char D_005BE0D0[8];
+void func_001F8580(char *, int);
+int func_001F8590(char *, int);
+void func_001F85A0(char *, int, int, char *);
+void func_0012B2E8(char *, char *);
+char *func_0012BA60(char *, char *);
+void func_0012ACE8(char *, char *, char *);
+int func_001EBB20(char *, char *);
+int func_00197C30(char *, char *, int, int);
+int func_0013CEF0(char *, char *);
+int func_0013CFC0(char *, int);
+int func_001EBB10(char *, char *, int);
 
 void func_00357560(p0, p1) char *p0; int p1; {
     char *v0;
@@ -4956,4 +4975,89 @@ void func_00357560(p0, p1) char *p0; int p1; {
         }
         break;
     }
+}
+
+static inline float fsqrt(float x) {
+    float r;
+    __asm__("sqrt.s %0, %1" : "=f"(r) : "f"(x));
+    return r;
+}
+
+int func_0024B940(char *p, char *a, char *b) {
+    float v60[4] __attribute__((aligned(16)));
+    float v50[4] __attribute__((aligned(16)));
+    float t;
+    float r;
+    float d;
+    float s;
+    v60[0] = (*(float *)((b) + (0x120))) - (*(float *)((a) + (0x120)));
+    v60[1] = 0.0f;
+    v60[2] = (*(float *)((b) + (0x128))) - (*(float *)((a) + (0x128)));
+    t = (*(float *)((a) + (0x130))) + (*(float *)((b) + (0x134)));
+    t = t - func_001324E0(v60);
+    if (t < 0.0f) return 0;
+    r = func_0024B880((*(float *)((a) + (0x124))) + (*(float *)((a) + (0x130))), (*(float *)((a) + (0x124))) - (*(float *)((a) + (0x130))), (*(float *)((b) + (0x124))) + (*(float *)((b) + (0x130))), (*(float *)((b) + (0x124))));
+    if (r < 0.0f) return 0;
+    if (t < r) {
+        if (!((*(float *)((a) + (0x124))) <= (*(float *)((b) + (0x124))) + (*(float *)((b) + (0x130))))) {
+            d = (*(float *)((a) + (0x124))) - ((*(float *)((b) + (0x124))) + (*(float *)((b) + (0x130))));
+            r = func_001324E0(v60) - (*(float *)((b) + (0x134)));
+            t = fsqrt((*(float *)((a) + (0x130))) * (*(float *)((a) + (0x130))) - d * d) - r;
+        } else if ((*(float *)((a) + (0x124))) < (*(float *)((b) + (0x124)))) {
+            d = (*(float *)((b) + (0x124))) - (*(float *)((a) + (0x124)));
+            r = func_001324E0(v60) - (*(float *)((b) + (0x134)));
+            t = fsqrt((*(float *)((a) + (0x130))) * (*(float *)((a) + (0x130))) - d * d) - r;
+        }
+        if (t < 0.0f) return 0;
+        func_0024BBC0(p, a, b, v60, t);
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(a + 0x120), "r"(a + 0xD0) : "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(b + 0x120), "r"(b + 0xD0) : "memory");
+    } else {
+        v50[1] = 1.0f;
+        v50[2] = 0.0f;
+        v50[0] = 0.0f;
+        if (!((*(float *)((a) + (0x124))) <= (*(float *)((b) + (0x124))) + (*(float *)((b) + (0x130))) / 2.0f))
+            r = (*(float *)((a) + (0x124))) - ((*(float *)((a) + (0x130))) + ((*(float *)((b) + (0x124))) + (*(float *)((b) + (0x130)))));
+        else
+            r = (*(float *)((a) + (0x124))) - ((*(float *)((b) + (0x124))) - (*(float *)((a) + (0x130))));
+        func_0024BBC0(p, a, b, v50, r);
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(a + 0x120), "r"(a + 0xD0) : "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(b + 0x120), "r"(b + 0xD0) : "memory");
+    }
+    return 1;
+}
+
+static inline char *inner213(char *q) {
+    if (*(unsigned int *)(q + 4) < 1) return 0;
+    if (*(int *)(q + 8) == 0) return 0;
+    return q + *(int *)(q + 8);
+}
+
+int func_00213CA0(char *p) {
+    char b70[64];
+    char b30[64];
+    int h;
+    char *r;
+    if (*(unsigned char *)p == 0) {
+        *(char **)(p + 0x14) = inner213(*(char **)(*(char **)(p + 0x25C0) + 0xC));
+    } else if (*(unsigned char *)p == 2) {
+        *(char **)(p + 0x14) = inner213(*(char **)(*(char **)(p + 0x25C0) + 0xC));
+    } else {
+        func_001F8580(D_01DF5B50, 9);
+        if (!(unsigned char)func_001F8590(D_01DF5B50, 9)) return 0;
+        func_001F85A0(D_01DF5B50, 9, *(short *)(p + 4), b70);
+        func_0012B2E8(p + 0x18, b70);
+        *func_0012BA60(p + 0x18, D_005BBB18) = 0;
+        func_0012ACE8(b30, D_00542100, b70);
+        h = func_001EBB20(D_005BE0D0, b30);
+        if (!h) return 0;
+        r = func_001B0FD0(p + 0x25C8, 0x10000, 0);
+        if (!r) return 0;
+        if (!(unsigned char)func_00197C30(p + 0x25D8, r, 0x10000, 5)) return 0;
+        if (!(unsigned char)func_0013CEF0(p + 0x25F4, p + 0x25D8)) return 0;
+        if (!func_0013CFC0(p + 0x25F4, h + 1)) return 0;
+        if (!(unsigned char)func_001EBB10(D_005BE0D0, b30, *(int *)(p + 0x25F8))) return 0;
+        *(int *)(p + 0x14) = *(int *)(p + 0x25F8);
+    }
+    return 1;
 }

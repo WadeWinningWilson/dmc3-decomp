@@ -1036,6 +1036,7 @@ void func_0031DCB0(char *);
 void func_00212BF0(char *);
 void func_00204AD0(void);
 void func_00204A70(void);
+int func_00210850(char *, int, int *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1610,3 +1611,4 @@ char *func_00231370(char *p) {
     D_005BE108 = 2.1f;
     return p;
 }
+

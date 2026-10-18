@@ -591,6 +591,11 @@ void func_00224FA0(char *p) {
 }
 
 typedef struct { float f[4]; } F4_223;
+int func_002242C0(char *);
+void func_0031DAF0(char *, int, int);
+void func_0024CC00(char *, int);
+void func_00226A00(char *, int);
+void func_00226580(char *, int);
 
 void func_002238B0(char *p) {
     unsigned char ok;
@@ -699,4 +704,71 @@ void func_002238B0(char *p) {
         func_0021C100(p, 7, 0, *(float *)(*(char **)(p + 0x283C) + 0x2A4), *(float *)(*(char **)(p + 0x283C) + 0x2A8));
         break;
     }
+}
+
+int func_00240ED0(char *p) {
+    unsigned int i;
+    unsigned char d2;
+    unsigned char d1;
+    unsigned int j;
+    unsigned int n;
+    signed char cur;
+    signed char v;
+    char *o;
+    d2 = 0;
+    d1 = 0;
+    if ((unsigned char)func_002242C0(p) == 1) return 1;
+    if (*(unsigned char *)(p + 0x28AA) == 2) return 1;
+    if (*(unsigned char *)(p + 0x290D) == 1) return 0;
+    if ((*(unsigned short *)(p + 0x49C4) & D_0066671A[func_001AE770(D_00666710, 2)]) && *(float *)(p + 0x3D88) <= 0.0f) {
+        *(float *)(p + 0x3D88) = *(float *)(*(char **)(p + 0x283C) + 0x2F4);
+        i = *(unsigned char *)(p + 0x3D4A);
+        cur = *(signed char *)((char *)i + (int)p + 0x3D4C);
+        for (n = 0; n < 2; n++) {
+            i++;
+            if (i > 1) i = 0;
+            v = *(signed char *)(p + i + 0x3D4C);
+            if (v != -1) {
+                if (cur != v) {
+                    o = **(char ***)(*(char **)D_01CAFF0C + 0x2C);
+                    if (o) func_0031DAF0(o, 1, i);
+                    d1 = 1;
+                }
+                break;
+            }
+        }
+        if (d1 == 1) {
+            *(unsigned char *)(p + 0x3D4A) = i;
+            func_0024CC00(p, 4);
+            if (*(unsigned char *)(p + 0x28AE) == 1 || *(unsigned char *)(p + 0x28AA) == 1 ||
+                (*(unsigned char *)(p + 0x3C79) == 1 && *(unsigned char *)(p + 0x28AA) != 3)) {
+                func_00226A00(p, 1);
+                func_00226580(p, 1);
+            }
+        }
+    }
+    if ((*(unsigned short *)(p + 0x49C4) & D_0066671A[func_001AE770(D_00666710, 1)]) && *(float *)(p + 0x3D8C) <= 0.0f) {
+        *(float *)(p + 0x3D8C) = *(float *)(*(char **)(p + 0x283C) + 0x2F4);
+        j = *(unsigned char *)(p + 0x3D4B);
+        cur = *(signed char *)((char *)j + (int)p + 0x3D4C);
+        for (n = 0; n < 3; n++) {
+            j++;
+            if (j > 3) j = 2;
+            v = *(signed char *)(p + j + 0x3D4C);
+            if (v != -1) {
+                if (cur != v) {
+                    o = **(char ***)(*(char **)D_01CAFF0C + 0x2C);
+                    if (o) func_0031DAF0(o, 0, j - 2);
+                    d2 = 1;
+                }
+                break;
+            }
+        }
+        if (d2 == 1) {
+            *(unsigned char *)(p + 0x3D4B) = j;
+            func_0024CC00(p, 7);
+            func_0024CC00(p, 9);
+        }
+    }
+    return 1;
 }
