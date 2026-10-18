@@ -858,6 +858,8 @@ char *func_00199ED0(char *, char *);
 char *func_0019AB70(char *, char *);
 char *func_0019B530(char *, char *);
 void func_0019A040(char *);
+int func_001BE6F0(char *, float *, float *, float *);
+void func_00132540(float *, float *, float);
 
 void func_00233920(char *p) {
     float t = func_001F9C40(D_01DF5D20, 0x86);
@@ -1118,4 +1120,28 @@ void func_00199740(char *p, char *buf, int a) {
     }
     *(int *)(p + 0xB0) = ((int)(c + 15) & -16) - (int)buf;
     func_0019A040(p);
+}
+
+#define VADDIP(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+typedef struct { float x; float y; float z; float w; } cf4;
+
+typedef struct { cf4 c; float r; } sph5;
+
+int func_001C0040(char *a, float *b, char *c, float *out) {
+    float s[8];
+    sph5 t;
+    float tmp[4];
+    QCOPY(s, c);
+    QCOPY(s + 4, c + 0x10);
+    t.c = ((sph5 *)b)->c;
+    t.r = b[4];
+    t.r = t.r + *(float *)(c + 0x20);
+    if ((unsigned char)func_001BE6F0(a, s, (float *)&t, out) == 0) {
+        return 0;
+    }
+    VSUB(tmp, b, out);
+    func_00132540(tmp, tmp, *(float *)(c + 0x20));
+    VADDIP(out, tmp);
+    return 1;
 }
