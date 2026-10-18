@@ -9561,6 +9561,10 @@ void func_002486E0(char *);
 int func_00286B90(char *, int, int);
 void func_00209E30(int *, int, char *);
 unsigned char func_00203670(int, int);
+void func_002EB840(int, char *, float);
+void func_002EC050(int, char *, float);
+void func_002EA290(int, int, char *, int);
+int func_004D2D20(char *, unsigned char);
 
 void func_00233B00(char *p) {
     float m[16] __attribute__((aligned(16)));
@@ -9832,4 +9836,35 @@ int func_002869A0(char *p) {
         return 1;
     }
     return 0;
+}
+
+void func_002EE580(char *p, int k, int n) {
+    int i;
+    switch ((signed char)k) {
+    case 0:
+        func_002EB840(n, p + 0x480, 100.0f);
+        break;
+    case 10: case 11: case 12: case 13: case 14: case 15:
+        for (i = 0; i < n; i++) func_002EC050((unsigned char)k, p + 0x480, 10.0f);
+        break;
+    case 5: case 6: case 7: case 8: case 9: case 16: case 17: case 18: case 19:
+        func_002EA290(k, (unsigned char)n, p + 0x480, 1);
+        break;
+    case 1: case 2: case 3: case 4:
+        break;
+    }
+}
+
+unsigned char func_004CD3C0(char *p, int k) {
+    unsigned char r = 0;
+    switch (k) {
+    case 0x21: case 0x22: case 0x23: case 0x25: case 0x26: case 0x27: case 0x28: case 0x29: case 0x2A: case 0x2B: case 0x2D: case 0x2E: case 0x2F: case 0x3A: case 0x3B: case 0x3C: case 0x3F: case 0x40: case 0x41:
+        if ((unsigned char)func_004D2D20(p, k) == 1) {
+            if (--*(int *)(p + 0xB2C4) <= 0) r = 1;
+        }
+        break;
+    case 0x17: case 0x18: case 0x19: case 0x1A: case 0x1B: case 0x1C: case 0x1D: case 0x1E: case 0x1F: case 0x20: case 0x24: case 0x2C: case 0x30: case 0x31: case 0x32: case 0x33: case 0x34: case 0x35: case 0x36: case 0x37: case 0x38: case 0x39: case 0x3D: case 0x3E: case 0x42: case 0x43: case 0x44:
+        break;
+    }
+    return r;
 }

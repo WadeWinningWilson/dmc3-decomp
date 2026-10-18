@@ -468,6 +468,7 @@ short func_00131D10(float, float);
 void func_00105760(float *, float *, float);
 void func_00104B80(float *, float *, float *);
 unsigned char func_002018A0(char *, float *, float *, float *, char *, int);
+void func_00207470(int, int);
 
 void func_003A6340(unsigned char *p) {
     unsigned char go;
@@ -820,4 +821,29 @@ int func_00245590(char *p, float *pos, float *dir, char *out, float a, float h) 
         }
     }
     return 1;
+}
+
+void func_00316180(char *p, signed char k) {
+    switch (k) {
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18:
+        func_00207470(*(signed char *)(*(char **)(p + 0xC) + 0), *(short *)(*(char **)(p + 0xC) + 2));
+        break;
+    case 8: case 9: case 10:
+        func_00207470(*(signed char *)(*(char **)(p + 0xC) + 8), *(short *)(*(char **)(p + 0xC) + 0xA));
+        break;
+    }
+}
+
+void func_00315980(char *p, signed char k) {
+    switch (k) {
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+        func_00207470(3, 0x1C);
+        break;
+    case 8: case 9:
+        func_00207470(3, 4);
+        break;
+    case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18:
+        func_00207470(3, 0x91);
+        break;
+    }
 }
