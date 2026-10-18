@@ -3353,6 +3353,7 @@ void func_0024BF20(char *);
 void func_00387830(char *);
 void func_002282B0(char *);
 int func_0040F1B0(char *);
+void func_00105760(float *, float *, float);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -3989,5 +3990,41 @@ void func_0040EA40(char *p) {
         *(float *)(p + 0xEC) = 20.0f;
         __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(*(char **)(p + 0x108) + 0x450) : "memory");
         func_003305E0(D_01DFABA0, 8, 0x33, (char *)v, 0x24, 0, 0);
+    }
+}
+
+#define UNIT(e) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(e) : "memory")
+
+void func_002CB4E0(char *p, short a, int x, int y) {
+    float m[16] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    char *o;
+    short s = *(short *)(p + 0x90) + a;
+    UNIT(m);
+    func_00105760(m, m, (float)s / 65536.0f * 6.283185f);
+    v[1] = -65.0f;
+    v[3] = 1.0f;
+    v[0] = 0.0f;
+    v[2] = 0.0f;
+    func_00105230(m, m, v);
+    if (*(char **)(p + 0x2F70) != 0) {
+        func_001AD140(*(char **)(p + 0x2F70));
+    }
+    *(char **)(p + 0x2F70) = func_00207480(x, y, m, 0x10);
+    {
+        char *o1 = *(char **)(p + 0x2F70);
+        if (o1 != 0) {
+            *(int *)(o1 + 0x90) = *(int *)(*(char **)(p + 0x590) + 0x104);
+            *(char *)(o1 + 0x9A) = 1;
+        }
+    }
+    if (*(char **)(p + 0x2F74) != 0) {
+        func_001AD140(*(char **)(p + 0x2F74));
+    }
+    *(char **)(p + 0x2F74) = func_00207480(x, y, m, 0x10);
+    o = *(char **)(p + 0x2F74);
+    if (o != 0) {
+        *(int *)(o + 0x90) = *(int *)(*(char **)(p + 0x598) + 0x104);
+        *(char *)(o + 0x9A) = 1;
     }
 }

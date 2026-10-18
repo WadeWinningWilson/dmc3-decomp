@@ -7601,3 +7601,127 @@ int func_00332DD0(char *p) {
 zero:
     return 0;
 }
+
+extern V4 D_00578C70;
+char *func_001A5B50(char *);
+float *func_00277610(char *, float *, int, int);
+void func_00105578(float, float *, float *);
+void func_00104C00(char *, char *, float *);
+
+void func_00457DB0(char *p) {
+    V4 t;
+    float r[4] __attribute__((aligned(16)));
+    float w[4] __attribute__((aligned(16)));
+    UNIT(p + 0x440);
+    t = D_00578C70;
+    func_00133890(p + 0x440, p + 0x400, &t);
+    func_00105230(p + 0x440, p + 0x440, (float *)(p + 0x50));
+    func_001318E0(p + 0x440, p + 0x440, (float *)(p + 0x3F0));
+    r[0] = 0.0f;
+    r[1] = 6.283185f * (*(short *)(p + 0x3D6) / 65536.0f);
+    r[2] = 0.0f;
+    r[3] = 1.0f;
+    UNIT(p + 0x480);
+    func_00131700(p + 0x480, p + 0x480, r);
+    func_00105230(p + 0x480, p + 0x480, (float *)(p + 0x50));
+    w[0] = *(float *)(p + 0x50);
+    w[1] = 100.0f;
+    w[2] = *(float *)(p + 0x58);
+    w[3] = 1.0f;
+    UNIT(p + 0x4C0);
+    func_00105230(p + 0x4C0, p + 0x4C0, w);
+}
+
+#define QCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_0019BF40(char *p) {
+    float t[4] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    char *e;
+    char *s;
+    unsigned int i;
+    unsigned char *q;
+    unsigned char *m;
+    s = *(char **)(p + 0x10);
+    for (i = 0; i < *(unsigned short *)(p + 0xAA); i++) {
+        e = *(char **)p + i * 0x90;
+        *(char *)(e + 0x85) = i;
+        UNIT(e + 0x40);
+        QCOPY(t, s);
+        t[3] = 1.0f;
+        s += 0x10;
+        QCOPY(r, s);
+        s += 0x10;
+        r[3] = 0.0f;
+        func_00131760(e + 0x40, e + 0x40, r);
+        func_00105230(e + 0x40, e + 0x40, t);
+    }
+    m = *(unsigned char **)(p + 0x8);
+    q = *(unsigned char **)(p + 0x4);
+    for (i = 0; i < *(unsigned short *)(p + 0xAA); i++) {
+        e = *(char **)p + m[i] * 0x90;
+        *(unsigned char *)(e + 0x84) = *q++;
+        if (*(unsigned char *)(e + 0x84) != 0xFF) {
+            *(char **)(e + 0x80) = *(char **)(p + 0x108) + *(unsigned char *)(e + 0x84) * 0x40;
+        } else {
+            *(char **)(e + 0x80) = p + 0x120;
+        }
+    }
+}
+
+#define VADDR54(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+void func_00304C30(char *p, char *t) {
+    float v[4] __attribute__((aligned(16)));
+    float w[4] __attribute__((aligned(16)));
+    char *o;
+    char *m;
+    float *r;
+    if (t != 0) {
+        o = func_001A5B50(*(char **)(p + 0xC));
+        if (o == 0) {
+            m = *(char **)(*(char **)(p + 0xC) + 0x108) + *(unsigned short *)(*(char **)(p + 0xC) + 0xBA) * 0x40;
+        } else {
+            m = *(char **)(o + 0x108) + *(unsigned short *)(*(char **)(p + 0xC) + 0xBA) * 0x40;
+        }
+        QCOPY(v, m + 0x30);
+        v[3] = 1.0f;
+        r = func_00277610(t, v, 0x1C, 0);
+        if (!(r[8] <= 0.0f)) {
+            QCOPY(p + 0x30, r);
+            VADDR54(p + 0x30, v, p + 0x30);
+            *(float *)(p + 0x3C) = 1.0f;
+        } else {
+            w[0] = 200.0f;
+            w[1] = 300.0f;
+            w[2] = 50.0f;
+            w[3] = 0.0f;
+            VADDR54(p + 0x30, v, w);
+            *(float *)(p + 0x3C) = 1.0f;
+        }
+    }
+}
+
+void func_003FD970(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    func_00206730(p + 0x470);
+    func_00286040(p + 0x474);
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        (*(unsigned char *)(p + 5))++;
+        *(float *)(p + 0x47C) = 1.0f;
+        func_00207470(3, 0x142, p + 0x150);
+        func_00330BD0(D_01DFABA0, 0x19, p + 0x50, 0x1E, 0);
+    case 1:
+        *(float *)(p + 0x47C) = *(float *)(p + 0x47C) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x47C) < 0.0f) {
+            *(unsigned char *)(p + 4) = 4;
+        }
+        break;
+    }
+    *(short *)(p + 0x480) += 10923.0f * *(float *)(p + 0x10);
+    *(float *)(p + 0x88) = (float)*(short *)(p + 0x480) / 65536.0f * 6.283185f;
+    UNIT(m);
+    func_00105578(*(float *)(p + 0x88), m, m);
+    func_00104C00(p + 0x150, p + 0x150, m);
+}
