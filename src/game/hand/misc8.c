@@ -8835,6 +8835,15 @@ static inline unsigned short act_A7C90(char *p) {
 }
 
 extern StA7C90 D_00660620;
+extern char D_00558760[];
+extern char D_005BC618;
+extern char D_005BC620;
+unsigned char *func_002F99F0(int, int *, int);
+int func_002FA790(void);
+void func_0010F9C0(char *);
+void func_00124ED8(char *, int, char *);
+void func_001A7B20(int, int, int);
+void func_001A7B90(int, int, int);
 
 void func_001A7C90(char *p, int n) {
     if ((unsigned char)act_A7C90(p)) {
@@ -8873,4 +8882,97 @@ unsigned char func_003CC9D0(char *p, unsigned char *out, float *t, float *pos) {
         }
     }
     return r;
+}
+
+unsigned int func_002F92C0(int mode) {
+    int req[2];
+    unsigned char *r;
+    unsigned int f;
+    int k;
+    req[0] = 0x20000000;
+    r = func_002F99F0(2, req, 8);
+    k = func_002FA790();
+    f = 0;
+    if (k != 0) f |= 1;
+    if (r[0xA] != 0) f |= 0x10;
+    if (r[9] != 0) f |= 0x100;
+    if (r[8] != 0) f |= 0x1000;
+    switch (mode) {
+    case 0:
+        if (f == 0) {
+            f = 0;
+        } else {
+            f |= 0x80000000;
+        }
+        break;
+    case 1:
+        if ((f & 0x111) == 0) {
+            f = 0;
+        } else {
+            f |= 0x80000000;
+        }
+        break;
+    default:
+        func_0010F9C0(D_00558760);
+        func_00124ED8(&D_005BC618, 0xD3, &D_005BC620);
+        break;
+    }
+    return f;
+}
+
+#define VADDX(d, a) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a) : "memory")
+
+#define VSUBX(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+void func_0048BF50(char *p, float s) {
+    float v[4] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    char *cam = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    v[2] = 5.0f;
+    v[3] = 1.0f;
+    v[0] = 0.0f;
+    v[1] = 0.0f;
+    func_0041E190(v, v, 6.283185f * (*(short *)(p + 0x90) / 65536.0f));
+    VADDX(v, p + 0x50);
+    VSUBX(d, v, cam + 0x50);
+    d[0] = d[0] * s;
+    d[1] = d[1] * s;
+    d[2] = d[2] * s;
+    *(float *)(p + 0x50) = *(float *)(p + 0x50) - d[0];
+    *(float *)(p + 0x54) = *(float *)(p + 0x54) - d[1];
+    *(float *)(p + 0x58) = *(float *)(p + 0x58) - d[2];
+}
+
+typedef struct { int b4[2]; int b8[2]; int a8[2]; unsigned int b0[2]; } St1A79;
+
+static inline unsigned short act_1A79(char *p) {
+    if (*(int *)(p + 0xB4) == 0 && *(short *)(p + 0xB8) == 0) return 0;
+    return 1;
+}
+
+extern St1A79 D_0065F5F8;
+
+void func_001A79A0(char *p, int n) {
+    int k;
+    if ((unsigned char)act_1A79(p)) {
+        if (n < 0) {
+            n = 0;
+        } else if (n > 0) {
+            n = 0;
+        }
+        k = *(signed char *)(D_005BE0D8 + 0xE);
+        if (*(int *)(p + 0xA0) & 0x20) {
+            func_001A7B20(*(int *)((char *)(k * 4) + (int)p + 0xE0), *(int *)((char *)(k * 4) + (int)p + 0xE8), n);
+            D_0065F5F8.b4[0] += *(int *)(p + 0xB4);
+            D_0065F5F8.b8[0] += *(short *)(p + 0xB8);
+            D_0065F5F8.a8[0] += *(unsigned short *)(p + 0xA8);
+            D_0065F5F8.b0[0] += *(int *)(p + 0xB0);
+        } else {
+            func_001A7B90(*(int *)((char *)(k * 4) + (int)p + 0xE0), *(int *)((char *)(k * 4) + (int)p + 0xE8), n);
+            D_0065F5F8.b4[1] += *(int *)(p + 0xB4);
+            D_0065F5F8.b8[1] += *(short *)(p + 0xB8);
+            D_0065F5F8.a8[1] += *(unsigned short *)(p + 0xA8);
+            D_0065F5F8.b0[1] += *(int *)(p + 0xB0);
+        }
+    }
 }
