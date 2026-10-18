@@ -2974,6 +2974,11 @@ typedef struct { cf4 a; cf4 b; cf2 c; cb2 e; float d[10]; } cam54;
 
 extern cam54 *D_005BC2E4;
 void func_00195D70(char *, int);
+extern char *D_00567300[];
+void func_00204A70(char *, int);
+extern char D_005AE980[];
+extern char D_005AE9A4[];
+extern char D_005AADD0[];
 
 void func_002D58C0(char *p) {
     switch (*(unsigned char *)(p + 5)) {
@@ -3042,4 +3047,51 @@ char *func_002F7C10(int a, unsigned char b) {
         }
     }
     return 0;
+}
+
+int func_0037C0C0(char *p, int a) {
+    char *t;
+    if (a < 0 || a > 12) {
+        a = 1;
+    }
+    t = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    *(int *)(p + 0x781C) = a;
+    *(int *)(p + 0x7820) = 0;
+    *(char **)(p + 0x7828) = D_00567300[*(int *)(p + 0x781C)] + *(int *)(p + 0x7820) * 44;
+    if (t != 0) {
+        if (*(float *)(t + 0x54) < 900.0f) {
+            *(char **)(p + 0x782C) = *(char **)(p + 0x7828) + 0x2C;
+        } else {
+            *(char **)(p + 0x782C) = *(char **)(p + 0x7828);
+        }
+    } else {
+        *(char **)(p + 0x782C) = *(char **)(p + 0x7828) + 0x2C;
+    }
+    *(int *)(p + 0x7824) = -1;
+    *(unsigned char *)(p + 0x7830) = 0;
+    *(unsigned char *)(p + 0x7831) = 0;
+    *(unsigned char *)(p + 0x7832) = 0;
+    *(unsigned char *)(p + 0x7833) = 0;
+    return a;
+}
+
+char *func_00383D00(char *p, short n) {
+    if (p != 0) {
+        *(char **)p = D_005AE980;
+        *(char **)(p + 0x38) = D_005AE9A4;
+        func_002791E0(p + 0x780, -1);
+        func_001003E0(p + 0x2C0, (void *)func_00204A70, 0xC0, 6);
+        func_001003E0(p + 0x48, (void *)func_0013D240, 0x10, 0x1F);
+        if (p + 0x38 != 0) {
+            *(char **)(p + 0x38) = D_005AADD0;
+        }
+        if (p != 0) {
+            *(char **)p = D_005A6F50;
+            func_0013D240(p + 0x24, -1);
+        }
+        if (n > 0) {
+            func_00100580(p);
+        }
+    }
+    return p;
 }

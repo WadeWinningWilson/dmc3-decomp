@@ -16580,6 +16580,10 @@ public:
 };
 
 extern "C" ObjEn198 *func_002A4E40(char *, signed char *, int);
+extern "C" int func_0039FE70(char *);
+extern "C" void func_003A0620(char *);
+extern "C" int func_0039FF60(char *);
+extern "C" int func_003A01F0(char *);
 
 extern "C" ObjEn198 *func_002F2850(char *p, signed char *a) {
     char it[4];
@@ -16633,4 +16637,32 @@ extern "C" void func_003596B0(ObjSt3C *o, unsigned char a, int b, int c) {
     case 1:
         break;
     }
+}
+
+class ObjVal28 {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual float m28(int);
+};
+
+extern "C" int func_0039DDF0(char *p, float t) {
+    if (!(((ObjVal28 *)(p + 0x4C4))->m28(0) < t)) {
+        if ((unsigned char)func_0039FE70(p) == 1) {
+            *(unsigned char *)(p + 0x2DE6) = 0;
+            func_003A0620(p);
+            *(unsigned char *)(p + 0x2EC3) = 0;
+            *(unsigned char *)(p + 0x2EC4) = 0;
+            func_003A0230(p);
+            return 1;
+        }
+        if ((unsigned char)func_0039FF60(p) == 1) {
+            func_003A0230(p);
+            return 1;
+        }
+        if ((unsigned char)func_003A01F0(p) == 1) {
+            func_003A0230(p);
+            return 1;
+        }
+    }
+    return 0;
 }
