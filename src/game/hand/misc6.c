@@ -2993,6 +2993,9 @@ void func_0034C3E0(char *);
 void func_00313930(int, int, signed char);
 int func_00206190(char *, int);
 int func_001C35D0(char *, char *, int, float *);
+void func_00104B80(float *, char *, float *);
+float func_002E7630(char *);
+float func_002E7660(char *);
 
 void func_002D58C0(char *p) {
     switch (*(unsigned char *)(p + 5)) {
@@ -3283,4 +3286,30 @@ int func_001C3B40(int a, char *r, int c, int *count, char *out) {
     }
     *count = n;
     return *count > 0;
+}
+
+#define FTOI0(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tvftoi0.xyzw $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+int func_002E76D0(char *p, float *v) {
+    float a[4];
+    float c[4];
+    int out[4];
+    float inv;
+    float b;
+    func_00104B80(a, (char *)D_005BE09C + 0x140, v);
+    if (a[3] < 0.0f) {
+        return 0xFF;
+    }
+    inv = 1.0f / a[3];
+    b = func_002E7630(p);
+    b = b + inv * func_002E7660(p);
+    if (b < 0.0f) {
+        b = 0.0f;
+    }
+    if (!(b <= 255.0f)) {
+        b = 255.0f;
+    }
+    c[3] = b;
+    FTOI0(out, c);
+    return out[3];
 }
