@@ -9290,6 +9290,11 @@ void func_002DBD00(char *);
 void func_002DBD30(char *);
 void func_0021C380(char *, int);
 void func_002DA3A0(char *, short);
+void func_002F30C0(int, char *, char *, char *);
+extern int D_005BBEB0[1];
+extern float D_005BBEB4[1];
+char *func_00231E00(char *, short);
+void func_00131DF0(float *, char *, float *);
 
 void func_00453AE0(char *p) {
     int i;
@@ -9459,4 +9464,161 @@ void func_0021C100(char *p, int k, int n, float a, float b) {
         break;
     }
     func_0021C7A0(p, 9);
+}
+
+#define ANG24C(x) ((short)(unsigned short)(short)(int)(65536.0f * (x) / 360.0f + 0.5f))
+
+unsigned char func_0024D030(char *p, short k) {
+    float a;
+    float b;
+    short d;
+    short lo;
+    if ((unsigned char)func_002DAD40(p) != 2) {
+        d = k - *(short *)(p + 0x28E4) - (*(unsigned short *)(p + 0x49E8) + 0x8000);
+        a = *(float *)(*(char **)(p + 0x283C) + 0xBC);
+        lo = ANG24C(-a);
+        if (!(lo > d) && !(d > ANG24C(a))) return 0;
+        b = 180.0f - a;
+        if (!(ANG24C(-b) > d) && !(d > lo)) return 1;
+        if (!(ANG24C(b) < d) && !(d < ANG24C(a))) return 3;
+        return 2;
+    }
+    return 4;
+}
+
+void func_00262CA0(char *p, unsigned char a, unsigned char k, char *d) {
+    func_00330B50(D_01DFABA0, 0, d, 5);
+    switch (k) {
+    case 0: case 1: case 2: case 3: case 4: case 6:
+        if (a == 1 || (a & 1)) {
+            func_002F30C0(0, *(char **)(((char **)(p + 0x13A4))[func_002D9EB0(p)] + 0x104), p + 0x26C0, p);
+        } else {
+            func_002F30C0(3, *(char **)(((char **)(p + 0x13B4))[func_002D9EB0(p)] + 0x104), p + 0x26C0, p);
+        }
+        break;
+    case 5:
+        if (a & 1) {
+            func_002F30C0(1, *(char **)(((char **)(p + 0x13A4))[func_002D9EB0(p)] + 0x104), p + 0x26C0, p);
+        } else {
+            func_002F30C0(4, *(char **)(((char **)(p + 0x13B4))[func_002D9EB0(p)] + 0x104), p + 0x26C0, p);
+        }
+        func_00330B50(D_01DFABA0, 0xB, d, 5);
+        break;
+    case 7: case 8: case 9:
+        if (a & 1) {
+            func_002F30C0(2, *(char **)(((char **)(p + 0x13A4))[func_002D9EB0(p)] + 0x104), p + 0x26C0, p);
+        } else {
+            func_002F30C0(5, *(char **)(((char **)(p + 0x13B4))[func_002D9EB0(p)] + 0x104), p + 0x26C0, p);
+        }
+        break;
+    }
+}
+
+#define QCOPY233(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+typedef struct { float f[4]; } __attribute__((aligned(16))) Q233;
+
+extern Q233 D_00543CB0[];
+extern Q233 D_00543CC0[];
+extern char D_00544990[];
+extern char D_005449B0[];
+extern char D_005449F0[];
+extern char D_00544A30[];
+extern char D_00544A70[];
+float func_001324B0(float *, char *);
+
+void func_00233B00(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float c[4] __attribute__((aligned(16)));
+    float r1[4] __attribute__((aligned(16)));
+    float r2[4] __attribute__((aligned(16)));
+    float a[4] __attribute__((aligned(16)));
+    float b[4] __attribute__((aligned(16)));
+    float off;
+    char *e;
+    char *g;
+    int i;
+    g = func_00210240(*(char **)(p + 0x200C));
+    off = 0.0f;
+    if (!(*(float *)(g + 0xC) + *(float *)(g + 0x10) <= 6000.0f)) off = -100.0f;
+    e = func_00231E00(p, *(short *)(*(char **)(p + 0x200C) + 0x98));
+    if (e == 0) return;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    c[0] = 128.0f;
+    c[1] = 128.0f;
+    c[2] = 128.0f;
+    c[3] = 80.0f;
+    for (i = 0; i < 1; i++) {
+        QCOPY233(a, &D_00543CB0[i]);
+        QCOPY233(b, &D_00543CC0[i]);
+        a[2] += off;
+        b[2] += off;
+        func_00131DF0(r1, *(char **)(*(char **)((char *)(D_005BBEB0[i] * 4) + (int)e + 0xB10) + 0x104), a);
+        func_00131DF0(r2, *(char **)(*(char **)((char *)(D_005BBEB0[i] * 4) + (int)e + 0xB10) + 0x104), b);
+        *(float *)((char *)(i * 48) + (int)p + 0x39B0) = r1[0];
+        *(float *)((char *)(i * 48) + (int)p + 0x39B4) = r1[1];
+        *(float *)((char *)(i * 48) + (int)p + 0x39B8) = r1[2];
+        *(float *)((char *)(i * 48) + (int)p + 0x39C0) = r2[0];
+        *(float *)((char *)(i * 48) + (int)p + 0x39C4) = r2[1];
+        *(float *)((char *)(i * 48) + (int)p + 0x39C8) = r2[2];
+        *(float *)((char *)(i * 48) + (int)p + 0x39D0) = D_005BBEB4[i];
+    }
+}
+
+#define QCOPY244(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+int func_00244A40(char *p, float *out) {
+    char *t;
+    unsigned int n;
+    unsigned int i;
+    char *e;
+    unsigned int r;
+    float h;
+    r = (unsigned char)func_002242C0(p);
+    n = 1;
+    if (r == 1) return 0;
+    switch (D_01CAFF38[0]) {
+    case 4:
+    case 0x258:
+        t = D_00544990;
+        n = 1;
+        break;
+    case 0x7C:
+    case 0x82:
+        t = D_005449B0;
+        n = 2;
+        break;
+    case 0x88:
+        t = D_005449F0;
+        n = 2;
+        break;
+    case 0x12E:
+    case 0x1A3:
+        t = D_00544A30;
+        n = 2;
+        break;
+    case 0x384:
+        t = D_00544A70;
+        break;
+    default:
+        return 0;
+    }
+    for (i = 0; i < n; i++) {
+        e = t + i * 32;
+        QCOPY244(out, e);
+        if (*(unsigned int *)(p + 0x2898) & 2) {
+            if (50.0f + out[1] < *(float *)(p + 0x54) && !(out[1] + *(float *)(e + 0x10) <= *(float *)(p + 0x54)) &&
+                func_001324B0(out, p + 0x50) < 150.0f) {
+                out[1] = *(float *)(p + 0x54);
+                return 1;
+            }
+        } else {
+            h = *(float *)(e + 0x10);
+            if (!(out[1] + h - 50.0f <= *(float *)(p + 0x54)) && func_001324B0(out, p + 0x50) < 100.0f) {
+                out[1] = *(float *)(p + 0x54);
+                return 1;
+            }
+        }
+    }
+    return 0;
 }

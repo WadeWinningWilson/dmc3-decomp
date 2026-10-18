@@ -457,6 +457,12 @@ void func_003305E0(char *, int, int, char *, int, int, int);
 int func_002D9A10(char *, short, int);
 void func_0021C7E0(char *, int, int, int);
 void func_0025DD40(char *);
+void func_00131650(float *, float *);
+float func_00132630(float *, float *);
+void func_00132580(float *, float, float *);
+float func_00132470(char *, float *);
+void func_001323E0(float *);
+void func_0024BBC0(char *, char *, char *, float *, float);
 
 void func_003A6340(unsigned char *p) {
     unsigned char go;
@@ -714,4 +720,51 @@ void func_00274140(char *p) {
         func_0025DD40(p);
         return;
     }
+}
+
+int func_0024B500(char *p, char *a, char *b) {
+    float v80[4] __attribute__((aligned(16)));
+    float v70[4] __attribute__((aligned(16)));
+    float v60[4] __attribute__((aligned(16)));
+    unsigned int f;
+    float t;
+    f = 0;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(v60), "r"((b + 0x130)), "r"((b + 0x120)) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(v70), "r"((b + 0x120)), "r"((b + 0x130)) : "memory");
+    func_00131650(v60, v60);
+    func_00131650(v70, v70);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(v80), "r"((a + 0xD0)), "r"((b + 0x120)) : "memory");
+    if (func_00132630(v80, v60) < 0.0f) f |= 1;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(v80), "r"((a + 0xD0)), "r"((b + 0x130)) : "memory");
+    if ((t = func_00132630(v80, v70)) < 0.0f) f |= 2;
+    switch (f) {
+    case 0:
+        func_00132580(v80, t, v70);
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(v80), "r"(b + 0x130) : "memory");
+        break;
+    case 1:
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v80), "r"((b + 0x120)) : "memory");
+        break;
+    case 2:
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v80), "r"((b + 0x130)) : "memory");
+        break;
+    case 3:
+        return 1;
+    }
+    t = func_00132470(a + 0xD0, v80);
+    if (t < *(float *)(a + 0x130) + *(float *)(b + 0x140)) {
+        t = *(float *)(a + 0x130) + *(float *)(b + 0x140) - t;
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vsub.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(v80), "r"(a + 0xD0) : "memory");
+        func_001323E0(v80);
+        func_0024BBC0(p, a, b, v80, t);
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"((a + 0x120)), "r"((a + 0xD0)) : "memory");
+        return 1;
+    }
+    return 0;
 }
