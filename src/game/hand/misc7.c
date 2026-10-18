@@ -2169,6 +2169,7 @@ int func_001A4F90(char *);
 void func_00199730(char *, char *, char *, int);
 void func_00199720(char *, char *, int);
 int func_001A5B30(char *, int);
+void func_002242C0(char *);
 
 void func_002276B0(char *p) {
     T404 t;
@@ -2389,3 +2390,9 @@ int func_001AE770(char *p, unsigned short b) {
     return 0;
 }
 
+int func_0028BFE0(char *p) {
+    char *o = *(char **)(p + 0xE0);
+    if (*(unsigned char *)(o + 0x24F1) == 1) return 1;
+    func_002242C0(o);
+    return 0;
+}

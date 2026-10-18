@@ -8213,6 +8213,8 @@ extern float D_01DF5DC0[];
 void func_00330C50(char *, int, int, int, int);
 void func_00377100(char *, unsigned char);
 void func_002F17E0(char *);
+extern int D_005BE0A0;
+extern int D_005BE0A4;
 
 int func_004D9280(char *p, char *a, char *r) {
     char buf[0x20];
@@ -8414,4 +8416,28 @@ char *func_002F15D0(char *p, int k) {
     }
     if (e == 0) return 0;
     return *(char **)(e + 8);
+}
+
+void func_003B5FB0(char *p) {
+    func_004F7680(*(int *)(p + 0x4C0), p, 3, *(short *)(p + 0x90), *(char **)(*(char **)(p + 0x698) + 0x104) + 0x30);
+}
+
+int func_001AE4B0(unsigned int n) {
+    int r;
+    if (!((unsigned int)D_005BE0A4 < n)) {
+        D_005BE0A4 = D_005BE0A4 - n;
+        r = D_005BE0A0;
+        D_005BE0A0 = r + n * 16;
+        return r;
+    }
+    return 0;
+}
+
+void func_003AA450(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    UNIT(p + 0x4B60);
+    QCOPY(v, p + 0x50);
+    v[1] = 5.0f + *(float *)(p + 0x4E24);
+    v[3] = 1.0f;
+    func_00105230(p + 0x4B60, p + 0x4B60, v);
 }

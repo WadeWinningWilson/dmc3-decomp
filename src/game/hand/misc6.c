@@ -4417,3 +4417,13 @@ int func_002443D0(char *p, unsigned char mode, signed char c) {
     }
     return 0;
 }
+
+void func_0028D560(char *p) {
+    *(unsigned char *)(p + 0xD8) = 1;
+    if (func_002DA0B0(*(char **)(p + 0xE0), *(signed char *)(p + 0xD2)) == 0 || func_002DA0B0(*(char **)(p + 0xE0), *(signed char *)(p + 0xD2)) == 3) {
+        *(unsigned char *)(p + 5) = 0;
+        *(unsigned char *)(p + 6) = 0;
+    } else {
+        *(signed char *)(p + 0xDA) = -1;
+    }
+}

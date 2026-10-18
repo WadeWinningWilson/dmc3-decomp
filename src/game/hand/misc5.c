@@ -1353,3 +1353,20 @@ int func_001B9520(char *a, char *b) {
     func_001AE4F0(*(unsigned short *)(s + 0x34));
     return r;
 }
+
+static inline signed char find_2DA(char *p, signed char k) {
+    unsigned int i;
+    if (k != -1) {
+        for (i = 0; i < 5; i++) {
+            signed char c = *(signed char *)(p + i + 0x3D4C);
+            if (c == k) return i;
+        }
+    }
+    return -1;
+}
+
+signed char func_002DA0B0(char *p, signed char k) {
+    signed char idx = find_2DA(p, k);
+    if (idx != -1) return *(signed char *)((char *)idx + (int)p + 0x3D68);
+    return 4;
+}
