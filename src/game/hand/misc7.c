@@ -1145,3 +1145,27 @@ int func_001C0040(char *a, float *b, char *c, float *out) {
     VADDIP(out, tmp);
     return 1;
 }
+
+int func_0023F760(char *p) {
+    switch (*(signed char *)((char *)*(unsigned char *)(p + 0x3D4B) + (int)p + 0x3D4C)) {
+    case 5:
+        *(signed char *)(p + 0x3BA1) = 5;
+        return 1;
+    case 6:
+        *(signed char *)(p + 0x3BA1) = 6;
+        return 1;
+    case 7:
+        *(signed char *)(p + 0x3BA1) = 7;
+        return 1;
+    case 8:
+        *(signed char *)(p + 0x3BA1) = 8;
+        return 1;
+    case 9:
+        *(signed char *)(p + 0x3BA1) = 9;
+        return 1;
+    }
+    if (slot_find(p, 5) != -1) {
+        *(signed char *)(p + 0x3BA1) = 5;
+    }
+    return 1;
+}

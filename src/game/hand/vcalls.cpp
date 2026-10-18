@@ -17190,6 +17190,7 @@ typedef struct { unsigned char v[6]; } b6tab;
 extern "C" i6tab D_00563EC0;
 extern "C" b6tab D_005BCCC0;
 extern "C" signed char D_00575B10[];
+extern "C" void func_0024E830(char *, char *, float *, char *);
 
 extern "C" void func_0039CDF0(char *p) {
     i6tab t __attribute__((aligned(16))) = D_00563EC0;
@@ -17354,4 +17355,34 @@ extern "C" void func_00209C00(char *p, unsigned char mode) {
         *(unsigned char *)(p + 0x89) = 0;
     }
     *(int *)(p + 0xC) = *(int *)(p + 4);
+}
+
+#define VZERO20(d) __asm__ volatile("vsub.xyzw $vf20, $vf0, $vf0\n\tsqc2 $vf20, 0x0(%0)" : : "r"(d) : "memory")
+
+static inline bool stage_on(void) {
+    unsigned char r;
+    if (*(int *)(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x55C) == 0) {
+        r = 0;
+    } else {
+        r = 1;
+    }
+    return r;
+}
+
+extern "C" void func_0027D620(char *p) {
+    float z[4];
+    float a[4];
+    float b[4];
+    VZERO20(z);
+    if (stage_on()) {
+        QCOPYB(a, p + 0x50);
+        a[1] = a[1] + 100.0f;
+        a[3] = 1.0f;
+        if ((unsigned char)func_00201770(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, a, b, (float *)(p + 0x2B50), 0) == 1) {
+            func_0024E830(p + 0x2160, p + 0x50, z, p + 0x2B50);
+            func_0024E830(p + 0x2230, p + 0x50, z, p + 0x2B50);
+        }
+    }
+    func_0024DD30(p + 0x2160);
+    func_0024DD30(p + 0x2230);
 }
