@@ -17171,3 +17171,66 @@ extern "C" void func_0038F540(char *p) {
     }
     func_002A4DE0(it, -1);
 }
+
+class ObjMdA0 {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9(); virtual void d10(); virtual void d11();
+    virtual void d12(); virtual void d13(); virtual void d14(); virtual void d15(); virtual void d16(); virtual void d17();
+    virtual void d18(); virtual void d19(); virtual void d20(); virtual void d21(); virtual void d22(); virtual void d23();
+    virtual void d24(); virtual void d25(); virtual void d26(); virtual void d27(); virtual void d28(); virtual void d29();
+    virtual void d30(); virtual void d31(); virtual void d32(); virtual void d33(); virtual void d34(); virtual void m94(int, int);
+    virtual void m98(int, int); virtual void m9C(int, int); virtual void mA0(int, int);
+};
+
+typedef struct { int v[6]; } i6tab;
+
+typedef struct { unsigned char v[6]; } b6tab;
+
+extern "C" i6tab D_00563EC0;
+extern "C" b6tab D_005BCCC0;
+
+extern "C" void func_0039CDF0(char *p) {
+    i6tab t __attribute__((aligned(16))) = D_00563EC0;
+    b6tab u = D_005BCCC0;
+    int k = *(unsigned char *)(p + 0x2DD5);
+    if (k != 0) {
+        ((ObjMdA0 *)(p + 0x4C0))->m94(1, t.v[(unsigned char)k * 2]);
+        ((ObjMdA0 *)(p + 0x4C0))->m98(1, t.v[*(unsigned char *)(p + 0x2DD5) * 2 + 1]);
+        ((ObjMdA0 *)(p + 0x4C0))->m9C(1, u.v[*(unsigned char *)(p + 0x2DD5) * 2]);
+        ((ObjMdA0 *)(p + 0x4C0))->mA0(1, u.v[*(unsigned char *)(p + 0x2DD5) * 2 + 1]);
+    }
+}
+
+extern "C" int func_0039FE70(char *p) {
+    char *list;
+    int i;
+    int n;
+    if ((*(unsigned char *)(p + 0x2DE7) != 0) == false) {
+        return 0;
+    }
+    list = *(char **)(p + 0x2ED8);
+    if (list == 0) {
+        *(unsigned char *)(p + 0x2DE7) = 0;
+        *(unsigned char *)(p + 0x2DE5) = 1;
+        *(unsigned char *)(p + 0x2DE3) = 1;
+        return 0;
+    }
+    n = *(unsigned char *)(p + 0x2EE1);
+    if (n < 2) {
+        *(unsigned char *)(p + 0x2DE7) = 0;
+        *(unsigned char *)(p + 0x2DE5) = 1;
+        *(unsigned char *)(p + 0x2DE3) = 1;
+        return 0;
+    }
+    for (i = 0; i < n; i++) {
+        char *e = *(char **)(list + i * 4 + 0x264);
+        if (e != p && e != 0) {
+            if (*(short *)(e + 0xAC0) == 0x24 || ((*(unsigned short *)(e + 0x2DD8) & 1) != 0) == 1) {
+                return 0;
+            }
+        }
+    }
+    *(short *)(p + 0x2DDA) = 0x40;
+    return 1;
+}
