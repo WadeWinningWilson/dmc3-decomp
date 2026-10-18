@@ -7979,3 +7979,44 @@ void func_0033D430(char *p) {
     }
     func_0028C5C0(p + 0x150, 0, *(float *)(p + 0x10));
 }
+
+extern Q16 D_00549A10;
+
+void func_0028BA90(char *p, char *m1, char *m2, unsigned char k) {
+    float t[4] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    Q16 sc;
+    char *e;
+    sc = D_00549A10;
+    e = (*(char ***)(p + 0xE4))[k];
+    *(signed char *)(p + 0xDA) = *(signed char *)(e + 0);
+    *(unsigned char *)(p + 0xDB) = *(unsigned char *)(e + 1);
+    *(unsigned char *)(p + 0xD6) = *(unsigned char *)(e + 2);
+    *(unsigned char *)(p + 0xD4) = *(unsigned char *)(e + 3);
+    t[0] = *(float *)(e + 0x10);
+    t[1] = *(float *)(e + 0x14);
+    t[2] = *(float *)(e + 0x18);
+    t[3] = 1.0f;
+    r[0] = *(float *)(e + 0x20);
+    r[1] = *(float *)(e + 0x24);
+    r[2] = *(float *)(e + 0x28);
+    r[3] = 1.0f;
+    UNIT(m1);
+    func_00131760(m1, m1, r);
+    func_00105230(m1, m1, t);
+    func_001318E0(m1, m1, (float *)sc.w);
+    *(unsigned char *)(p + 0xD7) = *(unsigned char *)(e + 0x30);
+    *(unsigned char *)(p + 0xD5) = *(unsigned char *)(e + 0x31);
+    t[0] = *(float *)(e + 0x40);
+    t[1] = *(float *)(e + 0x44);
+    t[2] = *(float *)(e + 0x48);
+    t[3] = 1.0f;
+    r[0] = *(float *)(e + 0x50);
+    r[1] = *(float *)(e + 0x54);
+    r[2] = *(float *)(e + 0x58);
+    r[3] = 1.0f;
+    UNIT(m2);
+    func_00131760(m2, m2, r);
+    func_00105230(m2, m2, t);
+    func_001318E0(m2, m2, (float *)sc.w);
+}

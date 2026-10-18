@@ -962,6 +962,7 @@ short func_00131D10(float, float);
 void func_00105668(char *, char *, float);
 void func_00105578(char *, char *, float);
 void func_00105760(char *, char *, float);
+void func_00133890(char *, float *, float *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1198,4 +1199,38 @@ void func_003161F0(char *o, char *m, float *pos, int ang, unsigned char f) {
     }
     func_00105578(m, m, 6.283185f * ((float)ang / 65536.0f));
     func_00105760(m, m, 6.283185f * ((float)r / 65536.0f));
+}
+
+#define QCOPYR(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(s), "r"(d) : "memory")
+
+#define VSUBR54(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+void func_00506080(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    float u[4] __attribute__((aligned(16)));
+    char *d;
+    char *e;
+    d = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    *(int *)(p + 0x20C) = 0;
+    *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+    func_0028C910(p + 0x220);
+    func_0028C8E0(p + 0x220, 7);
+    e = func_0028C3A0(p + 0x220, 3, -1, p + 0x1B0);
+    if (e != 0) {
+        *(unsigned char *)(e + 2) = 1;
+    }
+    UNIT(m);
+    UNIT(p + 0x1B0);
+    VSUBR54(v, d + 0x50, *(char **)(p + 0x218) + 0x78B0);
+    v[1] = 0.0f;
+    u[0] = 0.0f;
+    u[1] = 1.0f;
+    u[2] = 0.0f;
+    u[3] = 0.0f;
+    func_00133890(p + 0x1B0, v, u);
+    QCOPYR(p + 0x1E0, *(char **)(p + 0x218) + 0x78B0);
+    *(float *)(p + 0x1E0) = *(float *)(p + 0x1E0) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A0) * *(float *)(p + 0x10);
+    *(float *)(p + 0x1E4) = *(float *)(p + 0x1E4) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A4) * *(float *)(p + 0x10);
+    *(float *)(p + 0x1E8) = *(float *)(p + 0x1E8) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A8) * *(float *)(p + 0x10);
 }

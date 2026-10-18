@@ -1983,6 +1983,10 @@ typedef struct { short n; char x[0x16]; } T18;
 extern T18 D_00541CE0[];
 extern float D_00578C14[];
 unsigned char func_002077F0(int);
+void func_00358740(char *, int);
+void func_001A2050(char *);
+void func_003587C0(char *);
+void func_003587A0(char *);
 
 int func_00210850(float f, char *o, int k, char **out) {
     int i;
@@ -2109,4 +2113,33 @@ void func_001EFFE0(char *p, float r) {
     *(float *)(p + 0x6F8) = o[0];
     *(float *)(p + 0x6FC) = o[1];
     *(float *)(p + 0x700) = o[2];
+}
+
+#define VGET3_30(d, s) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_00358260(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    int i;
+    *(float *)(p + 0x7E8) = *(float *)(p + 0x7E8) + *(float *)(p + 0x10);
+    if (*(float *)(p + 0x7E8) < 720.0f) {
+        if (!(*(float *)(p + 0x7EC) < 0.0f)) {
+            *(float *)(p + 0x7EC) = *(float *)(p + 0x7EC) - *(float *)(p + 0x10);
+        }
+        for (i = 0; i < 4; i++) {
+            if (!(*(float *)(p + 0x7E8) <= 100.0f * (float)(i + 1))) {
+                func_00358740(p, i);
+            }
+        }
+        func_0028C5C0(p + 0x560, (unsigned int)*(float *)(p + 0x10), 1.0f);
+        return;
+    }
+    *(unsigned char *)(p + 0x7E1) = 1;
+    *(float *)(p + 0x7E8) = 0.0f;
+    func_001A2050(func_0027A710(p + 0xE0));
+    func_003587C0(p);
+    func_003587A0(p);
+    *(unsigned char *)(p + 0x7E2) = 2;
+    VGET3_30(v, p + 0x520);
+    v[3] = 1.0f;
+    func_003305E0(D_01DFABA0, 8, 0x15, (char *)v, 0x21, 0, 0);
 }
