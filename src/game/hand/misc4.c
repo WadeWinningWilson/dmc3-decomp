@@ -661,6 +661,27 @@ void func_0048AFC0(char *, int);
 unsigned char func_0041D6B0(char *, float);
 void func_0048B3F0(char *);
 void func_0048AF80(char *, int);
+extern int D_01CAFF38[];
+extern signed char D_005BE11C;
+extern char D_005BE124;
+extern int D_005BE190;
+extern int D_005BE194;
+short func_0034B940(char *, char *);
+void func_00316D80(char *);
+void func_00228300(int *);
+void func_00317850(char *);
+void func_004E8500(char *);
+void func_004E8980(char *);
+void func_00317B50(char *);
+void func_005080A0(char *);
+void func_005090D0(char *);
+void func_00507A90(char *);
+void func_004F56C0(char *);
+void func_004FE000(char *);
+void func_004E8120(char *);
+void func_00506900(char *);
+void func_00509600(char *);
+void func_005086C0(char *);
 
 int func_0036F5E0(char *p, int a, int id) {
     Buf66 b;
@@ -1650,4 +1671,84 @@ void func_004235F0(char *p) {
         if (func_0041D6B0(p + 0x458, *(float *)(p + 0x10)) == 1) func_0048AF80(p, 0);
         break;
     }
+}
+
+void func_00316A00(char *p) {
+    unsigned char v;
+    if (*(int *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x2898) & 2) v = 1;
+    else v = 0;
+    *(unsigned char *)(p + 0x2B6) = v;
+    *(int *)(p + 0x2B0) = *(unsigned char *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x284A);
+    *(short *)(p + 0x2B4) = func_0034B940(p + 0x80, p + 0x70);
+    switch (*(unsigned char *)(p + 0x2B7)) {
+    case 0:
+        func_00316D80(p);
+        *(unsigned char *)(p + 0x2B7) = 1;
+        break;
+    case 1:
+        if (D_01CAFF38[0] != 0x191) {
+            func_00228300(&D_005BE190);
+            func_00228300(&D_005BE194);
+            if (D_005BE190 == 0 && D_005BE194 == 0) {
+                *(unsigned char *)(p + 0x2B7) = 2;
+                return;
+            }
+        }
+        *(float *)(p + 0x228) = 0.95f;
+        *(float *)(p + 0x22C) = 0.95f;
+        *(float *)(p + 0x230) = 0.95f;
+        *(float *)(p + 0x234) = 0.95f;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x1B0), "r"(p + 0x70) : "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x1C0), "r"(p + 0x80) : "memory");
+        switch (D_005BE11C) {
+        case 0:
+            break;
+        case 1:
+            func_004E8500(p);
+            break;
+        case 2:
+            func_004E8980(p);
+            break;
+        case 8:
+            func_00317B50(p);
+            break;
+        case 11:
+            func_005080A0(p);
+            break;
+        case 6:
+            func_005090D0(p);
+            break;
+        case 7:
+            func_00507A90(p);
+            break;
+        case 5:
+            func_004F56C0(p);
+            break;
+        case 4:
+            func_004FE000(p);
+            break;
+        case 3:
+            *(float *)(p + 0x230) = 0.95f;
+            func_004E8120(p);
+            break;
+        case 12:
+            func_00506900(p);
+            break;
+        case 10:
+            func_00509600(p);
+            break;
+        case 9:
+            func_005086C0(p);
+            break;
+        case 13:
+            func_00317A30(p);
+            break;
+        }
+        break;
+    case 2:
+        func_00317850(p);
+        D_005BE11C = -0x80;
+        break;
+    }
+    D_005BE124 = 0;
 }

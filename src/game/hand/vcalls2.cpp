@@ -6070,3 +6070,225 @@ extern "C" void func_00227470(char *p) {
         break;
     }
 }
+
+class M3E5 {
+public:
+    virtual void z0();
+    virtual void z1();
+    virtual void z2();
+    virtual void z3();
+    virtual void z4();
+    virtual void z5();
+    virtual void z6();
+    virtual void z7();
+    virtual void z8();
+    virtual void z9();
+    virtual void z10();
+    virtual void z11();
+    virtual void z12();
+    virtual void z13();
+    virtual void z14();
+    virtual void z15();
+    virtual void z16();
+    virtual void z17();
+    virtual void z18();
+    virtual void z19();
+    virtual void z20();
+    virtual void z21();
+    virtual void z22();
+    virtual void z23();
+    virtual void z24();
+    virtual void z25();
+    virtual void z26();
+    virtual void z27();
+    virtual void z28();
+    virtual float m7C();
+};
+
+class H3E5 {
+public:
+    virtual void z0();
+    virtual void mC(signed char *, int, int);
+};
+
+extern "C" void func_003E53C0(char *p, signed char *a, int b, int c) {
+    if (*(unsigned char *)(p + 0x3A31)) return;
+    if (*(unsigned char *)(p + 0x14D) == 3) return;
+    switch (*(unsigned char *)(p + 0x342C)) {
+    case 0x46: case 0x47: case 0x48: case 0x49: case 0x4A: case 0x4B:
+        return;
+    }
+    switch (*(int *)(p + 0x1F94)) {
+    case 0x29:
+        if (!(((M3E5 *)func_002792A0(p + 0x980))->m7C() <= 20.0f)) {
+            switch (*a) {
+            case 3: case 7:
+                *(int *)(p + 0x3124) = 0;
+                break;
+            }
+        }
+        break;
+    case 0x28:
+        if (!(((M3E5 *)func_002792A0(p + 0x980))->m7C() <= 20.0f)) {
+            switch (*a) {
+            case 3: case 7:
+                *(int *)(p + 0x3124) = 0;
+                break;
+            }
+        }
+        break;
+    }
+    if (*(H3E5 **)(p + 0x118)) (*(H3E5 **)(p + 0x118))->mC(a, b, c);
+}
+
+class W45Eo {
+public:
+    virtual void d8();
+    virtual int mC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void m28(int);
+};
+
+class W45E {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void d6C();
+    virtual void d70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void mB4(int);
+};
+
+static inline float frd45E(void) { unsigned int y; if (D_01DF8810[0] >= 0x270) { func_00207A90(D_01DF7E50); } { unsigned int i = D_01DF8810[0]; D_01DF8810[0] = i + 1; y = D_01DF7E50[i]; } y ^= y >> 11; y ^= (y << 7) & 0x9D2C5680; y ^= (y << 15) & 0xEFC60000; y ^= y >> 18; return 2.3283064e-10f * (float)y; }
+
+extern "C" void func_0045E880(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        *(unsigned char *)(p + 0xB5) = 1;
+    case 1:
+        if (frd45E() < 0.5f) {
+            (*(W45Eo **)(p + 0xC))->m28(0x45);
+            *(unsigned char *)(p + 0xB5) = 2;
+        } else {
+            (*(W45Eo **)(p + 0xC))->m28(0x46);
+            *(unsigned char *)(p + 0xB5) = 3;
+        }
+        break;
+    case 2:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x45) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x45);
+        *(unsigned char *)(p + 0xB5) = 6;
+        break;
+    case 3:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x46) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x46);
+        *(unsigned char *)(p + 0xB5) = 7;
+        break;
+    case 4: case 5:
+        break;
+    case 6:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x45) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x49);
+        *(unsigned char *)(p + 0xB5) = 8;
+        break;
+    case 7:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x46) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x49);
+        *(unsigned char *)(p + 0xB5) = 8;
+        break;
+    case 8:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x49) break;
+        ((W45E *)p)->mB4(0x17);
+        break;
+    }
+}
+
+static inline float frd45D(void) { unsigned int y; if (D_01DF8810[0] >= 0x270) { func_00207A90(D_01DF7E50); } { unsigned int i = D_01DF8810[0]; D_01DF8810[0] = i + 1; y = D_01DF7E50[i]; } y ^= y >> 11; y ^= (y << 7) & 0x9D2C5680; y ^= (y << 15) & 0xEFC60000; y ^= y >> 18; return 2.3283064e-10f * (float)y; }
+
+extern "C" void func_0045DC90(char *p) {
+    switch (*(unsigned char *)(p + 0xB5)) {
+    case 0:
+        (*(W45Eo **)(p + 0xC))->m28(0x48);
+        *(unsigned char *)(p + 0xB5) = 1;
+        break;
+    case 1:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x48) break;
+        if (frd45D() < 0.5f) {
+            (*(W45Eo **)(p + 0xC))->m28(0x45);
+            *(unsigned char *)(p + 0xB5) = 2;
+        } else {
+            (*(W45Eo **)(p + 0xC))->m28(0x46);
+            *(unsigned char *)(p + 0xB5) = 3;
+        }
+        break;
+    case 2:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x45) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x45);
+        *(unsigned char *)(p + 0xB5) = 6;
+        break;
+    case 3:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x46) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x46);
+        *(unsigned char *)(p + 0xB5) = 7;
+        break;
+    case 4: case 5:
+        break;
+    case 6:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x45) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x49);
+        *(unsigned char *)(p + 0xB5) = 8;
+        break;
+    case 7:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x46) break;
+        (*(W45Eo **)(p + 0xC))->m28(0x49);
+        *(unsigned char *)(p + 0xB5) = 8;
+        break;
+    case 8:
+        if ((*(W45Eo **)(p + 0xC))->mC() == 0x49) break;
+        ((W45E *)p)->mB4(0x17);
+        break;
+    }
+}

@@ -4874,6 +4874,8 @@ void func_002E1B90(char *);
 void func_002D9450(char *, int, int, float);
 void func_002E1AB0(char *, int);
 void func_0021CB60(char *, unsigned int);
+int func_00406EA0(char *, int);
+void func_003303F0(char *, int, int, int, int);
 
 void func_00357560(p0, p1) char *p0; int p1; {
     char *v0;
@@ -5157,4 +5159,59 @@ void func_002E00E0(char *p, int a, int b, signed char c) {
     }
     if (*(float *)(p + 0x2AD4) <= 0.0f && *(unsigned char *)(p + 0x2AE1) != 3) *(unsigned char *)(p + 0x2AE1) = 3;
     *(unsigned char *)(p + 0x2998) = 0;
+}
+
+int func_00416B00(char *p) {
+    char *o;
+    int k;
+    int r;
+    int v;
+    k = (*(int *)(p + 0x3300) + p)[*(signed char *)(p + 0x32F5) + 0x32F7];
+    r = func_00406EA0(*(char **)(p + 0x32F0), k);
+    o = *(char **)(p + 0x32F0);
+    if ((signed char)r == 0) v = *(int *)(o + 4);
+    else v = ((unsigned char *)(o + 8))[(signed char)r];
+    if (v == 0) return -1;
+    switch ((signed char)k) {
+    case 4: case 5:
+        *(int *)(p + 0x3314) = 0x4E53;
+        k = 1;
+        func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+        break;
+    case 6: case 7:
+        *(int *)(p + 0x3314) = 0x4E55;
+        k = 0;
+        func_003303F0(D_01DFABA0, 0, 0x13, 0, 0);
+        break;
+    case 0: case 1:
+        if (*(float *)(o + 0x84) == *(float *)(o + 0x88)) {
+            *(int *)(p + 0x3314) = 0x4E54;
+            k = 0;
+            func_003303F0(D_01DFABA0, 0, 0x13, 0, 0);
+        } else {
+            *(int *)(p + 0x3314) = 0x4E53;
+            k = 1;
+            func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+        }
+        break;
+    case 2:
+        if (*(float *)(o + 0x8C) == *(float *)(o + 0x90)) {
+            *(int *)(p + 0x3314) = 0x4E54;
+            k = 0;
+            func_003303F0(D_01DFABA0, 0, 0x13, 0, 0);
+        } else {
+            *(int *)(p + 0x3314) = 0x4E53;
+            k = 1;
+            func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+        }
+        break;
+    case 3:
+        *(int *)(p + 0x3314) = 0x4E53;
+        k = 1;
+        func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+        break;
+    default:
+        return -1;
+    }
+    return k;
 }

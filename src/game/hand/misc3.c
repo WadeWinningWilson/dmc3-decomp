@@ -469,6 +469,7 @@ void func_00105760(float *, float *, float);
 void func_00104B80(float *, float *, float *);
 unsigned char func_002018A0(char *, float *, float *, float *, char *, int);
 void func_00207470(int, int);
+void func_00105578(float *, float *, float);
 
 void func_003A6340(unsigned char *p) {
     unsigned char go;
@@ -846,4 +847,42 @@ void func_00315980(char *p, signed char k) {
         func_00207470(3, 0x91);
         break;
     }
+}
+
+void func_0041DDC0(signed char k, float *a, float *b, float *out) {
+    float m[16] __attribute__((aligned(16)));
+    float v80[4] __attribute__((aligned(16)));
+    float v70[4] __attribute__((aligned(16)));
+    float v60[4] __attribute__((aligned(16)));
+    short s;
+    float ang;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v70), "r"(a) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v60), "r"(b) : "memory");
+    s = func_0034B940((char *)v60, (char *)v70);
+    v80[1] = 500.0f;
+    v80[0] = 0.0f;
+    v80[2] = 0.0f;
+    v80[3] = 1.0f;
+    switch (k) {
+    case 0: case 11: ang = 3.1415925f; break;
+    case 1: case 12: ang = 2.3561945f; break;
+    case 2: case 13: ang = 1.5707963f; break;
+    case 3: case 14: ang = 0.7853981f; break;
+    case 4: case 15: ang = 0.0f; break;
+    case 5: case 16: ang = -0.6981317f; break;
+    case 6: case 17: ang = -1.5707963f; break;
+    case 7: case 18: ang = -2.3561945f; break;
+    case 8: case 9: case 10:
+        v80[3] = 1.0f;
+        v80[2] = -300.0f;
+        v80[0] = 0.0f;
+        ang = 0.0f;
+        v80[1] = 0.0f;
+        break;
+    }
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    func_00105578(m, m, ang);
+    func_00105760(m, m, 6.283185f * ((float)s / 65536.0f));
+    func_00104B80(v80, m, v80);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(out), "r"(v80), "r"(a) : "memory");
 }
