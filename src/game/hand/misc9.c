@@ -12655,6 +12655,10 @@ int func_004B5C70(char *, int);
 int func_0030E980(char *, int);
 int func_004B5D60(char *, int);
 float func_00132D80(float *, float *);
+extern int D_006543E4[];
+char *func_00206BC0(char *, int);
+char *func_00206B80(char *);
+int func_0013C740(int, char *, int);
 
 signed char func_002088E0(char *l, char *a, char *b, short c, unsigned char d, unsigned char e, unsigned char f) {
     char *t7;
@@ -12754,4 +12758,29 @@ int func_00245EF0(float s, char *u, float *pos, int ang, float *out, char *o, un
         return 1;
     }
     return 0;
+}
+
+int func_00206E00(char *p, char **out, int id) {
+    char *b;
+    char *e;
+    e = func_00206BC0(p, id);
+    if (e == 0) return 3;
+    if (*(unsigned char *)(e + 2) == 1) {
+        if (*(unsigned char *)(e + 3) == 1) {
+            *out = *(char **)(e + 8);
+            return 1;
+        }
+        b = func_00206B80(p);
+        if (b == 0) return 3;
+        if (func_0013C740(*(int *)(e + 4), b, *(int *)(p + 0x184)) == 0) return 3;
+        if (!(*(int *)(p + 0x184) + (*(short *)(b + 0xE) + *(short *)(b + 0x22)) * 0x20 < D_006543E0[0] + D_006543E4[0])) return 3;
+        *(unsigned char *)(e + 3) = 1;
+        *(char **)(e + 8) = b;
+        *(int *)(p + 0x184) = *(int *)(p + 0x184) + (*(short *)(b + 0xE) + *(short *)(b + 0x22)) * 0x20;
+    } else {
+        *out = *(char **)(e + 8);
+        return 0;
+    }
+    *out = b;
+    return 2;
 }

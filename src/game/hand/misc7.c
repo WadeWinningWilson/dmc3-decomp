@@ -1665,6 +1665,9 @@ typedef struct { float a; float b; } F2;
 
 extern F2 D_005A0020[];
 void func_00105760(float, float *, float *);
+int func_002018A0(char *, char *, char *, float *, char *, int);
+void func_00133450(float *, float *, float *);
+char *func_00207470(int, int, float *);
 
 void func_003B7720(char *p) {
     int i;
@@ -1809,4 +1812,53 @@ void func_003D0790(char *p, unsigned char k) {
     UNIT(e + 0x520);
     func_00131700((float *)(p + k * 0x720 + 0x520), (float *)(p + k * 0x720 + 0x520), r);
     func_00105230((float *)(p + k * 0x720 + 0x520), (float *)(p + k * 0x720 + 0x520), (char *)t);
+}
+
+
+void func_00497090(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float r[16] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    if (*(float *)(p + 0x108) <= 0.0f) {
+        if (*(unsigned char *)(p + 0xCD) == 0) {
+            *(float *)(*(char **)(p + 0x10) + 0x34) += -0.54f * *(float *)(p + 0xB0);
+            *(float *)(*(char **)(p + 0x10) + 0x34) += *(float *)(*(char **)(p + 0xA8) + 0x24);
+            if (!(*(float *)(*(char **)(p + 0x10) + 0x34) <= 0.0f)) *(float *)(*(char **)(p + 0x10) + 0x34) = 0.0f;
+            *(float *)(*(char **)(p + 0x10) + 0x24) += *(float *)(*(char **)(p + 0x10) + 0x34) * *(float *)(p + 0xB0);
+        }
+        __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(m), "r"(*(char **)(p + 0x10) + 0x20) : "memory");
+        func_00105760(6.283185f * (*(short *)(*(char **)(p + 0x10) + 0x50) / 65536.0f), r, m);
+        __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(r) : "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(*(char **)(p + 0x10) + 0x10), "r"(v) : "memory");
+    }
+}
+
+int func_0041DC70(char *a, char *b, int f) {
+    float h[4] __attribute__((aligned(16)));
+    float info[16] __attribute__((aligned(16)));
+    float s[4] __attribute__((aligned(16)));
+    float n[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    if ((unsigned char)func_002018A0(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, a, b, h, (char *)info, 4) == 1) {
+        UNIT(m);
+        s[0] = 100.0f;
+        s[1] = 100.0f;
+        s[2] = 100.0f;
+        n[3] = 0.0f;
+        n[0] = info[10];
+        n[1] = info[11];
+        n[2] = info[12];
+        func_00133450(m, n, s);
+        m[12] = h[0] + 5.0f * info[10];
+        m[15] = 1.0f;
+        m[13] = h[1] + 5.0f * info[11];
+        m[14] = h[2] + 5.0f * info[12];
+        if (f == 0) {
+            func_00207470(3, 0x1A9, m);
+        } else {
+            func_00207470(1, 0x2B3, m);
+        }
+        return 1;
+    }
+    return 0;
 }

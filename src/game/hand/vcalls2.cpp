@@ -2441,6 +2441,8 @@ public:
 };
 
 extern "C" BaseD0 *func_002F7C10(int, int);
+extern "C" float func_001324B0(char *, char *);
+extern "C" float func_00132470(char *, char *);
 
 class PadD0 {
 public:
@@ -2474,4 +2476,42 @@ extern "C" void func_003B5470(char *p) {
         *(unsigned char *)(p + 0x220C) = func_003B5780(p, *(int *)(p + 0x2200));
         *(short *)(p + 0x220E) = func_003B5700(p, *(int *)(p + 0x2200));
     }
+}
+
+extern "C" bool func_0034B340(float far, float near, unsigned char *out, float *t, char *pos, unsigned int hi, unsigned int lo) {
+    bool r;
+    float d;
+    if (*(char **)((char *)D_005BE09C + 0x23C) == 0) return false;
+    d = func_001324B0(*(char **)((char *)D_005BE09C + 0x23C) + 0x70, pos);
+    r = false;
+    if (d < far) {
+        r = true;
+        if (!(d <= near)) {
+            *t = (d - near) / (far - near);
+            *out = (unsigned int)((float)lo + *t * (float)(int)((unsigned char)hi - (unsigned char)lo));
+        } else {
+            *t = 0.0f;
+            *out = lo;
+        }
+    }
+    return r;
+}
+
+extern "C" bool func_0034B490(float far, float near, unsigned char *out, float *t, char *pos, unsigned int hi, unsigned int lo) {
+    bool r;
+    float d;
+    if (*(char **)((char *)D_005BE09C + 0x23C) == 0) return false;
+    d = func_00132470(*(char **)((char *)D_005BE09C + 0x23C) + 0x70, pos);
+    r = false;
+    if (d < far) {
+        r = true;
+        if (!(d <= near)) {
+            *t = (d - near) / (far - near);
+            *out = (unsigned int)((float)lo + *t * (float)(int)((unsigned char)hi - (unsigned char)lo));
+        } else {
+            *t = 0.0f;
+            *out = lo;
+        }
+    }
+    return r;
 }

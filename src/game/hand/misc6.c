@@ -3352,6 +3352,7 @@ void func_00248580(char *);
 void func_0024BF20(char *);
 void func_00387830(char *);
 void func_002282B0(char *);
+int func_0040F1B0(char *);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -3959,5 +3960,34 @@ void func_003FDFF0(char *p) {
         func_001AD140(p);
     } else {
         func_0028C5C0(p + 0x150, 0, *(float *)(p + 0x10));
+    }
+}
+
+static inline void setflag(short k) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    int s = k;
+    if (s < 32) {
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) |= 1 << (s & 31);
+    } else {
+        s -= 32;
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) |= 1 << (s & 31);
+    }
+}
+
+void func_0040EA40(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    if (*(unsigned char *)(p + 0xE1) == 0) {
+        if ((unsigned char)func_0040F1B0(p) == 1) {
+            *(unsigned char *)(p + 0xE1) = 1;
+            if (*(short *)(p + 0xDC) != -1) setflag(*(short *)(p + 0xDC));
+        }
+    } else {
+        func_0040F220(p);
+    }
+    *(float *)(p + 0xEC) = *(float *)(p + 0xEC) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0xEC) < 0.0f) {
+        *(float *)(p + 0xEC) = 20.0f;
+        __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(*(char **)(p + 0x108) + 0x450) : "memory");
+        func_003305E0(D_01DFABA0, 8, 0x33, (char *)v, 0x24, 0, 0);
     }
 }
