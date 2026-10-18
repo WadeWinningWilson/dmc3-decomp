@@ -16351,6 +16351,7 @@ public:
 };
 
 extern "C" ObjBlend34 *func_0027A720(char *);
+extern "C" short D_00541CE0[];
 
 extern "C" void func_0043D9F0(char *p) {
     ObjBlend34 *a = (ObjBlend34 *)func_002792A0(p + 0x340);
@@ -16410,4 +16411,34 @@ extern "C" void func_0048F670(char *p) {
         func_00196C40(D_006480D0, *(char **)(p + 0x44));
         *(char **)(p + 0x44) = 0;
     }
+}
+
+class ObjAt1C {
+public:
+    int a0;
+    int a4;
+    int a8;
+    int aC;
+    int a10;
+    int a14;
+    int a18;
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void m1C();
+};
+
+extern "C" void func_00210660(char *p) {
+    int i;
+    *(unsigned char *)(p + 4) = 0;
+    for (i = 0; i < D_00541CE0[*(unsigned char *)(p + 6) * 12]; i++) {
+        char *e = *(char **)(p + 0x24) + i * 16;
+        if (*(int *)e != 0) {
+            (*(ObjAt1C **)(e + 4))->m1C();
+            func_0013D5D0(*(char **)(p + 0x24) + i * 16);
+        }
+    }
+    func_0013D5D0(p + 0x14);
 }
