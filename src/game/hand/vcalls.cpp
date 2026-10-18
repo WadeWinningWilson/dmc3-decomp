@@ -16358,6 +16358,7 @@ extern "C" void func_001FF760(char *, int);
 extern "C" void func_002019D0(char *, char *, char *);
 extern "C" float D_005BBEC0;
 extern "C" void func_00248660(char *);
+extern "C" void func_001A3370(char *, int);
 
 extern "C" void func_0043D9F0(char *p) {
     ObjBlend34 *a = (ObjBlend34 *)func_002792A0(p + 0x340);
@@ -16502,4 +16503,53 @@ extern "C" void func_00249010(char *p) {
     if (*(unsigned char *)(p + 0x28AA) != 3 && *(unsigned char *)(p + 0x3C6C) == 5 && (unsigned char)func_002242C0(p) == 1) {
         *(unsigned char *)(p + 0x47A1) = 5;
     }
+}
+
+class Obj240Snd {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual void d8(); virtual int m2C(int, int); virtual void d10(); virtual void d11();
+    virtual void d12(); virtual void d13(); virtual void d14(); virtual void d15(); virtual void d16(); virtual void d17();
+    virtual void d18(); virtual void d19(); virtual void d20(); virtual void d21(); virtual void d22(); virtual void d23();
+    virtual void d24(); virtual void d25(); virtual void d26(); virtual void d27(); virtual void d28(); virtual void d29();
+    virtual void d30(); virtual void d31(); virtual void d32(); virtual void d33(); virtual void d34(); virtual void d35();
+    virtual void d36(); virtual void d37(); virtual void d38(); virtual void d39(); virtual void d40(); virtual void d41();
+    virtual void mB0(int, char *);
+};
+
+typedef struct { int n; float v[3]; } e16t;
+
+extern "C" e16t D_0055E450[][5];
+
+extern "C" void func_00284A10(char *p) {
+    float y;
+    float x;
+    char *q;
+    if (((Obj240Snd *)(p + 0x240))->m2C(*(int *)(p + 0x1B0), *(int *)(p + 0x1B4)) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    ((Obj240Snd *)(p + 0x240))->mB0(*(int *)(p + 0x1B8), p + 0x1C0);
+    *(float *)(p + 0xE40) = 80.0f;
+    *(float *)(p + 0xE44) = 20.0f;
+    *(float *)(p + 0xE48) = 10.0f;
+    func_001A2180(func_00279290(p + 0x240), 0x80, 1);
+    func_001A3370(func_00279290(p + 0x240), 1);
+    x = *(float *)(p + 0xE48);
+    y = *(float *)(p + 0xE44);
+    q = func_00279290(p + 0x240);
+    *(float *)(q + 0x190) = y;
+    *(float *)(q + 0x194) = x;
+    *(int *)(p + 0xE4C) = *(int *)(p + 0x1AC);
+}
+
+extern "C" float func_002A41B0(char *p) {
+    float buf[5];
+    int i;
+    int k;
+    for (i = 0; i < 5; i++) {
+        buf[i] = D_0055E450[func_002A4A40(p)][i].v[*(int *)(p + 0x8928)];
+    }
+    k = func_0034BBE0(5, (char *)buf);
+    return (float)D_0055E450[func_002A4A40(p)][k].n;
 }
