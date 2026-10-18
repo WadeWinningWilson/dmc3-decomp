@@ -15541,3 +15541,233 @@ int func_0019E6B0(char *p) {
     *(float *)(p + 0x20) = 1.0f / *(float *)(p + 0x30) * *(float *)(p + 0x70);
     return func_0019E2D0(p);
 }
+
+#define VMULT(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvmul.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+float func_001C1A90(char *u, float *a, float *b, float *c) {
+    float t[4] __attribute__((aligned(16)));
+    float d;
+    VMULT(t, a, b);
+    d = -(t[2] + (t[0] + t[1]));
+    VMULT(t, c, b);
+    return d + (t[2] + (t[0] + t[1]));
+}
+
+char *func_001972B0(char *p) {
+    int e = *(signed char *)(D_005BE0D8 + 0xE);
+    int n = (*(int *)((char *)(e * 4) + (int)p + 0xC300))++;
+    *(unsigned char *)((char *)n + (int)((char *)(e * 128) + (int)p) + 0xC200) = 1;
+    return p + e * 0x5000 + n * 0xA0 + 0x2200;
+}
+
+typedef struct { float a[3]; } F3_3B5;
+
+extern F3_3B5 D_00564690;
+extern char D_0065E550[];
+extern char D_0065F620[];
+void func_00286440(char *);
+unsigned char func_001C3200(char *, float *, char *, float *, float *);
+void func_003AAB30(char *, int, char *, unsigned char);
+void func_003B9E50(char *);
+void func_003B9D20(char *);
+
+int func_003B5E50(char *p) {
+    F3_3B5 t = D_00564690;
+    int i;
+    for (i = 0; i < 3; i++) {
+        if (!(t.a[i] < *(float *)(p + 0x21DC))) continue;
+        return i;
+    }
+    return 3;
+}
+
+int func_0021CF60(char *p) {
+    unsigned char k;
+    if (*(unsigned char *)(p + 0x28B2) == 1) return 0;
+    if (*(unsigned char *)(p + 0x2848) == 0x26) return 0;
+    k = *(unsigned char *)(p + 0x2848);
+    if ((unsigned int)(k - 1) <= 3 || (k >= 10 && k < 15)) {
+        *(unsigned char *)(p + 0x28B2) = 1;
+        return 1;
+    }
+    return 0;
+}
+
+void func_001A7840(unsigned int addr, unsigned long long *tag, int pri) {
+    unsigned long long *ot;
+    unsigned long long old;
+    if (pri < 0) {
+        pri = 126;
+    } else if (pri > 126) {
+        pri = 126;
+    }
+    ot = (unsigned long long *)((char *)((pri + 1) * 16) + (int)(D_0065E550 + *(signed char *)(D_005BE0D8 + 0xE) * 2048));
+    old = *ot;
+    *ot = ((unsigned long long)addr << 32) | 0x20000000;
+    *tag = (((unsigned long long)(old >> 32)) << 32) | 0x20000000;
+}
+
+void func_001A7DA0(unsigned int addr, unsigned long long *tag, int pri) {
+    unsigned long long *ot;
+    unsigned long long old;
+    if (pri < 0) {
+        pri = 126;
+    } else if (pri > 126) {
+        pri = 126;
+    }
+    ot = (unsigned long long *)((char *)((pri + 1) * 16) + (int)(D_0065F620 + *(signed char *)(D_005BE0D8 + 0xE) * 2048));
+    old = *ot;
+    *ot = ((unsigned long long)addr << 32) | 0x20000000;
+    *tag = (((unsigned long long)(old >> 32)) << 32) | 0x20000000;
+}
+
+static inline float mul_3A0(float k, float v) {
+    return k * v;
+}
+
+void func_003A0AB0(char *p) {
+    float d = *(float *)(p + 0x154) - *(float *)(p + 0x54);
+    if (!(d <= 300.0f)) {
+        *(unsigned char *)(p + 0x2DF6) = 1;
+        *(float *)(p + 0x2F38) = *(float *)(p + 0x2F38) + mul_3A0(1.0f, *(float *)(p + 0x10));
+    } else if (d < -200.0f) {
+        *(unsigned char *)(p + 0x2DF6) = 2;
+        *(float *)(p + 0x2F38) = 0.0f;
+    } else {
+        *(unsigned char *)(p + 0x2DF6) = 0;
+        *(float *)(p + 0x2F38) = 0.0f;
+    }
+}
+
+int func_001960F0(char *p, int n) {
+    *(int *)(p + 0xC314) = n * 32;
+    *(int *)(p + 0xC310) = *(int *)(p + 0xC30C) = *(unsigned short *)(D_005BE0D8 + 0x4E) - *(int *)(p + 0xC314);
+    *(int *)(p + 0xC318) = *(int *)(p + 0xC310) - *(unsigned short *)(D_005BE0D8 + 0x4C);
+    func_00286440(D_00645EB0);
+    return 1;
+}
+
+void func_003D6120(char *p) {
+    char *e;
+    func_002F2FB0(*(char **)(*(char **)D_01CAFF0C + 0x20));
+    for (;;) {
+        e = func_002F3080(*(char **)(*(char **)D_01CAFF0C + 0x20));
+        if ((e != 0) ^ 1) break;
+        if (!(*(float *)(p + 0x54) - *(float *)(e + 0x54) <= 400.0f)) {
+            func_001AD140(e);
+        }
+    }
+}
+
+int func_001BE6F0(char *u, char *s, char *c, float *out) {
+    float q[8] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    float a[4] __attribute__((aligned(16)));
+    QCOPY(a, s + 0x10);
+    VSUB(d, s, s + 0x10);
+    if (func_001C3200(u, a, c, &q[7], r) == 1) {
+        QCOPY(out, r);
+        return 1;
+    }
+    return 0;
+}
+
+static inline char *el_48D(char *p, int i) {
+    char *r;
+    if (!(i < *(int *)(p + 0x10F0))) {
+        r = 0;
+    } else {
+        r = *(char **)(p + 0x10C0) + i * 128;
+    }
+    return r;
+}
+
+void func_0048D6D0(char *p) {
+    int i;
+    char *e;
+    float x, y, z;
+    for (i = 0; i < 4; i++) {
+        z = *(float *)(p + 0x58);
+        y = *(float *)(p + 0x54);
+        x = *(float *)(p + 0x50);
+        e = el_48D(p, i);
+        *(float *)(e + 0x20) = x;
+        *(float *)(e + 0x24) = y;
+        *(float *)(e + 0x28) = z;
+        *(float *)(e + 0x2C) = 1.0f;
+        QCOPY(e, e + 0x20);
+        QCOPY(e + 0x10, e + 0x20);
+    }
+}
+
+void func_00208A60(char *p, int k, unsigned char on) {
+    if (k < 32) {
+        if (on == 1) {
+            *(unsigned int *)((char *)(k / 32 * 4) + (int)p + 0x9DC) &= ~(1 << (k & 31));
+        } else {
+            unsigned int m = 1 << (k & 31);
+            *(unsigned int *)((char *)(k / 32 * 4) + (int)p + 0x9DC) |= m;
+            *(unsigned int *)((char *)(k / 32 * 4) + (int)p + 0x9D8) &= ~m;
+        }
+    }
+}
+
+int func_0021D1D0(char *p) {
+    if (*(float *)(p + 0x2AD4) <= 0.0f) return 0;
+    if (*(unsigned char *)(p + 0x28A7) != 0 || *(unsigned char *)(p + 0x2848) == 0x21) return 0;
+    if (*(unsigned char *)(p + 0x3C79) == 1 && *(unsigned char *)(p + 0x28AA) != 3) return 0;
+    if (*(unsigned char *)(p + 0x3C78) == 1) return 0;
+    return 1;
+}
+
+int func_002FAE60(char *p) {
+    unsigned short f;
+    if (*(unsigned short *)p & 1) {
+        *(unsigned char *)(p + 3) = *(unsigned char *)(p + 3) & 0x7F;
+    } else {
+        *(unsigned short *)p = *(unsigned short *)p | 1;
+        *(unsigned char *)(p + 3) = 0x7F;
+    }
+    f = *(unsigned short *)p;
+    if (f & 0x20) {
+        if ((f & 0xE) == 0) return -1;
+    } else {
+        if (f & 0x40) return -1;
+    }
+    if (f & 0x10) {
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) & 0x7F;
+    }
+    return 0;
+}
+
+static inline int bit_20F(unsigned int *a, int k) {
+    unsigned int *w = &a[k / 32];
+    return (*w & (1 << (k & 31))) != 0;
+}
+
+short func_0020F9B0(char *p) {
+    short k = *(short *)(p + 0x610);
+    short r = k;
+    if (bit_20F((unsigned int *)(p + 0x108), k)) r = -1;
+    if ((unsigned int)(D_01CAFF38[0] - 0x25C) <= 1 || D_01CAFF38[0] == 0x90 || D_01CAFF38[0] == 0xD9) r = k;
+    (*(short *)(p + 0x610))++;
+    (*(short *)(p + 0x612))++;
+    return r;
+}
+
+typedef struct { float x, y, z, w; } V4_3B9;
+
+void func_003B9200(char *p) {
+    if (*(unsigned char *)(p + 0x1B4) != 0) {
+        func_003AAB30(*(char **)(p + 0x1DC), *(unsigned char *)(p + 0x1BC), p + 0x230, *(unsigned char *)(p + 0x1B2));
+    } else {
+        *(V4_3B9 *)(p + 0x230) = *(V4_3B9 *)(p + 0x200);
+    }
+    *(float *)(p + 0x50) = *(float *)(p + 0x230);
+    *(float *)(p + 0x54) = *(float *)(p + 0x234);
+    *(float *)(p + 0x58) = *(float *)(p + 0x238);
+    *(float *)(p + 0x5C) = 1.0f;
+    func_003B9E50(p);
+    func_003B9D20(p);
+}

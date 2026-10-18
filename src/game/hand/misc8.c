@@ -8215,6 +8215,9 @@ void func_00377100(char *, unsigned char);
 void func_002F17E0(char *);
 extern int D_005BE0A0;
 extern int D_005BE0A4;
+extern signed char D_005BDD50[4];
+extern signed char D_005BDD58[4];
+float func_001C2B90(char *, char *, float *, int, int);
 
 int func_004D9280(char *p, char *a, char *r) {
     char buf[0x20];
@@ -8440,4 +8443,83 @@ void func_003AA450(char *p) {
     v[1] = 5.0f + *(float *)(p + 0x4E24);
     v[3] = 1.0f;
     func_00105230(p + 0x4B60, p + 0x4B60, v);
+}
+
+static inline signed char find_2DA1(char *p, signed char k) {
+    unsigned int i;
+    if (k != -1) {
+        for (i = 0; i < 5; i++) {
+            signed char c = *(signed char *)(p + i + 0x3D4C);
+            if (c == k) return i;
+        }
+    }
+    return -1;
+}
+
+void func_002DA130(char *p, signed char k, unsigned char v) {
+    signed char idx = find_2DA1(p, k);
+    if (idx != -1 && *(unsigned char *)((char *)idx + (int)p + 0x3D68) != 4) {
+        *(unsigned char *)((char *)idx + (int)p + 0x3D68) = v;
+    }
+}
+
+int func_002A67F0(int k, unsigned char flag) {
+    if (flag == 1) k = 0;
+    switch ((unsigned char)k) {
+    case 0: return 4;
+    case 1: return 0;
+    case 2: return 1;
+    case 3: return 2;
+    case 4: return 3;
+    }
+    return 5;
+}
+
+char *func_00215A30(char *p, unsigned char k, short id) {
+    int i;
+    for (i = 0; i < 200; i++) {
+        if (*(unsigned char *)(p + i * 48 + 0x3C) != 0) {
+            if (id != -1) {
+                if (id == *(short *)(p + i * 48 + 0x40) && k == *(unsigned char *)(p + i * 48 + 0x3E)) return p + i * 48 + 0x38;
+            } else if (k == *(unsigned char *)(p + i * 48 + 0x3E)) {
+                return p + i * 48 + 0x38;
+            }
+        }
+    }
+    return 0;
+}
+
+int func_004B5E70(char *p, int i) {
+    signed char k = D_005BDD50[i];
+    signed char r = func_00406EA0(*(int *)(p + 0x3370), k);
+    int lim = D_005BDD58[k];
+    char *o = *(char **)(p + 0x3370);
+    unsigned int v;
+    if (r == 0) {
+        v = *(unsigned int *)(o + 4);
+    } else {
+        v = *(unsigned char *)((char *)r + (int)o + 8);
+    }
+    if (lim <= v) return 1;
+    return 0;
+}
+
+#define VSUB(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(x), "r"(y) : "memory")
+
+unsigned char func_001BF4F0(char *u, char *o, float *t) {
+    float e2[4] __attribute__((aligned(16)));
+    float e1[4] __attribute__((aligned(16)));
+    float a[4] __attribute__((aligned(16)));
+    unsigned char r;
+    a[0] = t[0];
+    a[1] = t[1];
+    a[2] = t[2];
+    VSUB(e1, t + 4, t);
+    VSUB(e2, t + 8, t);
+    if (func_001C2B90(u, o, a, 0, 0) < *(float *)(o + 0x10) * *(float *)(o + 0x10)) {
+        r = 1;
+    } else {
+        r = 0;
+    }
+    return r;
 }

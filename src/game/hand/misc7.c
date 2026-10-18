@@ -2170,6 +2170,9 @@ void func_00199730(char *, char *, char *, int);
 void func_00199720(char *, char *, int);
 int func_001A5B30(char *, int);
 void func_002242C0(char *);
+float func_001324B0(char *, float *);
+int func_00131D10(float, float);
+unsigned char func_002DAD40(char *);
 
 void func_002276B0(char *p) {
     T404 t;
@@ -2395,4 +2398,58 @@ int func_0028BFE0(char *p) {
     if (*(unsigned char *)(o + 0x24F1) == 1) return 1;
     func_002242C0(o);
     return 0;
+}
+
+int func_00244DF0(char *p, unsigned int x) {
+    if (x != 0) {
+        switch (x & 0xFF000000) {
+        case 0x80000000:
+            if (*(unsigned char *)((char *)(x & 0xFF) + (int)p + 0x24DB) == 2) return 1;
+            break;
+        case 0x40000000:
+            if ((x & 0xFF) == *(unsigned char *)(p + 0x2998)) return 1;
+            break;
+        }
+    }
+    return 0;
+}
+
+void func_00197D10(char *p) {
+    *(char **)(p + 0x1C) = p + 0x34;
+    *(int *)(p + 0x18) = 0x100;
+    func_00128488(*(char **)(p + 0x1C), 0, *(int *)(p + 0x18));
+    *(unsigned char *)(p + 0xC) = 0;
+    *(int *)(p + 0x14) = 0;
+    *(int *)(p + 0x10) = 0;
+    *(unsigned char *)(p + 0xD) = 0;
+    *(char **)(p + 0x30) = p + 0x8434;
+    *(int *)(p + 0x2C) = 0x10;
+    func_00128488(*(char **)(p + 0x30), 0, *(int *)(p + 0x2C));
+    *(unsigned char *)(p + 0x20) = 0;
+    *(int *)(p + 0x28) = 0;
+    *(int *)(p + 0x24) = 0;
+    *(unsigned char *)(p + 0x21) = 0;
+    *(int *)(p + 8) = 0;
+}
+
+short func_00221710(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    char *o;
+    short r = 0x4000;
+    if (*(unsigned char *)(p + 0x3B9D) == 0) return r;
+    o = *(char **)(*(char **)((char *)(func_002D9EB0(p) * 4) + (int)p + 0x138C) + 0x104);
+    __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(o) : "memory");
+    r = func_00131D10(func_001324B0(p + 0x3C40, v), *(float *)(p + 0x3C44) - v[1]);
+    return r;
+}
+
+int func_0024D260(char *p) {
+    short d;
+    if (func_002DAD40(p) != 2) {
+        d = *(short *)(p + 0x49EC) - (*(unsigned short *)(p + 0x49E8) + 0x6000);
+        if (0 <= d && d <= 0x4000) return 0;
+        d = *(short *)(p + 0x49EC) - (*(unsigned short *)(p + 0x49E8) - 0x2000);
+        if (0 <= d && d <= 0x4000) return 2;
+    }
+    return 4;
 }
