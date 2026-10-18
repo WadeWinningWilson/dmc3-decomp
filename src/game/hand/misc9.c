@@ -17131,6 +17131,15 @@ void func_003A0480(char *p) {
 typedef struct { int pad[8]; int a; int b; int pad2[34]; } E2FF;
 extern float D_005BD958;
 int func_00439970(char *, int, int);
+void func_0013DF80();
+void func_0013DFB0();
+extern char D_005599AC[];
+extern char D_005599A8[];
+extern float D_005BC6A8;
+extern float D_005BC6AC;
+void func_0030BF70(int, float, int, int, int, int, int, int, char *, int);
+void func_002FC670(char *);
+void func_002FD7C0(char *);
 
 void func_002FFC60(char *p) {
     int i;
@@ -17194,4 +17203,139 @@ int func_00439700(char *p, int st, int arg) {
         r2 = func_00439970(p, st, arg);
     }
     return r2;
+}
+
+char *func_0013D7E0(char *p) {
+    int i;
+    char *q;
+    func_0013D6A0(p + 0x3030C);
+    func_00100450(p + 0x30324, func_0013DF80, func_0013DFB0, 0x18, 4);
+    return p;
+}
+
+#define VUNIT(d) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(d) : "memory")
+
+static inline void set4_333(float *v, float x, float y, float z, float w) {
+    v[0] = x;
+    v[1] = y;
+    v[2] = z;
+    v[3] = w;
+}
+
+void func_003338E0(char *p) {
+    *(float *)(p + 0xDE0) = 1.0f;
+    QCOPY(p + 0x50, p + 0x4A0);
+    set4_333((float *)(p + 0x60), 0.0f, 0.0f, 0.0f, 1.0f);
+    set4_333((float *)(p + 0x70), 0.0f, 0.0f, 0.0f, 1.0f);
+    set4_333((float *)(p + 0x80), 0.0f, 0.0f, 0.0f, 1.0f);
+    p[0xD60] = 0;
+    set4_333((float *)(p + 0xD70), 0.0f, 0.0f, 0.0f, 1.0f);
+    set4_333((float *)(p + 0xD80), 0.0f, 0.0f, 0.0f, 1.0f);
+    set4_333((float *)(p + 0xD90), 1.0f, 1.0f, 1.0f, 1.0f);
+    VUNIT(p + 0xDA0);
+    func_00131700(p + 0xDA0, p + 0xDA0, p + 0xD80);
+    func_00105230(p + 0xDA0, p + 0xDA0, p + 0xD70);
+    func_001318E0(p + 0xDA0, p + 0xDA0, p + 0xD90);
+    QCOPY(p + 0xD70, p + 0x50);
+    QCOPY(p + 0xD80, p + 0x80);
+    VUNIT(p + 0xDA0);
+    func_00131700(p + 0xDA0, p + 0xDA0, p + 0xD80);
+    func_00105230(p + 0xDA0, p + 0xDA0, p + 0xD70);
+    func_001318E0(p + 0xDA0, p + 0xDA0, p + 0xD90);
+}
+
+void func_0030BBC0(char *p) {
+    unsigned char r;
+    int m;
+    int i;
+    float t;
+    float u;
+    r = func_0024E780(*(char **)(p + 0x173C), 0, 1);
+    if (!(*(float *)(p + 0xE8) <= *(float *)D_005599AC)) {
+        *(float *)(p + 0xE8) = *(float *)(p + 0xE8) + *(float *)D_005599A8;
+        if (*(float *)(p + 0xE8) < *(float *)D_005599AC) *(float *)(p + 0xE8) = *(float *)D_005599AC;
+    }
+    if (r == 2) {
+        if (*(unsigned char *)(p + 0x1739) == 1) {
+            m = 2;
+        } else {
+            m = 0;
+        }
+        func_0030BF70(*(int *)(p + 0xD0), *(float *)(p + 0xE8), *(int *)(p + 0xD4), *(int *)(p + 0xD8), *(int *)(p + 0x173C), *(int *)(p + 0x1740), *(int *)(p + 0x1744), 1, p + 0x1670, m);
+        func_0030BF70(*(int *)(p + 0xD0), *(float *)(p + 0xE8), *(int *)(p + 0xD4), *(int *)(p + 0xD8), *(int *)(p + 0x173C), *(int *)(p + 0x1740), *(int *)(p + 0x1744), 2, p + 0x16B0, m);
+        func_0030BF70(*(int *)(p + 0xD0), *(float *)(p + 0xE8), *(int *)(p + 0xD4), *(int *)(p + 0xD8), *(int *)(p + 0x173C), *(int *)(p + 0x1740), *(int *)(p + 0x1744), 3, p + 0x16F0, m);
+        p[4] = 2;
+    } else {
+        t = *(float *)(p + 0x1734);
+        if (!(t <= 0.0f)) {
+            u = t - D_005BC6A8 / D_005BC6AC;
+            *(float *)(p + 0x1734) = u;
+            if (u < 0.0f) {
+                *(float *)(p + 0x1734) = 0.0f;
+                p[0x1738] = 0;
+            }
+        }
+        if (*(unsigned char *)(p + 0x1739) == 1) {
+            for (i = 0; i < 3; i++) func_001A29A0(func_00279290(p + i * 0x600 + 0x180));
+        }
+        func_00195E20(D_005BE098, p);
+    }
+}
+
+#define VMOVE3(d, s) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+static inline int flag_2FC(short s) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    if (s < 32) {
+        unsigned int *w = (unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18);
+        return (*w & (1 << (s & 31))) != 0;
+    } else {
+        unsigned int *w = (unsigned int *)((char *)((s - 32) / 32 * 4) + (int)g + 0x44);
+        return (*w & (1 << ((s - 32) & 31))) != 0;
+    }
+}
+
+void func_002FC320(char *p) {
+    int i;
+    int j;
+    if (*(short *)(p + 0xDC) != -1 && flag_2FC(*(short *)(p + 0xDC))) func_002FC670(p);
+    *(int *)(p + 0x880) = 0;
+    *(int *)(p + 0x87C) = 0;
+    *(int *)(p + 0x878) = 0;
+    i = 0;
+    while (i < 16) {
+        *(int *)((char *)(i * 4) + (int)p + 0x884) = 0;
+        i++;
+    }
+    func_002FD7C0(p);
+    p[0x828] = 0;
+    p[0x45] = 6;
+    p[0x9C0] = 0;
+    p[0x9C1] = 0;
+    *(short *)(p + 0x9C2) = 0;
+    *(int *)(p + 0x9C8) = 0;
+    *(int *)(p + 0x9CC) = 0;
+    *(int *)(p + 0x9D0) = 0;
+    *(int *)(p + 0x9E0) = 0;
+    *(int *)(p + 0x9E4) = 0;
+    *(int *)(p + 0x9E8) = 0;
+    *(float *)(p + 0x9EC) = 1.0f;
+    *(float *)(p + 0x9F0) = 100000.0f;
+    p[0x9F4] = 0;
+    p[0x9F5] = 0;
+    *(short *)(p + 0x9F6) = 0;
+    j = 0;
+    while (j < 10) {
+        *(short *)((char *)(j * 2) + (int)p + 0x9F8) = -1;
+        j++;
+    }
+    p[0x9C0] = 0;
+    p[0x9C1] = 0;
+    *(short *)(p + 0x9C2) = 1;
+    *(short *)(p + 0x9C4) = 0;
+    *(char **)(p + 0x9C8) = p;
+    *(int *)(p + 0x9CC) = 0;
+    *(char **)(p + 0x9D0) = p + 0x560;
+    VMOVE3(p + 0x9E0, p + 0x560);
+    *(int *)(p + 0xC) |= 0x40;
 }
