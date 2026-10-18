@@ -2173,6 +2173,10 @@ void func_002242C0(char *);
 float func_001324B0(char *, float *);
 int func_00131D10(float, float);
 unsigned char func_002DAD40(char *);
+void func_003AAB30(int, int, char *, unsigned char);
+int func_003B9390(char *);
+void func_003B9E50(char *);
+void func_003B9D20(char *);
 
 void func_002276B0(char *p) {
     T404 t;
@@ -2452,4 +2456,31 @@ int func_0024D260(char *p) {
         if (0 <= d && d <= 0x4000) return 2;
     }
     return 4;
+}
+
+typedef struct { float f[4]; } F4_3B9;
+
+void func_003B9120(char *p) {
+    if (*(unsigned char *)(p + 0x1B4) != 0) {
+        func_003AAB30(*(int *)(p + 0x1DC), *(unsigned char *)(p + 0x1BC), p + 0x230, *(unsigned char *)(p + 0x1B2));
+    } else {
+        *(F4_3B9 *)(p + 0x230) = *(F4_3B9 *)(p + 0x200);
+    }
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+    case 1:
+        switch (func_003B9390(p)) {
+        case 0:
+            break;
+        case 1:
+            func_003B9E50(p);
+            return;
+        case -1:
+            *(unsigned char *)(p + 0x1B6) = 0;
+            break;
+        }
+        break;
+    }
+    func_003B9D20(p);
 }
