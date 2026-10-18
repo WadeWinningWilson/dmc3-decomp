@@ -847,6 +847,17 @@ void func_0013D6A0(char *);
 float func_001324E0(float *);
 void func_00131D70(char *, char *);
 extern float D_0058BBA0[];
+void func_00198FE0(char *, int);
+char *func_00199090(char *, char *);
+void func_00199950(char *);
+char *func_00198460(char *, char *);
+char *func_00199100(char *, char *);
+char *func_00199180(char *, char *);
+char *func_00199BB0(char *, char *);
+char *func_00199ED0(char *, char *);
+char *func_0019AB70(char *, char *);
+char *func_0019B530(char *, char *);
+void func_0019A040(char *);
 
 void func_00233920(char *p) {
     float t = func_001F9C40(D_01DF5D20, 0x86);
@@ -1084,4 +1095,27 @@ void func_004F73C0(char *p, unsigned char k) {
         func_00131650(p + 0xF0, p + 0xF0);
     }
     func_00131D70(p + 0x80, p + 0xF0);
+}
+
+void func_00199740(char *p, char *buf, int a) {
+    char *c;
+    char *n;
+    func_00198FE0(p, a);
+    n = func_00199090(p, buf);
+    func_00199950(p);
+    c = func_00198460(p, n);
+    c = func_00199100(p, c);
+    c = func_00199180(p, c);
+    c = func_00199BB0(p, c);
+    c = func_00199ED0(p, c);
+    switch (*(unsigned int *)(p + 0xA0) & 0xF0000000) {
+    case 0x10000000:
+        c = func_0019AB70(p, c);
+        break;
+    case 0x20000000:
+        c = func_0019B530(p, c);
+        break;
+    }
+    *(int *)(p + 0xB0) = ((int)(c + 15) & -16) - (int)buf;
+    func_0019A040(p);
 }
