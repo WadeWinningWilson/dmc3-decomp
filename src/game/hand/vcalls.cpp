@@ -16352,6 +16352,12 @@ public:
 
 extern "C" ObjBlend34 *func_0027A720(char *);
 extern "C" short D_00541CE0[];
+extern "C" void func_0028C200(char *, char *, char *, int, char *, char *, int);
+extern "C" char *D_00554060[];
+extern "C" void func_001FF760(char *, int);
+extern "C" void func_002019D0(char *, char *, char *);
+extern "C" float D_005BBEC0;
+extern "C" void func_00248660(char *);
 
 extern "C" void func_0043D9F0(char *p) {
     ObjBlend34 *a = (ObjBlend34 *)func_002792A0(p + 0x340);
@@ -16441,4 +16447,59 @@ extern "C" void func_00210660(char *p) {
         }
     }
     func_0013D5D0(p + 0x14);
+}
+
+class ObjTm1C {
+public: int a0; int a4; int a8; int aC; int a10; int a14; int a18;
+    virtual void d0(); virtual void d1(); virtual void m10(); virtual float m14();
+};
+
+#define QCOPYB(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+extern "C" void func_00228520(char *p) {
+    float d;
+    float t = *(float *)(p + 0x28) - func_001F9C40(D_01DF5D20, 0x87);
+    *(float *)(p + 0x28) = t;
+    if (t < 0.0f) {
+        ((ObjTm1C *)p)->m10();
+        return;
+    }
+    switch (*(unsigned char *)(p + 0x20)) {
+    case 0:
+        break;
+    case 1:
+        d = *(float *)(p + 0x30) - *(float *)(p + 0x2C);
+        d *= 1.0f - *(float *)(p + 0x28) / (*(float *)(p + 0x10) * ((ObjTm1C *)p)->m14());
+        d += *(float *)(p + 0x2C);
+        D_01DF5D24[0] = d;
+        break;
+    }
+}
+
+extern "C" void func_00248580(char *p) {
+    float c[4];
+    float b[4];
+    float a[4];
+    QCOPYB(c, p + 0x1A0);
+    b[0] = 50.0f;
+    QCOPYB(a, p + 0x1A0);
+    func_001FF760(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, 1);
+    func_002019D0(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, (char *)a, p + 0x1B0);
+    func_001FF760(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, 0);
+    QCOPYB(p + 0x1A0, a);
+    *(float *)(p + 0x1AC) = 1.0f;
+    if (func_00132470((char *)c, p + 0x1A0) > D_005BBEC0) {
+        func_00248660(p);
+    }
+    *(float *)(p + 0x1AC) = 1.0f;
+}
+
+extern "C" void func_00249010(char *p) {
+    int k = *(signed char *)(p + 0x46);
+    char *a = func_001AED80(D_00666750, 0, k, 6);
+    char *b = func_001AED80(D_00666750, 0, k, 7);
+    func_0028C200(p + 0x47A0, a, b, 0, *(char **)D_00554060[k], p, 0);
+    if (*(unsigned char *)(p + 0x28AA) != 3 && *(unsigned char *)(p + 0x3C6C) == 5 && (unsigned char)func_002242C0(p) == 1) {
+        *(unsigned char *)(p + 0x47A1) = 5;
+    }
 }
