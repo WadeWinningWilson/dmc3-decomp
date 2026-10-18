@@ -16597,6 +16597,7 @@ extern "C" void func_004D7DB0(char *);
 extern "C" void func_004D8120(char *);
 extern "C" void func_00104B80(float *, char *, float *);
 extern "C" void func_004F6470(char *, float *, int, int, float);
+extern "C" unsigned int func_002F0A40(char *);
 
 extern "C" ObjEn198 *func_002F2850(char *p, signed char *a) {
     char it[4];
@@ -17080,4 +17081,93 @@ extern "C" int func_0031B9E0(char *p) {
         return 0;
     }
     return 1;
+}
+
+class ObjDrD8 {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9(); virtual void d10(); virtual void d11();
+    virtual void d12(); virtual void d13(); virtual void d14(); virtual void d15(); virtual void d16(); virtual void d17();
+    virtual void d18(); virtual void d19(); virtual void d20(); virtual void d21(); virtual void d22(); virtual void d23();
+    virtual void d24(); virtual void d25(); virtual void d26(); virtual void d27(); virtual void d28(); virtual void d29();
+    virtual void d30(); virtual void d31(); virtual void d32(); virtual void d33(); virtual void d34(); virtual void d35();
+    virtual void d36(); virtual void d37(); virtual void d38(); virtual void d39(); virtual void d40(); virtual void d41();
+    virtual void d42(); virtual void d43(); virtual void d44(); virtual void d45(); virtual void d46(); virtual void d47();
+    virtual void d48(); virtual void d49(); virtual void d50(); virtual void d51(); virtual void mD8(char *, char *);
+};
+
+class ObjMt24 {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual char *m24(int);
+};
+
+typedef struct { int w[4]; } __attribute__((aligned(16))) qw16;
+
+typedef struct { qw16 q[4]; } mat64q;
+
+typedef struct { signed char a; char pad[15]; float pos[4]; short ang; short one; int pad2; int b; int zero; int cnt; unsigned int f; char tail[0x14]; } spawn38;
+
+extern "C" mat64q D_0055E090;
+extern "C" ObjDrD8 *func_002F15D0(char *, unsigned int);
+
+extern "C" void func_0034C3E0(char *m) {
+    char *s = *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x2B58;
+    unsigned int n = func_002F0A40(s);
+    unsigned int i;
+    mat64q local = D_0055E090;
+    m = m != 0 ? m : (char *)&local;
+    for (i = 0; i < n; i++) {
+        ObjDrD8 *o = func_002F15D0(s, i);
+        if (o != 0) {
+            char *c = *(char **)(*(char **)D_01CAFF0C + 0xC);
+            if (c != 0) {
+                c += 0x40;
+            }
+            o->mD8(m, c);
+        }
+    }
+}
+
+extern "C" void func_00385720(char *p) {
+    int k;
+    char *g;
+    if (*(signed char *)(p + 0x58) == 1) {
+        func_00105300(p + 0xB0, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x110);
+        return;
+    }
+    if (*(unsigned char *)(p + 0xA0) != 1) {
+        return;
+    }
+    if (*(int *)(p + 0xA4) != -1) {
+        ObjMt24 *o = (ObjMt24 *)func_002F7C10(*(int *)(p + 0xA4), 0);
+        if (o != 0) {
+            func_00105300(p + 0xB0, o->m24(*(int *)(p + 0xA8)));
+        }
+    } else {
+        k = *(int *)(p + 0xA8);
+        g = *(char **)(*(char **)D_01CAFF0C + 0x14);
+        func_00105300(p + 0xB0, k != -1 ? *(char **)(func_0027A710(g + 0x40) + 0x108) + k * 64 : g + 0x4C0);
+    }
+}
+
+extern "C" void func_0038F540(char *p) {
+    spawn38 s;
+    char it[4];
+    ObjEn198 *o;
+    func_002A4DA0(it);
+    *(int *)(p + 0x45C) -= 1;
+    s.a = *(signed char *)(p + 0x46);
+    QCOPYB(s.pos, p + 0x50);
+    s.ang = *(short *)(p + 0x90);
+    s.one = 1;
+    s.b = (unsigned char)*(unsigned char *)(p + 0x460);
+    s.zero = 0;
+    s.cnt = *(int *)(p + 0x45C);
+    s.f = (unsigned int)*(float *)(p + 0xF64);
+    o = func_002A4E40(it, (signed char *)&s, *(int *)(p + 0x4B0));
+    if (o != 0) {
+        o->m198();
+    }
+    func_002A4DE0(it, -1);
 }
