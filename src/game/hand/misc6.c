@@ -3369,6 +3369,22 @@ extern int D_005BD000;
 extern int D_005BD008;
 extern int D_005BD010;
 extern int D_005BD018;
+extern char D_01CAF520[];
+void func_0020FBD0(char *);
+void func_0020FBE0(char *, int);
+char *func_00210240(char *);
+void func_00210090(char *, float);
+void func_001AC630(int, float);
+void func_001AC980(int, char *);
+void func_002E74D0(char *);
+void func_002E7510(char *, unsigned char, unsigned char, unsigned char, float, float, float, float);
+extern signed char D_005BE11C;
+extern char *D_005BE190;
+void func_004FE7A0(char *);
+void func_0041E1F0(float *, float *, float, float);
+void func_002018A0(char *, char *, char *, char *, char *, int);
+void func_002E3690(char *, int, int, int);
+void func_001A2000(char *, int);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -4279,4 +4295,101 @@ int func_004011B0(char *p, char *a, char *s) {
         } while ((func_0022CBA0(s) != 0) ^ 1);
     }
     return 0;
+}
+
+int func_00246030(char *p) {
+    char *s;
+    char *r;
+    func_0020FBD0(p + 0x30);
+    func_0020FBE0(p + 0x30, *(int *)(p + 0x20));
+    s = *(char **)(p + 0x20);
+    r = func_00210240(p);
+    func_00210090(p + 0x30, *(float *)(s + 0x10) + ((*(float *)(r + 0xC) + *(float *)(r + 0x10)) - *(float *)(p + 4)) / *(float *)(p + 0x10));
+    func_0024BF20(p + 0x30);
+    func_001AC630(D_005BE09C, *(float *)(p + 0x50));
+    func_001AC980(D_005BE09C, p + 0x30);
+    func_002E74D0(D_01CAF520);
+    if (*(unsigned char *)(p + 0x1FB) != 0) {
+        D_01CAF520[0] = 1;
+        func_002E7510(D_01CAF520, *(unsigned char *)(p + 0x1F8), *(unsigned char *)(p + 0x1F9), *(unsigned char *)(p + 0x1FA),
+                      (float)(unsigned int)*(unsigned short *)(p + 0x1F2), (float)(unsigned int)*(unsigned short *)(p + 0x1F0),
+                      (float)(unsigned int)*(unsigned short *)(p + 0x1F4), (float)(unsigned int)*(unsigned short *)(p + 0x1F6));
+    } else {
+        D_01CAF520[0] = 0;
+    }
+    return 1;
+}
+
+#define VADDY(d, x, y) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(y), "r"(x) : "memory")
+
+void func_00316D80(char *p) {
+    char buf[0x40] __attribute__((aligned(16)));
+    float u[4] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    float w[4] __attribute__((aligned(16)));
+    char *g = D_005BE190;
+    short t;
+    switch (D_005BE11C) {
+    case 4:
+        func_004FE7A0(p);
+        break;
+    default:
+        func_00316F30((int)p, (char *)v, 0);
+        QCOPY(p + 0x190, v);
+        QCOPY(w, g + 0x50);
+        w[1] = w[1] + 100.0f;
+        w[3] = 1.0f;
+        *(float *)(p + 0x238) = 400.0f;
+        *(float *)(p + 0x210) = 0.05235988f;
+        *(short *)(p + 0x248) = 0x38E;
+        *(short *)(p + 0x24A) = func_0034B940((char *)w, (char *)v);
+        t = *(short *)(p + 0x24A);
+        *(short *)(p + 0x24A) = t + 0x38E;
+        *(float *)(p + 0x214) = 6.283185f * ((float)*(short *)(p + 0x24A) / 65536.0f);
+        u[0] = 0.0f;
+        u[1] = 0.0f;
+        u[2] = -*(float *)(p + 0x238);
+        u[3] = 1.0f;
+        func_0041E1F0(u, u, *(float *)(p + 0x210), *(float *)(p + 0x214));
+        VADDY(p + 0x1A0, u, p + 0x190);
+        break;
+    }
+    func_002018A0(*(char **)(*(char **)D_01CAFF0C + 0x14) + 0x548, p + 0x190, p + 0x1A0, p + 0x1A0, buf, 8);
+    QCOPY(p + 0x70, p + 0x1A0);
+    QCOPY(p + 0x80, p + 0x190);
+}
+
+static inline void func_00387970_s(short k) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    int s = k;
+    if (s < 32) {
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) |= 1 << (s & 31);
+    } else {
+        s -= 32;
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) |= 1 << (s & 31);
+    }
+}
+
+void func_00387970(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    char *e;
+    int i;
+    *(unsigned char *)(p + 5) = 4;
+    func_002E3690(p + 0xC00, 0xB, 0xC, 0);
+    func_001A2000(func_00279290(p + 0x600), 8);
+    func_001A2000(func_00279290(p + 0x600), 9);
+    UNIT(m);
+    e = func_00207470(3, 0x1AF, (char *)m);
+    if (e != 0) {
+        *(char **)(e + 0x90) = p + 0xCB0;
+        *(unsigned char *)(e + 0x9A) = 0;
+    }
+    for (i = 0; i < *(int *)(p + 0x11B8); i++) {
+        if (*(char **)((char *)(i * 4) + (int)p + 0x1190) != 0) {
+            func_001AD140(*(char **)((char *)(i * 4) + (int)p + 0x1190));
+        }
+    }
+    if (*(short *)(p + 0x1342) != -1) func_00387970_s(*(short *)(p + 0x1342));
+    *(float *)(p + 0xDB0) = 10.0f;
+    func_003305E0(D_01DFABA0, 8, 0x3E, p + 0xCE0, 0x21, 0, 0);
 }

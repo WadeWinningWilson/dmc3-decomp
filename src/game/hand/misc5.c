@@ -963,6 +963,7 @@ void func_00105668(char *, char *, float);
 void func_00105578(char *, char *, float);
 void func_00105760(char *, char *, float);
 void func_00133890(char *, float *, float *);
+void func_00105230(char *, char *, float *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1233,4 +1234,45 @@ void func_00506080(char *p) {
     *(float *)(p + 0x1E0) = *(float *)(p + 0x1E0) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A0) * *(float *)(p + 0x10);
     *(float *)(p + 0x1E4) = *(float *)(p + 0x1E4) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A4) * *(float *)(p + 0x10);
     *(float *)(p + 0x1E8) = *(float *)(p + 0x1E8) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A8) * *(float *)(p + 0x10);
+}
+
+void func_004960F0(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    float g[4] __attribute__((aligned(16)));
+    float u[4] __attribute__((aligned(16)));
+    switch (*(unsigned char *)(p + 0x372)) {
+    case 0:
+        v[0] = *(float *)(p + 0x50);
+        v[1] = *(float *)(p + 0x54);
+        v[2] = *(float *)(p + 0x58);
+        v[3] = 1.0f;
+        g[0] = 0.0f;
+        g[1] = 6.283185f * ((float)*(short *)(p + 0x374) / 65536.0f);
+        g[2] = 0.0f;
+        g[3] = 1.0f;
+        u[0] = 0.0f;
+        u[1] = 1.0f;
+        u[3] = 1.0f;
+        u[2] = 0.0f;
+        UNIT(p + 0x3B0);
+        func_00133890(p + 0x3B0, (float *)(p + 0x3A0), u);
+        func_00105230(p + 0x3B0, p + 0x3B0, v);
+        break;
+    case 1:
+        break;
+    case 2:
+    case 3:
+        v[0] = *(float *)(p + 0x50);
+        v[1] = *(float *)(p + 0x54);
+        v[2] = *(float *)(p + 0x58);
+        v[3] = 1.0f;
+        g[0] = 0.0f;
+        g[1] = 6.283185f * ((float)*(short *)(p + 0x374) / 65536.0f);
+        g[2] = 0.0f;
+        g[3] = 1.0f;
+        UNIT(p + 0x3B0);
+        func_00131700((float *)(p + 0x3B0), (float *)(p + 0x3B0), g);
+        func_00105230(p + 0x3B0, p + 0x3B0, v);
+        break;
+    }
 }
