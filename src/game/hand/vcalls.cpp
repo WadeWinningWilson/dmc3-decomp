@@ -17272,3 +17272,25 @@ extern "C" int func_00445B90(char *p, signed char a, signed char b) {
     }
     return 0;
 }
+
+static inline int clampT(int a, short lim) {
+    if (a < lim) {
+        return (short)a;
+    }
+    if (lim < -a) {
+        return (short)-a;
+    }
+    return lim;
+}
+
+extern "C" short func_004D8420(char *p, short lim, int a) {
+    int d;
+    if (a == 0) {
+        return *(short *)(p + 0x90);
+    }
+    d = clampT(a, lim);
+    if (*(float *)(p + 0x10) != 1.0f) {
+        d = (short)(unsigned short)(short)(int)(0.5f + 65536.0f * (6.283185f * ((float)d / 65536.0f) * *(float *)(p + 0x10)) / 6.283185f);
+    }
+    return *(short *)(p + 0x90) + (short)d;
+}
