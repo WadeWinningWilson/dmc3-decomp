@@ -17196,6 +17196,11 @@ extern "C" char *func_002F14E0(char *);
 extern "C" int func_002F1B20(char *, char *, int, int);
 extern "C" void func_00286040(char *);
 extern "C" int func_00124EC0(int);
+extern "C" void func_003AD5C0(char *);
+extern "C" void func_00131760(char *, char *, float *);
+extern "C" void func_003B61B0(char *);
+extern "C" int func_003B4A30(char *, short);
+extern "C" char *D_005642E0[];
 
 extern "C" void func_0039CDF0(char *p) {
     i6tab t __attribute__((aligned(16))) = D_00563EC0;
@@ -17634,4 +17639,263 @@ extern "C" void func_00358A80(char *p, int a2, char *a3, int a4, int a5, int a6,
     ((ObjInit *)p)->mEC(0xE);
     ((ObjInit *)p)->mB4(0xE);
     ((ObjInit *)p)->m98(*(int *)(a3 + 0x1C));
+}
+
+static inline unsigned char cam_lock(char *p) {
+    unsigned char r;
+    if (*(unsigned char *)(p + 0x2DE8) == 1) {
+        r = 1;
+    } else {
+        r = 0;
+    }
+    return r;
+}
+
+extern "C" void func_003A1220(char *p) {
+    float m[16];
+    float v[4];
+    float *src = ((ObjPosC4 *)(p + 0x4C0))->mC4();
+    QCOPY(p + 0x2E10, src);
+    if (cam_lock(p) != 0) {
+        float a = 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f);
+        v[0] = *(float *)(p + 0x2E10);
+        v[1] = 0.0f;
+        v[2] = *(float *)(p + 0x2E18);
+        v[3] = 0.0f;
+        UNIT(m);
+        func_00105760(m, m, a);
+        func_00104B80(v, (char *)m, v);
+        VADDIP(p + 0x50, v);
+    }
+}
+
+extern "C" void func_003AA050(char *p) {
+    int i;
+    if (*(char **)(*(char **)D_01CAFF0C + 0x20) != 0) {
+        func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), (Obj1E0 *)p);
+    }
+    for (i = 0; i < 9; i++) {
+        func_00206730(p + i * 4 + 0x4AD0);
+        if (*(char **)(p + i * 4 + 0x4AD0) != 0) {
+            func_001AD140(*(char **)(p + i * 4 + 0x4AD0));
+            *(int *)(p + i * 4 + 0x4AD0) = 0;
+        }
+    }
+    for (i = 0; i < 8; i++) {
+        func_00206730(p + i * 4 + 0x4AF4);
+        if (*(char **)(p + i * 4 + 0x4AF4) != 0) {
+            func_001AD140(*(char **)(p + i * 4 + 0x4AF4));
+            *(int *)(p + i * 4 + 0x4AF4) = 0;
+        }
+    }
+    func_003AD5C0(p + 0x515C);
+    if (*(char **)(p + 0x515C) != 0) {
+        func_001AD140(*(char **)(p + 0x515C));
+    }
+    D_005BC1A8->m14(0x80000000, 5);
+}
+
+class ObjCm78 {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9(); virtual void d10(); virtual void d11();
+    virtual void d12(); virtual void d13(); virtual void d14(); virtual void d15(); virtual void d16(); virtual void d17();
+    virtual void d18(); virtual void d19(); virtual void d20(); virtual void d21(); virtual void d22(); virtual void d23();
+    virtual void d24(); virtual void d25(); virtual void d26(); virtual void d27(); virtual short m78(short, short);
+};
+
+#define VSUBR54(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+static inline unsigned char cam_lock2(char *p) {
+    unsigned char r;
+    if (*(unsigned char *)(p + 0x21CA) == 1) {
+        r = 1;
+    } else {
+        r = 0;
+    }
+    return r;
+}
+
+static inline unsigned char guard_on(char *p) {
+    unsigned char r;
+    if (*(unsigned char *)(p + 0x21C7) == 1) {
+        r = 1;
+    } else {
+        r = 0;
+    }
+    return r;
+}
+
+extern "C" qw16 D_00564680;
+extern "C" float D_005BCFEC;
+extern "C" int func_0034B340(float, float, unsigned char *, unsigned char *, char *, int, int);
+extern "C" void func_00138340(int);
+
+extern "C" void func_003B5240(char *p) {
+    float m[16];
+    float v[4];
+    float *src = ((ObjPosC4 *)(p + 0x700))->mC4();
+    QCOPY(p + 0x21B0, src);
+    if (cam_lock2(p) != 0) {
+        float a = 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f);
+        v[0] = *(float *)(p + 0x21B0);
+        v[1] = 0.0f;
+        v[2] = *(float *)(p + 0x21B8);
+        v[3] = 0.0f;
+        UNIT(m);
+        func_00105760(m, m, a);
+        func_00104B80(v, (char *)m, v);
+        VADDIP(p + 0x50, v);
+    }
+}
+
+extern "C" void func_003AF140(char *p, int a, char *hit) {
+    float d[4];
+    short r;
+    if (*(unsigned char *)(p + 0x14D) != 3 && guard_on(p) != 0) {
+        func_003B61B0(p);
+        VSUBR54(d, hit + 0x10, p + 0x50);
+        r = ((ObjCm78 *)(p + 0x130))->m78(func_00131D10(d[0], d[2]), *(short *)(p + 0x90));
+        if ((unsigned char)func_003B4A30(p, r) & 1) {
+            func_003B4B60(p, 0x1A);
+        } else {
+            func_003B4B60(p, 0x19);
+        }
+    }
+}
+
+extern "C" void func_003B3E70(char *p) {
+    float t[4];
+    float r[4];
+    qw16 s = D_00564680;
+    char *e = D_005642E0[*(unsigned char *)(p + 0x2181)];
+    *(unsigned char *)(p + 0x2182) = *(unsigned char *)(e + 2);
+    t[0] = *(float *)(e + 0x10);
+    t[1] = *(float *)(e + 0x14);
+    t[2] = *(float *)(e + 0x18);
+    t[3] = 1.0f;
+    r[0] = *(float *)(e + 0x20);
+    r[1] = *(float *)(e + 0x24);
+    r[2] = *(float *)(e + 0x28);
+    r[3] = 1.0f;
+    UNIT(p + 0x2140);
+    func_00131760(p + 0x2140, p + 0x2140, r);
+    func_00105230(p + 0x2140, p + 0x2140, (char *)t);
+    func_001318E0(p + 0x2140, p + 0x2140, (char *)&s);
+    func_00104C00(p + 0x2140, (int)(*(char **)(func_00279290(p + 0x700) + 0x108) + *(unsigned char *)(p + 0x2182) * 64), p + 0x2140);
+}
+
+class ObjInit2 {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9(); virtual void d10(); virtual void d11();
+    virtual void d12(); virtual void d13(); virtual void d14(); virtual void d15(); virtual void d16(); virtual void d17();
+    virtual void d18(); virtual void d19(); virtual void d20(); virtual void d21(); virtual void d22(); virtual void d23();
+    virtual void d24(); virtual void d25(); virtual void d26(); virtual void d27(); virtual void d28(); virtual void d29();
+    virtual void d30(); virtual void d31(); virtual void d32(); virtual void d33(); virtual void d34(); virtual void d35();
+    virtual void m98(int); virtual void d37(); virtual void d38(); virtual void d39(); virtual void d40(); virtual void d41();
+    virtual void d42(); virtual void mB4(int); virtual void d44(); virtual void d45(); virtual void d46(); virtual void d47();
+    virtual void d48(); virtual void d49(); virtual void d50(); virtual void d51(); virtual void d52(); virtual void d53();
+    virtual void d54(); virtual void d55(); virtual void mE8(int);
+};
+
+extern "C" void func_003CCBD0(char *p, int a2, char *a3, int a4, int a5, int a6, int a7, int a8, int a9) {
+    *(int *)(p + 4) = a2;
+    *(char **)(p + 8) = a3;
+    *(int *)(p + 0xC) = a4;
+    *(int *)(p + 0xA8) = a5;
+    *(int *)(p + 0x10) = a6;
+    *(int *)(p + 0xBC) = a7;
+    *(int *)(p + 0xA4) = a8;
+    *(int *)(p + 0xAC) = a9;
+    *(float *)(p + 0x14) = stage_obj_id();
+    *(short *)(p + 0x30) = 0;
+    *(int *)(p + 0x34) = 0;
+    *(int *)(p + 0x38) = 0;
+    *(int *)(p + 0x108) = 0;
+    *(unsigned char *)(p + 0x1C) = 0;
+    *(unsigned char *)(p + 0x1D) = 0;
+    *(unsigned char *)(p + 0xCD) = 0;
+    *(unsigned char *)(p + 0xCE) = 0;
+    *(unsigned char *)(p + 0xCF) = 0;
+    *(unsigned char *)(p + 0xD0) = 0;
+    *(unsigned char *)(p + 0xD1) = 0;
+    ((ObjInit2 *)p)->mE8(1);
+    ((ObjInit2 *)p)->mB4(0x17);
+    ((ObjInit2 *)p)->m98(*(int *)(a3 + 0x1C));
+}
+
+extern "C" int func_003C7B30(char *p) {
+    int r;
+    if (*(unsigned char *)(p + 0x1CEB) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CEC) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CED) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CEE) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CF5) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CF4) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CEF) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CF0) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CF1) != 0) {
+        r = 1;
+    } else if (*(unsigned char *)(p + 0x1CF2) != 0) {
+        r = 1;
+    } else {
+        r = *(unsigned char *)(p + 0x1CF3);
+    }
+    return r;
+}
+
+class ObjDrCC {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9(); virtual void d10(); virtual void d11();
+    virtual void d12(); virtual void d13(); virtual void d14(); virtual void d15(); virtual void d16(); virtual void d17();
+    virtual void d18(); virtual void d19(); virtual void d20(); virtual void d21(); virtual void d22(); virtual void d23();
+    virtual void d24(); virtual void d25(); virtual void d26(); virtual void d27(); virtual void d28(); virtual void d29();
+    virtual void d30(); virtual void d31(); virtual void d32(); virtual void d33(); virtual void d34(); virtual void d35();
+    virtual void d36(); virtual void d37(); virtual void d38(); virtual void d39(); virtual void d40(); virtual void d41();
+    virtual void d42(); virtual void d43(); virtual void d44(); virtual void d45(); virtual void d46(); virtual void d47();
+    virtual void d48(); virtual void mCC(char *);
+};
+
+extern "C" void func_003DEA50(char *p) {
+    char *t = p + 0x3C80;
+    ((ObjDrCC *)(p + 0x3640))->mCC(t);
+    ((ObjDrCC *)(p + 0x3040))->mCC(t);
+    ((ObjDrCC *)(p + 0x2A40))->mCC(t);
+    ((ObjDrCC *)(p + 0x2440))->mCC(t);
+    ((ObjDrCC *)(p + 0x1E40))->mCC(t);
+    ((ObjDrCC *)(p + 0x1840))->mCC(t);
+    ((ObjDrCC *)(p + 0x1240))->mCC(t);
+    ((ObjDrCC *)(p + 0xC40))->mCC(t);
+    ((ObjDrCC *)(p + 0x640))->mCC(t);
+    ((ObjDrCC *)(p + 0x40))->mCC(t);
+}
+
+extern "C" void func_00400010(char *p) {
+    unsigned char k;
+    unsigned char b[7];
+    if (*(unsigned char *)(p + 0x12D3) == 1) {
+        if ((unsigned char)func_0034B340(D_005BCFEC, 150.0f, &k, b, p + 0x50, 0x7F, 0x10) == 1) {
+            func_001A5CC0(func_0027A710(p + 0x280));
+            func_00138340(k);
+        } else {
+            func_001A5B90(func_0027A710(p + 0x280));
+        }
+        ((ObjDrCC *)(p + 0x280))->mCC(p + 0x1F0);
+    } else {
+        ((ObjDrCC *)(p + 0x6C0))->mCC(p + 0x1F0);
+    }
+    if (*(unsigned char *)(p + 5) != 0) {
+        func_001A20C0(func_0027A710(p + 0xB00), 7);
+        ((ObjDrCC *)(p + 0xB00))->mCC(p + 0x1F0);
+    }
 }
