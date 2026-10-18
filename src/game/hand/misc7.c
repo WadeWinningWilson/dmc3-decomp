@@ -831,6 +831,8 @@ typedef struct { unsigned short a; unsigned short b; int c; int d; } ent12;
 
 extern ent12 D_00546270[];
 int func_0024C320(char *, char *, ent12 *, int);
+void func_00330DA0(char *, int, int, char *);
+int func_002DA0B0(char *);
 
 void func_00233920(char *p) {
     float t = func_001F9C40(D_01DF5D20, 0x86);
@@ -856,4 +858,53 @@ void func_0024C230(char *p) {
             *(unsigned int *)(p + (i >> 5) * 4 + 0x49F0) |= 1 << (i & 31);
         }
     }
+}
+
+static inline signed char slot_find(char *p, signed char id) {
+    unsigned int i;
+    if (id != -1) {
+        for (i = 0; i < 5; i++) {
+            signed char c = *(signed char *)(p + i + 0x3D4C);
+            if (c == id) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+void func_002EE2E0(char *p, char *e, int u, float *v) {
+    float m[16];
+    if (*(int *)(p + 0x444) == -1) {
+        return;
+    }
+    *(int *)(p + 0x444) = (int)((float)*(int *)(p + 0x444) - *(float *)(e + 4));
+    if (*(int *)(p + 0x444) <= 0) {
+        *(unsigned char *)(p + 0x496) = 1;
+    } else if (*(signed char *)(e + 2) == 1) {
+        func_00330DA0(D_01DFABA0, 1, *(int *)(p + 0x720), p + 0x480);
+    } else {
+        func_00330DA0(D_01DFABA0, 2, *(int *)(p + 0x720), p + 0x480);
+    }
+    UNIT(m);
+    func_00105230(m, m, (char *)v);
+    func_00207480(3, 0x1C, m, 0x20);
+}
+
+int func_002DA1B0(char *p, signed char id, unsigned char which) {
+    signed char k;
+    if ((unsigned char)func_002DA0B0(p) == 0) {
+        k = slot_find(p, id);
+        if (k != -1) {
+            if (which == 0) {
+        *(signed char *)(p + 0x3D4A) = k;
+        *(signed char *)(p + 0x3D49) = *(signed char *)((char *)*(unsigned char *)(p + 0x3D4A) + (int)p + 0x3D4C);
+    } else {
+        *(signed char *)(p + 0x3D4B) = k;
+        *(signed char *)(p + 0x3D49) = *(signed char *)((char *)*(unsigned char *)(p + 0x3D4B) + (int)p + 0x3D4C);
+    }
+            return 1;
+        }
+    }
+    return 0;
 }
