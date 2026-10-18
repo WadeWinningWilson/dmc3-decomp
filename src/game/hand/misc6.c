@@ -2996,6 +2996,8 @@ int func_001C35D0(char *, char *, int, float *);
 void func_00104B80(float *, char *, float *);
 float func_002E7630(char *);
 float func_002E7660(char *);
+extern char *D_00565600[];
+int func_0034B800(char *, char *, short, short, float);
 
 void func_002D58C0(char *p) {
     switch (*(unsigned char *)(p + 5)) {
@@ -3312,4 +3314,24 @@ int func_002E76D0(char *p, float *v) {
     c[3] = b;
     FTOI0(out, c);
     return out[3];
+}
+
+typedef struct { int v; short a; short r; float d; } zone12;
+
+int func_002D2700(char *p) {
+    zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
+    int i = 0;
+    zone12 *e;
+    if (t[0].v != 0) {
+        e = t;
+        do {
+            *(float *)(p + 0x5C) = 1.0f;
+            if ((unsigned char)func_0034B800(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, p + 0x50, *(short *)(p + 0x38FC) + e->a, e->r, e->d) == 1) {
+                return t[i].v;
+            }
+            e++;
+            i++;
+        } while (e->v != 0);
+    }
+    return t[i - 1].v;
 }
