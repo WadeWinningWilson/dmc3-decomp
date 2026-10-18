@@ -7725,3 +7725,130 @@ void func_003FD970(char *p) {
     func_00105578(*(float *)(p + 0x88), m, m);
     func_00104C00(p + 0x150, p + 0x150, m);
 }
+
+typedef struct { float v[4]; } __attribute__((aligned(16))) V4Q;
+
+extern V4Q D_0057BB20;
+void func_001A0530(char *, int);
+int func_001A0B50(char *, int);
+void func_0019B440(char *, char *);
+void func_0019AA80(char *, char *);
+void func_00199580(char *, int, int);
+void func_001996C0(char *);
+
+void func_00474E80(char *p, char *o) {
+    V4Q t;
+    char *m;
+    char *e = p + *(signed char *)((char *)*(signed char *)(p + 0x19D) + (int)p + 0x13B) * 4;
+    *o = *(signed char *)(e + 0xFB);
+    *(float *)(o + 4) = (float)*(short *)(e + 0xFC) / 360.0f * 6.283185f;
+    m = o + 0x450;
+    UNIT(m);
+    func_00105760(o + 0x450, o + 0x450, -1.0f * *(float *)(o + 4) * 0.5f * (float)*(signed char *)(p + 0x188));
+    t = D_0057BB20;
+    t.v[0] = *(float *)(p + 0xE4);
+    t.v[1] = *(float *)(p + 0xE8);
+    t.v[2] = *(float *)(p + 0xEC);
+    func_00105230(o + 0x450, o + 0x450, t.v);
+    *(signed char *)(p + 0x19D) = (*(signed char *)(p + 0x19D) + 1) % *(signed char *)(p + 0x13A);
+}
+
+int func_001A03D0(char *p, int k) {
+    unsigned int *e = (unsigned int *)(*(char **)(p + 0xBC) + k * 0x340);
+    int r = 0;
+    if (e[0xB0] == 0) return -1;
+    if ((e[0] & 4) == 0) {
+        e[0] |= 4;
+        e[0xB1] &= ~0xF;
+        e[0xB1] |= 1;
+    }
+    switch (e[0xB1] & 0xF) {
+    case 1:
+        e[0xB1] &= ~0xF;
+        e[0xB1] |= 2;
+        func_001A0530(p, k);
+    case 2:
+        switch (e[0xB1] & 0x1000000) {
+        case 0x1000000:
+            r = func_001A0B50(p, k);
+        }
+        if (r <= 0) {
+            e[0xB1] &= ~0xF;
+            e[0xB1] |= 3;
+        }
+        break;
+    case 3:
+        break;
+    }
+    return r;
+}
+
+char *func_00199ED0(char *p, char *a) {
+    int i;
+    char *e;
+    int j;
+    char *s;
+    unsigned int t;
+    for (i = 0; i < *(unsigned short *)(p + 0xA8); i++) {
+        e = *(char **)(p + 0xBC) + i * 0x340;
+        *(char **)(e + 0x1C) = a;
+        t = *(unsigned int *)(p + 0xA0) & 0xF0000000;
+        a += *(unsigned char *)(e + 0xC) * 0x150;
+        switch (t) {
+        case 0x10000000:
+            func_0019AA80(p, e);
+            break;
+        case 0x20000000:
+            func_0019B440(p, e);
+            break;
+        }
+        for (j = 0; j < *(unsigned char *)(e + 0xC); j++) {
+            s = *(char **)(e + 0x1C) + j * 0x150;
+            *(int *)(e + 8) = *(int *)(e + 8) + *(int *)(s + 4);
+            func_00199580(s, *(int *)(p + 0xC8), *(int *)(e + 0x14));
+            func_001996C0(s);
+            *(int *)(s + 0x13C) = 0;
+        }
+    }
+    return a;
+}
+
+void func_002F8DA0(char *p) {
+    float t[4];
+    float r[4];
+    float s[4];
+    switch (*(unsigned char *)(p + 0x459)) {
+    case 0:
+        t[0] = *(float *)(p + 0x50);
+        t[1] = *(float *)(p + 0x54);
+        t[2] = *(float *)(p + 0x58);
+        t[3] = 1.0f;
+        r[0] = 0.0f;
+        r[1] = (float)*(short *)(p + 0x3F4) / 65536.0f * 6.283185f;
+        r[2] = 0.0f;
+        r[3] = 1.0f;
+        s[0] = 1.0f;
+        s[1] = 1.0f;
+        s[2] = 1.0f;
+        s[3] = 1.0f;
+        break;
+    case 1:
+        t[0] = *(float *)(p + 0x50);
+        t[1] = *(float *)(p + 0x54);
+        t[2] = *(float *)(p + 0x58);
+        t[3] = 1.0f;
+        r[0] = 1.5707963f;
+        r[1] = (float)*(short *)(p + 0x3F4) / 65536.0f * 6.283185f;
+        r[2] = 0.0f;
+        r[3] = 1.0f;
+        s[0] = 1.0f;
+        s[1] = 1.0f;
+        s[2] = 1.0f;
+        s[3] = 1.0f;
+        break;
+    }
+    UNIT(p + 0x410);
+    func_00131700(p + 0x410, p + 0x410, r);
+    func_00105230(p + 0x410, p + 0x410, t);
+    func_001318E0(p + 0x410, p + 0x410, s);
+}

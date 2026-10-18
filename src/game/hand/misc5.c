@@ -951,6 +951,12 @@ int func_0034B940(char *, char *);
 void func_00131760(float *, float *, float *);
 void func_00104B80(char *, float *, float *);
 void func_00131650(char *, char *);
+int func_0013B920(int, int *);
+int func_001B0FD0(char *, int, int);
+void func_00131700(float *, float *, float *);
+extern float D_00587380[];
+extern float D_00587384[];
+extern float D_00587388[];
 
 void func_0041F600(char *p) {
     char *b;
@@ -1113,4 +1119,52 @@ void func_003DB8C0(char *p) {
     *(float *)(p + 0xEDC) = 4.0f;
     *(float *)(p + 0xEE0) = 0.0f;
     *(unsigned char *)(p + 0x1E1) = 1;
+}
+
+int func_00418520(char *p, char *s, int f) {
+    int t[16];
+    if (!(s[0] == 'i' && s[1] == 'p' && s[2] == 'u' && s[3] == 'm')) return 0;
+    {
+        if (func_0013B920(f, t) == 0) return 0;
+        *(char **)(p + 0) = s;
+        *(int *)(p + 4) = *(int *)(s + 4) - 8;
+        *(short *)(p + 8) = *(short *)(s + 8);
+        *(short *)(p + 0xA) = *(short *)(s + 0xA);
+        *(int *)(p + 0xC) = *(int *)(s + 0xC);
+        *(int *)(p + 0x10) = 0;
+        *(short *)(p + 0x14) = *(short *)(p + 8) >> 4;
+        *(short *)(p + 0x16) = *(short *)(p + 0xA) >> 4;
+        *(int *)(p + 0x1C) = func_001B0FD0(p + 0x58, *(short *)(p + 8) * *(short *)(p + 0xA) * 4, -1);
+        *(int *)(p + 0x18) = func_001B0FD0(p + 0x48, 0x40, -1);
+        *(int *)(p + 0x20) = t[0];
+        if (!*(int *)(p + 0x1C)) return 0;
+        return *(int *)(p + 0x18) ? 1 : 0;
+    }
+}
+
+static inline char *func_004BE0D0_g(char *g, unsigned char i) {
+    return *(char **)((char *)(i * 4) + (int)g + 0xC);
+}
+
+void func_004BE0D0(char *p, int k, float *out) {
+    float r[4] __attribute__((aligned(16)));
+    float t[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    char *e;
+    UNIT(m);
+    e = func_004BE0D0_g(*(char **)D_01CAFF0C, *(unsigned char *)(p + 0x378));
+    r[0] = 0.0f;
+    r[1] = (float)*(short *)(e + 0x90) / 65536.0f * 6.283185f;
+    r[2] = 0.0f;
+    r[3] = 1.0f;
+    func_00131700(m, m, r);
+    t[0] = D_00587380[(signed char)k * 4];
+    t[1] = D_00587384[(signed char)k * 4];
+    t[2] = D_00587388[(signed char)k * 4];
+    t[3] = 1.0f;
+    func_00104B80((char *)out, m, t);
+    out[0] = out[0] + *(float *)(e + 0x50);
+    out[1] = out[1] + *(float *)(e + 0x54);
+    out[2] = out[2] + *(float *)(e + 0x58);
+    out[3] = 1.0f;
 }

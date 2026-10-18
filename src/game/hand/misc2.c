@@ -178,6 +178,7 @@ void func_003EFCE0(char *p) {
 float func_00132470(char *, float *); void func_0030CCD0(char *);
 short func_0034B940(char *, char *);
 int func_0034B8C0(short *, short *, int);
+void func_00112228(int, int, int);
 void func_0030CBD0(char *p) {
     float v[4];
     char *a;
@@ -214,4 +215,33 @@ unsigned char func_0041DAB0(char *a, short *b, int c) {
     d = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, a);
     d = d - *b;
     return func_0034B8C0(b, &d, c);
+}
+
+int func_001EB9F0(int a, int b, int c, int d) {
+    char buf[256];
+    unsigned int i;
+    int fd, size;
+    char *s;
+    size = func_001EBB30(a, b, c);
+    func_0012ACE8(buf, D_00540D50, D_005BBA30, c, b, D_005BBA38);
+    i = 0;
+    if (i < func_0012B400(buf)) {
+        s = buf;
+        do {
+            if (*s == '/') {
+                *s = 0x5C;
+            }
+            s++;
+            i++;
+        } while (i < func_0012B400(buf));
+    }
+    func_001AAAE0(D_00662370);
+    fd = func_00111BE8(buf, 1);
+    if (fd < 0) {
+        return 0;
+    }
+    func_00112228(fd, d, size);
+    func_00111E70(fd);
+    func_001AAAF0(D_00662370);
+    return 1;
 }

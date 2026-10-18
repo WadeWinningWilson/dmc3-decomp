@@ -3354,6 +3354,10 @@ void func_00387830(char *);
 void func_002282B0(char *);
 int func_0040F1B0(char *);
 void func_00105760(float *, float *, float);
+void func_00105668(char *, char *, float);
+extern int D_0054D9D0[];
+extern unsigned char D_005BCA88;
+extern unsigned char D_005BCA89;
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -4027,4 +4031,89 @@ void func_002CB4E0(char *p, short a, int x, int y) {
         *(int *)(o + 0x90) = *(int *)(*(char **)(p + 0x598) + 0x104);
         *(char *)(o + 0x9A) = 1;
     }
+}
+
+#define GETPOS(d,m) __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(d), "r"(m) : "memory")
+
+#define VADDIP(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+#define SETPOS(m, s) __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(m), "r"(s) : "memory")
+
+void func_0041D6E0(char *p, float *v, int f, float s) {
+    float m[16] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    d[0] = v[0] * s;
+    d[1] = v[1] * s;
+    d[2] = v[2] * s;
+    if ((unsigned char)f == 1) {
+        UNIT(m);
+        SETPOS(m, d);
+        func_00105668((char *)m, (char *)m, *(float *)(p + 0x40));
+        func_00105760(m, m, (float)*(short *)(p + 0x50) / 65536.0f * 6.283185f);
+        GETPOS(d, m);
+    }
+    VADDIP(p + 0x10, d);
+    *(float *)(p + 0x1C) = 1.0f;
+}
+
+void func_002CF320(char *p, unsigned char k) {
+    float m[16] __attribute__((aligned(16)));
+    if (*(char **)((char *)(k * 4) + (int)p + 0x2F58) == 0) {
+        if (k == 2) {
+            UNIT(m);
+            func_00105760(m, m, 3.1415925f);
+            *(char **)((char *)(k * 4) + (int)p + 0x2F58) = func_00207480(3, 0x127, m, 0x10);
+        } else {
+            *(char **)((char *)(k * 4) + (int)p + 0x2F58) = func_00207480(3, 0x127, 0, 0x10);
+        }
+        {
+        char *o1;
+        if (*(char **)((char *)(k * 4) + (int)p + 0x2F58) != 0) {
+            o1 = *(char **)((char *)(k * 4) + (int)p + 0x2F58);
+            *(int *)(o1 + 0x90) = *(int *)(*(char **)((char *)(D_0054D9D0[k] * 4) + (int)p + 0x4F4) + 0x104);
+            *(unsigned char *)(o1 + 0x9A) = 3;
+            *(unsigned char *)(*(char **)((char *)(k * 4) + (int)p + 0x2F58) + 0x3A) = 1;
+            if (*(unsigned char *)(p + 0x5C6) == 1) {
+                char *o2 = *(char **)((char *)(k * 4) + (int)p + 0x2F58);
+                {
+                    unsigned char b = D_005BCA89;
+                    *(unsigned char *)(o2 + 0x9C) = D_005BCA88;
+                    *(unsigned char *)(o2 + 0x9D) = b;
+                    *(unsigned char *)(o2 + 0x9E) = b;
+                }
+                *(unsigned char *)(o2 + 0x9B) = 2;
+            }
+        }
+        }
+    }
+}
+
+void func_00370EF0(char *p) {
+    float v[4];
+    unsigned int f;
+    func_001AD100(p);
+    f = *(unsigned int *)(*(char **)(p + 0x1CC) + 8);
+    *(float *)(p + 0x570) = *(float *)(p + 0x570) - 1.0f;
+    if ((f & 3) != 0 || *(float *)(p + 0x570) < 0.0f) {
+        (*(unsigned char *)(p + 5))++;
+        if (*(char **)(p + 0x578) != 0) {
+            func_001AD140(*(char **)(p + 0x578));
+        }
+        *(char **)(p + 0x578) = func_00207470(3, 0xAB, p + 0x4B0);
+        if (*(char **)(p + 0x578) != 0) {
+            *(unsigned char *)(*(char **)(p + 0x578) + 0x3A) = 1;
+        }
+        *(float *)(p + 0x570) = 50.0f;
+        v[0] = *(float *)(p + 0x4E0);
+        v[1] = *(float *)(p + 0x4E4);
+        v[2] = *(float *)(p + 0x4E8);
+        v[3] = 1.0f;
+        func_0034BA60(0x1D, (char *)v, *(signed char *)(*(char **)(p + 0x480) + 0x46), 0, 1);
+        func_0028C740(p + 0x150);
+    }
+    func_00105300((float *)(p + 0x4F0), p + 0x4B0);
+    func_00105300((float *)(p + 0x530), p + 0x4B0);
+    *(float *)(p + 0x524) = *(float *)(p + 0x524) - 80.0f;
+    *(float *)(p + 0x564) = *(float *)(p + 0x564) + 80.0f;
+    func_0028C5C0(p + 0x150, 0, 1.0f);
 }
