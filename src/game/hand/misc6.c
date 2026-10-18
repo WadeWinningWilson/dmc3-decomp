@@ -3397,6 +3397,11 @@ void func_003023F0(char *);
 void func_002530C0(char *, char *);
 char *func_004E70B0(char *);
 void func_004E6FF0(char *);
+void func_00249290(char *, int, int, int, int, int, float);
+void func_00226820(char *, int, int, int);
+void func_0021EED0(char *);
+void func_00249E70(char *, char *);
+void func_0021C7A0(char *, int);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -4487,4 +4492,44 @@ void func_004E6B40(char *p) {
     func_004E6FF0(p);
     func_0028C5C0(p + 0x1A0, 0, *(float *)(p + 0x10));
     func_00195E20(D_005BE098, p);
+}
+
+unsigned char func_00226580(char *p, unsigned char f) {
+    unsigned char r = 0;
+    int t = *(unsigned char *)(p + 0x2848);
+    if (t == 1 || t == 0xA || t == 3 || t == 0xD || t == 0x22 || t == 0x23 || t == 0x24) {
+        func_00226820(p, 0, 0, 0);
+        t = *(unsigned char *)(p + 0x2848);
+        if (t == 3 || t == 0x22 || t == 0x23 || t == 0x24) {
+            func_002490F0(p, (unsigned char)(*(unsigned short *)(p + 0x24C6) >> 8), (unsigned char)*(unsigned short *)(p + 0x24C6), -1, 0, 0, -1.0f);
+            r = 1;
+        }
+        if (*(unsigned char *)(p + 0x2848) == 0xD) {
+            func_002490F0(p, (unsigned char)(*(unsigned short *)(p + 0x24C6) >> 8), (unsigned char)*(unsigned short *)(p + 0x24C6), -1, 0, 0, -1.0f);
+            func_00249290(p, (unsigned char)(*(unsigned short *)(p + 0x24C6) >> 8), (unsigned char)*(unsigned short *)(p + 0x24C6), -1, 0, 0, -1.0f);
+            r = 1;
+        }
+        if (r == 1) {
+            func_0021EED0(p);
+            func_00249E70(p, p + 0x110);
+            return 1;
+        }
+        if (f == 0) {
+            if (*(unsigned int *)(p + 0x2898) & 1) func_0021C7A0(p, 0x21);
+        } else {
+            if (*(unsigned char *)(p + 0x2848) == 1) {
+                func_002490F0(p, (unsigned char)(*(unsigned short *)(p + 0x24C6) >> 8), (unsigned char)*(unsigned short *)(p + 0x24C6), -1, 0, 0, -1.0f);
+                r = 1;
+            } else if (*(unsigned char *)(p + 0x2848) == 0xA) {
+                func_002490F0(p, (unsigned char)(*(unsigned short *)(p + 0x24C6) >> 8), (unsigned char)*(unsigned short *)(p + 0x24C6), -1, 0, 0, -1.0f);
+                func_00249290(p, (unsigned char)(*(unsigned short *)(p + 0x24C6) >> 8), (unsigned char)*(unsigned short *)(p + 0x24C6), -1, 0, 0, -1.0f);
+                r = 1;
+            }
+            if (r == 1) {
+                func_0021EED0(p);
+                func_00249E70(p, p + 0x110);
+            }
+        }
+    }
+    return r;
 }

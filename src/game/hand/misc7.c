@@ -4620,6 +4620,27 @@ void func_002D6C50(char *);
 void func_0025EE70(char *, int, float, float, float);
 int func_0025EE90(char *);
 float func_00249DD0(char *, int);
+extern char D_005408E0[];
+extern char D_00662370[];
+extern char D_01100000[];
+extern char D_01100004[];
+extern char D_01100018[];
+extern char D_0110001C[];
+void func_0010DF60();
+int func_0010E080();
+int func_0010E0A0();
+int func_00111BE8();
+void func_00111E70();
+int func_00111FF0();
+void func_00112228();
+int func_00114A28();
+void func_00114B90();
+int func_0013CB00();
+void func_001AAB00();
+void func_001C3ED0();
+int func_001C3F30();
+void func_002F9620();
+extern int D_01CAFF30[];
 
 void func_00424400(char *p) {
     E424 *e = &D_0056F3F0[*(unsigned char *)(p + 0x3AB)];
@@ -4739,6 +4760,200 @@ void func_0025FA60(char *p) {
             break;
         }
         func_002DBAA0(p, *(short *)(p + 0x90), 1.0f);
+        break;
+    }
+}
+
+int func_001C3C50(p0) int p0; {
+    char stk[0x10] __attribute__((aligned(16)));
+    int v0;
+    int v1;
+    char *v2;
+    int v3;
+    int v4;
+    int v5;
+    int v7;
+    int v6;
+    int v8;
+    int tmp0;
+    int tmp1;
+    int tmp2;
+    int tmp3;
+    int tmp4;
+    int tmp5;
+    int tmp17;
+    v0 = p0;
+    while ((v1 = func_00111BE8(D_005408E0, 1)) < 0) {
+    }
+    tmp1 = func_00111FF0(v1, 0, 2);
+    func_00111FF0(v1, 0, 0);
+    func_00112228(v1, 0x1000000, tmp1);
+    func_00111E70(v1);
+    tmp2 = func_0013CB00(0x1000000, 0x1100000);
+    v3 = tmp2;
+    while ((v4 = func_00114A28(v3)) == 0) {
+    }
+    *(int *)((stk + -64) + 64) = 0x1100000;
+    *(int *)((stk + -64) + 72) = v3;
+    *(int *)((stk + -64) + 68) = v4;
+    *(int *)((stk + -64) + 76) = 0;
+    func_0010DF60(0);
+    tmp4 = func_0010E0A0(((stk + -64) + 64), 1);
+    v5 = tmp4;
+    do {
+        tmp5 = func_0010E080(v5);
+    } while (tmp5 >= 0);
+    v6 = *(int *)D_01100000;
+    v2 = D_01100004;
+    v7 = 0;
+    if ((0 < v6)) {
+        v8 = (v6 + -8);
+        if (v6 > 8) {
+            do {
+                v7 = (v7 + 8);
+                *(int *)(v2 + 0) = (*(int *)(v2 + 0) + v4);
+                *(int *)(v2 + 4) = (*(int *)(v2 + 4) + v4);
+                *(int *)(v2 + 8) = (*(int *)(v2 + 8) + v4);
+                *(int *)(v2 + 12) = (*(int *)(v2 + 12) + v4);
+                *(int *)(v2 + 16) = (*(int *)(v2 + 16) + v4);
+                *(int *)(v2 + 20) = (*(int *)(v2 + 20) + v4);
+                *(int *)(v2 + 24) = (*(int *)(v2 + 24) + v4);
+                *(int *)(v2 + 28) = (*(int *)(v2 + 28) + v4);
+                v2 = (v2 + 32);
+            } while ((v7 < v8));
+        }
+        if ((v7 < v6)) {
+            do {
+                v7 = (v7 + 1);
+                *(int *)(v2 + 0) = (*(int *)(v2 + 0) + v4);
+                v2 = (v2 + 4);
+            } while ((v7 < v6));
+        }
+    }
+    func_001C3ED0(v0, 0x1100000, 0, 0, 0);
+    func_001C3ED0(v0, 0x1100000, 1, 0, 0);
+    func_001C3ED0(v0, 0x1100000, 2, 0, 0);
+    func_001C3ED0(v0, 0x1100000, 3, 0, 0);
+    func_001C3ED0(v0, 0x1100000, 4, 0, 0);
+    func_002F9620(D_01DFABA0, *(int *)D_01100018);
+    func_001AAB00(D_00662370, *(int *)D_0110001C);
+    func_00114B90(v4);
+    tmp17 = func_001C3F30(v0);
+    return tmp17;
+}
+
+typedef struct { char pad[16]; int e[4][33]; char rest[120]; } C357;
+
+extern C357 D_0054A0E0[];
+
+void func_00357560(p0, p1) char *p0; int p1; {
+    char *v0;
+    int v1;
+    int v2;
+    int v3;
+    int v4;
+    int v5;
+    v0 = (char *)D_0054A0E0[D_01CAFF30[0]].e[D_01CAFF3C[0]];
+    switch (p1) {
+    case 1:
+        v5 = *(int *)(p0 + 12);
+        if ((v5 < *(int *)(v0 + 0))) {
+            *(char *)(p0 + 48) = 4;
+        } else {
+            if ((v5 < *(int *)(v0 + 4))) {
+                *(char *)(p0 + 48) = 3;
+            } else {
+                if ((v5 < *(int *)(v0 + 8))) {
+                    *(char *)(p0 + 48) = 2;
+                } else {
+                    if ((v5 < *(int *)(v0 + 12))) {
+                        *(char *)(p0 + 48) = 1;
+                    } else {
+                        *(char *)(p0 + 48) = 0;
+                    }
+                }
+            }
+        }
+        break;
+    case 2:
+        v1 = *(int *)(p0 + 12);
+        if ((*(int *)(v0 + 16) < v1)) {
+            *(char *)(p0 + 48) = 4;
+        } else {
+            if ((*(int *)(v0 + 20) < v1)) {
+                *(char *)(p0 + 48) = 3;
+            } else {
+                if ((*(int *)(v0 + 24) < v1)) {
+                    *(char *)(p0 + 48) = 2;
+                } else {
+                    if ((*(int *)(v0 + 28) < v1)) {
+                        *(char *)(p0 + 48) = 1;
+                    } else {
+                        *(char *)(p0 + 48) = 0;
+                    }
+                }
+            }
+        }
+        break;
+    case 3:
+        v2 = *(int *)(p0 + 12);
+        if ((*(int *)(v0 + 32) < v2)) {
+            *(char *)(p0 + 48) = 4;
+        } else {
+            if ((*(int *)(v0 + 36) < v2)) {
+                *(char *)(p0 + 48) = 3;
+            } else {
+                if ((*(int *)(v0 + 40) < v2)) {
+                    *(char *)(p0 + 48) = 2;
+                } else {
+                    if ((*(int *)(v0 + 44) < v2)) {
+                        *(char *)(p0 + 48) = 1;
+                    } else {
+                        *(char *)(p0 + 48) = 0;
+                    }
+                }
+            }
+        }
+        break;
+    case 4:
+        v3 = *(int *)(p0 + 12);
+        if ((v3 < *(int *)(v0 + 48))) {
+            *(char *)(p0 + 48) = 4;
+        } else {
+            if ((v3 < *(int *)(v0 + 52))) {
+                *(char *)(p0 + 48) = 3;
+            } else {
+                if ((v3 < *(int *)(v0 + 56))) {
+                    *(char *)(p0 + 48) = 2;
+                } else {
+                    if ((v3 < *(int *)(v0 + 60))) {
+                        *(char *)(p0 + 48) = 1;
+                    } else {
+                        *(char *)(p0 + 48) = 0;
+                    }
+                }
+            }
+        }
+        break;
+    case 5:
+        v4 = *(int *)(p0 + 12);
+        if ((v4 < *(int *)(v0 + 64))) {
+            *(char *)(p0 + 48) = 4;
+        } else {
+            if ((v4 < *(int *)(v0 + 68))) {
+                *(char *)(p0 + 48) = 3;
+            } else {
+                if ((v4 < *(int *)(v0 + 72))) {
+                    *(char *)(p0 + 48) = 2;
+                } else {
+                    if ((v4 < *(int *)(v0 + 76))) {
+                        *(char *)(p0 + 48) = 1;
+                    } else {
+                        *(char *)(p0 + 48) = 0;
+                    }
+                }
+            }
+        }
         break;
     }
 }
