@@ -1051,3 +1051,26 @@ void func_0050EDC0(char *p) {
     QCOPY(d, s);
     (*(unsigned char *)(p + 4))++;
 }
+
+int func_0023EB30(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    unsigned int f;
+    unsigned int i;
+    char *o;
+    f = 0;
+    for (i = 0; i < 16; i++) {
+        o = *(char **)((char *)(i * 4) + (int)p + 0x481C);
+        if (o != 0 && (**(unsigned char **)(o + 0x100) & 4) != 0) {
+            f |= *(unsigned int *)(o + 8);
+        }
+    }
+    if ((f & 0x4000) != 0 && *(char **)(p + 0x2890) != 0) {
+        for (i = 0; i < 3; i++) {
+            if (*(unsigned char *)((char *)i + (int)*(char **)(p + 0x2890) + 0x8920) == 1) {
+                __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(*(char **)(*(char **)((char *)(i * 0x14) + (int)*(char **)(p + 0x2890) + 0x1BE0) + 0x104)) : "memory");
+                if (func_00132470(v, p + 0x50) < 120.0f) return 1;
+            }
+        }
+    }
+    return 0;
+}

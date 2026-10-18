@@ -6901,6 +6901,8 @@ typedef struct { short s[4]; } S8;
 extern S8 D_005BCD08;
 extern float D_0057894C[];
 extern unsigned char D_01CAFF3D[];
+void func_001B43C0(char *, int, int);
+extern char D_01DF8A00[];
 
 void func_003B6490(char *p, unsigned char k) {
     float m[16];
@@ -7020,5 +7022,30 @@ void func_002FD7C0(char *p) {
     if (q != 0) {
         *(char **)(q + 0x90) = p + 0x560;
         *(unsigned char *)(q + 0x9A) = 0;
+    }
+}
+
+void func_001F7720(char *p) {
+    char *q;
+    *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+    q = *(char **)(p + 0x440);
+    func_001B43C0(p, 0, 0x18);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0xD0), "r"(q + 0x20) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0xE0), "r"(q + 0x30) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0xF0), "r"(q + 0x40) : "memory");
+    *(float *)(p + 0x460) = *(int *)(q + 0x68);
+    *(unsigned char *)(p + 0x454) = 0;
+    *(char **)(p + 0x45C) = q + 0x6C;
+    *(float *)(p + 0x458) = *(short *)(q + 0x6C);
+    *(unsigned char *)(p + 0x455) = 0;
+    func_001F8910(p + 0x444, p + 0x444, *(char **)(p + 0x45C), *(char **)(p + 0x45C) + 0x14, 4, 4, 0.0f);
+    *(char **)(p + 0xAC0) = func_0021B0B0(D_01DF8A00, *(short *)(q + 0xD8));
+    if (*(char **)(p + 0xAC0) == 0) {
+        *(unsigned char *)(p + 0x38) = 3;
+        func_001AD140(p);
+    } else {
+        *(int *)(p + 0xAC4) = 0;
+        *(int *)(p + 0xBC) = 0;
+        *(char *)(p + 0xAB0) = *(signed char *)(D_005BE0D8 + 0xE);
     }
 }
