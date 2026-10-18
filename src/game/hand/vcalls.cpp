@@ -16584,6 +16584,8 @@ extern "C" int func_0039FE70(char *);
 extern "C" void func_003A0620(char *);
 extern "C" int func_0039FF60(char *);
 extern "C" int func_003A01F0(char *);
+extern "C" char *D_005BD0CC;
+extern "C" void func_003B6AE0(char *, int);
 
 extern "C" ObjEn198 *func_002F2850(char *p, signed char *a) {
     char it[4];
@@ -16665,4 +16667,16 @@ extern "C" int func_0039DDF0(char *p, float t) {
         }
     }
     return 0;
+}
+
+extern "C" void func_003B4B80(char *p) {
+    Obj1E0 *o = (Obj1E0 *)p;
+    *(int *)((char *)o + 0x21E0) = 0;
+    *(float *)(*(char **)(*(char **)D_01CAFF0C + 0x18) + 0x104) = *(float *)(D_005BD0CC + 0x44);
+    *(int *)(*(char **)(*(char **)D_01CAFF0C + 0x18) + 0x100) = (int)o->m1E0((unsigned int)*(float *)(D_005BD0CC + 0x2C));
+    func_003B6AE0((char *)o, 0x40);
+    if (*(char **)(*(char **)D_01CAFF0C + 0x20) != 0) {
+        func_002F2D30(*(char **)(*(char **)D_01CAFF0C + 0x20), o);
+    }
+    func_003B4B60((char *)o, 0x18);
 }
