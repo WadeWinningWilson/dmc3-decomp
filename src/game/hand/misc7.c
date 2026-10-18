@@ -770,3 +770,54 @@ void func_003DB7E0(char *p) {
     *(int *)(p + 0xEE0) = 0;
     *(unsigned char *)(p + 0x1E1) = 1;
 }
+
+static inline void set4(float *d, float a, float b, float c, float e) {
+    d[0] = a;
+    d[1] = b;
+    d[2] = c;
+    d[3] = e;
+}
+
+void func_001A9F90(char *p, float *v) {
+    float *m = (float *)(p + *(signed char *)(D_005BE0D8 + 0xE) * 128 + 0x1C0);
+    m[0] = 0.0f;
+    m[1] = 0.0f;
+    m[2] = 0.0f;
+    m[3] = 1.0f;
+    m[4] = 0.0f;
+    m[5] = 0.0f;
+    m[6] = 0.0f;
+    m[7] = 1.0f;
+    m[8] = 0.0f;
+    m[9] = 0.0f;
+    m[10] = 0.0f;
+    m[11] = 1.0f;
+    QCOPY(m + 12, v);
+    set4(m + 16, 0.0f, 0.0f, 0.0f, 0.0f);
+    set4(m + 20, 0.0f, 0.0f, 0.0f, 0.0f);
+    set4(m + 24, 0.0f, 0.0f, 0.0f, 0.0f);
+    set4(m + 28, 0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+short func_001F8640(char *p, unsigned char k, short id) {
+    short i;
+    unsigned short *t;
+    if (k != 10) {
+        t = *(unsigned short **)((char *)(k * 4) + (int)p + 0x2C);
+        for (i = 0; i < t[0]; i++) {
+            unsigned short v = t[i + 0x6401];
+            if (v == id) {
+                return i;
+            }
+        }
+    } else {
+        t = *(unsigned short **)((char *)(k * 4) + (int)p + 0x2C);
+        for (i = 0; i < t[0]; i++) {
+            unsigned short v = t[i + 0x8001];
+            if (v == id) {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
