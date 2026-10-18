@@ -844,6 +844,9 @@ extern char D_005B7564[];
 void func_0028C110(char *);
 void func_002790E0(char *);
 void func_0013D6A0(char *);
+float func_001324E0(float *);
+void func_00131D70(char *, char *);
+extern float D_0058BBA0[];
 
 void func_00233920(char *p) {
     float t = func_001F9C40(D_01DF5D20, 0x86);
@@ -1033,4 +1036,52 @@ char *func_0048C820(char *p) {
     *(float *)(q + 0x60) = 0.0f;
     *(float *)(q + 0x68) = 1.0f;
     return p;
+}
+
+#define QCOPYR(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tsqc2 $vf4, 0x0(%1)" : : "r"(s), "r"(d) : "memory")
+
+#define VADDR54(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+#define VSUBR54(d, a, b) __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory")
+
+void func_004DCE00(char *p) {
+    float v[4];
+    float u[4];
+    float d;
+    float e;
+    QCOPYR(v, p + 0xFA0);
+    v[1] = 0.0f;
+    v[3] = 0.0f;
+    VADDR54(p + 0xCE0, p + 0xCE0, v);
+    QCOPY(u, v);
+    d = func_001324E0(u);
+    if (!(d <= 0.0f)) {
+        u[0] = u[0] / d;
+        u[2] = u[2] / d;
+        e = func_00132630(u, p + 0xD80);
+        *(float *)(p + 0xD80) = *(float *)(p + 0xD80) - 1.8f * (u[0] * e);
+        *(float *)(p + 0xD88) = *(float *)(p + 0xD88) - 1.8f * (u[2] * e);
+    }
+}
+
+void func_004F73C0(char *p, unsigned char k) {
+    float m[16];
+    float r[4];
+    if (k == 0) {
+        UNIT(m);
+        r[0] = 0.0f;
+        r[1] = 0.0f;
+        r[2] = 0.0f;
+        r[3] = 1.0f;
+        func_00131700(m, m, r);
+        func_00104B80(p + 0xBE0, m, D_0058BBA0 + *(int *)(p + 0xBA8) * 4);
+        *(float *)(p + 0xF0) = *(float *)(p + 0xBE0);
+        *(float *)(p + 0xF4) = *(float *)(p + 0xBE4);
+        *(float *)(p + 0xF8) = *(float *)(p + 0xBE8);
+        *(float *)(p + 0xFC) = 1.0f;
+    } else {
+        VSUBR54(p + 0xF0, p + 0xBD0, p + 0x50);
+        func_00131650(p + 0xF0, p + 0xF0);
+    }
+    func_00131D70(p + 0x80, p + 0xF0);
 }
