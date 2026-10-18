@@ -427,6 +427,10 @@ extern int D_0058B1B0[];
 char *func_0027A710(char *);
 void func_001A1F30(char *, int);
 void func_001C6600(char *, int);
+extern char D_0055C2C0[];
+extern char D_0055C300[];
+extern char D_0056F590[];
+void func_0024D9F0(char *, char *, int, int, char *, char *, char *, char *, char *);
 
 void func_00483760(char *p) {
     func_00483620(p);
@@ -658,5 +662,46 @@ void func_001C6520(char *p, int a, int b, unsigned long long c) {
         *(int *)(p + 0x15894) = a;
         *(int *)(p + 0x15890) = b;
         *(unsigned long long *)(p + 0x15888) = c;
+    }
+}
+
+typedef struct { int w[13]; } s13t;
+
+static inline char *sub24(char *q) {
+    if (*(unsigned int *)(q + 4) < 8) {
+        return 0;
+    }
+    if (*(int *)(q + 0x24) == 0) {
+        return 0;
+    }
+    return q + *(int *)(q + 0x24);
+}
+
+void func_00333EF0(char *p) {
+    char *h;
+    char *a;
+    func_0028C200(p + 0xED0, D_0055C2C0, D_0055C300, 2, D_0056F590, p, 0);
+    h = *(char **)(p + 0x4D0);
+    if (**(unsigned short **)(h + 8) == 0) {
+        a = sub24(*(char **)(h + 0xC));
+    } else {
+        a = *(char **)(h + 0xC);
+    }
+    func_0024D9F0(p + 0xDF0, a, 0, 1, p + 0xEC0, p + 0x744, p + 0x660, p + 0xDE0, p + 0xED0);
+}
+
+void func_00356FC0(char *p, s13t s) {
+    int i;
+    float x;
+    float y;
+    for (i = 0; i < 6; i++) {
+        int k = s.w[6 + i];
+        if (k != -1) {
+            x = D_0059E5C0[k * 2];
+            y = D_0059E5C0[k * 2 + 1];
+        } else {
+            x = y = 0.0f;
+        }
+        func_001A3BD0(func_00279290(p + 0x6C0), i, x, y);
     }
 }

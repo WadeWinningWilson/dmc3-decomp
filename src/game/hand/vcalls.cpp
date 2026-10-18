@@ -16598,3 +16598,39 @@ extern "C" ObjEn198 *func_002F2850(char *p, signed char *a) {
     func_002A4DE0(it, -1);
     return o;
 }
+
+class ObjSt10 {
+public:
+    virtual void d0(); virtual void d1(); virtual unsigned char m10();
+};
+
+class ObjSt3C {
+public:
+    virtual void d0(); virtual void d1(); virtual void d2(); virtual void d3(); virtual void d4(); virtual void d5();
+    virtual void d6(); virtual void d7(); virtual void d8(); virtual void d9(); virtual void d10(); virtual void d11();
+    virtual void d12(); virtual void m3C(int, int);
+};
+
+extern "C" void func_003596B0(ObjSt3C *o, unsigned char a, int b, int c) {
+    if (*((unsigned char *)o + 0x1D) == 3) {
+        return;
+    }
+    switch ((*(ObjSt10 **)((char *)o + 0xC))->m10()) {
+    case 0:
+        switch (a) {
+        case 0:
+            break;
+        case 1:
+            break;
+        case 4:
+            break;
+        case 2:
+        case 3:
+            o->m3C(b, c);
+            break;
+        }
+        break;
+    case 1:
+        break;
+    }
+}
