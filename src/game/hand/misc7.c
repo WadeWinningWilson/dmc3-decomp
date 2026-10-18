@@ -908,3 +908,49 @@ int func_002DA1B0(char *p, signed char id, unsigned char which) {
     }
     return 0;
 }
+
+static inline int clampS(int a, short lim) {
+    if (a < lim) {
+        return (short)a;
+    }
+    if (lim < -a) {
+        return (short)-a;
+    }
+    return lim;
+}
+
+void func_003B5910(char *p, int a, int flag) {
+    int d = clampS(a, *(short *)(p + 0x220E));
+    if (*(float *)(p + 0x10) != 1.0f) {
+        float r = 6.283185f * ((float)d / 65536.0f);
+        if (!flag) {
+            r *= *(float *)(p + 0x10);
+        }
+        d = (short)(unsigned short)(short)(int)(0.5f + 65536.0f * r / 6.283185f);
+    }
+    *(short *)(p + 0x90) = *(short *)(p + 0x90) + d;
+}
+
+void func_003B4D80(char *p, int a, int flag) {
+    int d = clampS(a, *(short *)(p + 0x2186));
+    if (*(float *)(p + 0x10) != 1.0f) {
+        float r = 6.283185f * ((float)d / 65536.0f);
+        if (!flag) {
+            r *= *(float *)(p + 0x10);
+        }
+        d = (short)(unsigned short)(short)(int)(0.5f + 65536.0f * r / 6.283185f);
+    }
+    *(short *)(p + 0x90) = *(short *)(p + 0x90) + d;
+}
+
+void func_003A0CD0(char *p, int a) {
+    int d;
+    if (a == 0) {
+        return;
+    }
+    d = clampS(a, *(short *)(p + 0x2DEC));
+    if (*(float *)(p + 0x10) != 1.0f) {
+        d = (short)(unsigned short)(short)(int)(0.5f + 65536.0f * (6.283185f * ((float)d / 65536.0f) * *(float *)(p + 0x10)) / 6.283185f);
+    }
+    *(short *)(p + 0x90) = *(short *)(p + 0x90) + d;
+}
