@@ -460,6 +460,7 @@ extern char D_005A7790[];
 extern char D_005A7780[];
 float func_00132470(char *, char *);
 void func_00277D30(char *);
+void func_00197910(char *, char *);
 
 void func_003B8EF0(char *p) {
     int i;
@@ -585,4 +586,34 @@ void func_003B8DE0(char *p) {
     }
     }
     func_003B9D20(p);
+}
+
+typedef struct { int a[64]; int x; int y; } Buf66;
+
+int func_0036F5E0(char *p, int a, int id) {
+    Buf66 b;
+    char t[64];
+    int i;
+    int n;
+    char *buf;
+    for (i = 0; i < 64; i++) b.a[i] = 0;
+    b.y = 0;
+    b.x = 0;
+    func_00197910((char *)&b, t);
+    func_00198450(p + 0x40, a, id, 0);
+    n = func_001A4F90(p + 0x40);
+    if (n <= 0) {
+        return 0;
+    }
+    buf = func_001B0FD0(p + 0x14, n, -2);
+    if (buf == 0) {
+        return 0;
+    }
+    func_00130990(buf, n >> 2);
+    func_00199730(p + 0x40, buf, (char *)&b, 0);
+    if (func_001A5B30(p + 0x40, n) != 0) {
+        return 0;
+    }
+    p[0xA] = 1;
+    return 1;
 }

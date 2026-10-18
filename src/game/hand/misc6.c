@@ -3350,6 +3350,7 @@ void func_00248AF0(char *, float *, float *, float);
 void func_00247920(char *, char *, float *);
 void func_00248580(char *);
 void func_0024BF20(char *);
+void func_00387830(char *);
 
 int func_002D2700(char *p) {
     zone12 *t = (zone12 *)D_00565600[*(unsigned char *)(p + 0x38D0)];
@@ -3888,4 +3889,50 @@ void func_002477F0(char *p, float a) {
     func_0024BF20(p);
     *(unsigned char *)(p + 0x91) = 1;
     QCP(p + 0xA0, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50);
+}
+
+void func_00387700(char *p) {
+    int s;
+    int f;
+    *(float *)(p + 0xD80) = *(float *)(p + 0xD80) * 0.95f;
+    *(float *)(p + 0xD84) = *(float *)(p + 0xD84) - 1.0f;
+    *(float *)(p + 0xD88) = *(float *)(p + 0xD88) * 0.95f;
+    *(float *)(p + 0xCE0) = *(float *)(p + 0xCE0) * 0.95f + *(float *)(p + 0xCA0) * 0.05f;
+    *(float *)(p + 0xCE8) = *(float *)(p + 0xCE8) * 0.95f + *(float *)(p + 0xCA8) * 0.05f;
+    s = *(short *)(p + 0x1340);
+    if (s != -1) {
+        char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+        if (s < 32) {
+            unsigned int *w = (unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18);
+            f = (*w & (1 << (s & 31))) != 0;
+        } else {
+            int t = s - 32;
+            unsigned int *w = (unsigned int *)((char *)(t / 32 * 4) + (int)g + 0x44);
+            f = (*w & (1 << (t & 31))) != 0;
+        }
+        if (f) func_00387830(p);
+    }
+}
+
+void func_003D8EA0(char *p, int on) {
+    int s = *(short *)(p + 0x224);
+    if (s != -1) {
+        if (on != 0) {
+            char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+            if (s < 32) {
+                *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) |= 1 << (s & 31);
+            } else {
+                s -= 32;
+                *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) |= 1 << (s & 31);
+            }
+        } else {
+            char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+            if (s < 32) {
+                *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) &= ~(1 << (s & 31));
+            } else {
+                s -= 32;
+                *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) &= ~(1 << (s & 31));
+            }
+        }
+    }
 }
