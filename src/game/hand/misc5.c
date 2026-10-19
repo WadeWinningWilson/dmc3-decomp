@@ -1042,6 +1042,21 @@ extern signed char D_01CAFF3C[];
 extern unsigned char D_01CAFF3D[];
 extern char *D_01CAFF10[];
 int func_002A67F0(int, int);
+extern char D_006663C0[];
+extern int D_00569E90[];
+char *func_001AEA60(char *, int, int);
+int func_003F4680(char *);
+int func_001AFB90(char *, int, int, int);
+int func_003F4E30(int);
+int func_003F3F30(char *, int);
+int func_003F44F0(int);
+unsigned short func_001AE1E0(char *, int);
+void func_003F4E20(int);
+void func_003F44E0(int);
+int func_003F44D0(int);
+int func_003F4E10(int);
+int func_003F4E00(int);
+void func_001AF080(char *, int);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1647,5 +1662,90 @@ void func_0050A5E0(char *x, unsigned char k, char *a, char *b, char *c) {
         case 5:
             break;
         }
+    }
+}
+
+static inline int ok4F9(unsigned char *o) { unsigned char r = 1; if (o[1] != 0 && o[1] != 3) r = 0; return r; }
+
+void func_004F9E20(char *p) {
+    switch (*(unsigned int *)(p + 8)) {
+    case 0:
+        if (*(int *)(p + 0x40) == 0) {
+            *(int *)(p + 0x40) = func_003F4680(func_001AEA60(D_00666750, 6, 4));
+            if (*(int *)(p + 0x40) == 0) {
+                *(int *)(p + 8) = 7;
+                break;
+            }
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+    case 1:
+        *(int *)(p + 0x2C) = func_001AFB90(D_00666750, D_00569E90[*(short *)(p + 0x22)], 1, 8);
+        if (*(int *)(p + 0x2C) == 0) {
+            *(int *)(p + 8) = 7;
+            break;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+    case 2:
+        if ((unsigned char)ok4F9(*(unsigned char **)(p + 0x2C)) != 1) break;
+        if ((unsigned char)func_003F4E30(*(int *)(p + 0x40)) != 1) break;
+        *(int *)(p + 0x3C) = func_003F3F30(*(char **)(p + 0x2C), *(signed char *)(p + 0x22));
+        if (*(int *)(p + 0x3C) == 0) {
+            *(int *)(p + 8) = 7;
+            break;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 3:
+        if ((unsigned char)func_003F44F0(*(int *)(p + 0x3C)) != 1) break;
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 4:
+        if ((func_001AE1E0(D_006663C0, 0) & 0x50) == 0) break;
+        switch (*(unsigned char *)((char *)(*(unsigned char *)(p + 0x21) * 4) + (int)p + 0x16)) {
+        case 1: case 2: case 3:
+            break;
+        default:
+            func_003F4E20(*(int *)(p + 0x40));
+            break;
+        }
+        func_003F44E0(*(int *)(p + 0x3C));
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 5:
+        if ((unsigned char)func_003F44D0(*(int *)(p + 0x3C)) != 1) break;
+        if ((unsigned char)func_003F4E10(*(int *)(p + 0x40)) == 1) *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        else *(int *)(p + 8) = 8;
+        break;
+    case 6:
+        if ((unsigned char)func_003F4E00(*(int *)(p + 0x40)) != 1) break;
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 7:
+        if (*(char **)(p + 0x40) != 0) {
+            func_001AD140(*(char **)(p + 0x40));
+            *(char **)(p + 0x40) = 0;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+    case 8:
+        if (*(char **)(p + 0x2C) != 0) {
+            if (!(unsigned char)ok4F9(*(unsigned char **)(p + 0x2C))) break;
+        }
+        if (*(char **)(p + 0x3C) != 0) {
+            func_001AD140(*(char **)(p + 0x3C));
+            *(char **)(p + 0x3C) = 0;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 9: case 10:
+        *(int *)(p + 8) = *(unsigned int *)(p + 8) + 1;
+        break;
+    case 11:
+        if (*(int *)(p + 0x2C) != 0) {
+            func_001AF080(D_00666750, *(int *)(p + 0x2C));
+            *(int *)(p + 0x2C) = 0;
+        }
+        *(int *)(p + 4) = *(int *)(p + 4) + 1;
+        *(int *)(p + 8) = 0;
+        break;
     }
 }

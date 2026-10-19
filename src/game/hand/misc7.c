@@ -4876,6 +4876,12 @@ void func_002E1AB0(char *, int);
 void func_0021CB60(char *, unsigned int);
 int func_00406EA0(char *, int);
 void func_003303F0(char *, int, int, int, int);
+float func_002DAAA0(char *, char *);
+int func_002DAB50(char *, float, float);
+int func_002DAAB0(char *, char *, short, short);
+int func_002452A0(char *, float);
+int func_00244A40(char *, char *);
+int func_002448D0(char *);
 
 void func_00357560(p0, p1) char *p0; int p1; {
     char *v0;
@@ -5214,4 +5220,50 @@ int func_00416B00(char *p) {
         return -1;
     }
     return k;
+}
+
+static inline unsigned char both244(char *p) { unsigned char r; if (*(unsigned char *)(p + 0x28AE) == 1 && *(unsigned char *)(p + 0x28A9) == 1) r = 1; else r = 0; return r; }
+
+int func_00244590(char *p, char *a) {
+    switch (*(unsigned char *)(a + 0xE)) {
+    case 0:
+        return 1;
+    case 1:
+        if (*(unsigned char *)(p + 0x3B9D) != 1) break;
+        if (!(func_002DAAA0(p, p + 0x3C40) < 200.0f)) break;
+        if ((unsigned char)func_002DAB50(p, *(float *)(p + 0x3C44), 200.0f) != 1) break;
+        if ((unsigned char)func_002DAAB0(p, p + 0x3C40, 0x2000, -0x8000) != 1) break;
+        return 1;
+    case 2:
+        if ((unsigned char)func_002DAD40(p) == 2) break;
+        if (*(int *)(p + 0x2898) & 2) {
+            if (*(signed char *)(p + 0x2908) <= 0) break;
+            if ((unsigned char)func_002450D0(p, 0, -func_0011D798(6.283185f * (*(float *)(*(char **)(p + 0x283C) + 0xE8) / 360.0f))) == 1) return 1;
+            if ((unsigned char)func_002452A0(p, -func_0011D798(6.283185f * (*(float *)(*(char **)(p + 0x283C) + 0xEC) / 360.0f))) != 1) break;
+            return 1;
+        }
+        if ((unsigned char)func_002450D0(p, 0, -func_0011D798(6.283185f * (*(float *)(*(char **)(p + 0x283C) + 0xE0) / 360.0f))) != 1) break;
+        return 1;
+    case 3:
+        if ((unsigned char)func_00244A40(p, p + 0x29B0) != 1) break;
+        return 1;
+    case 4:
+        if ((unsigned char)func_002448D0(p) != 1) break;
+        return 1;
+    case 5:
+        if (*(float *)(p + 0x54) - *(float *)(p + 0x2924) <= *(float *)(*(char **)(p + 0x2844) + 0x18C)) break;
+        return 1;
+    case 6:
+        if (*(float *)(p + 0x54) - *(float *)(p + 0x2924) <= *(float *)(*(char **)(p + 0x2844) + 0x60)) break;
+        return 1;
+    case 7:
+        if (*(float *)(p + 0x54) - *(float *)(p + 0x2924) <= *(float *)(*(char **)(p + 0x283C) + 0x114)) break;
+        return 1;
+    case 8:
+        if (*(unsigned char *)(a + 2) != 0xC2) goto ret1; return *(unsigned char *)(p + 0x3C74) >= 1; ret1: return 1;
+    case 9:
+        if ((unsigned char)both244(p) != 1) break;
+        return 1;
+    }
+    return 0;
 }
