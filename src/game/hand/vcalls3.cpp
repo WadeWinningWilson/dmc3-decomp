@@ -2591,6 +2591,40 @@ extern "C" void func_00509B10(char *);
 extern "C" int func_00509F90(char *);
 extern "C" int func_0050F270(char *);
 extern "C" int func_0050F7F0(int);
+extern "C" void func_002F8FE0(char *);
+extern "C" int func_003F4680(char *);
+extern "C" int func_003F4E30(int);
+extern "C" int func_0032EB70(char *, int, int);
+extern "C" int func_0032F5D0(int);
+extern "C" void func_003F4E20(int);
+extern "C" void func_0032F5C0(int);
+extern "C" int func_0032F5B0(int);
+extern "C" int func_003F4E10(int);
+extern "C" int func_003F4E00(int);
+extern "C" char D_01CAF2B0[];
+extern "C" char D_01DFA340[];
+extern "C" void func_001ECFF0(char *, int, int, int);
+extern "C" void func_0030FD40(char *, int, int, int, int, int, int, int);
+extern "C" int func_001ED110(char *);
+extern "C" void func_001A2000(char *, int);
+extern "C" void func_001A2D70(char *, int, int);
+extern "C" void func_005012F0(char *, char *);
+extern "C" void func_0030EA90(char *, int);
+extern "C" int D_00569F10[];
+extern "C" void func_002F43B0(int, unsigned char *);
+extern "C" int D_00578040[][5];
+extern "C" extern char D_005A9A10[];
+extern "C" extern char D_005A99E0[];
+extern "C" extern char D_005A99B0[];
+extern "C" extern char D_005A9980[];
+extern "C" extern char D_005A9950[];
+extern "C" void func_002B5550(char *);
+extern "C" void func_0024BE00(char *);
+extern "C" void func_0024BE90(char *);
+extern "C" void func_0023BA10();
+extern "C" void func_0023ACD0();
+extern "C" void func_00100450(char *, void (*)(), void (*)(), int, int);
+extern "C" void func_00247770(int, char *);
 
 extern "C" void func_0029CD10(char *p) {
     float v[4] __attribute__((aligned(16)));
@@ -7445,6 +7479,862 @@ extern "C" void func_0031EDD0(char *p) {
     case 6:
         if ((*(W31Eo **)(p + 8))->m2C() != 0) ((W31E *)p)->m28(0xE);
         (*(W31Eo **)(p + 8))->m24();
+        break;
+    }
+}
+
+class W2F8 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual float m24();
+};
+
+extern "C" void func_002F8AD0(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    char *e;
+    *(unsigned char *)(p + 0x459) = 1;
+    func_002F8FE0(p);
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    v[0] = 0.0f;
+    v[1] = 6.283185f * ((float)*(short *)(p + 0x3F4) / 65536.0f);
+    v[2] = 0.0f;
+    v[3] = 1.0f;
+    func_00131700((char *)m, (char *)m, (char *)v);
+    func_00105230((char *)m, (char *)m, p + 0x50);
+    func_00207480(3, 0x47, (M207 *)m, 8);
+    switch (*(unsigned char *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x2928)) {
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+        func_00207480(0, 0xF, (M207 *)m, 8);
+        break;
+    case 11:
+        func_00207480(3, 0xF2, (M207 *)m, 8);
+        break;
+    case 12: case 13: case 14: case 15:
+        break;
+    }
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    e = func_00207480(3, 0x38, (M207 *)m, 8);
+    if (e != 0) {
+        *(char **)(e + 0x90) = p + 0x410;
+        *(unsigned char *)(e + 0x9A) = 0;
+        *(unsigned char *)(e + 0x3A) = 1;
+        *(char **)(p + 0x3D8) = e;
+        *(unsigned char *)(p + 0x3D0) = 1;
+        *(float *)(p + 0x450) = ((W2F8 *)e)->m24();
+        *(float *)(p + 0x400) = 0.0f;
+        *(float *)(p + 0x404) = 1.0f;
+        *(float *)(p + 0x408) = 0.0f;
+        *(float *)(p + 0x40C) = 1.0f;
+        *(float *)(p + 0x3F8) = 1.0f;
+    } else {
+        func_001AD140(p);
+    }
+}
+
+static inline int ok4F99(unsigned char *o) { unsigned char r = 1; if (o[1] != 0 && o[1] != 3) r = 0; return r; }
+
+extern "C" void func_004F99E0(char *p) {
+    switch (*(unsigned int *)(p + 8)) {
+    case 0:
+        if (*(int *)(p + 0x40) == 0) {
+            *(int *)(p + 0x40) = func_003F4680(func_001AEA60(D_00666750, 6, 4));
+            if (*(int *)(p + 0x40) == 0) {
+                *(int *)(p + 8) = 9;
+                break;
+            }
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+    case 1:
+        *(int *)(p + 0x2C) = func_001AFB90(D_00666750, *(short *)(p + 0x22) + 0x1F4, 1, 8);
+        if (*(int *)(p + 0x2C) == 0) {
+            *(int *)(p + 8) = 9;
+            break;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 2:
+        if ((unsigned char)ok4F99(*(unsigned char **)(p + 0x2C)) != 1) break;
+        if ((unsigned char)func_003F4E30(*(int *)(p + 0x40)) != 1) break;
+        *(int *)(p + 0x38) = func_0032EB70(*(char **)(p + 0x2C), *(signed char *)(p + 0x22), *(unsigned char *)(p + 0x24) == 2);
+        if (*(int *)(p + 0x38) == 0) {
+            *(int *)(p + 8) = 9;
+            break;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 3:
+        if ((unsigned char)func_0032F5D0(*(int *)(p + 0x38)) == 1) *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 4:
+        if ((func_001AE1E0(D_006663C0, 0) & 0x50) == 0) break;
+        switch (*(unsigned char *)((char *)(*(unsigned char *)(p + 0x21) * 4) + (int)p + 0x16)) {
+        case 1: case 2: case 3:
+            break;
+        default:
+            func_003F4E20(*(int *)(p + 0x40));
+            break;
+        }
+        func_0032F5C0(*(int *)(p + 0x38));
+        if (*(short *)(p + 0x22) == 0x3A) {
+            D_005BC1A8->m18(0x80C0C0C0, 4);
+            *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        } else {
+            *(int *)(p + 8) = 7;
+        }
+        break;
+    case 5:
+        if ((unsigned char)D_005BC1A8->m2C() != 1) break;
+        D_005BC1A8->m14(0x20000000, 0x18);
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 6:
+        if ((unsigned char)D_005BC1A8->m2C() != 1) break;
+        D_005BC1A8->m24(0, 0);
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 7:
+        if ((unsigned char)func_0032F5B0(*(int *)(p + 0x38)) != 1) break;
+        if ((unsigned char)func_003F4E10(*(int *)(p + 0x40)) == 1) *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        else *(int *)(p + 8) = 0xA;
+        break;
+    case 8:
+        if ((unsigned char)func_003F4E00(*(int *)(p + 0x40)) != 1) break;
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 9:
+        if (*(char **)(p + 0x40) != 0) {
+            func_001AD140(*(char **)(p + 0x40));
+            *(char **)(p + 0x40) = 0;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+    case 10:
+        if (*(char **)(p + 0x2C) != 0) {
+            if (!(unsigned char)ok4F99(*(unsigned char **)(p + 0x2C))) break;
+        }
+        if (*(char **)(p + 0x38) != 0) {
+            func_001AD140(*(char **)(p + 0x38));
+            *(char **)(p + 0x38) = 0;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 11: case 12:
+        *(int *)(p + 8) = *(unsigned int *)(p + 8) + 1;
+        break;
+    case 13:
+        if (*(int *)(p + 0x2C) != 0) {
+            func_001AF080(D_00666750, *(int *)(p + 0x2C));
+            *(int *)(p + 0x2C) = 0;
+        }
+        *(int *)(p + 4) = *(int *)(p + 4) + 1;
+        *(int *)(p + 8) = 0;
+        break;
+    }
+}
+
+class W50F {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void m24(int);
+    virtual void d28();
+    virtual int m2C(char *, char *);
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void m3C(int);
+};
+
+static inline char *inner50F(char *q, int i) { if (*(unsigned int *)(q + 4) < i + 2) return 0; if (*(int *)(q + 0xC + i * 4) == 0) return 0; return q + *(int *)(q + 0xC + i * 4); }
+
+static inline char *chunk50F(char *h, int i) { if (**(unsigned short **)(h + 8) == 0) return inner50F(*(char **)(h + 0xC), i); return *(char **)(h + 0xC); }
+
+extern "C" void func_0050F380(char *p) {
+    char *a;
+    char *b;
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        *(unsigned char *)(p + 0x640) = 0;
+        *(float *)(p + 0x650) = 0.0f;
+        *(float *)(p + 0x654) = 0.0f;
+        *(float *)(p + 0x658) = 0.0f;
+        *(float *)(p + 0x65C) = 1.0f;
+        *(float *)(p + 0x660) = 0.0f;
+        *(float *)(p + 0x664) = 0.0f;
+        *(float *)(p + 0x668) = 0.0f;
+        *(float *)(p + 0x66C) = 1.0f;
+        *(float *)(p + 0x670) = 1.0f;
+        *(float *)(p + 0x674) = 1.0f;
+        *(float *)(p + 0x678) = 1.0f;
+        *(float *)(p + 0x67C) = 1.0f;
+        __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(p + 0x680) : "memory");
+        func_00131700(p + 0x680, p + 0x680, p + 0x660);
+        func_00105230(p + 0x680, p + 0x680, p + 0x650);
+        func_001318E0(p + 0x680, p + 0x680, p + 0x670);
+        a = chunk50F(*(char **)(p + 0x38), -1);
+        b = chunk50F(*(char **)(p + 0x38), 0);
+        ((W50F *)(p + 0x40))->m24(1);
+        if ((unsigned char)((W50F *)(p + 0x40))->m2C(a, b) == 0) goto fail;
+        ((W50F *)(p + 0x40))->m3C(0);
+        *(int *)(p + 0x6C0) = 0x2E;
+        *(int *)(p + 0x6C4) = 0x38;
+        func_001ECFF0(D_01CAF2B0, *(int *)(p + 0x6C0), *(int *)(p + 0x6C4), 0x3138);
+        D_005BC1A8->m14(0x80000000, 0x20);
+        *(unsigned char *)(p + 4) = 1;
+        *(unsigned char *)(p + 5) = 0;
+    case 1:
+        func_0030FD40(D_01DFA340, 0x3138, *(int *)(p + 0x6C0), *(int *)(p + 0x6C4), 0x585858, 0, 0xFFFFF2, 1);
+        if ((unsigned char)D_005BC1A8->m2C() != 1) break;
+        D_005BC1A8->m24(0, 0);
+        *(unsigned char *)(p + 4) = 2;
+        break;
+    case 2:
+        func_0030FD40(D_01DFA340, 0x3138, *(int *)(p + 0x6C0), *(int *)(p + 0x6C4), 0x585858, 0, 0xFFFFF2, 1);
+        switch (func_001ED110(D_01CAF2B0)) {
+        case 0:
+            break;
+        case 1:
+            func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+            *(unsigned char *)(p + 0x6C8) = 1;
+            *(unsigned char *)(p + 4) = 3;
+            break;
+        case 2: case -1: default:
+            func_003303F0(D_01DFABA0, 0, 3, 0, 0);
+            *(unsigned char *)(p + 0x6C8) = 2;
+            *(unsigned char *)(p + 4) = 3;
+            break;
+        }
+        break;
+    case 3:
+        D_005BC1A8->m18(0x80000000, 0x10);
+        *(unsigned char *)(p + 4) = 4;
+    case 4:
+        func_0030FD40(D_01DFA340, 0x3138, *(int *)(p + 0x6C0), *(int *)(p + 0x6C4), 0x585858, 0, 0xFFFFF2, 1);
+        if ((unsigned char)D_005BC1A8->m2C() == 1) *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+        break;
+    case 5:
+        break;
+    }
+    func_00195E20(D_005BE098, p);
+    return;
+fail:
+    func_001AD140(p);
+    *(unsigned char *)(p + 4) = 4;
+    *(unsigned char *)(p + 5) = 0;
+}
+
+class W501 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void d6C();
+    virtual void d70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void m88(int, int, int);
+    virtual void d8C();
+    virtual void m90(int);
+};
+
+extern "C" void func_00501F60(char *p, char *a) {
+    int x;
+    switch (*(signed char *)(a + 1)) {
+    case 0:
+        func_001A1E70(func_00279290(p + 0xCC0), 0);
+        func_001A1E70(func_00279290(p + 0xCC0), 4);
+        func_001A1E70(func_00279290(p + 0xCC0), 5);
+        func_001A2D70(func_00279290(p + 0xCC0), 4, 0x80404040);
+        func_001A2D70(func_00279290(p + 0xCC0), 5, 0x80404040);
+        *(unsigned char *)(a + 5) = 0;
+        *(unsigned char *)(a + 3) = 0;
+        *(signed char *)(a + 1) = *(signed char *)(a + 1) + 1;
+    case 1:
+        *(unsigned char *)(a + 5) = *(unsigned char *)(a + 5) + 4;
+        if (*(unsigned char *)(a + 5) < 0x40) {
+            ((W501 *)(p + 0xCC0))->m88(0, *(unsigned char *)(a + 5), 1);
+            ((W501 *)(p + 0xCC0))->m88(4, *(unsigned char *)(a + 5), 1);
+            ((W501 *)(p + 0xCC0))->m88(5, *(unsigned char *)(a + 5), 1);
+            break;
+        }
+        ((W501 *)(p + 0xCC0))->m90(0);
+        ((W501 *)(p + 0xCC0))->m90(4);
+        ((W501 *)(p + 0xCC0))->m90(5);
+        *(unsigned char *)(a + 3) = 1;
+        *(signed char *)(a + 1) = *(signed char *)(a + 1) + 1;
+        break;
+    case 2:
+        if (*(signed char *)(p + 0x13EA) != 0) {
+            func_001A2D70(func_00279290(p + 0xCC0), 4, 0x80404040);
+            func_001A2D70(func_00279290(p + 0xCC0), 5, 0x80C0C0C0);
+        } else {
+            func_001A2D70(func_00279290(p + 0xCC0), 4, 0x80C0C0C0);
+            func_001A2D70(func_00279290(p + 0xCC0), 5, 0x80404040);
+        }
+        x = *(signed char *)(a + 4);
+        if (x == 0 || x == 2) {
+            *(unsigned char *)(a + 5) = 0x40;
+            *(unsigned char *)(a + 3) = 0;
+            *(signed char *)(a + 1) = *(signed char *)(a + 1) + 1;
+        }
+        break;
+    case 3:
+        *(unsigned char *)(a + 5) = *(unsigned char *)(a + 5) - 4;
+        if (0 < *(unsigned char *)(a + 5)) {
+            ((W501 *)(p + 0xCC0))->m88(0, *(unsigned char *)(a + 5), 1);
+            ((W501 *)(p + 0xCC0))->m88(4, *(unsigned char *)(a + 5), 1);
+            ((W501 *)(p + 0xCC0))->m88(5, *(unsigned char *)(a + 5), 1);
+            break;
+        }
+        ((W501 *)(p + 0xCC0))->m90(0);
+        ((W501 *)(p + 0xCC0))->m90(4);
+        ((W501 *)(p + 0xCC0))->m90(5);
+        func_001A2000(func_00279290(p + 0xCC0), 0);
+        func_001A2000(func_00279290(p + 0xCC0), 4);
+        func_001A2000(func_00279290(p + 0xCC0), 5);
+        if (*(signed char *)(a + 4) == 2) {
+            *(signed char *)(a + 4) = -1;
+            *(signed char *)(a + 1) = 4;
+        } else {
+            *(unsigned char *)(a + 3) = 3;
+            *(signed char *)(a + 1) = -1;
+        }
+        break;
+    case 4:
+        if (*(signed char *)(a + 4) == 0) {
+            *(signed char *)(a + 4) = -1;
+            *(signed char *)(a + 1) = 0;
+        }
+        break;
+    case -1: default:
+        ((W501 *)(p + 0xCC0))->m90(0);
+        ((W501 *)(p + 0xCC0))->m90(4);
+        ((W501 *)(p + 0xCC0))->m90(5);
+        func_001A2000(func_00279290(p + 0xCC0), 0);
+        func_001A2000(func_00279290(p + 0xCC0), 4);
+        func_001A2000(func_00279290(p + 0xCC0), 5);
+        func_005012F0(p, a);
+        break;
+    }
+}
+
+class W3F4 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void m24(int);
+    virtual void d28();
+    virtual int m2C(char *, char *);
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void m3C(int);
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void d6C();
+    virtual void d70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void m84(int, int);
+    virtual void d88();
+    virtual void m8C();
+};
+
+static inline char *inner3F4(char *q, int i) { if (*(unsigned int *)(q + 4) < i + 2) return 0; if (*(int *)(q + 0xC + i * 4) == 0) return 0; return q + *(int *)(q + 0xC + i * 4); }
+
+static inline char *chunk3F4(char *h, int i) { if (**(unsigned short **)(h + 8) == 0) return inner3F4(*(char **)(h + 0xC), i); return *(char **)(h + 0xC); }
+
+extern "C" void func_003F4050(char *p) {
+    char *a;
+    char *b;
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        *(unsigned char *)(p + 0x640) = 0;
+        *(float *)(p + 0x650) = 0.0f;
+        *(float *)(p + 0x654) = 0.0f;
+        *(float *)(p + 0x658) = 0.0f;
+        *(float *)(p + 0x65C) = 1.0f;
+        *(float *)(p + 0x660) = 0.0f;
+        *(float *)(p + 0x664) = 0.0f;
+        *(float *)(p + 0x668) = 0.0f;
+        *(float *)(p + 0x66C) = 1.0f;
+        *(float *)(p + 0x670) = 1.0f;
+        *(float *)(p + 0x674) = 1.0f;
+        *(float *)(p + 0x678) = 1.0f;
+        *(float *)(p + 0x67C) = 1.0f;
+        __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(p + 0x680) : "memory");
+        func_00131700(p + 0x680, p + 0x680, p + 0x660);
+        func_00105230(p + 0x680, p + 0x680, p + 0x650);
+        func_001318E0(p + 0x680, p + 0x680, p + 0x670);
+        a = chunk3F4(*(char **)(p + 0x38), -1);
+        b = chunk3F4(*(char **)(p + 0x38), 0);
+        ((W3F4 *)(p + 0x40))->m24(1);
+        if ((unsigned char)((W3F4 *)(p + 0x40))->m2C(b, a) == 0) goto fail;
+        ((W3F4 *)(p + 0x40))->m3C(3);
+        *(unsigned char *)(p + 0x6C3) = 0;
+        ((W3F4 *)(p + 0x40))->m84(*(unsigned char *)(p + 0x6C3), 1);
+        *(unsigned char *)(p + 0x6C1) = 0;
+        *(unsigned char *)(p + 0x6C2) = 0;
+        func_003303F0(D_01DFABA0, 0, 0x10, 0x40, 0);
+        *(unsigned char *)(p + 4) = 1;
+    case 1:
+        if (*(unsigned char *)(p + 0x6C3) < 0x40) {
+            *(unsigned char *)(p + 0x6C3) = *(unsigned char *)(p + 0x6C3) + 8;
+            ((W3F4 *)(p + 0x40))->m84(*(unsigned char *)(p + 0x6C3), 1);
+            if (!(*(unsigned char *)(p + 0x6C3) < 0x40)) {
+                ((W3F4 *)(p + 0x40))->m8C();
+                func_0030EA90(D_01DFA340, D_00569F10[*(signed char *)(p + 0x6C0)]);
+                *(float *)(p + 0x6C4) = 30.0f;
+                *(unsigned char *)(p + 4) = 2;
+            }
+        }
+        func_00195E20(D_005BE098, p);
+        break;
+    case 2:
+        *(float *)(p + 0x6C4) = *(float *)(p + 0x6C4) - func_001F9C40(D_01DF5D20, 0x87);
+        if (*(float *)(p + 0x6C4) < 0.0f) *(unsigned char *)(p + 4) = 3;
+        func_00195E20(D_005BE098, p);
+        break;
+    case 3:
+        if (*(unsigned char *)(p + 0x6C1) == 1) {
+            *(unsigned char *)(p + 4) = 4;
+            D_01DFA340[0] = 0;
+            func_003303F0(D_01DFABA0, 0, 0x11, 0x40, 0);
+            *(unsigned char *)(p + 0x6C3) = 0x40;
+            ((W3F4 *)(p + 0x40))->m84(*(unsigned char *)(p + 0x6C3), 1);
+        } else {
+            func_00195E20(D_005BE098, p);
+            break;
+        }
+    case 4:
+        if (0 < *(unsigned char *)(p + 0x6C3)) {
+            *(unsigned char *)(p + 0x6C3) = *(unsigned char *)(p + 0x6C3) - 8;
+            if (*(unsigned char *)(p + 0x6C3) < 0) *(unsigned char *)(p + 0x6C3) = 0;
+            ((W3F4 *)(p + 0x40))->m84(*(unsigned char *)(p + 0x6C3), 1);
+        }
+        if (*(unsigned char *)(p + 0x6C3) == 0) {
+            ((W3F4 *)(p + 0x40))->m8C();
+            *(unsigned char *)(p + 4) = 5;
+            *(unsigned char *)(p + 0x6C2) = 1;
+            break;
+        }
+        func_00195E20(D_005BE098, p);
+        break;
+    case 5:
+        break;
+    }
+    return;
+fail:
+    func_001AD140(p);
+    *(unsigned char *)(p + 4) = 5;
+}
+
+static inline void setc4567(char *e, unsigned char r, unsigned char g, unsigned char b) { *(unsigned char *)(e + 0x9C) = r; *(unsigned char *)(e + 0x9D) = g; *(unsigned char *)(e + 0x9E) = b; *(unsigned char *)(e + 0x9B) = 2; *(unsigned char *)(e + 0x9F) = 0x80; *(unsigned char *)(e + 0x9B) = 3; *(unsigned char *)(e + 0x9B) = 1; }
+
+extern "C" void func_00456700(char *p) {
+    unsigned char c[4];
+    bool f;
+    char *e;
+    func_002F43B0(*(unsigned char *)(p + 0x644), c);
+    f = false;
+    switch (*(unsigned char *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x3D90)) {
+    case 0:
+        if (*(char **)(p + 0x6B0) == 0) {
+            *(char **)(p + 0x6B0) = func_00207480(2, 0x10E, 0, 0x40);
+            e = *(char **)(p + 0x6B0);
+            if (e != 0) {
+                *(int *)(e + 0x94) = *(int *)(*(char **)(p + 0x1E8) + 0x104);
+                *(unsigned char *)(e + 0x99) = 1;
+                setc4567(*(char **)(p + 0x6B0), c[0], c[1], c[2]);
+            }
+            f = true;
+        }
+        if (*(unsigned char *)(p + 0x643) == 1) break;
+    case 1:
+        if (*(char **)(p + 0x6AC) == 0) {
+            *(char **)(p + 0x6AC) = func_00207480(2, 0x10E, 0, 0x40);
+            e = *(char **)(p + 0x6AC);
+            if (e != 0) {
+                *(int *)(e + 0x94) = *(int *)(*(char **)(p + 0x1D0) + 0x104);
+                *(unsigned char *)(e + 0x99) = 1;
+                setc4567(*(char **)(p + 0x6AC), c[0], c[1], c[2]);
+            }
+            f = true;
+        }
+        if (*(unsigned char *)(p + 0x643) == 2) break;
+    case 2:
+        if (*(char **)(p + 0x6A8) == 0) {
+            *(char **)(p + 0x6A8) = func_00207480(2, 0x10E, 0, 0x40);
+            e = *(char **)(p + 0x6A8);
+            if (e != 0) {
+                *(int *)(e + 0x94) = *(int *)(*(char **)(p + 0x1D4) + 0x104);
+                *(unsigned char *)(e + 0x99) = 1;
+                setc4567(*(char **)(p + 0x6A8), c[0], c[1], c[2]);
+            }
+            f = true;
+        }
+        if (*(unsigned char *)(p + 0x643) == 3) break;
+    case 3:
+        if (*(char **)(p + 0x6A4) == 0) {
+            *(char **)(p + 0x6A4) = func_00207480(2, 0x10E, 0, 0x40);
+            e = *(char **)(p + 0x6A4);
+            if (e != 0) {
+                *(int *)(e + 0x94) = *(int *)(*(char **)(p + 0x1E4) + 0x104);
+                *(unsigned char *)(e + 0x99) = 1;
+                setc4567(*(char **)(p + 0x6A4), c[0], c[1], c[2]);
+            }
+            f = true;
+        }
+        if (*(unsigned char *)(p + 0x643) == 4) break;
+    case 4:
+        if (*(char **)(p + 0x6A0) == 0) {
+            *(char **)(p + 0x6A0) = func_00207480(2, 0x10E, 0, 0x40);
+            e = *(char **)(p + 0x6A0);
+            if (e != 0) {
+                *(int *)(e + 0x94) = *(int *)(*(char **)(p + 0x1D8) + 0x104);
+                *(unsigned char *)(e + 0x99) = 1;
+                setc4567(*(char **)(p + 0x6A0), c[0], c[1], c[2]);
+            }
+            f = true;
+        }
+        if (*(unsigned char *)(p + 0x643) == 5) break;
+    case 5:
+        if (*(char **)(p + 0x69C) == 0) {
+            *(char **)(p + 0x69C) = func_00207480(2, 0x10E, 0, 0x40);
+            e = *(char **)(p + 0x69C);
+            if (e != 0) {
+                *(int *)(e + 0x94) = *(int *)(*(char **)(p + 0x1E0) + 0x104);
+                *(unsigned char *)(e + 0x99) = 1;
+                setc4567(*(char **)(p + 0x69C), c[0], c[1], c[2]);
+            }
+            f = true;
+        }
+        if (*(unsigned char *)(p + 0x643) == 6) break;
+    case 6:
+        if (*(char **)(p + 0x698) == 0) {
+            *(char **)(p + 0x698) = func_00207480(2, 0x10E, 0, 0x40);
+            e = *(char **)(p + 0x698);
+            if (e != 0) {
+                *(int *)(e + 0x94) = *(int *)(*(char **)(p + 0x1DC) + 0x104);
+                *(unsigned char *)(e + 0x99) = 1;
+                setc4567(*(char **)(p + 0x698), c[0], c[1], c[2]);
+            }
+            f = true;
+        }
+    case 7:
+        break;
+    }
+    if (f) func_003305E0(D_01DFABA0, 8, 0x43, p + 0x50, 0x22, 0, 0);
+}
+
+class W2A80 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void m24(int);
+    virtual void d28();
+    virtual bool m2C(char *, char *);
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void m3C(int);
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void d68();
+    virtual void d6C();
+    virtual void d70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void m84(int, int);
+    virtual void d88();
+    virtual void m8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void dB4();
+    virtual void dB8();
+    virtual void dBC();
+    virtual void dC0();
+    virtual void dC4();
+    virtual void dC8();
+    virtual void dCC();
+    virtual void mD0();
+};
+
+static inline int ok040(unsigned char *o) { unsigned char r = 1; if (o[1] != 0 && o[1] != 3) r = 0; return r; }
+
+static inline char *chunkB44(char *c) { if (*(unsigned int *)(c + 4) < 2) return 0; if (*(int *)(c + 0xC) == 0) return 0; return c + *(int *)(c + 0xC); }
+
+static inline char *chunkA44(char *c) { if (*(int *)(c + 4) == 0) return 0; if (*(int *)(c + 8) == 0) return 0; return c + *(int *)(c + 8); }
+
+static inline char *getB44(char *o) { if (**(unsigned short **)(o + 8) == 0) return chunkB44(*(char **)(o + 0xC)); return *(char **)(o + 0xC); }
+
+static inline char *getA44(char *o) { if (**(unsigned short **)(o + 8) == 0) return chunkA44(*(char **)(o + 0xC)); return *(char **)(o + 0xC); }
+
+extern "C" int func_0044B660(char *p) {
+    switch (*(unsigned char *)(p + 0x3088)) {
+    case 0:
+        if (*(unsigned char *)(p + 0x308A) == 0) break;
+        if (*(signed char *)(p + 0x311F) == *(signed char *)(p + 0x311C)) {
+            *(unsigned char *)(p + 0x308A) = 0;
+            break;
+        }
+        if (*(unsigned char *)(p + 0x3089) == 1) {
+            *(unsigned char *)(p + 0x3129) = 0x40;
+            *(unsigned char *)(p + 0x3088) = 1;
+        } else {
+            *(unsigned char *)(p + 0x3088) = 3;
+        }
+        break;
+    case 1:
+        if (0 < *(unsigned char *)(p + 0x3129)) {
+            ((W2A80 *)(p + 0x2A80))->m84(*(unsigned char *)(p + 0x3129), 1);
+            *(unsigned char *)(p + 0x3129) = *(unsigned char *)(p + 0x3129) - 0x10;
+        } else {
+            ((W2A80 *)(p + 0x2A80))->m8C();
+            *(unsigned char *)(p + 0x3089) = 0;
+            *(int *)(p + 0x308C) = 2;
+            *(unsigned char *)(p + 0x3088) = 2;
+        }
+        break;
+    case 2:
+        if (--*(int *)(p + 0x308C) == 0) {
+            ((W2A80 *)(p + 0x2A80))->mD0();
+            *(unsigned char *)(p + 0x3088) = 3;
+        }
+        break;
+    case 3:
+        if (*(unsigned char *)(p + 0x3120) & 1) {
+            *(unsigned char *)(p + 0x3088) = 0;
+            break;
+        }
+        if (*(unsigned char *)(p + 0x308A) == 0) break;
+        if (*(int *)(p + 0x40) != 0) {
+            func_001AF080(D_00666750, *(int *)(p + 0x40));
+            *(int *)(p + 0x40) = 0;
+        }
+        *(signed char *)(p + 0x311F) = *(signed char *)(p + 0x311C);
+        *(int *)(p + 0x40) = func_001AFB90(D_00666750, D_00578040[*(signed char *)(p + 0x311B)][((signed char *)(p + 0x3124))[*(signed char *)(p + 0x311F)]], 0, 8);
+        if (*(int *)(p + 0x40) == 0) return 0;
+        *(unsigned char *)(p + 0x3088) = 4;
+    case 4:
+        if ((unsigned char)ok040(*(unsigned char **)(p + 0x40)) == 0) break;
+        if (*(unsigned char *)(p + 0x308A) == 0) {
+            *(unsigned char *)(p + 0x3088) = 3;
+        } else {
+            *(unsigned char *)(p + 0x3088) = 5;
+        }
+        break;
+    case 5: {
+        char *o;
+        char *a;
+        char *b;
+        unsigned short k;
+        o = *(char **)(p + 0x40);
+        b = getB44(o);
+        a = getA44(o);
+        ((W2A80 *)(p + 0x2A80))->m24(1);
+        if (((W2A80 *)(p + 0x2A80))->m2C(a, b) == 0) return 0;
+        ((W2A80 *)(p + 0x2A80))->m3C(3);
+        *(unsigned char *)(p + 0x3129) = 0;
+        ((W2A80 *)(p + 0x2A80))->m84(*(unsigned char *)(p + 0x3129), 1);
+        *(unsigned char *)(p + 0x3089) = 1;
+        *(unsigned char *)(p + 0x3088) = 6;
+    }
+    case 6:
+        if (*(unsigned char *)(p + 0x3129) < 0x40) {
+            *(unsigned char *)(p + 0x3129) = *(unsigned char *)(p + 0x3129) + 0x10;
+            ((W2A80 *)(p + 0x2A80))->m84(*(unsigned char *)(p + 0x3129), 1);
+        }
+        if (*(unsigned char *)(p + 0x3129) >= 0x40) {
+            ((W2A80 *)(p + 0x2A80))->m8C();
+            *(unsigned char *)(p + 0x308A) = 0;
+            *(unsigned char *)(p + 0x3088) = 0;
+        }
+        break;
+    }
+    return 1;
+}
+
+class V2B5 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void m10(int);
+};
+
+typedef struct { char *a; int b; int c; int d; } E2B5;
+
+extern "C" void func_002B51B0(char *p, signed char k) {
+    char *q;
+    if (*(unsigned char *)(p + 0x24A1) == 0xFF) {
+        *(unsigned char *)(p + 0x24A3) = *(unsigned char *)(p + 0x24A2);
+        return;
+    }
+    if (*(unsigned char *)(p + 0x24A1) == *(unsigned char *)(p + 0x24A3)) {
+        *(unsigned char *)(p + 0x24A3) = 0xFF;
+        return;
+    }
+    *(unsigned char *)(p + 0x24A3) = 0xFF;
+    func_002B5550(p);
+    switch (*(unsigned char *)(((E2B5 *)(p + 0x94))[*(unsigned char *)(p + 0x24A1)].a + 1)) {
+    case 0:
+        q = p + 0x2B0;
+        if (q != 0) {
+            func_0024BE00(q);
+            *(char **)q = D_005A9A10;
+            func_0024BE90(q);
+            *(unsigned char *)(q + 0x90) = 6;
+            *(float *)(q + 0x9C) = 1.0f;
+            *(char **)q = D_005A99E0;
+        }
+        ((V2B5 *)q)->m10(((E2B5 *)(p + 0x94))[*(unsigned char *)(p + 0x24A1)].b);
+        *(char **)(p + 0x2A0) = q;
+        *(char **)(p + 0x294) = *(char **)(p + 0x2A0);
+        break;
+    case 1:
+        q = p + 0x2B0;
+        if (q != 0) {
+            func_0024BE00(q);
+            *(char **)q = D_005A9A10;
+            func_0024BE90(q);
+            *(unsigned char *)(q + 0x90) = 6;
+            *(float *)(q + 0x9C) = 1.0f;
+            *(char **)q = D_005A99B0;
+            func_00100450(q + 0xB0, func_0023BA10, func_0023ACD0, 0x850, 2);
+        }
+        ((V2B5 *)q)->m10(((E2B5 *)(p + 0x94))[*(unsigned char *)(p + 0x24A1)].b);
+        *(char **)(p + 0x2A0) = q;
+        *(char **)(p + 0x294) = *(char **)(p + 0x2A0);
+        break;
+    case 2:
+        q = p + 0x2B0;
+        if (q != 0) {
+            func_0024BE00(q);
+            *(char **)q = D_005A9A10;
+            func_0024BE90(q);
+            *(unsigned char *)(q + 0x90) = 6;
+            *(float *)(q + 0x9C) = 1.0f;
+            *(char **)q = D_005A9980;
+            func_00100450(q + 0xB0, func_0023BA10, func_0023ACD0, 0x850, 4);
+        }
+        ((V2B5 *)q)->m10(((E2B5 *)(p + 0x94))[*(unsigned char *)(p + 0x24A1)].b);
+        *(char **)(p + 0x2A0) = q;
+        *(char **)(p + 0x294) = *(char **)(p + 0x2A0);
+        break;
+    case 3:
+        q = p + 0x2B0;
+        if (q != 0) {
+            func_0024BE00(q);
+            *(char **)q = D_005A9A10;
+            func_0024BE90(q);
+            *(unsigned char *)(q + 0x90) = 6;
+            *(float *)(q + 0x9C) = 1.0f;
+            *(char **)q = D_005A9950;
+        }
+        ((V2B5 *)q)->m10(((E2B5 *)(p + 0x94))[*(unsigned char *)(p + 0x24A1)].b);
+        *(char **)(p + 0x2A0) = q;
+        *(char **)(p + 0x294) = *(char **)(p + 0x2A0);
+        break;
+    case 4:
+        *(char **)(p + 0x2A0) = 0;
+        *(int *)(p + 0x294) = *(int *)(p + 0x298);
+        if (k == 1) {
+            func_00247770(*(int *)(p + 0x298), p + 0x70);
+            break;
+        }
+        if (*(unsigned char *)(p + 0x24A2) == 0xFF || *(unsigned char *)(((E2B5 *)(p + 0x94))[*(unsigned char *)(p + 0x24A2)].a + 1) != 4) {
+            func_00247770(*(int *)(p + 0x298), p + 0x70);
+        }
+        break;
+    case 5:
+        *(char **)(p + 0x2A0) = 0;
+        *(int *)(p + 0x294) = *(int *)(p + 0x298);
         break;
     }
 }

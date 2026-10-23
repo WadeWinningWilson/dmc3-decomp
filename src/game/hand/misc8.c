@@ -3257,6 +3257,8 @@ void func_00225F30(char *, int);
 void func_00226580(char *, int);
 extern signed char D_005BCD60[];
 void func_0031E570(char *);
+static inline unsigned char okD9(void) { unsigned char r = 1; if (D_01CAFF38[0] != 0xD9 && D_01CAFF38[0] != 0x1A0) r = 0; return r; }
+
 void func_002D2270(char *, int);
 extern char D_005B9CA0[];
 extern char D_005B9CC4[];
@@ -9565,6 +9567,7 @@ void func_002EB840(int, char *, float);
 void func_002EC050(int, char *, float);
 void func_002EA290(int, int, char *, int);
 int func_004D2D20(char *, unsigned char);
+void func_002D26A0(char *, int, int);
 
 void func_00233B00(char *p) {
     float m[16] __attribute__((aligned(16)));
@@ -9867,4 +9870,158 @@ unsigned char func_004CD3C0(char *p, int k) {
         break;
     }
     return r;
+}
+
+void func_001F83E0(char *p, unsigned char k) {
+    unsigned short i;
+    char *s;
+    char *d;
+    d = *(char **)((char *)(k * 4) + (int)p + 0x2C);
+    switch (k) {
+    case 0: case 1: case 2: case 3: case 4: case 6: case 7: case 8:
+        s = *(char **)((char *)(k * 4) + (int)p);
+        *(unsigned short *)d = *(unsigned short *)s;
+        for (i = 0; i < *(unsigned short *)d; i++) {
+            func_0012B2E8(d + i * 0x20 + 2, s + 2);
+            s += 0x10;
+            *(unsigned short *)(d + i * 2 + 0xC802) = i;
+        }
+        break;
+    case 5:
+        s = *(char **)((char *)(k * 4) + (int)p);
+        *(unsigned short *)d = *(unsigned short *)s;
+        for (i = 0; i < *(unsigned short *)d; i++) {
+            func_0012B2E8(d + i * 0x20 + 2, s + 2);
+            s += 0x10;
+            *(unsigned short *)(d + i * 2 + 0xC802) = i;
+        }
+        break;
+    case 9:
+        s = *(char **)((char *)(k * 4) + (int)p);
+        *(unsigned short *)d = *(unsigned short *)s;
+        for (i = 0; i < *(unsigned short *)d; i++) {
+            func_0012B2E8(d + i * 0x20 + 2, s + 2);
+            s += 0x20;
+            *(unsigned short *)(d + i * 2 + 0xC802) = i;
+        }
+        break;
+    case 10:
+        break;
+    }
+}
+
+void func_002D2270(char *p, int k) {
+    unsigned char f;
+    if ((unsigned char)okD9() == 0 && (unsigned char)k == 0x17) k = 2;
+    *(signed char *)(p + 0x37DC) = *(signed char *)(p + 0x37DA);
+    *(unsigned char *)(p + 0x37DA) = k;
+    *(unsigned char *)(p + 5) = 0;
+    f = 0;
+    switch (*(unsigned char *)(p + 0x37DA)) {
+    case 0:
+        func_002D26A0(p, 0, 0);
+        break;
+    case 1:
+        if (*(unsigned char *)(p + 0x37DC) != 0xB) func_002D26A0(p, 0, 1);
+        break;
+    case 2:
+        func_002D26A0(p, 0, 7);
+        f = 1;
+        break;
+    case 3:
+        func_002D26A0(p, 0, 8);
+        break;
+    case 4:
+        func_002D26A0(p, 0, 9);
+        break;
+    case 5:
+        func_002D26A0(p, 1, 0);
+        break;
+    case 6:
+        func_002D26A0(p, 1, 1);
+        break;
+    case 7:
+        func_002D26A0(p, 1, 2);
+        func_0024DA80(p + 0x31E0, 0, 2);
+        *(unsigned char *)(p + 0x3900) = 1;
+        break;
+    case 8:
+        func_002D26A0(p, 1, 3);
+        break;
+    case 9:
+        func_002D26A0(p, 1, 6);
+        break;
+    case 10:
+        func_002D26A0(p, 1, 9);
+        break;
+    case 11:
+        if (*(unsigned char *)(p + 0x37DC) != 1) func_002D26A0(p, 0, 1);
+        f = 1;
+        break;
+    case 12:
+        func_002D26A0(p, 3, 0);
+        f = 1;
+        break;
+    case 13:
+        func_002D26A0(p, 3, 1);
+        break;
+    case 14:
+        func_002D26A0(p, 3, 2);
+        break;
+    case 15:
+        func_002D26A0(p, 3, 3);
+        f = 1;
+        func_0024DA80(p + 0x31E0, 0, 1);
+        *(unsigned char *)(p + 0x3900) = 1;
+        break;
+    case 16:
+        func_002D26A0(p, 3, 4);
+        f = 1;
+        break;
+    case 17:
+        func_002D26A0(p, 3, 5);
+        f = 1;
+        break;
+    case 18:
+        func_002D26A0(p, 3, 6);
+        f = 1;
+        break;
+    case 19:
+        func_002D26A0(p, 3, 7);
+        f = 1;
+        break;
+    case 20:
+        func_002D26A0(p, 3, 8);
+        break;
+    case 21:
+        func_002D26A0(p, 3, 9);
+        f = 1;
+        break;
+    case 22:
+        func_002D26A0(p, 1, 0);
+        break;
+    case 23:
+        func_002D26A0(p, 0, 7);
+        f = 1;
+        break;
+    case 24:
+        func_002D26A0(p, 3, 11);
+        f = 1;
+        break;
+    case 25:
+        func_002D26A0(p, 3, 12);
+        break;
+    case 26:
+        func_002D26A0(p, 3, 13);
+        break;
+    case 27:
+        func_002D26A0(p, 3, 14);
+        f = 1;
+        break;
+    }
+    if (f == 1) {
+        if (*(unsigned char *)(p + 0x37DD) != (unsigned char)k) *(unsigned char *)(p + 0x3908) = 0;
+        else *(unsigned char *)(p + 0x3908) = *(unsigned char *)(p + 0x3908) + 1;
+        *(unsigned char *)(p + 0x37DD) = k;
+    }
 }
