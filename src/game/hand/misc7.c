@@ -5646,6 +5646,9 @@ void func_001B96E0(char *, B47A *);
 void func_003C4EF0(unsigned char *);
 void func_003C4F70(unsigned char *, int);
 void func_003C3CA0(unsigned char *, int);
+int func_002F99F0(int, void *, int);
+int func_003B5E50(char *);
+void func_003B4B60(char *, short);
 
 void func_0047A2F0(char *p) {
     unsigned int col[2];
@@ -5768,3 +5771,33 @@ unsigned char func_003C7C30(unsigned char *p) {
     if (r == 1) func_003C3CA0(p, s);
     return r;
 }
+
+int func_002FA7A0(int a) {
+    int b[3] = { 0 };
+    b[2] = a;
+    func_002F99F0(0x309, b, 12);
+    return 0;
+}
+
+typedef struct { int v[4]; } I4B3 __attribute__((aligned(16)));
+
+extern I4B3 D_00564640;
+extern I4B3 D_00564650;
+extern I4B3 D_00564660;
+extern I4B3 D_00564670;
+
+
+
+typedef struct { char *d; void *nx; } L2F1;
+
+static inline int ok2F1(L2F1 *x) { return x != 0; }
+
+static inline int end2F1(L2F1 *x) { return !ok2F1(x); }
+
+static inline char *nxt2F1(char *p) { char *r; L2F1 *x = *(L2F1 **)(p + 0x1020); r = 0; if (!end2F1(x)) { r = x->d; *(L2F1 **)(p + 0x1020) = (L2F1 *)x->nx; } return r; }
+
+static inline char *nxt2F2(char *p) { char *r; L2F1 *x = *(L2F1 **)(p + 0x83C); r = 0; if (!end2F1(x)) { r = x->d; *(L2F1 **)(p + 0x83C) = (L2F1 *)x->nx; } return r; }
+
+
+
+

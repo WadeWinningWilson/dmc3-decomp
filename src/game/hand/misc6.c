@@ -7980,6 +7980,9 @@ void func_004724D0(char *p) {
 typedef struct { float v[4]; } __attribute__((aligned(16))) V4_004B6310;
 
 extern V4_004B6310 D_00586DB0;
+int func_002FA530(int, void *, int);
+extern char D_005588D0[];
+void func_0010F9C0(char *, ...);
 
 void func_004B6310(char *p) {
     V4_004B6310 m;
@@ -8059,4 +8062,46 @@ void func_004DE570(char *p, int i) {
         ((int *)(p + 0x1828))[i] = 0;
         ((unsigned char *)(p + 0x5EC))[i] = 9;
     }
+}
+
+typedef struct { unsigned short u0; unsigned char b2, b3, b4, b5, b6, b7; short h8, hA, hC, hE; unsigned char b10, b11, b12, b13; unsigned int w14; int w18; } S2FAA;
+
+typedef struct { unsigned short fl; unsigned char b2; unsigned char b3; unsigned char b4; unsigned char b5; } F2FAE;
+
+typedef struct { int cmd; int w4; S2FAA s; } C36;
+
+int func_002FAEF0(S2FAA *, int);
+
+int func_002FAEF0(S2FAA *t, int cmd) {
+    C36 s = { 0 };
+    switch (cmd) {
+    case 0x10000003:
+    case 0x10000002:
+    case 0x10000001:
+        break;
+    default:
+        func_0010F9C0(D_005588D0);
+        return -1;
+    }
+    s.cmd = cmd;
+    s.s.u0 = t->u0;
+    s.s.b2 = t->b2;
+    s.s.b3 = t->b3;
+    s.s.b4 = t->b4;
+    s.s.b5 = t->b5;
+    s.s.b6 = t->b6;
+    s.s.b7 = t->b7;
+    s.s.h8 = t->h8;
+    s.s.hA = t->hA;
+    s.s.hC = t->hC;
+    s.s.hE = t->hE;
+    s.s.b10 = t->b10;
+    s.s.b11 = t->b11;
+    s.s.b12 = t->b12;
+    s.s.b13 = t->b13;
+    s.s.w14 = t->w14;
+    s.s.w18 = t->w18;
+    if (func_002FAE60((F2FAE *)&s.s) == -1) return -1;
+    func_002FA530(1, &s, 0x24);
+    return 0;
 }

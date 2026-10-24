@@ -10599,6 +10599,7 @@ void func_004F8100(char *p) {
 typedef struct { int a; signed char b; char pad5[7]; int d; } T50C;
 
 extern T50C D_0058C400[];
+int func_002FA530(int, void *, int);
 
 int func_0050C1F0(char *p) {
     T50C t;
@@ -10646,4 +10647,214 @@ int func_0050C1F0(char *p) {
         }
     }
     return r;
+}
+
+typedef struct { int cmd; int w4; unsigned char c8; char pad[3]; } C12;
+
+int func_002FA800(int a) {
+    C12 s = { 0 };
+    s.cmd = 0x10000009;
+    s.c8 = a & 1;
+    func_002FA530(1, &s, 12);
+    return 0;
+}
+
+int func_002FA980(int a) {
+    C12 s = { 0 };
+    s.cmd = 0x1000000C;
+    s.c8 = a == 0xFF ? a : a & 0xF;
+    func_002FA530(1, &s, 12);
+    return 0;
+}
+
+typedef struct { unsigned short u0; unsigned char b2, b3, b4, b5, b6, b7; short h8, hA, hC, hE; unsigned char b10, b11, b12, b13; unsigned int w14; int w18; } S2FAA;
+
+typedef struct { int cmd; int w4; S2FAA s; short h24, h26, h28, h2A; } C44;
+
+int func_002FAA00(S2FAA *t, unsigned short a, unsigned short b, unsigned short c, unsigned short d) {
+    C44 s = { 0 };
+    s.cmd = 0x10000004;
+    s.s.u0 = t->u0;
+    s.s.b2 = t->b2;
+    s.s.b3 = t->b3;
+    s.s.b4 = t->b4;
+    s.s.b5 = t->b5;
+    s.s.b6 = t->b6;
+    s.s.b7 = t->b7;
+    s.s.h8 = t->h8;
+    s.s.hA = t->hA;
+    s.s.hC = t->hC;
+    s.s.hE = t->hE;
+    s.s.b10 = t->b10;
+    s.s.b11 = t->b11;
+    s.s.b12 = t->b12;
+    s.s.b13 = t->b13;
+    s.s.w14 = t->w14;
+    s.s.w18 = t->w18;
+    s.h24 = a;
+    s.h26 = b;
+    s.h28 = c;
+    s.h2A = d;
+    func_002FA530(1, &s, 0x2C);
+    return 0;
+}
+
+typedef struct { int cmd; int w4; int w8; int wC; short h10; unsigned char b12; unsigned char b13; } C20;
+
+int func_002FAB80(int a, int b, short c, unsigned char d, unsigned char e) {
+    C20 s = { 0 };
+    s.cmd = 0x10000007;
+    s.w8 = a;
+    s.wC = b;
+    s.h10 = c;
+    s.b12 = d;
+    s.b13 = e;
+    func_002FA530(1, &s, 0x14);
+    return 0;
+}
+
+typedef struct { int cmd; int w4; int w8; int wC; int w10; } W20;
+
+int func_002FABF0(int a, int b, int c) {
+    W20 s = { 0 };
+    s.cmd = 0x30000000;
+    s.w8 = a;
+    s.wC = b;
+    s.w10 = c;
+    func_002FA530(3, &s, 0x14);
+    return 0;
+}
+
+typedef struct { int cmd; int w4; short h8; short hA; } H12;
+
+int func_002FB040(short a, short b) {
+    H12 s = { 0 };
+    s.cmd = 0x10000008;
+    s.h8 = a;
+    s.hA = b;
+    func_002FA530(1, &s, 12);
+    return 0;
+}
+
+typedef struct { int cmd; int w4; unsigned char c8; unsigned char c9; char pad[2]; } D12;
+
+int func_002FA880(int a, int b) {
+    D12 s = { 0 };
+    s.cmd = 0x1000000A;
+    s.c8 = a == 0xFF ? a : a & 0xF;
+    s.c9 = b & 0x7F;
+    func_002FA530(1, &s, 12);
+    return 0;
+}
+
+typedef struct { unsigned short fl; unsigned char b2; unsigned char b3; unsigned char b4; unsigned char b5; } F2FAE;
+int func_002F9F10(int);
+int func_002FA000(int, unsigned char);
+int func_002FA0C0(void *, int, unsigned char, unsigned char, unsigned char);
+int func_002F9EC0(int);
+void func_002FA250(void *, void *, int, int);
+void func_002FAC60(void *, unsigned char *);
+
+
+
+int func_002FAD60(unsigned char *p, unsigned short id, int k) {
+    char buf[16] = { 0 };
+    char tmp[32];
+    int h;
+    int n;
+    int i;
+    h = func_002F9F10(id);
+    n = func_002FA000(h, k);
+    for (i = 0; i < n; i++) {
+        if (func_002FA0C0(buf, h, k, p[5], i) >= 0) {
+            func_002FA250(tmp, buf, p[5], func_002F9EC0(id));
+            func_002FAC60(tmp, p);
+        }
+    }
+    return 0;
+}
+
+typedef struct { int cmd; int w4; unsigned char c8; char pad[3]; int wC; unsigned char c10; char pad2[3]; } E20;
+extern int D_005BE14C;
+extern int D_0059DA30[];
+extern int D_0059DA70[];
+void func_002F9680(int *);
+char *func_001B0EE0(int);
+void func_002F96C0(char *, void (*)(void));
+void func_0032F910(void);
+long long func_00117930(void);
+void func_00331000(char *, int);
+void func_002F9830(char *, int, int);
+
+int func_002FA900(int a, int b, int c) {
+    E20 s = { 0 };
+    s.cmd = 0x1000000B;
+    s.c8 = a == 0xFF ? a : a & 0xF;
+    s.wC = c;
+    s.c10 = b & 0x7F;
+    func_002FA530(1, &s, 0x14);
+    return 0;
+}
+
+void func_0032FB30(char *p) {
+    unsigned int i;
+    func_002F9680(&D_005BE14C);
+    {
+    float z[4] __attribute__((aligned(16))) = { 0 };
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x10), "r"(z) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x20), "r"(z) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x30), "r"(z) : "memory");
+    *(char **)(p + 0x90) = func_001B0EE0(0x800);
+    for (i = 0; i < 16; i++) {
+        if (D_0059DA30[i] != 0) ((char **)(p + 0x94))[i] = func_001B0EE0(D_0059DA30[i]);
+        if (D_0059DA70[i] != 0) ((char **)(p + 0xD4))[i] = func_001B0EE0(D_0059DA70[i]);
+    }
+    func_002F96C0(D_01DFABA0, func_0032F910);
+    func_00331000(p, (int)func_00117930());
+    func_002F9830(p, 0, 0xFC0);
+    func_002F9830(p, 1, 0xFCF);
+    }
+}
+
+typedef struct { char *d; void *nx; } L2F1;
+void func_004FEA70(char *);
+
+static inline int ok2F1(L2F1 *x) { return x != 0; }
+
+static inline int end2F1(L2F1 *x) { return !ok2F1(x); }
+
+static inline char *nxt2F1(char *p) { char *r; L2F1 *x = *(L2F1 **)(p + 0x1020); r = 0; if (!end2F1(x)) { r = x->d; *(L2F1 **)(p + 0x1020) = (L2F1 *)x->nx; } return r; }
+
+static inline char *nxt2F2(char *p) { char *r; L2F1 *x = *(L2F1 **)(p + 0x83C); r = 0; if (!end2F1(x)) { r = x->d; *(L2F1 **)(p + 0x83C) = (L2F1 *)x->nx; } return r; }
+
+void func_004FE960(char *p, int x, unsigned short fl, float dt) {
+    float tmp[4] __attribute__((aligned(16)));
+    *(float *)(p + 0x18C) -= dt;
+    *(float *)(p + 0x194) -= dt;
+    if (*(unsigned char *)(p + 0x1A8) == 1 && *(float *)(p + 0x194) <= 0.0f) {
+        *(float *)(p + 0x194) = *(float *)(p + 0x190);
+        func_004FEA70(p);
+    } else {
+        func_00131650(p + 0x150, p + 0x150);
+    }
+    if (fl & 2) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	mfc1 $t0, %1
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x150), "f"(*(float *)(p + 0x170)) : "t0", "memory");
+    }
+    if (fl & 1) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + 0x150), "f"(dt) : "t0", "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(tmp) : "memory");
+    }
 }

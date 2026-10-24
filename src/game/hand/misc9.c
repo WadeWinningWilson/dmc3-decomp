@@ -1,3 +1,4 @@
+#include "stdarg.h"
 /* Hand-matched functions whose callee prototypes conflict with declarations in misc5-8. */
 
 typedef int u128 __attribute__((mode(TI)));
@@ -25368,4 +25369,103 @@ int func_003E0B10(char *p, int *q, char *r) {
         }
     }
     return 0;
+}
+
+typedef struct { unsigned short u0; unsigned char b2, b3, b4, b5, b6, b7; short h8, hA, hC, hE; unsigned char b10, b11, b12, b13; unsigned int w14; int w18; } S2FAA;
+
+typedef struct { short h0; short h2; unsigned char c4; char pad[0x17]; } C28;
+
+int func_002FAEF0(S2FAA *, int);
+void func_002FB250(char *, char *, int *);
+
+void func_002FAB20(int a) {
+    C28 s = { 0 };
+    s.h0 = 8;
+    s.c4 = a & 0xF;
+    func_002FAEF0((S2FAA *)&s, 0x10000002);
+}
+
+void func_001970E0(char *p, short *q) {
+    char *d;
+    int n;
+    d = p + (q[3] - *(int *)(p + 0xC308)) / 32 + 0x2000;
+    n = q[7];
+    do { *d++ = 0; } while (--n);
+    if (q[0xC] >= 0 && q[0xA] == 0 && q[0x1C] == 0) {
+        d = p + (q[0xD] - *(int *)(p + 0xC308)) / 32 + 0x2000;
+        n = q[0x11];
+        do { *d++ = 0; } while (--n);
+    }
+}
+
+static inline void clr2F94(char *c, int n) { if (c != 0) { while (1) { *c++ = 0; if (--n == 0) break; } } }
+
+void func_002F9480(char *a, char *b, int n, ...) {
+    int prm[12] = { 0 };
+    int i;
+    va_list ap;
+    int k;
+    int v;
+    prm[10] = 100;
+    va_start(ap, n);
+    for (i = 0; i < n; i++) {
+        k = va_arg(ap, int);
+        v = va_arg(ap, int);
+        switch (k) {
+        case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+            prm[k] += v;
+            break;
+        case 10:
+            prm[k] = prm[k] * v / 100;
+            break;
+        case 11:
+            prm[k] = v;
+            break;
+        }
+    }
+    func_002FB250(a, b, prm);
+}
+
+void func_002F8C80(char *p) {
+    float tmp[4] __attribute__((aligned(16)));
+    float t;
+    func_002F8F10(p);
+    if ((*(float *)(p + 0x450) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_002F8FE0(p);
+        func_001AD140(p);
+        return;
+    }
+    t = func_0034C160(*(float *)(p + 0x3F8), 10.0f, *(float *)(p + 0x10));
+    *(float *)(p + 0x3F8) = t;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + 0x400), "f"(t) : "t0", "memory");
+    *(float *)(p + 0x50) += tmp[0] * *(float *)(p + 0x10);
+    *(float *)(p + 0x54) += tmp[1] * *(float *)(p + 0x10);
+    *(float *)(p + 0x58) += tmp[2] * *(float *)(p + 0x10);
+    func_002F8DA0(p);
+}
+
+void func_004BDD50(char *p) {
+    float tmp[4] __attribute__((aligned(16)));
+    float t;
+    if ((*(float *)(p + 0x3E4) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_004BD9B0(p);
+        func_001AD140(p);
+        return;
+    }
+    t = func_0034C160(*(float *)(p + 0x3E0), 9.0f, 0.18f * *(float *)(p + 0x10));
+    *(float *)(p + 0x3E0) = t;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + 0x3D0), "f"(t * t) : "t0", "memory");
+    *(float *)(p + 0x50) += tmp[0] * *(float *)(p + 0x10);
+    *(float *)(p + 0x54) += tmp[1] * *(float *)(p + 0x10);
+    *(float *)(p + 0x58) += tmp[2] * *(float *)(p + 0x10);
 }

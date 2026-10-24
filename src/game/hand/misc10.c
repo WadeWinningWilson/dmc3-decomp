@@ -262,3 +262,80 @@ void func_004E7C40(char *p) {
         (*(unsigned char *)(p + 5))++;
     }
 }
+
+#define E2FF(p) ((*(Q2FF **)((p) + 0x40))[*(short *)((p) + 0x3A)])
+
+typedef struct { float x, y, z, w; } V4F;
+
+typedef struct { V4F a; V4F b; } P2FF;
+
+typedef struct { char pad[0x30]; float p0[4]; float p1[4]; char pad2[0x60]; } Q2FF;
+
+void func_00104B80(V4F *, float *, float *);
+void func_00131760(float *, float *, float *);
+void func_00105230(float *, float *, float *);
+char *func_00279290(char *);
+void func_00104C00(float *, char *, float *);
+
+void func_002FFE20(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    V4F a __attribute__((aligned(16)));
+    V4F b __attribute__((aligned(16)));
+    int i;
+    v[0] = E2FF(p).p0[0];
+    v[1] = E2FF(p).p0[1];
+    v[2] = E2FF(p).p0[2];
+    v[3] = 1.0f;
+    func_00104B80(&a, *(float **)(p + 0x3C), v);
+    v[0] = E2FF(p).p1[0];
+    v[1] = E2FF(p).p1[1];
+    v[2] = E2FF(p).p1[2];
+    v[3] = 1.0f;
+    func_00104B80(&b, *(float **)(p + 0x3C), v);
+    for (i = 0; i < *(int *)(*(char **)(p + 0x44) + 0x42E4) + 2; i++) {
+        ((P2FF *)*(char **)(p + 0x44))[i].a = a;
+        ((P2FF *)*(char **)(p + 0x44))[i].b = b;
+    }
+}
+
+#define M39D(p, k) ((float *)((p) + (k) * 64 + 0x2E40))
+
+typedef struct { unsigned char id; char pad[15]; float pos[4]; float rot[4]; } T39D __attribute__((aligned(16)));
+
+extern T39D D_00563EE0;
+extern T39D D_00563F10;
+extern T39D D_00563F40;
+extern T39D D_00563F70;
+
+void func_0039D0F0(char *p, unsigned char k) {
+    T39D a = D_00563EE0;
+    T39D b = D_00563F10;
+    T39D c = D_00563F40;
+    T39D d = D_00563F70;
+    T39D *t[4] = { &a, &b, &c, &d };
+    float v[4] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    T39D *e;
+    unsigned char id;
+    char *bn;
+    e = t[((unsigned char *)(p + 0x2EC0))[k]];
+    v[0] = e->pos[0];
+    v[1] = e->pos[1];
+    v[2] = e->pos[2];
+    v[3] = 1.0f;
+    r[0] = e->rot[0];
+    r[1] = e->rot[1];
+    r[2] = e->rot[2];
+    r[3] = 1.0f;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(M39D(p, k)) : "memory");
+    func_00131760(M39D(p, k), M39D(p, k), r);
+    func_00105230(M39D(p, k), M39D(p, k), v);
+    id = e->id;
+    if (!(id & 0x80)) {
+        bn = *(char **)(func_00279290(p + 0x4C0) + 0x108) + id * 64;
+    } else {
+        id &= 0x7F;
+        bn = *(char **)(func_00279290((k ^ 1) ? p + 0x1380 : p + 0xD80) + 0x108) + id * 64;
+    }
+    func_00104C00(M39D(p, k), bn, M39D(p, k));
+}
