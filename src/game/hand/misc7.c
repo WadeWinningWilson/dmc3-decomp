@@ -4902,6 +4902,13 @@ extern float D_005603C8[];
 extern float D_005BCA40[];
 void func_00104E78(char *, char *);
 void func_00131DF0(float *, char *, float *);
+int func_0022CBA0(char *);
+int func_0012B1A0(char *, char *);
+int func_0022CD60(char *);
+extern char D_005BDFF4[4];
+extern char D_005BDFF8[8];
+extern char D_005BE000[8];
+extern char D_0058BE60[];
 
 void func_00357560(p0, p1) char *p0; int p1; {
     char *v0;
@@ -5506,4 +5513,55 @@ unsigned char func_002EF940(char *p, char *s) {
     if (*(char **)(p + 0x10) != 0) *(int *)(*(char **)(p + 0x10) + 0x3B7C) = *(int *)(*(char **)(p + 0x10) + 0x3B7C) + 1;
     if (*(char **)(p + 0x10) != 0) push2EF(*(char **)(p + 0x10) + 0x2B5C, s);
     return push2EF(*(char **)(p + 0xC) + 0x2B5C, s);
+}
+
+typedef struct { signed char b0; signed char b1; unsigned char b2; char pad3[0x1D]; int e0; int e4; int e8; int ec; unsigned char f0; unsigned char f1; } S4FCs;
+
+typedef struct { signed char a0; unsigned char a1; signed char a2; unsigned char a3; char pad4[0xC]; float f10[12]; S4FCs sub; } S4FC;
+
+int func_004FC4C0(char *, int *, S4FC *);
+int func_002F6690(S4FC *, char *, char *);
+int func_002F69A0(S4FCs *, char *, char *);
+
+int func_004FC2E0(char *p, int *q, char *r) {
+    char name[32];
+    S4FC s;
+    s.a1 = 0;
+    s.a3 = 0;
+    s.f10[0] = 0.0f;
+    s.a0 = -1;
+    s.a2 = -1;
+    s.f10[1] = 0.0f;
+    s.f10[2] = 0.0f;
+    s.f10[3] = 1.0f;
+    s.f10[4] = 0.0f;
+    s.f10[5] = 0.0f;
+    s.f10[6] = 0.0f;
+    s.f10[7] = 1.0f;
+    s.f10[8] = 1.0f;
+    s.f10[9] = 1.0f;
+    s.f10[10] = 1.0f;
+    s.f10[11] = 1.0f;
+    s.sub.b0 = -1;
+    s.sub.b1 = -1;
+    s.sub.b2 = 0;
+    s.sub.e8 = 0;
+    s.sub.e4 = 0;
+    s.sub.e0 = 0;
+    while (!func_0022CBA0(r)) {
+        func_0022CBB0(r, name);
+        if (func_0012B1A0(name, D_005BDFF4) == 0) {
+            return func_004FC4C0(p, q, &s);
+        }
+        if (func_002F6690(&s, name, r) == 0 && func_002F69A0(&s.sub, name, r) == 0) {
+            if (func_0012B1A0(name, D_005BDFF8) == 0) {
+                s.sub.ec = func_0022CD60(r);
+            } else if (func_0012B1A0(name, D_005BE000) == 0) {
+                s.sub.f0 = func_0022CD60(r);
+            } else if (func_0012B1A0(name, D_0058BE60) == 0) {
+                s.sub.f1 = func_0022CD60(r);
+            }
+        }
+    }
+    return 0;
 }
