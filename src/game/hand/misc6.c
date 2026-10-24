@@ -4690,6 +4690,11 @@ void func_0020F0D0(char *, char **);
 extern float D_005BC25C;
 extern float D_005BC260;
 extern float D_005BC264;
+extern unsigned char D_005BBA28[4];
+extern signed char D_00540870[][4];
+extern signed char D_00540871[][4];
+extern signed char D_00540872[][4];
+extern signed char D_00540873[][4];
 
 unsigned char func_00226F20(char *p, int fi) {
     unsigned char r = 0;
@@ -5511,4 +5516,126 @@ unsigned char func_002D7E90(char *p) {
         break;
     }
     return r;
+}
+
+void func_0034BA60(int a, char *b, signed char c, int d, int e) {
+    int k = d;
+    switch (c) {
+    case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13: case 14: case 15: case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23:
+        k = 0;
+        break;
+    case 24:
+        k = 0x6;
+        break;
+    case 25:
+        k = 0x7;
+        break;
+    case 26:
+        k = 0x8;
+        break;
+    case 31:
+        k = 0xd;
+        break;
+    case 32:
+        k = 0xe;
+        break;
+    case 34:
+        k = 0x10;
+        break;
+    case 35:
+        k = 0x11;
+        break;
+    case 36:
+        k = 0x12;
+        break;
+    case 37:
+        k = 0x13;
+        break;
+    case 38:
+        k = 0x14;
+        break;
+    case 39:
+        k = 0x15;
+        break;
+    case 40:
+        k = 0x16;
+        break;
+    case 41:
+        k = 0x17;
+        break;
+    case 50:
+        k = 0x1d;
+        break;
+    case 43:
+        k = 0x19;
+        break;
+    case 51:
+        k = 0x1e;
+        break;
+    case 49:
+        k = 0x1c;
+        break;
+    case 52:
+        k = 0x1f;
+        break;
+    case 42: case 53: case 54:
+        k = 0x20;
+        break;
+    case 55:
+        k = 0x22;
+        break;
+    case 58:
+        k = 0x23;
+        break;
+    case 29:
+        k = 0xb;
+        break;
+    case 30:
+        k = 0xc;
+        break;
+    case 28:
+        k = 0xa;
+        break;
+    case 44:
+        k = 0x1a;
+        break;
+    case 27: case 33: case 45: case 46: case 47: case 48: case 56: case 57: case 59: case 60: case 61:
+        break;
+    }
+    func_00330BD0(D_01DFABA0, a & 0xFFFF, b, k, d);
+    if (e != 0 && ((unsigned int)a >> 16) != 0) {
+        func_003305E0(D_01DFABA0, 0, (unsigned int)a >> 16, b, 0, 0, 0);
+    }
+}
+
+#define QC1BF(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+typedef struct { float v[4]; } __attribute__((aligned(16))) V1BF;
+
+int func_001C1180(char *, V1BF *, V1BF *);
+int func_001BFA00(char *, V1BF *, V1BF *, V1BF *, int, V1BF *);
+
+int func_001BFB50(char *a, V1BF *box, V1BF *tri, V1BF *out) {
+    V1BF e[2];
+    V1BF q[4];
+    int i;
+    int j;
+    for (i = 0; i < 3; i++) {
+        if (func_001C1180(a, &tri[i], box)) {
+            if (out != 0) QC1BF(out, &tri[i]);
+            return 1;
+        }
+    }
+    for (i = 0; i < 3; i++) {
+        QC1BF(&e[0], &tri[i]);
+        QC1BF(&e[1], &tri[D_005BBA28[i]]);
+        for (j = 0; j < 6; j++) {
+            QC1BF(&q[0], &box[D_00540870[j][0]]);
+            QC1BF(&q[1], &box[D_00540871[j][0]]);
+            QC1BF(&q[2], &box[D_00540872[j][0]]);
+            QC1BF(&q[3], &box[D_00540873[j][0]]);
+            if (func_001BFA00(a, e, q, (V1BF *)((char *)&box[j] + 0x80), 4, out)) return 1;
+        }
+    }
+    return 0;
 }

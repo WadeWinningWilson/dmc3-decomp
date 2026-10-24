@@ -1062,6 +1062,10 @@ int func_004D8EA0(char *, int);
 void func_004F9970(char *, int, int);
 void func_004F99E0(char *);
 void func_004FA5B0(char *);
+extern unsigned char D_00666712[];
+extern int D_00540350[];
+int func_001AF3F0(char *, int *, int, int);
+int func_0013BF20(char *);
 
 void func_0041F600(char *p) {
     char *b;
@@ -1983,6 +1987,59 @@ unsigned char func_004F9540(char *p) {
         break;
     default:
         *(int *)(p + 4) = 4;
+        break;
+    }
+    return r;
+}
+
+typedef struct { int h; int x; } S404;
+
+static inline int ok404(unsigned char *o) { unsigned char r = 1; if (o[1] != 0 && o[1] != 3) r = 0; return r; }
+
+static inline char *chunkB404(char *c) { if (*(unsigned int *)(c + 4) < 2) return 0; if (*(int *)(c + 0xC) == 0) return 0; return c + *(int *)(c + 0xC); }
+
+static inline char *getB404(char *o) { if (**(unsigned short **)(o + 8) == 0) return chunkB404(*(char **)(o + 0xC)); return *(char **)(o + 0xC); }
+
+unsigned char func_004047E0(char *p) {
+    unsigned char r;
+    int i;
+    char *o;
+    char *c;
+    r = 0;
+    if (*(unsigned char *)(p + 0x17) == 1) {
+        i = (*(int *)(p + 0x54) + 1) & 1;
+    } else {
+        i = *(int *)(p + 0x54);
+    }
+    switch (*(int *)(p + 8)) {
+    case 0:
+        ((S404 *)(p + 0x44))[i].h = func_001AF3F0(D_00666750, &D_00540350[D_00666712[0]], 0, 0);
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 1:
+        o = (char *)((S404 *)(p + 0x44))[i].h;
+        if ((unsigned char)ok404((unsigned char *)o) != 1) break;
+        c = getB404(o);
+        if (c != 0) {
+            *(int *)(p + 0x58) = func_0013BF20(c);
+            if (*(int *)(p + 0x58) == 0) {
+                *(int *)(p + 4) = 10;
+                break;
+            }
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+        break;
+    case 2:
+        if (((S404 *)(p + 0x44))[i].h != 0) {
+            func_001AF080(D_00666750, ((S404 *)(p + 0x44))[i].h);
+            ((S404 *)(p + 0x44))[i].h = 0;
+        }
+        *(int *)(p + 8) = *(int *)(p + 8) + 1;
+    case 3:
+        r = 1;
+        break;
+    default:
+        *(int *)(p + 4) = 10;
         break;
     }
     return r;

@@ -9568,6 +9568,14 @@ void func_002EC050(int, char *, float);
 void func_002EA290(int, int, char *, int);
 int func_004D2D20(char *, unsigned char);
 void func_002D26A0(char *, int, int);
+extern signed char D_0054A040[][2];
+int func_002F2AA0(char *, int);
+void func_002F2B10(char *);
+extern signed char D_00666712[];
+extern int D_005829F0[][2];
+extern int D_005829F4[][2];
+unsigned short func_001AE360(char *, int);
+void func_0030FDF0(char *, int, int, int, int, int, int, int);
 
 void func_00233B00(char *p) {
     float m[16] __attribute__((aligned(16)));
@@ -10024,4 +10032,173 @@ void func_002D2270(char *p, int k) {
         else *(unsigned char *)(p + 0x3908) = *(unsigned char *)(p + 0x3908) + 1;
         *(unsigned char *)(p + 0x37DD) = k;
     }
+}
+
+int func_002F2B60(char *p, signed char *buf, int n, int x) {
+    int i;
+    int v;
+    signed char c;
+    int k;
+    unsigned char flag;
+    if (*(int *)(p + 4) == 0) return 0;
+    if ((unsigned char)func_002F2AA0(p, x) == 0) return 0;
+    for (i = 0; i < n; i++) {
+        if (buf[i] == 0x1B) {
+            buf[i] = 0;
+            break;
+        }
+    }
+    flag = 0;
+    for (v = *(int *)(p + 0x10); v != 0; v = *(int *)(p + 0x10)) {
+        switch (v) {
+        case 1:
+        case 2:
+            k = *(int *)(*(char **)(p + 8) + 4);
+            c = D_0054A040[(signed char)k][1];
+            if ((unsigned int)(k - 0x14) <= 2 || k == 0x17) flag = 1;
+            for (i = 0; i < n; i++) {
+                if (c == buf[i]) break;
+            }
+            if (i == n) {
+                buf[n] = c;
+                n++;
+            }
+            break;
+        }
+        func_002F2B10(p);
+    }
+    if (flag) {
+        for (i = 0; i < n; i++) {
+            if (buf[i] == 0) {
+                buf[i] = 0x1B;
+                break;
+            }
+        }
+    }
+    return n;
+}
+
+typedef struct { int x; int y; } __attribute__((aligned(8))) P1ED;
+
+extern P1ED D_005BBA40;
+extern char D_005BE0C8[4];
+float func_001C1B00(char *, float *, char *, float);
+float func_00131B50(float);
+void func_00132580(float *, float *, float);
+extern char D_00540720[];
+void func_001B9910(int *);
+
+int func_001ED110(char *p) {
+    int r;
+    P1ED pos;
+    int c1;
+    int c2;
+    r = 0;
+    if (*(unsigned char *)(p + 0xC04) != 0) {
+        if ((func_001AE360(D_006663C0, 0) & 0x2000) || (func_001AE360(D_006663C0, 0) & 0x8000)) {
+            func_003303F0(D_01DFABA0, 0, 2, 0, 0);
+            if (*(unsigned char *)(p + 0xC05) == 0) {
+                *(unsigned char *)(p + 0xC05) = 1;
+            } else {
+                *(unsigned char *)(p + 0xC05) = 0;
+            }
+        }
+        if (func_001AE1E0(D_006663C0, 0) & 0x40) {
+            if (*(unsigned char *)(p + 0xC05) == 0) {
+                r = 1;
+            } else {
+                r = 2;
+            }
+        }
+        if (func_001AE1E0(D_006663C0, 0) & 0x10) r = -1;
+        pos = D_005BBA40;
+        if (*(unsigned char *)(p + 0xC05) == 0) {
+            c1 = 0xFFFFFF;
+            c2 = 0x404040;
+        } else {
+            c1 = 0x404040;
+            c2 = 0xFFFFFF;
+        }
+        func_0030FDF0(D_01DFA340, D_005829F0[D_00666712[0]][0], *(int *)(p + 0xC08) + pos.x, *(int *)(p + 0xC0C), c1, 0x10, 0xFFFFF2, 1);
+        func_0030FDF0(D_01DFA340, D_005829F4[D_00666712[0]][0], *(int *)(p + 0xC08) + pos.y, *(int *)(p + 0xC0C), c2, 0x10, 0xFFFFF2, 1);
+    }
+    if (r != 0) *(unsigned char *)(p + 0xC04) = 0;
+    return r;
+}
+
+int func_001FF2C0(char *p, char *t, float *out) {
+    float v[4][4] __attribute__((aligned(16)));
+    float h;
+    __asm__ volatile("ldl $t0, 0x7(%1)\n\tldr $t0, 0x0(%1)\n\tlw $t1, 0x8(%1)\n\tpcpyld $t0, $t1, $t0\n\tqmtc2.ni $t0, $vf8\n\tvmove.w $vf8, $vf0\n\tsqc2 $vf8, 0x0(%0)" : : "r"(v[0]), "r"(t + 4) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)\n\tldr $t0, 0x0(%1)\n\tlw $t1, 0x8(%1)\n\tpcpyld $t0, $t1, $t0\n\tqmtc2.ni $t0, $vf8\n\tvmove.w $vf8, $vf0\n\tsqc2 $vf8, 0x0(%0)" : : "r"(v[1]), "r"(t + 0x10) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)\n\tldr $t0, 0x0(%1)\n\tlw $t1, 0x8(%1)\n\tpcpyld $t0, $t1, $t0\n\tqmtc2.ni $t0, $vf8\n\tvmove.w $vf8, $vf0\n\tsqc2 $vf8, 0x0(%0)" : : "r"(v[2]), "r"(t + 0x1C) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)\n\tldr $t0, 0x0(%1)\n\tlw $t1, 0x8(%1)\n\tpcpyld $t0, $t1, $t0\n\tqmtc2.ni $t0, $vf8\n\tvmove.w $vf8, $vf0\n\tsqc2 $vf8, 0x0(%0)" : : "r"(v[3]), "r"(t + 0x28) : "t0", "t1", "memory");
+    if ((unsigned char)func_001BF4F0(D_005BE0C8, p, v[0]) == 0) {
+        out[0] = 0.0f;
+        out[1] = 0.0f;
+        out[2] = 0.0f;
+        out[3] = 0.0f;
+        return 0;
+    }
+    h = func_001C1B00(D_005BE0C8, v[3], p, *(float *)(t + 0x34));
+    if (func_00131B50(h) < 0.001f) h = 0.0f;
+    h = *(float *)(p + 0x10) - h;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(out), "r"(v[3]) : "memory");
+    if (out[1] < func_0011DA38(1.0471976f)) {
+        if (!(out[1] <= -func_0011DA38(1.0471976f))) out[1] = 0.0f;
+    }
+    func_00132580(out, out, func_00131B50(h));
+    return 1;
+}
+
+int func_001B9C70(int *g, char *out, float *m, float *in, unsigned int n) {
+    float tmp[4] __attribute__((aligned(16)));
+    unsigned int k;
+    unsigned int sum;
+    char *o;
+    int c;
+    func_001B9910(g);
+    o = out;
+    sum = 0;
+    k = n;
+    while (k != 0) {
+        __asm__ volatile("lqc2 $vf9, 0x0(%1)\n\tlqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x10(%2)\n\tlqc2 $vf6, 0x20(%2)\n\tlqc2 $vf7, 0x30(%2)\n\tvmulax.xyzw $ACC, $vf4, $vf9x\n\tvmadday.xyzw $ACC, $vf5, $vf9y\n\tvmaddaz.xyzw $ACC, $vf6, $vf9z\n\tvmaddw.xyzw $vf4, $vf7, $vf9w\n\tvdiv $Q, $vf0w, $vf4w\n\tvwaitq\n\tvaddq.x $vf5, $vf0, $Q\n\tvmulx.xyz $vf4, $vf4, $vf5x\n\tvsub.xyzw $vf8, $vf0, $vf0\n\tsqc2 $vf4, 0x0(%3)\n\tvftoi4.xy $vf5, $vf4\n\tlqc2 $vf6, 0x0(%4)\n\tvftoi0.zw $vf5, $vf4\n\tctc2.ni $zero, $vi16\n\tsqc2 $vf5, 0x0(%5)\n\tvsub.xyw $vf9, $vf4, $vf8\n\tvsub.xy $vf9, $vf6, $vf4\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tcfc2.ni %0, $vi16" : "=r"(c) : "r"(in), "r"(m), "r"(tmp), "r"(D_00540720), "r"(out) : "memory");
+        c &= 0xC0;
+        if (!(tmp[3] <= *(float *)(D_005BE09C + 0x1CC))) c |= 0x10;
+        if (tmp[3] < *(float *)(D_005BE09C + 0x1C8)) c |= 0x20;
+        if (c != 0) return c;
+        sum += *(int *)(out + 8);
+        in += 4;
+        k--;
+        out += 0x10;
+    }
+    *(unsigned int *)(o + 0xC) = (sum >> (g[0] - 13)) / n;
+    return 0;
+}
+
+int func_001B9AB0(int *g, char *out, float *m, float *in, unsigned int n) {
+    float tmp[4] __attribute__((aligned(16)));
+    unsigned int k;
+    unsigned int sum;
+    char *o;
+    int c;
+    func_001B9910(g);
+    o = out;
+    sum = 0;
+    k = n;
+    while (k != 0) {
+        __asm__ volatile("lqc2 $vf8, 0x0(%1)\n\tlqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x10(%2)\n\tlqc2 $vf6, 0x20(%2)\n\tlqc2 $vf7, 0x30(%2)\n\tvmulax.xyzw $ACC, $vf4, $vf8x\n\tvmadday.xyzw $ACC, $vf5, $vf8y\n\tvmaddaz.xyzw $ACC, $vf6, $vf8z\n\tvmaddw.xyzw $vf4, $vf7, $vf8w\n\tvdiv $Q, $vf0w, $vf4w\n\tvwaitq\n\tvaddq.x $vf5, $vf0, $Q\n\tvmulx.xyz $vf4, $vf4, $vf5x\n\tsqc2 $vf4, 0x0(%3)\n\tvftoi0.xyzw $vf5, $vf4\n\tsqc2 $vf5, 0x0(%5)\n\tvsub.xyzw $vf8, $vf0, $vf0\n\tlqc2 $vf6, 0x0(%4)\n\tctc2.ni $zero, $vi16\n\tvsub.xyw $vf5, $vf4, $vf8\n\tvsub.xy $vf5, $vf6, $vf4\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tcfc2.ni %0, $vi16" : "=r"(c) : "r"(in), "r"(m), "r"(tmp), "r"(D_00540720), "r"(out) : "memory");
+        c &= 0xC0;
+        if (!(tmp[3] <= *(float *)(D_005BE09C + 0x1CC))) c |= 0x10;
+        if (tmp[3] < *(float *)(D_005BE09C + 0x1C8)) c |= 0x20;
+        if (c != 0) return c;
+        *(int *)(out + 0) = *(int *)(out + 0) - 0x800 + *(short *)(D_005BE0D8 + 0x20) / 2;
+        *(int *)(out + 4) = *(int *)(out + 4) - 0x800 + *(short *)(D_005BE0D8 + 0x24) / 2;
+        sum += *(int *)(out + 8);
+        in += 4;
+        k--;
+        out += 0x10;
+    }
+    *(unsigned int *)(o + 0xC) = (sum >> (g[0] - 13)) / n;
+    return 0;
 }

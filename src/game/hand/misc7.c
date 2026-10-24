@@ -5477,3 +5477,33 @@ int func_0029F690(char *p) {
     }
     return r;
 }
+
+static inline unsigned char push2EF(char *q, char *s) {
+    char **n = *(char ***)(q + 0x808);
+    if (n != 0) {
+        *(char **)(q + 0x808) = n[1];
+        n[0] = s;
+        n[1] = *(char **)(q + 0x804);
+        *(char ***)(q + 0x804) = n;
+        return 1;
+    }
+    return 0;
+}
+
+unsigned char func_002EF940(char *p, char *s) {
+    if (*(unsigned char *)(*(char **)(*(char **)D_01CAFF0C + 0x18) + 0x9A) == 1) return 0;
+    *(unsigned char *)(s + 0) = 0;
+    *(unsigned char *)(s + 1) = 0;
+    __asm__ volatile("lqc2 $vf4, 0x30(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%1)" : : "r"(*(char **)(s + 0x10)), "r"(s + 0x20) : "memory");
+    *(float *)(s + 0x2C) = 1.0f;
+    *(float *)(s + 0x30) = func_00132470(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, s + 0x20);
+    *(unsigned short *)(s + 4) = 0;
+    if (*(float *)(s + 0x30) <= 3000.0f) *(unsigned short *)(s + 4) |= 8;
+    if (*(float *)(s + 0x30) <= 300.0f) *(unsigned short *)(s + 4) |= 1;
+    if (*(float *)(s + 0x30) <= 600.0f) *(unsigned short *)(s + 4) |= 2;
+    if (*(float *)(s + 0x30) <= 900.0f) *(unsigned short *)(s + 4) |= 4;
+    *(int *)(*(char **)(p + 0xC) + 0x3B7C) = *(int *)(*(char **)(p + 0xC) + 0x3B7C) + 1;
+    if (*(char **)(p + 0x10) != 0) *(int *)(*(char **)(p + 0x10) + 0x3B7C) = *(int *)(*(char **)(p + 0x10) + 0x3B7C) + 1;
+    if (*(char **)(p + 0x10) != 0) push2EF(*(char **)(p + 0x10) + 0x2B5C, s);
+    return push2EF(*(char **)(p + 0xC) + 0x2B5C, s);
+}
