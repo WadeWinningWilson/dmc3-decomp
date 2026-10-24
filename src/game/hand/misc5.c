@@ -2053,6 +2053,12 @@ void func_00132580(V1C0A *, V1C0A *, float);
 float func_00132630(V1C0A *, V1C0A *);
 void func_0033CC60(char *);
 void func_0028C5C0(char *, int, float);
+int func_0022CBA0(char *);
+void func_0022CBB0(char *, char *);
+int func_0012B1A0(char *, char *);
+int func_0022CD60(char *);
+extern char D_005BCE78[8];
+extern char D_005BCE80[8];
 
 static inline V1C0A *nrm1C0(V1C0A *b, int i) { return (V1C0A *)((char *)&b[i] + 0x80); }
 
@@ -2140,4 +2146,112 @@ void func_0033C8A0(char *p) {
     }
     func_0033CC60(p);
     func_0028C5C0(p + 0x150, 0, *(float *)(p + 0x10));
+}
+
+typedef struct { signed char b0; signed char b1; unsigned char b2; char pad3[0x1D]; int e0; int e4; int e8; } S3D3s;
+
+typedef struct { int x0; int x4; short x8; char pad[2]; int xC; signed char x10; } S3D3t;
+
+typedef struct { signed char a0; unsigned char a1; signed char a2; unsigned char a3; char pad4[0xC]; float f10[12]; S3D3s sub; S3D3t sub2; } S3D3;
+
+int func_003D4080(char *, int *, int *, S3D3 *);
+int func_002F6690(S3D3 *, char *, char *);
+int func_002F69A0(S3D3s *, char *, char *);
+int func_002F6D40(S3D3t *, char *, char *);
+void func_00206730(char *);
+int func_002077F0(char *);
+void func_002075D0(int, int, char *, int, int);
+void func_0034BA60(int, float *, int, int, int);
+float func_001324E0(float *);
+void func_004D6AC0(char *);
+void func_004D6A10(char *);
+
+static inline int *ent3D3(int *q, int n) { if ((unsigned int)q[1] < n + 1) return 0; if (*(int *)((char *)q + n * 4 + 8) == 0) return 0; return (int *)((char *)q + *(int *)((char *)q + n * 4 + 8)); }
+
+int func_003D3E10(char *p, int *q, char *r) {
+    char name[32];
+    S3D3 s;
+    s.a1 = 0;
+    s.a3 = 0;
+    s.f10[0] = 0.0f;
+    s.a0 = -1;
+    s.a2 = -1;
+    s.f10[1] = 0.0f;
+    s.f10[2] = 0.0f;
+    s.f10[3] = 1.0f;
+    s.f10[4] = 0.0f;
+    s.f10[5] = 0.0f;
+    s.f10[6] = 0.0f;
+    s.f10[7] = 1.0f;
+    s.f10[8] = 1.0f;
+    s.f10[9] = 1.0f;
+    s.f10[10] = 1.0f;
+    s.f10[11] = 1.0f;
+    s.sub.b0 = -1;
+    s.sub.b1 = -1;
+    s.sub.b2 = 0;
+    s.sub.e8 = 0;
+    s.sub.e4 = 0;
+    s.sub.e0 = 0;
+    s.sub2.x0 = 0;
+    s.sub2.x4 = 0xF000;
+    s.sub2.x8 = 0x180C;
+    s.sub2.x4 = 0x3F000;
+    s.sub2.x8 = 0x1826;
+    s.sub2.xC = 0;
+    s.sub2.x10 = -1;
+    while (!func_0022CBA0(r)) {
+        func_0022CBB0(r, name);
+        if (func_0012B1A0(name, D_005BCE78) == 0) {
+            return func_003D4080(p, ent3D3(q, s.a0 * 10), ent3D3(q, s.a0 * 10 + 1), &s);
+        }
+        if (func_002F6690(&s, name, r) == 0 && func_002F69A0(&s.sub, name, r) == 0 && func_002F6D40(&s.sub2, name, r) == 0) {
+            if (func_0012B1A0(name, D_005BCE80) == 0) {
+                s.sub2.x10 = func_0022CD60(r);
+            }
+        }
+    }
+    return 0;
+}
+
+void func_004D6810(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    float w[4] __attribute__((aligned(16)));
+    func_00206730(p + 0x190);
+    if (*(char **)(p + 0x190) != 0) {
+        if ((unsigned char)func_002077F0(*(char **)(p + 0x190)) == 1) {
+            *(int *)(p + 0x190) = 0;
+            func_001AD140(p);
+            return;
+        }
+    } else {
+        func_001AD140(p);
+        return;
+    }
+    if ((*(float *)(p + 0x194) -= *(float *)(p + 0x10)) < 0.0f) {
+        func_001AD140(p);
+        return;
+    }
+    if (*(float *)(p + 0x54) < -50.0f) {
+        func_002075D0(3, 0x146, p + 0x150, 1, 0x10);
+        __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(p + 0x150) : "memory");
+        func_0034BA60(0x2E, v, 0x35, 0, 1);
+        func_001AD140(p);
+        return;
+    }
+    *(float *)(p + 0x50) = *(float *)(p + 0x50) + *(float *)(p + 0x1B0) * *(float *)(p + 0x10);
+    *(float *)(p + 0x54) = *(float *)(p + 0x54) + *(float *)(p + 0x1B4) * *(float *)(p + 0x10);
+    *(float *)(p + 0x58) = *(float *)(p + 0x58) + *(float *)(p + 0x1B8) * *(float *)(p + 0x10);
+    *(float *)(p + 0x54) = *(float *)(p + 0x54) + *(float *)(p + 0x19C) * *(float *)(p + 0x10);
+    *(float *)(p + 0x19C) = *(float *)(p + 0x19C) - 0.8f * *(float *)(p + 0x10);
+    w[0] = *(float *)(p + 0x1B0);
+    w[1] = *(float *)(p + 0x1B4);
+    w[2] = *(float *)(p + 0x1B8);
+    w[3] = 1.0f;
+    *(float *)(p + 0x198) = func_001324E0(w);
+    if ((*(float *)(p + 0x198) -= 0.09f * *(float *)(p + 0x10)) < 0.0f) {
+        *(float *)(p + 0x198) = 0.0f;
+    }
+    func_004D6AC0(p);
+    func_004D6A10(p);
 }

@@ -5522,6 +5522,14 @@ typedef struct { signed char a0; unsigned char a1; signed char a2; unsigned char
 int func_004FC4C0(char *, int *, S4FC *);
 int func_002F6690(S4FC *, char *, char *);
 int func_002F69A0(S4FCs *, char *, char *);
+extern float D_00577D10[];
+extern float D_00577D14[];
+extern float D_00577D18[];
+extern float D_00577DD0[];
+extern float D_00577DD4[];
+extern float D_00577DD8[];
+extern float D_005BD9CC;
+extern float D_005BD9D0;
 
 int func_004FC2E0(char *p, int *q, char *r) {
     char name[32];
@@ -5564,4 +5572,65 @@ int func_004FC2E0(char *p, int *q, char *r) {
         }
     }
     return 0;
+}
+
+static inline float frand4DE(void) { return 2.3283064e-10f * (float)mt_rand(); }
+
+void func_004DE930(char *p, int k) {
+    char *m;
+    m = *(char **)(func_0027A710(p + 0x180) + 0x108) + k * 0x40;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    *(float *)(m + 0x30) = ((*(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x820) + 0x104) + 0x30) + *(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x8D0) + 0x104) + 0x30)) / 2.0f + 10.0f * frand4DE()) - 5.0f;
+    *(float *)(m + 0x34) = (*(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x820) + 0x104) + 0x34) + *(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x8D0) + 0x104) + 0x34)) / 2.0f;
+    *(float *)(m + 0x38) = ((*(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x820) + 0x104) + 0x38) + *(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x8D0) + 0x104) + 0x38)) / 2.0f + 10.0f * frand4DE()) - 5.0f;
+    *(float *)(m + 0x3C) = 1.0f;
+    ((float *)(p + 0x17AC))[k] = *(float *)(*(char **)(p + 0x5E8) + 0x714);
+    p[k + 0x5EC] = 8;
+}
+
+static inline float frand437(void) { return 2.3283064e-10f * (float)mt_rand(); }
+
+void func_004372D0(char *p, int k) {
+    if (*(unsigned char *)(p + 0x4859) == 1) {
+        *(float *)(p + 0x47F0) = D_00577D10[k * 3] + D_005BD9CC * (frand437() - 0.5f);
+        *(float *)(p + 0x47F4) = D_00577D14[k * 3];
+        *(float *)(p + 0x47F8) = D_00577D18[k * 3] + D_005BD9CC * (frand437() - 0.5f);
+        *(float *)(p + 0x47FC) = 1.0f;
+    } else {
+        *(float *)(p + 0x47F0) = D_00577DD0[k * 3] + D_005BD9D0 * (frand437() - 0.5f);
+        *(float *)(p + 0x47F4) = D_00577DD4[k * 3];
+        *(float *)(p + 0x47F8) = D_00577DD8[k * 3] + D_005BD9D0 * (frand437() - 0.5f);
+        *(float *)(p + 0x47FC) = 1.0f;
+    }
+}
+
+static inline char *pl3DB(int i) { return ((char **)(*(char **)D_01CAFF0C + 0xC))[i]; }
+
+void func_003DBA00(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    char *q;
+    char *w;
+    *(unsigned char *)(p + 0xEFD) = 9;
+    *(float *)(p + 0xEC4) = 0.0f;
+    if (*(unsigned char *)(p + 0xEFC) == 1 && (w = *(char **)(p + 0x308)) != 0 && *(unsigned char *)(w + 0x1CE1) == 1) {
+        *(float *)(p + 0xEC4) = *(float *)(p + 0xEC4) + (float)(mt_rand() % 60U);
+    }
+    *(unsigned char *)(p + 0xF06) = 0;
+    *(unsigned char *)(p + 5) = 0;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    r[0] = 1.5707963f;
+    r[3] = 1.0f;
+    r[1] = 0.0f;
+    r[2] = 0.0f;
+    func_00131700(m, m, r);
+    func_00105230(m, m, p + 0x50);
+    func_00207480(3, 0x12E, m, 0x10);
+    q = pl3DB(*(unsigned char *)(p + 0xF02)) + 0x50;
+    *(float *)(p + 0x50) = *(float *)q + ((float)(mt_rand() % 600U) - 300.0f);
+    *(float *)(p + 0x54) = -200.0f;
+    q = pl3DB(*(unsigned char *)(p + 0xF02)) + 0x50;
+    *(float *)(p + 0x58) = *(float *)(q + 8) + ((float)(mt_rand() % 600U) - 300.0f);
+    *(float *)(p + 0x5C) = 1.0f;
+    *(unsigned char *)(p + 0x1E1) = 0;
 }

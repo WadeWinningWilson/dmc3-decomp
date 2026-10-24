@@ -10099,6 +10099,10 @@ void func_0034B8C0(char *, short *, int);
 void func_0041D7F0(char *, float);
 void func_0041D9E0(float *, char *, char *);
 extern float D_00567EB0[];
+extern unsigned int D_01DF8810[];
+extern unsigned int D_01DF7E50[];
+void func_00207A90(unsigned int *);
+void func_001F7350(char *, float, char *);
 
 int func_001ED110(char *p) {
     int r;
@@ -10459,4 +10463,78 @@ void func_004F23D0(char *p) {
     *(unsigned char *)(p + 5) = 0;
     *(int *)(p + 0x5CC) = 0;
     *(float *)(p + 0x5C8) = 10.0f;
+}
+
+static inline unsigned int mt1B1(void) {
+    unsigned int y;
+    if (D_01DF8810[0] >= 0x270) {
+        func_00207A90(D_01DF7E50);
+    }
+    {
+        unsigned int i = D_01DF8810[0];
+        D_01DF8810[0] = i + 1;
+        y = D_01DF7E50[i];
+    }
+    y ^= y >> 11;
+    y ^= (y << 7) & 0x9D2C5680;
+    y ^= (y << 15) & 0xEFC60000;
+    y ^= y >> 18;
+    return y;
+}
+
+void func_001B16B0(char *p) {
+    char *d;
+    float f;
+    int n;
+    int m;
+    p[0x39] = 0;
+    *(float *)(p + 0xC0) = (float)*(int *)(*(char **)(p + 0x114) + 0x20);
+    *(float *)(p + 0xBC) = (float)*(int *)(*(char **)(p + 0x114) + 0x18);
+    d = *(char **)(p + 0x114);
+    switch (*(unsigned char *)(d + 1)) {
+    case 0:
+        *(float *)(p + 0xB0) = *(float *)(d + 4);
+        *(float *)(p + 0xA0) = 0.0f;
+        *(float *)(p + 0xA4) = 0.0f;
+        *(float *)(p + 0xA8) = 0.0f;
+        *(float *)(p + 0xAC) = 1.0f;
+        break;
+    case 1:
+        *(char **)(p + 0x110) = func_0021B0B0(D_01DF8A00, *(short *)(d + 2));
+        if (*(char **)(p + 0x110) == 0) {
+            func_001AD140(p);
+            return;
+        }
+        *(float *)(p + 0xB0) = 0.0f;
+        func_001F7350(*(char **)(p + 0x110), *(float *)(p + 0xB0), p + 0xA0);
+        break;
+    case 2:
+        *(float *)(p + 0xB0) = 0.0f;
+        *(float *)(p + 0xA0) = 0.0f;
+        *(float *)(p + 0xA4) = 0.0f;
+        *(float *)(p + 0xA8) = 0.0f;
+        *(float *)(p + 0xAC) = 1.0f;
+        break;
+    }
+    *(float *)(p + 0xB4) = 0.0f;
+    d = *(char **)(p + 0x114);
+    if (*(unsigned short *)(d + 0x40) > 0) {
+        f = *(float *)(d + 0x54) - *(float *)(d + 0x50);
+        n = (int)f;
+        if (n != 0) {
+            if (n > 0) {
+                m = (int)(10.0f * f);
+                m = m < 0 ? -m : m;
+                *(float *)(p + 0xB8) = 0.1f * (float)(mt1B1() % (unsigned int)m);
+            } else {
+                m = (int)(10.0f * f);
+                m = m < 0 ? -m : m;
+                *(float *)(p + 0xB8) = -0.1f * (float)(mt1B1() % (unsigned int)m);
+            }
+        } else {
+            *(float *)(p + 0xB8) = 1.0f;
+        }
+    } else {
+        *(float *)(p + 0xB8) = 1.0f;
+    }
 }
