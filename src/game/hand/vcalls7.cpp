@@ -67,6 +67,15 @@ extern "C" void func_001AD140(char *);
 extern "C" void func_003305E0(char *, int, int, float *, int, int, int);
 extern "C" void func_0028C790(char *, int);
 extern "C" void func_0034C3E0(int);
+extern "C" char D_01CAFF0C[];
+extern "C" unsigned char func_002D9FA0(char *, float *);
+extern "C" short func_0034B940(float *, float *);
+extern "C" void func_00131700(float *, float *, float *);
+extern "C" void func_00131650(char *, char *);
+extern "C" void func_0033CC60(char *);
+extern "C" void func_0033D430(char *);
+extern "C" void func_0033D310(char *);
+extern "C" void func_0033D350(char *);
 
 static inline void set3A1(char *v, float x, float y, float z) { *(float *)(v + 0) = x; *(float *)(v + 4) = y; *(float *)(v + 8) = z; *(float *)(v + 0xC) = 0.0f; }
 
@@ -342,4 +351,67 @@ extern "C" int func_004514E0(char *p) {
         }
     }
     return 0;
+}
+
+static inline unsigned char on33D(char *q) {
+    if (*(unsigned char *)(q + 0x28A6)) return 1;
+    return 0;
+}
+
+extern "C" void func_0033D810(char *p) {
+    float b[4] __attribute__((aligned(16)));
+    float a[4] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    float c[4] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    char *o;
+    *(unsigned char *)(p + 0xB42) = 0;
+    o = *(char **)D_01CAFF0C;
+    a[0] = *(float *)(p + 0x50);
+    a[1] = *(float *)(p + 0x54);
+    a[2] = *(float *)(p + 0x58);
+    a[3] = 1.0f;
+    b[0] = *(float *)(*(char **)(o + 0xC) + 0x50);
+    b[1] = *(float *)(*(char **)(o + 0xC) + 0x54);
+    b[2] = *(float *)(*(char **)(o + 0xC) + 0x58);
+    b[3] = 1.0f;
+    if (on33D(*(char **)(p + 0xBC0)) == 1 && func_002D9FA0(*(char **)(p + 0xBC0), a) == 1) {
+        b[0] = *(float *)(p + 0x50);
+        b[1] = *(float *)(p + 0x54);
+        b[2] = *(float *)(p + 0x58);
+        b[3] = 1.0f;
+    }
+    *(short *)(p + 0x90) = func_0034B940(a, b);
+    b[0] = *(float *)(p + 0x50);
+    b[1] = *(float *)(p + 0x54);
+    b[2] = *(float *)(p + 0x58);
+    b[3] = 1.0f;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    r[0] = 0.0f;
+    r[1] = 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f);
+    r[2] = 0.0f;
+    r[3] = 1.0f;
+    func_00131700(m, m, r);
+    c[0] = 0.0f;
+    c[1] = 0.0f;
+    c[2] = 800.0f;
+    c[3] = 1.0f;
+    func_00104B80(d, (char *)m, (char *)c);
+    a[0] = *(float *)(p + 0x50) + d[0];
+    a[1] = *(float *)(p + 0x54);
+    a[2] = *(float *)(p + 0x58) + d[2];
+    a[3] = 1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(p + 0xB70), "r"(a), "r"(b) : "memory");
+    func_00131650(p + 0xB70, p + 0xB70);
+    *(float *)(p + 0xB7C) = 1.0f;
+    *(float *)(p + 0xB44) = 1.0f;
+    func_0033CC60(p);
+    func_0033D430(p);
+    *(float *)(p + 0x80) = 0.0f;
+    *(float *)(p + 0x84) = 0.0f;
+    *(float *)(p + 0x88) = 0.0f;
+    *(float *)(p + 0x8C) = 1.0f;
+    func_0033D310(p);
+    func_0033D350(p);
 }

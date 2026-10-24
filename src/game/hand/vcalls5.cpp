@@ -799,6 +799,23 @@ public:
 typedef struct { int w[16]; } T37C;
 extern "C" unsigned char func_0024E810(char *);
 extern "C" unsigned char func_0024E800(char *);
+extern "C" int D_01CAFF38[];
+extern "C" char D_00666750[];
+extern "C" void func_00390E40(char *);
+extern "C" void func_00252B50(char *, int, int, float, float);
+extern "C" void func_0039D4C0(char *, int);
+extern "C" void func_003A02B0(char *, int);
+extern "C" void func_004B6970(char *, char *, int);
+extern "C" int func_001AEA60(char *, int, int);
+extern "C" int func_0031B860(int, char *, int, float);
+extern "C" void func_0034B270(int, char *, int);
+extern "C" void func_00128488(char *, int, int);
+extern "C" int *func_001F95B0(char *);
+extern "C" int func_001F8DE0(char *, char *);
+extern "C" int *func_001F95C0(char *, int);
+extern "C" unsigned char *func_001F9610(char *, int);
+extern "C" int func_001FF2C0(char *, unsigned char *, float *);
+extern "C" float func_00132470(float *, float *);
 
 extern "C" void func_0037C8A0(D_37C *self, char *a, E37C *e, float *v) {
     char *p = (char *)self;
@@ -901,4 +918,107 @@ extern "C" void func_004D0F20(char *p) {
 	vadd.xyzw $vf6, $vf4, $vf5
 	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(p + 0xB140) : "memory");
     *(float *)(p + 0x5C) = 1.0f;
+}
+
+class V390 {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24();
+    virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44();
+    virtual void d48(); virtual void d4C(); virtual void d50(); virtual void d54(); virtual void d58(); virtual void d5C(); virtual void d60(); virtual void d64();
+    virtual void d68();
+    virtual void g6C();
+    virtual void g70();
+    virtual void g74();
+};
+
+extern "C" void func_00390C00(char *p) {
+    float y;
+    int r;
+    func_00390E40(p);
+    func_00252B50(p, 0x80, 0x20, 400.0f, 300.0f);
+    func_0039D4C0(p, 0);
+    func_0039D4C0(p, 1);
+    if (D_01CAFF38[0] == 0x79 || D_01CAFF38[0] == 0x19E) {
+        y = 0.0f;
+        if (*(int *)(p + 0xB04) != 0) {
+            func_003A02B0(p, 2);
+        } else {
+            func_003A02B0(p, 1);
+            y = 100.0f;
+        }
+        switch (*(unsigned char *)(p + 0x2DD4)) {
+        case 0:
+            *(float *)(p + 0x50) = 2900.0f;
+            *(float *)(p + 0x54) = y;
+            *(float *)(p + 0x58) = 2125.0f;
+            *(float *)(p + 0x5C) = 1.0f;
+            break;
+        case 1:
+            *(float *)(p + 0x50) = 2120.0f;
+            *(float *)(p + 0x54) = y;
+            *(float *)(p + 0x58) = 2125.0f;
+            *(float *)(p + 0x5C) = 1.0f;
+            break;
+        default:
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x50), "r"(p + 0xAE0) : "memory");
+            break;
+        }
+    } else {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x50), "r"(p + 0xAE0) : "memory");
+        func_003A02B0(p, 2);
+    }
+    ((V390 *)(p + 0x130))->g6C();
+    ((V390 *)(p + 0x130))->g74();
+    ((V390 *)(p + 0x130))->g70();
+    *(short *)(p + 0x90) = *(short *)(p + 0x160);
+    func_004B6970(*(char **)(p + 0xB10), p, 0);
+    func_004B6970(*(char **)(p + 0xB10), p, 1);
+    r = func_001AEA60(D_00666750, 6, 3);
+    *(int *)(p + 0x2DD0) = func_0031B860(r, p + 0xBC8, *(unsigned char *)(p + 0x2EE0) ? 2 : 1, *(float *)(p + 0xBC8));
+    if (D_01CAFF38[0] == 0x79 || D_01CAFF38[0] == 0x19E) func_0034B270(5, 0, 0);
+}
+
+static inline unsigned char moved1FF(float *a, float *b) {
+    if (!(func_00132470(a, b) <= 0.001f)) return 1;
+    return 0;
+}
+
+static inline unsigned char tstD10(unsigned int *v, unsigned int b, unsigned int i) {
+    if ((1 << b) & v[i]) return 0;
+    return 1;
+}
+
+static inline unsigned char tasD10(unsigned int *v, unsigned int k) {
+    unsigned char r;
+    unsigned int b = k & 0x1F;
+    unsigned int i = k >> 5;
+    r = tstD10(v, b, i);
+    v[i] |= 1 << b;
+    return r;
+}
+
+extern "C" unsigned char func_001FFD10(char *p, float *b) {
+    float d[4] __attribute__((aligned(16)));
+    float save[4] __attribute__((aligned(16)));
+    unsigned int vis[200];
+    int i;
+    int n;
+    int *ids;
+    int *lst;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(save), "r"(b) : "memory");
+    func_00128488((char *)vis, 0, 0x320);
+    lst = func_001F95B0(((char **)(p + 8))[*(int *)p]);
+    n = func_001F8DE0(((char **)(p + 8))[*(int *)p], (char *)b);
+    for (i = 0; i < n; i++) {
+        for (ids = func_001F95C0(((char **)(p + 8))[*(int *)p], lst[i]); *ids != -1; ids++) {
+            if (tasD10(vis, (unsigned int)*ids / 56) == 1) {
+                if ((unsigned char)func_001FF2C0((char *)b, func_001F9610(((char **)(p + 8))[*(int *)p], *ids), d) == 1) {
+                    b[0] = b[0] + d[0];
+                    b[1] = b[1] + d[1];
+                    b[2] = b[2] + d[2];
+                }
+            }
+        }
+    }
+    return moved1FF(save, b);
 }

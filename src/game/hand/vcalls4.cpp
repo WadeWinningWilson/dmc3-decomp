@@ -11060,6 +11060,20 @@ public:
 typedef struct { unsigned char b0; char pad[15]; float pos[4]; short ang; short h92; short h94; short pad2; int w98; int w9C; int wA0; int wA4; } S4767 __attribute__((aligned(16)));
 
 extern "C" O4767 *func_002F2850(char *, S4767 *);
+extern "C" char D_005BE0C8[4];
+extern "C" void func_00128488(char *, int, int);
+extern "C" int *func_001F95B0(char *);
+extern "C" int func_001F8DE0(char *, char *);
+extern "C" int *func_001F95C0(char *, int);
+extern "C" unsigned char *func_001F9610(char *, int);
+extern "C" void func_002022F0(char *, char *, unsigned char *);
+extern "C" int func_001BF4F0(char *, char *, char *);
+extern "C" int func_001F8FA0(char *, char *);
+extern "C" int func_001BF9F0(char *, char *, char *, float *);
+extern "C" float func_0024CBB0(char *, int);
+extern "C" short func_00221710(char *);
+extern "C" int func_00131B60(int);
+extern "C" float func_00131B50(float);
 
 extern "C" void func_00476780(char *p, unsigned char k, int m) {
     S4767 s;
@@ -11133,4 +11147,192 @@ extern "C" void func_00476780(char *p, unsigned char k, int m) {
         if (*(unsigned char *)(p + 0xF13) == 0) ((unsigned char *)(p + 0xF10))[i] = 0;
         else ((unsigned char *)(p + 0xF10))[i] = 1;
     }
+}
+
+static inline unsigned char tas1FF(unsigned int *v, unsigned int k) {
+    unsigned int b;
+    unsigned int *w;
+    unsigned char r;
+    w = &v[k >> 5];
+    b = 1 << (k & 0x1F);
+    r = !((b & *w) != 0);
+    *w |= b;
+    return r;
+}
+
+static inline unsigned char hasf1FF(unsigned char *t, unsigned short m) {
+    unsigned short x = (t[3] << 8) | t[2];
+    unsigned short *px = &x;
+    return (*px & m) != 0;
+}
+
+extern "C" int func_001FFF40(char *p, char *b, int mask) {
+    char buf[0x40];
+    unsigned int vis[200];
+    int i;
+    int *ids;
+    int n;
+    int *lst;
+    unsigned char *t;
+    func_00128488((char *)vis, 0, 0x320);
+    lst = func_001F95B0(((char **)(p + 8))[*(int *)p]);
+    n = func_001F8DE0(((char **)(p + 8))[*(int *)p], b);
+    for (i = 0; i < n; i++, lst++) {
+        for (ids = func_001F95C0(*(char **)(p + *(int *)p * 4 + 8), *lst); *ids != -1; ids++) {
+            if (tas1FF(vis, (unsigned int)*ids / 56) == 1) {
+                t = func_001F9610(*(char **)(p + *(int *)p * 4 + 8), *ids);
+                if (mask == 0 || (mask != 0 && !hasf1FF(t, mask))) {
+                    func_002022F0(p, buf, t);
+                    if ((unsigned char)func_001BF4F0(D_005BE0C8, b, buf) == 1) return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
+class V24E {
+public:
+    virtual void d8(); virtual void dC();
+    virtual void g10(int, char *, unsigned char, int);
+    virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24(); virtual void d28(); virtual void d2C(); virtual void d30();
+    virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44(); virtual void d48(); virtual void d4C();
+    virtual void g50(int, unsigned char);
+    virtual void d54();
+    virtual unsigned char g58(int);
+    virtual void d5C();
+    virtual unsigned char g60(int);
+};
+
+static inline char *ent24E(char *t, unsigned int k) {
+    if (*(unsigned int *)(t + 4) < k + 1) return 0;
+    if (*(int *)((char *)(k * 4) + (int)t + 8) == 0) return 0;
+    return t + *(int *)(t + k * 4 + 8);
+}
+
+extern "C" void func_0024E530(char *p, char *q, int a, int b) {
+    char *t;
+    char *h;
+    char *e;
+    int i;
+    t = *(char **)(p + 0x18) + *(unsigned short *)(*(char **)(p + 0x18) + *(unsigned char *)(q + 4) * 2);
+    *(char **)(p + 0x1C) = t + *(unsigned short *)(t + *(unsigned char *)(q + 5) * 2);
+    h = *(char **)(p + 0x1C);
+    *(char **)(p + 0x1C) = h + 2;
+    *(char **)(p + 0x20) = *(char **)(p + 0x1C) + *(unsigned char *)h * 6;
+    for (i = 0; i < *(unsigned char *)h; i++) {
+        e = *(char **)(p + 0x1C);
+        *(char **)(p + 0x1C) = e + 6;
+        if (*(unsigned char *)e == *(int *)(p + 0x38)) {
+            if (*(unsigned char *)(e + 2) == 1) *(unsigned char *)(p + 0x7E) = 1;
+            else *(unsigned char *)(p + 0x7E) = 0;
+            (*(V24E **)(p + 0x44))->g10(*(int *)(p + 0x38), ent24E(*(char **)(*(char **)(p + 0x40) + *(unsigned short *)(e + 4) / 100 * 4), *(unsigned short *)(e + 4) % 100), (unsigned char)a, b);
+            switch (*(unsigned char *)(e + 1)) {
+            case 0:
+                *(unsigned char *)(p + 0x7F) = 0;
+                (*(V24E **)(p + 0x44))->g50(*(int *)(p + 0x38), *(unsigned char *)(p + 0x7F));
+                break;
+            case 1:
+                *(unsigned char *)(p + 0x7F) = 1;
+                (*(V24E **)(p + 0x44))->g50(*(int *)(p + 0x38), *(unsigned char *)(p + 0x7F));
+                break;
+            case 2:
+                *(unsigned char *)(p + 0x7F) = (*(V24E **)(p + 0x44))->g60(0);
+                break;
+            }
+            *(unsigned char *)(p + 0x86) = (*(V24E **)(p + 0x44))->g58(*(int *)(p + 0x38));
+            return;
+        }
+    }
+}
+
+static inline unsigned char tstFAC(unsigned int *v, unsigned int b, unsigned int i) {
+    if ((1 << b) & v[i]) return 0;
+    return 1;
+}
+
+static inline unsigned char tasFAC(unsigned int *v, unsigned int k) {
+    unsigned char r;
+    unsigned int b = k & 0x1F;
+    unsigned int i = k >> 5;
+    r = tstFAC(v, b, i);
+    v[i] |= 1 << b;
+    return r;
+}
+
+static inline unsigned char hasFAC(unsigned char *t, unsigned short m) {
+    unsigned short x = (t[3] << 8) | t[2];
+    if (x & m) return 1;
+    return 0;
+}
+
+extern "C" unsigned char func_001FFAC0(char *p, char *b, int mask) {
+    float v[4] __attribute__((aligned(16)));
+    unsigned int vis[200];
+    char buf[0x40];
+    unsigned char found;
+    int i;
+    int n;
+    int *ids;
+    int *lst;
+    unsigned char *t;
+    found = 0;
+    lst = func_001F95B0(((char **)(p + 8))[*(int *)p]);
+    n = func_001F8FA0(((char **)(p + 8))[*(int *)p], b);
+    func_00128488((char *)vis, 0, 0x320);
+    for (i = 0; i < n; i++) {
+        for (ids = func_001F95C0(((char **)(p + 8))[*(int *)p], lst[i]); *ids != -1; ids++) {
+            t = func_001F9610(((char **)(p + 8))[*(int *)p], *ids);
+            if (mask == 0 || (mask != 0 && hasFAC(t, mask) == 0)) {
+                if (tasFAC(vis, (unsigned int)*ids / 56) == 1) {
+                    func_002022F0(p, buf, t);
+                    if ((unsigned char)func_001BF9F0(D_005BE0C8, b, buf, v) == 1) {
+                        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(b), "r"(v) : "memory");
+                        found = 1;
+                    }
+                }
+            }
+        }
+    }
+    return found;
+}
+
+static inline unsigned char act221(char *o) {
+    if (*(int **)(o + 8) != 0 && **(int **)(o + 8) != 0) return 1;
+    if (*(int *)(o + 0x1C) - *(int *)(o + 0x20) != 0) return 1;
+    if (*(unsigned char *)(o + 0x1A) == 1) return 1;
+    return 0;
+}
+
+static inline unsigned char busy221(void) {
+    char *o = *(char **)(*(char **)D_01CAFF0C + 0x20);
+    if (o != 0) return act221(o);
+    return 0;
+}
+
+extern "C" unsigned short func_002213A0(char *p, int mode) {
+    unsigned short r;
+    short a;
+    float f;
+    if (*(unsigned char *)(p + 0x299F) != 0 || busy221() == 1
+        || (*(signed char *)((char *)*(unsigned char *)(p + 0x3D4B) + (int)p + 0x3D4C) == 7 && !(func_0024CBB0(p, 9) <= 0.0f))
+        || (*(signed char *)((char *)*(unsigned char *)(p + 0x3D4B) + (int)p + 0x3D4C) == 7 && !(func_0024CBB0(p, 10) <= 0.0f))) {
+        a = func_00221710(p);
+        if (a < 0x4000) {
+            r = 0;
+            if (a < 0x1554) a = 0x1554;
+            f = func_00131B50((float)(short)func_00131B60(a - 0x4000) / 10924.0f);
+        } else {
+            r = 4;
+            if (a > 0x6000) a = 0x6000;
+            f = func_00131B50((float)(short)func_00131B60(a - 0x4000) / 8192.0f);
+        }
+        if (!(f <= 1.0f)) f = 1.0f;
+        *(float *)(p + 0x2430) = f;
+        if (mode == 1) r++;
+    } else {
+        r = 6;
+        *(float *)(p + 0x2430) = 1.0f;
+    }
+    return r;
 }

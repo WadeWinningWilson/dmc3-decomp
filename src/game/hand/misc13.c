@@ -68,6 +68,20 @@ int func_002FB250(int a, int b, int *prm) {
 typedef struct { float v[4]; } V209 __attribute__((aligned(16)));
 
 extern V209 D_0054D9B0;
+extern char D_01CAFF0C[];
+extern char D_005601B0[];
+extern float D_005601D8[];
+extern float D_005601D4[];
+extern char D_005601F0[];
+extern float D_00560218[];
+extern float D_00560214[];
+void func_002282B0(char *);
+float func_001324E0(float *);
+void func_002EC050(int, char *, float);
+void func_00332AE0(char *, char *, float, float);
+char *func_00207480(int, int, char *, int);
+void func_0034BA60(int, char *, int, int, int);
+void func_001AD140(char *);
 
 void func_002B4830(char *d, float *s) {
     float m[16] __attribute__((aligned(16)));
@@ -134,4 +148,177 @@ void func_002B4830(char *d, float *s) {
     func_00104B80(d + 0x20, m, d + 0x20);
     func_00104B80(d + 0x30, m, d + 0x30);
     *(float *)(d + 0x40) = s[16];
+}
+
+typedef struct { int w[16]; } S3FE;
+void func_00105300(char *, char *);
+void func_00131650(float *, float *);
+void func_00104E78(float *, float *);
+void func_00104C00(float *, float *, char *);
+
+void func_003FE180(char *p, S3FE *s, int unused, float *pos) {
+    float v[4];
+    volatile S3FE c;
+    float w[4] __attribute__((aligned(16)));
+    float l;
+    char *o;
+    func_002282B0(p + 0x428);
+    if (*(int *)(p + 0x428) == 0) return;
+    c = *s;
+    o = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    v[0] = *(float *)(o + 0x50) - pos[0];
+    v[1] = *(float *)(o + 0x54) - pos[1];
+    v[2] = *(float *)(o + 0x58) - pos[2];
+    v[3] = 1.0f;
+    l = func_001324E0(v);
+    if (((signed char *)s)[2] != 0) return;
+    v[0] = *(float *)(p + 0x470);
+    v[1] = *(float *)(p + 0x474);
+    v[2] = *(float *)(p + 0x478);
+    v[3] = 1.0f;
+    if (!(*(float *)((char *)s + 4) < 100.0f) && l < 500.0f) {
+        func_002EC050(10, (char *)v, 100.0f);
+        func_00332AE0(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x3D90, D_005601F0, D_00560218[0], D_00560214[0]);
+    } else {
+        func_002EC050(3, (char *)v, 100.0f);
+        func_00332AE0(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x3D90, D_005601B0, D_005601D8[0], D_005601D4[0]);
+    }
+    func_00207480(3, 0x5A, p + 0x440, 0x10);
+    w[0] = *(float *)(p + 0x470);
+    w[1] = *(float *)(p + 0x474);
+    w[2] = *(float *)(p + 0x478);
+    w[3] = 1.0f;
+    func_0034BA60(0x1D, (char *)w, *(signed char *)(*(char **)(p + 0x428) + 0x46), 0, 1);
+    func_001AD140(p);
+}
+
+void func_00322DC0(char *p, S3FE *s, int unused, float *pos) {
+    float v[4];
+    volatile S3FE c;
+    float w[4] __attribute__((aligned(16)));
+    float l;
+    char *o;
+    c = *s;
+    o = *(char **)(*(char **)D_01CAFF0C + 0xC);
+    v[0] = *(float *)(o + 0x50) - pos[0];
+    v[1] = *(float *)(o + 0x54) - pos[1];
+    v[2] = *(float *)(o + 0x58) - pos[2];
+    v[3] = 1.0f;
+    l = func_001324E0(v);
+    if (((signed char *)s)[2] != 0) return;
+    v[0] = *(float *)(p + 0x180);
+    v[1] = *(float *)(p + 0x184);
+    v[2] = *(float *)(p + 0x188);
+    v[3] = 1.0f;
+    if (!(*(float *)((char *)s + 4) < 100.0f) && l < 500.0f) {
+        func_002EC050(10, (char *)v, 100.0f);
+        func_00332AE0(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x3D90, D_005601F0, D_00560218[0], D_00560214[0]);
+    } else {
+        func_002EC050(3, (char *)v, 100.0f);
+        func_00332AE0(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x3D90, D_005601B0, D_005601D8[0], D_005601D4[0]);
+    }
+    func_00207480(3, 0x5A, p + 0x150, 0x10);
+    w[0] = *(float *)(p + 0x180);
+    w[1] = *(float *)(p + 0x184);
+    w[2] = *(float *)(p + 0x188);
+    w[3] = 1.0f;
+    func_0034BA60(0x37, (char *)w, *(signed char *)(*(char **)(p + 0x1A4) + 0x46), 0, 1);
+    func_001AD140(p);
+}
+
+void func_001FD820(char *p, int n) {
+    float m2[16] __attribute__((aligned(16)));
+    float m1[16] __attribute__((aligned(16)));
+    float m0[16] __attribute__((aligned(16)));
+    int i;
+    char *e;
+    if (*(unsigned char *)(p + 0x104) == 0) {
+        volatile float f = (float)n;
+        *(int *)(p + 0x148) = 0;
+        *(float *)(p + 0x168) = 1.0f / (1.0f + f);
+        for (i = 0; i < *(int *)(p + 0x10); i++) {
+            e = *(char **)(*(char **)(p + 0x14) + i * 4);
+            if (*(char **)(e + 0xF0) != 0) {
+                func_00105300((char *)m0, *(char **)(*(char **)(e + 0xF0) + 0x104));
+                func_00131650(m0, m0);
+                func_00131650(m0 + 4, m0 + 4);
+                func_00131650(m0 + 8, m0 + 8);
+                func_00104E78(m1, m0);
+                func_00104C00(m2, m1, *(char **)(e + 0x104));
+                m2[12] = m2[12] / *(float *)(*(char **)(e + 0xF0) + 0xE0);
+                m2[13] = m2[13] / *(float *)(*(char **)(e + 0xF0) + 0xE4);
+                m2[14] = m2[14] / *(float *)(*(char **)(e + 0xF0) + 0xE8);
+                func_00105300(e, (char *)m2);
+            } else {
+                func_00105300(e, *(char **)(e + 0x100));
+            }
+            *(float *)(e + 0x90) = *(float *)(e + 0x184);
+            *(float *)(e + 0x94) = *(float *)(e + 0x198);
+            *(float *)(e + 0x98) = *(float *)(e + 0x1AC);
+            *(float *)(e + 0x9C) = 0.0f;
+        }
+    } else {
+        volatile float f = (float)n;
+        *(int *)(p + 0x148) = 0;
+        *(float *)(p + 0x168) = 1.0f / (1.0f + f);
+        for (i = 0; i < *(int *)(p + 0x10); i++) {
+            e = *(char **)(*(char **)(p + 0x14) + i * 4);
+            func_00105300(e, *(char **)(e + 0x100));
+            *(float *)(e + 0x90) = *(float *)(e + 0x184);
+            *(float *)(e + 0x94) = *(float *)(e + 0x198);
+            *(float *)(e + 0x98) = *(float *)(e + 0x1AC);
+            *(float *)(e + 0x9C) = 0.0f;
+        }
+    }
+}
+
+void func_001FDA70(char *p, int k, int n) {
+    float m2[16] __attribute__((aligned(16)));
+    float m1[16] __attribute__((aligned(16)));
+    float m0[16] __attribute__((aligned(16)));
+    int i;
+    int q;
+    char *e;
+    char *a;
+    int *kp = &k;
+    if (*(unsigned char *)(p + 0x104) == 0) {
+        a = (char *)(k * 4) + (int)p;
+        *(int *)(a + 0x148) = 0;
+        *(float *)(a + 0x168) = 1.0f / (1.0f + (float)n);
+        for (i = 0; i < *(int *)(p + 0x10); i++) {
+            e = *(char **)(*(char **)(p + 0x14) + i * 4);
+            if (*(short *)(e + 0xF4) == k) {
+                if (*(char **)(e + 0xF0) != 0) {
+                    func_00105300((char *)m0, *(char **)(*(char **)(e + 0xF0) + 0x104));
+                    func_00131650(m0, m0);
+                    func_00131650(m0 + 4, m0 + 4);
+                    func_00131650(m0 + 8, m0 + 8);
+                    func_00104E78(m1, m0);
+                    func_00104C00(m2, m1, *(char **)(e + 0x104));
+                    m2[12] = m2[12] / *(float *)(*(char **)(e + 0xF0) + 0xE0);
+                    m2[13] = m2[13] / *(float *)(*(char **)(e + 0xF0) + 0xE4);
+                    m2[14] = m2[14] / *(float *)(*(char **)(e + 0xF0) + 0xE8);
+                    func_00105300(e, (char *)m2);
+                } else {
+                    func_00105300(e, *(char **)(e + 0x100));
+                }
+                *(float *)(e + 0x90) = *(float *)(e + 0x184);
+                *(float *)(e + 0x94) = *(float *)(e + 0x198);
+                *(float *)(e + 0x98) = *(float *)(e + 0x1AC);
+            }
+        }
+    } else {
+        a = (char *)(k * 4) + (int)p;
+        *(int *)(a + 0x148) = 0;
+        *(float *)(a + 0x168) = 1.0f / (1.0f + (float)n);
+        for (q = 0; q < *(int *)(p + 0x10); q++) {
+            e = *(char **)(*(char **)(p + 0x14) + q * 4);
+            if (*(short *)(e + 0xF4) == k) {
+                func_00105300(e, *(char **)(e + 0x100));
+                *(float *)(e + 0x90) = *(float *)(e + 0x184);
+                *(float *)(e + 0x94) = *(float *)(e + 0x198);
+                *(float *)(e + 0x98) = *(float *)(e + 0x1AC);
+            }
+        }
+    }
 }

@@ -26020,3 +26020,151 @@ int func_004837F0(char *p, signed char k, int b) {
     }
     return r;
 }
+
+int func_00304790(void) {
+    int r;
+    __asm__ volatile("vmulax.xyzw $ACC, $vf13, $vf25x\n\tvmadday.xyzw $ACC, $vf14, $vf25y\n\tvmaddaz.xyzw $ACC, $vf15, $vf25z\n\tvmaddw.xyzw $vf28, $vf16, $vf0w\n\tvclipw.xyz $vf28, $vf28w\n\tvmulax.xyzw $ACC, $vf13, $vf26x\n\tvmadday.xyzw $ACC, $vf14, $vf26y\n\tvmaddaz.xyzw $ACC, $vf15, $vf26z\n\tvmaddw.xyzw $vf29, $vf16, $vf0w\n\tvclipw.xyz $vf29, $vf29w\n\tvmulax.xyzw $ACC, $vf13, $vf27x\n\tvmadday.xyzw $ACC, $vf14, $vf27y\n\tvmaddaz.xyzw $ACC, $vf15, $vf27z\n\tvmaddw.xyzw $vf28, $vf16, $vf0w\n\tvclipw.xyz $vf28, $vf28w\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tcfc2.ni %0, $vi18" : "=r"(r));
+    return r;
+}
+
+int func_003047F0(void) {
+    int r;
+    __asm__ volatile("vmulax.xyzw $ACC, $vf9, $vf25x\n\tvmadday.xyzw $ACC, $vf10, $vf25y\n\tvmaddaz.xyzw $ACC, $vf11, $vf25z\n\tvmaddw.xyzw $vf28, $vf12, $vf0w\n\tvclipw.xyz $vf28, $vf28w\n\tvmulax.xyzw $ACC, $vf9, $vf26x\n\tvmadday.xyzw $ACC, $vf10, $vf26y\n\tvmaddaz.xyzw $ACC, $vf11, $vf26z\n\tvmaddw.xyzw $vf29, $vf12, $vf0w\n\tvclipw.xyz $vf29, $vf29w\n\tvmulax.xyzw $ACC, $vf9, $vf27x\n\tvmadday.xyzw $ACC, $vf10, $vf27y\n\tvmaddaz.xyzw $ACC, $vf11, $vf27z\n\tvmaddw.xyzw $vf28, $vf12, $vf0w\n\tvclipw.xyz $vf28, $vf28w\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tvnop\n\tcfc2.ni %0, $vi18" : "=r"(r));
+    return r;
+}
+
+static inline int has500(char *p) {
+    return (*(unsigned char *)(p + 0x13EB) & (1 << *(signed char *)(p + 0x13E9))) != 0;
+}
+
+int func_005008B0(char *p) {
+    unsigned short k;
+    signed char a;
+    signed char b;
+    int r;
+    k = func_001AE3B0(D_006663C0, 0) | func_001AE360(D_006663C0, 0);
+    a = *(signed char *)(p + 0x13E9);
+    b = *(signed char *)(p + 0x13EA);
+    if (func_001AE360(D_006663C0, 0) & 0x40) {
+        r = 1;
+        if (*(unsigned char *)(p + 0x13EC) == 1) return *(signed char *)(p + 0x13EA) == 0 ? r : 2;
+        return r;
+    }
+    if (func_001AE360(D_006663C0, 0) & 0x10) {
+        if (*(unsigned char *)(p + 0x13EC) == 1) *(signed char *)(p + 0x13EA) = 1;
+        return 2;
+    }
+    if (k & 0x4000) {
+        if (*(unsigned char *)(p + 0x13EB) != 0) {
+            do {
+                *(signed char *)(p + 0x13E9) = (*(signed char *)(p + 0x13E9) + 1) & 0xF;
+            } while (has500(p) ^ 1);
+        }
+    } else if (k & 0x1000) {
+        if (*(unsigned char *)(p + 0x13EB) != 0) {
+            do {
+                *(signed char *)(p + 0x13E9) = (*(signed char *)(p + 0x13E9) - 1) & 0xF;
+            } while (has500(p) ^ 1);
+        }
+    } else if (k & 0xA000) {
+        if (*(unsigned char *)(p + 0x13EC) == 1) *(signed char *)(p + 0x13EA) = (*(signed char *)(p + 0x13EA) + 1) & 1;
+    }
+    if (a != *(signed char *)(p + 0x13E9) || b != *(signed char *)(p + 0x13EA)) func_003303F0(D_01DFABA0, 0, 2, 0, 0);
+    return 0;
+}
+
+typedef struct { float f[6]; } F1C5;
+extern float *D_005417E0[];
+extern float *D_005417E4[];
+
+int func_001C5350(char *p, char *e) {
+    int i;
+    char *t;
+    if (e == 0) {
+        for (i = 0; i < 16; i++) {
+            char *c = p + i * 0x230 + 0x2800;
+            if (*(int *)(c + 0x20) == 0 && *(int *)(c + 0x24) == 0) {
+                e = c;
+                break;
+            }
+        }
+        if (e == 0) return 0;
+    }
+    *(char **)(p + 0x158A8) = e;
+    *(int *)(*(char **)(p + 0x158A8) + 0x28) = *(int *)(p + 0x15880);
+    *(short *)(*(char **)(p + 0x158A8) + 0x2E) = 0;
+    *(long long *)(p + 0x158C8) = *(long long *)(p + 0x15888);
+    *(int *)(p + 0x158D0) = *(int *)(p + 0x15890);
+    *(int *)(p + 0x158D4) = *(int *)(p + 0x15894);
+    *(int *)(p + 0x158D8) = *(int *)(p + 0x15898);
+    *(int *)(p + 0x158DC) = *(int *)(p + 0x1589C);
+    *(int *)(p + 0x158E0) = *(int *)(p + 0x158A0);
+    *(int *)(p + 0x158E4) = *(int *)(p + 0x158A4);
+    *(int *)(p + 0x158E8) = *(int *)(p + 0x158A8);
+    *(F1C5 *)(p + 0x158EC) = *(F1C5 *)(p + 0x158AC);
+    *(int *)(p + 0x15904) = *(int *)(p + 0x158C4);
+    *(int *)(p + 0x158A4) = *(int *)(p + 0x15880);
+    t = *(char **)(p + 0x158A4);
+    *(char **)(p + 0x158A4) = t + 0x10;
+    *(char **)(p + 0x1589C) = t;
+    *(int *)(p + 0x15898) = 0;
+    *(long long *)(p + 0x15888) = 0;
+    *(int *)(p + 0x15890) = 0;
+    *(int *)(p + 0x15894) = 0;
+    return 1;
+}
+
+int func_001F45F0(char *p, unsigned int x, unsigned int y) {
+    int m = *(unsigned char *)(p + 0x8D);
+    if (m == 0) {
+        if (*(unsigned char *)(p + 0x6C) == 0) return *(int *)(p + 0x64);
+        return *(int *)(p + 0x70);
+    }
+    if (x >= 32) x -= 32;
+    if (y >= 32) y -= 32;
+    if (*(unsigned char *)(p + 0x6C) == 0) {
+        return (float)*(unsigned int *)(p + 0x64) - (float)*(unsigned int *)(p + 0x64) * D_005417E4[m * 2][x] - (float)*(unsigned int *)(p + 0x64) * D_005417E0[m * 2][y];
+    }
+    return (float)*(unsigned int *)(p + 0x70) - (float)*(unsigned int *)(p + 0x70) * D_005417E4[m * 2][x] - (float)*(unsigned int *)(p + 0x70) * D_005417E0[m * 2][y];
+}
+
+static inline char *ent400(char *p, int i) {
+    char *e;
+    if (!(i < *(int *)(p + 0x1290))) e = 0;
+    else e = *(char **)(p + 0x1260) + i * 0x80;
+    return e;
+}
+
+static inline void set400(char *e, float x, float y, float z) {
+    *(float *)(e + 0x20) = x;
+    *(float *)(e + 0x24) = y;
+    *(float *)(e + 0x28) = z;
+    *(float *)(e + 0x2C) = 1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(e), "r"(e + 0x20) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(e + 0x10), "r"(e + 0x20) : "memory");
+}
+
+void func_00400C10(char *p, float f) {
+    float v[4];
+    int i;
+    for (i = 0; i < 8; i++) {
+        v[0] = *(float *)(*(char **)(p + 0x1260) + i * 0x80 + *(int *)(p + 0x1264) * 16);
+        v[1] = *(float *)((char *)(*(int *)(p + 0x1264) * 16) + (int)((char *)(i * 0x80) + (int)*(char **)(p + 0x1260)) + 4);
+        v[2] = *(float *)((char *)(*(int *)(p + 0x1264) * 16) + (int)((char *)(i * 0x80) + (int)*(char **)(p + 0x1260)) + 8);
+        v[3] = 1.0f;
+        switch (i & 3) {
+        case 0:
+            set400(ent400(p, i), v[0], v[1], v[2] + f);
+            break;
+        case 1:
+            set400(ent400(p, i), v[0], v[1], v[2] - f);
+            break;
+        case 2:
+            set400(ent400(p, i), v[0] + f, v[1], v[2]);
+            break;
+        case 3:
+            set400(ent400(p, i), v[0] - f, v[1], v[2]);
+            break;
+        }
+    }
+}

@@ -2459,6 +2459,8 @@ int func_00312120(char *, int *, int *, int *, S311 *);
 int func_002F6690(S311 *, char *, char *);
 float func_001324E0(float *);
 extern float D_005BDF44;
+int func_003B5E50(char *);
+void func_003B4B60(char *, short);
 
 static inline int *ent311(int *q, int n) { if ((unsigned int)q[1] < n + 1) return 0; if (*(int *)((char *)q + n * 4 + 8) == 0) return 0; return (int *)((char *)q + *(int *)((char *)q + n * 4 + 8)); }
 
@@ -2558,4 +2560,29 @@ void func_004D30B0(char *p) {
 	vadd.xyzw $vf6, $vf5, $vf4
 	sqc2 $vf6, 0x0(%2)" : : "r"(*(char **)(g + 0xC) + 0x50), "r"(d), "r"(*(char **)(g + 0xC) + 0x50) : "memory");
     *(float *)(*(char **)(g + 0xC) + 0x5C) = 1.0f;
+}
+
+typedef struct { int v[4]; } T3B3;
+
+extern T3B3 D_00564640;
+extern T3B3 D_00564650;
+extern T3B3 D_00564660;
+extern T3B3 D_00564670;
+
+int func_003B3CF0(char *p) {
+    T3B3 z = { 0 };
+    T3B3 a __attribute__((aligned(16))) = D_00564640;
+    T3B3 b __attribute__((aligned(16))) = D_00564650;
+    T3B3 c __attribute__((aligned(16))) = D_00564660;
+    T3B3 d __attribute__((aligned(16))) = D_00564670;
+    T3B3 *t[5] = { &z, &a, &b, &c, &d };
+    T3B3 *e;
+    int v;
+    e = t[D_01CAFF3C[0]];
+    v = e->v[func_003B5E50(p)];
+    if (v != 0) {
+        func_003B4B60(p, v);
+        return 1;
+    }
+    return 0;
 }
