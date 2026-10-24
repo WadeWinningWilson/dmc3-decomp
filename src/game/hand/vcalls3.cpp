@@ -9521,6 +9521,8 @@ public:
 
 typedef struct { unsigned char f; int x; char **pp; } HB;
 extern "C" void func_0028DD40(char *);
+extern "C" short D_00586800[];
+extern "C" short D_0058CA30[];
 
 extern "C" char *func_003CA630(char *p, char c) {
     char *ret;
@@ -9761,4 +9763,126 @@ done:
         }
     }
     return ret;
+}
+
+class O48F {
+public:
+    virtual void u8();
+    virtual void uC();
+    virtual void u10();
+    virtual void u14();
+    virtual void u18();
+    virtual void u1C();
+    virtual void u20();
+    virtual void m24(int);
+    virtual void u28();
+    virtual int m2C(char *, char *);
+    virtual void u30();
+    virtual void u34();
+    virtual void u38();
+    virtual void m3C(short);
+};
+
+static inline char *ent48F(char *q, unsigned short i) { char *r; if (*(unsigned int *)(q + 4) < i + 1) { r = 0; } else if (((int *)(q + 8))[i] == 0) { r = 0; } else { r = q + ((int *)(q + 8))[i]; } return r; }
+
+static inline char *gch48F(char *h, unsigned short i) { char *r; if (**(unsigned short **)(h + 8) == 0) { r = ent48F(*(char **)(h + 0xC), i); } else { r = *(char **)(h + 0xC); } return r; }
+
+extern "C" int func_0048F890(char *p) {
+    unsigned short k;
+    char *b;
+    char *a;
+    int i;
+    *(char *)(p + 0x4280) = 0;
+    *(float *)(p + 0x4290) = 0.0f;
+    *(float *)(p + 0x4294) = 0.0f;
+    *(float *)(p + 0x4298) = 0.0f;
+    *(float *)(p + 0x429C) = 1.0f;
+    *(float *)(p + 0x42A0) = 0.0f;
+    *(float *)(p + 0x42A4) = 0.0f;
+    *(float *)(p + 0x42A8) = 0.0f;
+    *(float *)(p + 0x42AC) = 1.0f;
+    *(float *)(p + 0x42B0) = 1.0f;
+    *(float *)(p + 0x42B4) = 1.0f;
+    *(float *)(p + 0x42B8) = 1.0f;
+    *(float *)(p + 0x42BC) = 1.0f;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(p + 0x42C0) : "memory");
+    func_00131700(p + 0x42C0, p + 0x42C0, p + 0x42A0);
+    func_00105230(p + 0x42C0, p + 0x42C0, p + 0x4290);
+    func_001318E0(p + 0x42C0, p + 0x42C0, p + 0x42B0);
+    for (i = 0; i < 9; i++) {
+        k = i * 2 + 1;
+        a = gch48F(*(char **)(p + 0x38), k);
+        k = i * 2;
+        b = gch48F(*(char **)(p + 0x38), k);
+        ((O48F *)(p + i * 0x600 + 0x80))->m24(1);
+        if (!(unsigned char)((O48F *)(p + i * 0x600 + 0x80))->m2C(b, a)) {
+            return 0;
+        }
+        ((O48F *)(p + i * 0x600 + 0x80))->m3C(D_00586800[i * 2]);
+    }
+    return 1;
+}
+
+class O50C {
+public:
+    virtual void u8();
+    virtual void uC();
+    virtual void u10();
+    virtual void u14();
+    virtual void u18();
+    virtual void u1C();
+    virtual void u20();
+    virtual void m24(int);
+    virtual void u28();
+    virtual int m2C(char *, char *);
+    virtual void u30();
+    virtual void u34();
+    virtual void u38();
+    virtual void m3C(short);
+};
+
+static inline char *ent50C(char *q, unsigned short i) { char *r; if (*(unsigned int *)(q + 4) < i + 1) { r = 0; } else if (((int *)(q + 8))[i] == 0) { r = 0; } else { r = q + ((int *)(q + 8))[i]; } return r; }
+
+static inline char *gch50C(char *h, unsigned short i) { char *r; if (**(unsigned short **)(h + 8) == 0) { r = ent50C(*(char **)(h + 0xC), i); } else { r = *(char **)(h + 0xC); } return r; }
+
+extern "C" int func_0050C650(char *p) {
+    unsigned short k;
+    char *b;
+    char *a;
+    int i;
+    *(char *)(p + 0x3640) = 0;
+    *(float *)(p + 0x3650) = 0.0f;
+    *(float *)(p + 0x3654) = 0.0f;
+    *(float *)(p + 0x3658) = 0.0f;
+    *(float *)(p + 0x365C) = 1.0f;
+    *(float *)(p + 0x3660) = 0.0f;
+    *(float *)(p + 0x3664) = 0.0f;
+    *(float *)(p + 0x3668) = 0.0f;
+    *(float *)(p + 0x366C) = 1.0f;
+    *(float *)(p + 0x3670) = 1.0f;
+    *(float *)(p + 0x3674) = 1.0f;
+    *(float *)(p + 0x3678) = 1.0f;
+    *(float *)(p + 0x367C) = 1.0f;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(p + 0x3680) : "memory");
+    func_00131700(p + 0x3680, p + 0x3680, p + 0x3660);
+    func_00105230(p + 0x3680, p + 0x3680, p + 0x3650);
+    func_001318E0(p + 0x3680, p + 0x3680, p + 0x3670);
+    for (i = 0; i < 3; i++) {
+        k = i * 2 + 1;
+        a = gch50C(*(char **)(p + 0x38), k);
+        k = i * 2;
+        b = gch50C(*(char **)(p + 0x38), k);
+        ((O50C *)(p + i * 0x600 + 0x40))->m24(1);
+        if (!(unsigned char)((O50C *)(p + i * 0x600 + 0x40))->m2C(b, a)) {
+            return 0;
+        }
+        ((O50C *)(p + i * 0x600 + 0x40))->m3C(D_0058CA30[i * 2]);
+    }
+    return 1;
 }
