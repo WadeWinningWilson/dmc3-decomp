@@ -11080,6 +11080,10 @@ extern "C" int func_004D2610(char *);
 extern "C" int func_004D2CB0(char *);
 extern "C" void func_004CBBE0(char *, float);
 extern "C" int func_0034BBE0(int, char *);
+extern "C" signed char D_005628F0[];
+extern "C" char D_01CAFF30[];
+extern "C" void func_001F9EC0(char *);
+extern "C" void func_001FBAF0(char *);
 
 extern "C" void func_00476780(char *p, unsigned char k, int m) {
     S4767 s;
@@ -11456,4 +11460,185 @@ extern "C" void func_004C43B0(char *p) {
         ((V4C4 *)p)->m2F8(c);
         break;
     }
+}
+
+class S210 {
+public:
+    unsigned char st;
+    float f4;
+    float f8;
+    float fC;
+    float f10;
+    char pad14[8];
+    virtual unsigned char v8();
+    virtual void vC();
+    virtual void v10();
+    virtual float v14();
+};
+
+extern "C" unsigned char func_002103E0(char *p) {
+    unsigned char r = 0;
+    int i;
+    float t;
+    float l;
+    S210 *s;
+    t = *(float *)(*(char **)p + 0xC) + *(float *)(*(char **)p + 0x10);
+    *(float *)(p + 0x10) = 0.0f;
+    for (i = 0; i < *(int *)(p + 0xC); i++) {
+        if (*(int *)(*(char **)(p + 0x24) + i * 16) == 0) continue;
+        s = *(S210 **)(*(char **)(p + 0x24) + i * 16 + 4);
+        switch (s->st) {
+        case 0:
+            break;
+        case 1:
+            l = s->f10;
+            if (!(t < s->f4 + s->f8 * l)) {
+                if (t < s->f4 + (l * s->v14() - s->fC * l)) {
+                    if (*(unsigned char *)(*(char **)p + 1) != 0 || *(unsigned char *)(p + 6) != 7) {
+                        if (s->v8() == 1) {
+                            r = 1;
+                            s->st = 2;
+                            if (!(s->f4 <= *(float *)(p + 0x10))) *(float *)(p + 0x10) = s->f4;
+                        } else {
+                            s->st = 4;
+                        }
+                    }
+                }
+            }
+            break;
+        case 2:
+            if (!(t < s->f4 + (s->f10 * s->v14() - s->fC * s->f10))) {
+                s->v10();
+                s->st = 3;
+            } else {
+                s->vC();
+                if (!(s->f4 <= *(float *)(p + 0x10))) *(float *)(p + 0x10) = s->f4;
+            }
+            break;
+        case 4:
+            if (!(t <= s->f4 + (s->f10 * s->v14() - s->fC * s->f10))) s->st = 3;
+            break;
+        case 3:
+            break;
+        }
+    }
+    return r;
+}
+
+static inline void bclr36F(char *p, short k) {
+    int m = ~(1 << (k & 31));
+    *(int *)(*(char **)(p + 4) + k / 32 * 4 + 0x680) &= m;
+}
+
+static inline void bset36F(char *p, short k) {
+    int m = 1 << (k & 31);
+    *(int *)(*(char **)(p + 4) + k / 32 * 4 + 0x680) |= m;
+}
+
+static inline unsigned char tst36F(char *p, int m) {
+    return (*(int *)(*(char **)(p + 4) + 0x684) & m) != 0;
+}
+
+extern "C" void func_0036FD60(char *p) {
+    int i;
+    int n;
+    for (i = 0x24; i <= 0x39; i++) {
+        if (D_005628F0[i - 0x24] != -1) {
+            if (!(*(int *)D_01CAFF30 > D_005628F0[i - 0x24])) {
+                p[i + 0x20] = 0;
+                bclr36F(p, i);
+            } else if (*(int *)D_01CAFF30 > D_005628F0[i - 0x24]) {
+                p[i + 0x20] = 0;
+                bset36F(p, i);
+            }
+        }
+    }
+    if (*(int *)D_01CAFF30 < 5) {
+        *(signed char *)(p + 0x44) = 0;
+        *(int *)(*(char **)(p + 4) + 0x684) &= ~0x10;
+    } else if (*(int *)D_01CAFF30 == 5) {
+        *(signed char *)(p + 0x44) = 1;
+        *(int *)(*(char **)(p + 4) + 0x684) |= 0x10;
+    } else if (*(int *)D_01CAFF30 >= 6) {
+        *(signed char *)(p + 0x44) = 0;
+        *(int *)(*(char **)(p + 4) + 0x684) |= 0x10;
+    }
+    if (*(int *)D_01CAFF30 == 6) {
+        *(unsigned char *)(p + 0x48) = 0;
+        *(int *)(*(char **)(p + 4) + 0x684) &= ~0x100;
+        *(unsigned char *)(p + 0x49) = 0;
+        *(int *)(*(char **)(p + 4) + 0x684) &= ~0x200;
+        *(unsigned char *)(p + 0x4A) = 0;
+        *(int *)(*(char **)(p + 4) + 0x684) &= ~0x400;
+    } else if (*(int *)D_01CAFF30 == 7) {
+        n = 0;
+        if (*(unsigned char *)(p + 0x48) == 0 && tst36F(p, 0x100) == 1) n++;
+        if (*(unsigned char *)(p + 0x49) == 0 && tst36F(p, 0x200) == 1) n++;
+        if (*(unsigned char *)(p + 0x4A) == 0 && tst36F(p, 0x400) == 1) n++;
+        if (n < 2) {
+            *(unsigned char *)(p + 0x48) = 0;
+            *(int *)(*(char **)(p + 4) + 0x684) |= 0x100;
+            *(unsigned char *)(p + 0x49) = 0;
+            *(int *)(*(char **)(p + 4) + 0x684) |= 0x200;
+            *(unsigned char *)(p + 0x4A) = 0;
+            *(int *)(*(char **)(p + 4) + 0x684) |= 0x400;
+        }
+    }
+}
+
+class C1FB {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24(); virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44(); virtual void d48(); virtual void d4C(); virtual void d50(); virtual void d54(); virtual void d58(); virtual void d5C(); virtual void d60(); virtual void d64(); virtual void d68(); virtual void d6C(); virtual void d70();
+    virtual void m74(float);
+};
+
+#define E1FB(i) (((char **)*(char **)(p + 0x14))[i])
+
+extern "C" void func_001FBF70(char *p, char *a, char **arr) {
+    int i;
+    int j;
+    float *s;
+    char *e;
+    unsigned char c;
+    func_001FBAF0(p);
+    *(int *)(p + 4) = *(int *)(a + 8);
+    *(int *)(p + 8) = *(int *)(a + 4);
+    *(int *)(p + 0x10) = *(unsigned short *)(a + 0xAA);
+    *(char ***)(p + 0x14) = arr;
+    *(char **)(p + 0xB8) = a;
+    *(signed char *)(p + 0xB4) = 2;
+    *(signed char *)(p + 0xAC) = 2;
+    *(signed char *)(p + 0xAD) = 2;
+    *(signed char *)(p + 0xAE) = 2;
+    *(signed char *)(p + 0xAF) = 2;
+    *(signed char *)(p + 0xB0) = 2;
+    *(signed char *)(p + 0xB1) = 2;
+    *(signed char *)(p + 0xB2) = 2;
+    *(signed char *)(p + 0xB3) = 2;
+    s = *(float **)(a + 0x10);
+    for (i = 0; i < *(int *)(p + 0x10); i++) {
+        *(short *)(E1FB(i) + 0xF6) = i;
+        *(char **)(E1FB(i) + 0x104) = *(char **)(a + 0x108) + i * 0x40;
+        e = E1FB(i);
+        *(char **)(e + 0x100) = e + 0x40;
+        *(char **)(E1FB(i) + 0x80) = *(char **)a + i * 0x90;
+        c = (*(unsigned char **)(p + 8))[i];
+        if (c != 0xFF) {
+            *(char **)(E1FB((*(unsigned char **)(p + 4))[i]) + 0xF0) = E1FB(c);
+        } else {
+            *(char **)(E1FB((*(unsigned char **)(p + 4))[i]) + 0xF0) = 0;
+        }
+        *(float *)(E1FB(i) + 0x110) = s[0];
+        *(float *)(E1FB(i) + 0x124) = s[1];
+        *(float *)(E1FB(i) + 0x138) = s[2];
+        *(float *)(E1FB(i) + 0x14C) = s[4];
+        *(float *)(E1FB(i) + 0x160) = s[5];
+        *(float *)(E1FB(i) + 0x174) = s[6];
+        s += 8;
+        *(float *)(E1FB(i) + 0x188) = 1.0f;
+        *(float *)(E1FB(i) + 0x19C) = 1.0f;
+        *(float *)(E1FB(i) + 0x1B0) = 1.0f;
+        for (j = 0; j < 9; j++) func_001F9EC0(*(char **)((char *)(i * 4) + *(int *)(p + 0x14)) + j * 0x14 + 0x10C);
+    }
+    ((C1FB *)p)->m74(0.0f);
 }

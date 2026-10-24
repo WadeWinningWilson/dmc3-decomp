@@ -8091,6 +8091,18 @@ void func_001B7430(char *, int);
 extern unsigned short D_00562920[];
 extern char *D_005BE0D8;
 void func_002293F0(char *, char *, int);
+void func_001A1E70(char *, int);
+unsigned int func_0030FD40(int *, int, int, int, int, int, int, int);
+unsigned int func_0030FDF0(int *, int, int, int, int, int, int, int);
+int func_003101B0(int *, int, int);
+int func_004E9D10(void);
+int func_004E9D90(void);
+extern int D_005829F0[];
+extern int D_005829F4[];
+extern signed char D_00666712[];
+extern int D_01DFA340[];
+extern int D_01DFA344[];
+extern int D_01DFA348[];
 
 int func_002FAEF0(S2FAA *t, int cmd) {
     C36 s = { 0 };
@@ -8411,5 +8423,62 @@ void func_00228AC0(char *p, unsigned char k) {
         if (*(int *)(e + 0xC) & 0x1000) func_002293F0(p, e, *(int *)(p + 8));
         if (*(int *)(e + 0xC) & 0x4000) func_002293F0(p, e, *(int *)(p + 0x20));
         if (*(int *)(e + 0xC) & 0x10000) func_002293F0(p, e, *(int *)(p + 0x38));
+    }
+}
+
+void func_004E5F90(char *p, int id, int sel) {
+    unsigned int r;
+    unsigned int s;
+    int x;
+    int y;
+    int c;
+    int d;
+    if (id < 0) return;
+    D_01DFA344[0] = func_004E9D10();
+    D_01DFA348[0] = func_004E9D90() + 1;
+    s = func_003101B0(D_01DFA340, id, 0);
+    x = 0x50;
+    y = 0x9A;
+    func_001A2000(func_00279290(p + 0x31C0), 1);
+    func_001A2000(func_00279290(p + 0x31C0), 4);
+    func_001A2000(func_00279290(p + 0x31C0), 5);
+    if ((s & 0xFFFF) < 0x29) {
+        func_001A1E70(func_00279290(p + 0x31C0), 1);
+    } else if ((s & 0xFFFF) < 0x3D) {
+        func_001A1E70(func_00279290(p + 0x31C0), 5);
+        y = 0x84;
+    } else {
+        func_001A1E70(func_00279290(p + 0x31C0), 4);
+        y = 0x70;
+    }
+    r = func_0030FD40(D_01DFA340, id, 0x50, y, 0x80585858, 0, 0xFFFFF0, 1);
+    switch (id) {
+    case 0x4E23:
+    case 0x4E24:
+    case 0x4E25:
+    case 0x4E26:
+    case 0x4E27:
+    case 0x4E28:
+    case 0x4E29:
+    case 0x4E2A:
+    case 0x4E2B:
+    case 0x4E2C:
+    case 0x4E48:
+    case 0x4E4B:
+    case 0x4E51:
+    case 0x4E52:
+    case 0x4E5E:
+        if (sel != 0) {
+            c = 0x404040;
+            d = 0xFFFFFF;
+        } else {
+            c = 0xFFFFFF;
+            d = 0x404040;
+        }
+        x += (r >> 16) / 3;
+        y += r & 0xFFFF;
+        x += (func_0030FDF0(D_01DFA340, D_005829F0[D_00666712[0] * 2], x, y, c, 0, 0xFFFFF0, 1) >> 16) + 0x14;
+        func_0030FDF0(D_01DFA340, D_005829F4[D_00666712[0] * 2], x, y, d, 0, 0xFFFFF0, 1);
+        break;
     }
 }

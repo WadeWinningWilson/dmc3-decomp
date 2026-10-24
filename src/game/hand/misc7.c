@@ -6413,6 +6413,7 @@ void func_001A3370(char *p, int a1) {
 }
 
 typedef struct { float a; short b; } T39D;
+void func_00132DF0(char *, float *, char *);
 
 void func_0039DB80(char *p) {
     float d[4] __attribute__((aligned(16)));
@@ -6473,5 +6474,46 @@ void func_0039DB80(char *p) {
     case 3:
     case 4:
         break;
+    }
+}
+
+#define CP311(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_00311820(char *p) {
+    float d[4] __attribute__((aligned(16)));
+    float pt[3][5][4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    int i;
+    int j;
+    char *o;
+    float t;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    CP311(pt[0][0], *(char **)(*(char **)(p + 0x10C) + 0x104) + 0x30);
+    CP311(pt[0][4], *(char **)(*(char **)(p + 0x120) + 0x104) + 0x30);
+    CP311(pt[1][0], *(char **)(*(char **)(p + 0x114) + 0x104) + 0x30);
+    CP311(pt[1][4], *(char **)(*(char **)(p + 0x124) + 0x104) + 0x30);
+    CP311(pt[2][0], *(char **)(*(char **)(p + 0x11C) + 0x104) + 0x30);
+    CP311(pt[2][4], *(char **)(*(char **)(p + 0x128) + 0x104) + 0x30);
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 4; j++) {
+            t = 0.25f * j;
+            pt[i][j][0] = (1.0f - t) * pt[i][0][0] + t * pt[i][4][0];
+            pt[i][j][1] = (1.0f - t) * pt[i][0][1] + t * pt[i][4][1];
+            pt[i][j][2] = (1.0f - t) * pt[i][0][2] + t * pt[i][4][2];
+        }
+        for (j = 0; j < 4; j++) {
+            __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(pt[i][j]), "r"(pt[i][j + 1]) : "memory");
+            if (func_001324E0(d) == 0.0f) {
+                d[0] = 1.0f;
+                d[1] = 0.0f;
+                d[2] = 0.0f;
+                d[3] = 0.0f;
+            }
+            o = *(char **)(*(char **)((char *)(j * 4) + (int)((char *)(i * 0x14) + (int)p) + 0x130) + 0x104);
+            func_00132DF0(o, d, o + 0x10);
+            *(float *)(o + 0x30) = (pt[i][j][0] + pt[i][j + 1][0]) / 2.0f;
+            *(float *)(o + 0x34) = (pt[i][j][1] + pt[i][j + 1][1]) / 2.0f;
+            *(float *)(o + 0x38) = (pt[i][j][2] + pt[i][j + 1][2]) / 2.0f;
+        }
     }
 }

@@ -339,6 +339,10 @@ extern float D_005BDEEC;
 extern float D_005BDEF0;
 void func_0034BA60(int, char *, int, int, int);
 void func_00133890(char *, float *, float *);
+short func_00131D10(float, float);
+void func_00133450(float *, char *, float *);
+void func_0028C740(char *);
+void func_005050C0(char *, int, int, int, char *, float *, int, int, float, float);
 
 void func_0039D0F0(char *p, unsigned char k) {
     T39D a = D_00563EE0;
@@ -834,4 +838,56 @@ void func_00506210(char *p) {
     *(float *)(p + 0x1E0) = *(float *)(p + 0x1E0) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A0) * *(float *)(p + 0x10);
     *(float *)(p + 0x1E4) = *(float *)(p + 0x1E4) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A4) * *(float *)(p + 0x10);
     *(float *)(p + 0x1E8) = *(float *)(p + 0x1E8) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A8) * *(float *)(p + 0x10);
+}
+
+void func_00506480(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    int i;
+    char *o;
+    *(float *)(p + 0x1F4) -= *(float *)(p + 0x200) * *(float *)(p + 0x10);
+    *(float *)(p + 0x1E0) += *(float *)(p + 0x1F0) * *(float *)(p + 0x10);
+    *(float *)(p + 0x1E4) += *(float *)(p + 0x1F4) * *(float *)(p + 0x10);
+    *(float *)(p + 0x1E8) += *(float *)(p + 0x1F8) * *(float *)(p + 0x10);
+    *(short *)(p + 0x90) = func_00131D10(*(float *)(p + 0x1F0), *(float *)(p + 0x1F8));
+    if (*(float *)(p + 0x1E4) < 50.0f) {
+        *(float *)(p + 0x1E4) = 50.0f;
+        *(float *)(p + 0x20C) = 90.0f;
+        (*(unsigned char *)(p + 4))++;
+        func_00105300(m, p + 0x1B0);
+        for (i = -2; i <= 2; i++) {
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(p + 0x1D0) : "memory");
+            v[0] += *(float *)(p + 0x1B0) * (0.15f * i);
+            v[2] += *(float *)(p + 0x1B8) * (0.15f * i);
+            func_00133450(m, p + 0x1C0, v);
+            func_005050C0(*(char **)(p + 0x218) + 0x710, *(int *)(p + 0x190), i, 0, *(char **)(p + 0x218), m, *(int *)(p + 0x590), *(int *)(p + 0x594), 2.0f, 50.0f);
+        }
+        __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+        m[0] = 5.0f;
+        m[5] = 5.0f;
+        m[10] = 5.0f;
+        o = func_00207480(1, 0x5C5, m, 0x10);
+        if (o != 0) {
+            *(char **)(o + 0x90) = p + 0x1B0;
+            *(signed char *)(o + 0x9A) = 1;
+        }
+        if (*(char **)(p + 0x21C) != 0) func_001AD140(*(char **)(p + 0x21C));
+        func_0034BA60(0x2E, p + 0x1E0, 0x29, 0, 1);
+        func_0028C740(p + 0x220);
+        *(int *)(p + 0x2F8) = 0xCC0;
+        func_0028C8E0(p + 0x220, 6);
+        *(int *)(p + 0x2F8) = 0x40;
+        *(signed char *)(p + 0x223) = 0;
+        func_0028C910(p + 0x220);
+        o = func_0028C3A0(p + 0x220, 2, 5, p + 0x1B0);
+        if (o != 0) *(signed char *)(o + 2) = 1;
+        return;
+    }
+    *(float *)(p + 0x194) -= *(float *)(p + 0x10);
+    if (*(float *)(p + 0x194) < 0.0f) {
+        *(float *)(p + 0x20C) = 90.0f;
+        (*(unsigned char *)(p + 4))++;
+        if (*(char **)(p + 0x21C) != 0) func_001AD140(*(char **)(p + 0x21C));
+        return;
+    }
 }

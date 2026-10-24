@@ -576,3 +576,350 @@ extern "C" void func_003389A0(char *p) {
     }
     func_0033A580(p);
 }
+
+typedef struct {
+    signed char a, b, c;
+    float f4, f8, fC, f10, f14;
+    signed char c18;
+    float f1C;
+    signed char c20;
+    float f24, f28, f2C;
+    unsigned char u30;
+    int i34;
+    float f38;
+    signed char c3C, c3D, c3E;
+} S320;
+class Q320 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual unsigned char m10();
+    virtual unsigned char m14();
+    virtual unsigned char m18();
+};
+class P320 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void m68(S320 *, char *);
+    virtual void d6C();
+    virtual void m70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void mB4(int);
+};
+
+extern "C" void func_003208A0(char *p, S320 *s, char *q) {
+    if (*(unsigned char *)(p + 0x1D) == 3) return;
+    *(S320 *)(p + 0x3C) = *s;
+    switch (s->a) {
+    case 3:
+        ((P320 *)p)->mB4(7);
+        break;
+    case 5:
+        switch ((*(Q320 **)(p + 0xC))->m10()) {
+        case 0:
+            ((P320 *)p)->mB4(4);
+            break;
+        case 1:
+            ((P320 *)p)->mB4(5);
+            break;
+        }
+        break;
+    default:
+        (*(Q320 **)(p + 0xC))->m18();
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(p + 0x20), "r"(q + 0x10) : "memory");
+        ((P320 *)p)->m70();
+        if ((short)(*(short *)(p + 0x30) - *(short *)(*(char **)(p + 0x10) + 0x50) + 0x4000) > 0) {
+            switch ((unsigned char)s->c3C) {
+            case 0:
+                *(short *)(*(char **)(p + 0x10) + 0x50) = *(short *)(p + 0x30);
+                break;
+            case 1:
+                *(short *)(*(char **)(p + 0x10) + 0x50) = *(short *)(q + 0x50) + 0x8000;
+                break;
+            }
+            ((P320 *)p)->mB4(2);
+        } else {
+            switch ((unsigned char)s->c3C) {
+            case 0:
+                *(short *)(*(char **)(p + 0x10) + 0x50) = *(short *)(p + 0x30) + 0x8000;
+                break;
+            case 1:
+                *(short *)(*(char **)(p + 0x10) + 0x50) = *(short *)(q + 0x50);
+                break;
+            }
+            ((P320 *)p)->mB4(3);
+        }
+        break;
+    }
+    ((P320 *)p)->m68(s, q);
+}
+
+typedef struct {
+    signed char a, b, c;
+    float f4, f8, fC, f10, f14;
+    signed char c18;
+    float f1C;
+    signed char c20;
+    float f24, f28, f2C;
+    unsigned char u30;
+    int i34;
+    float f38;
+    signed char c3C, c3D, c3E;
+} S35A;
+class Q35A {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual unsigned char m10();
+    virtual unsigned char m14();
+    virtual void m18(int);
+};
+class P35A {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void m68(S35A *, char *);
+    virtual void d6C();
+    virtual void m70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void mB4(int);
+};
+
+extern "C" void func_0035A0E0(char *p, S35A *s, char *q) {
+    signed char c;
+    if (*(unsigned char *)(p + 0x1D) == 3) return;
+    *(S35A *)(p + 0x3C) = *s;
+    c = **(signed char **)(p + 4);
+    switch (c) {
+    default:
+        ((P35A *)p)->mB4(0x11);
+        break;
+    case 0x10:
+    case 0x11:
+    case 0x12:
+    case 0x13:
+        (*(Q35A **)(p + 0xA8))->m18(1000);
+        break;
+    }
+    ((P35A *)p)->m68(s, q);
+}
+
+typedef struct {
+    signed char a, b, c;
+    float f4, f8, fC, f10, f14;
+    signed char c18;
+    float f1C;
+    signed char c20;
+    float f24, f28, f2C;
+    unsigned char u30;
+    int i34;
+    float f38;
+    signed char c3C, c3D, c3E;
+} S32B;
+class Q32B {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual unsigned char m10();
+    virtual unsigned char m14();
+    virtual unsigned char m18();
+};
+class P32B {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual void d1C();
+    virtual void d20();
+    virtual void d24();
+    virtual void d28();
+    virtual void d2C();
+    virtual void d30();
+    virtual void d34();
+    virtual void d38();
+    virtual void d3C();
+    virtual void d40();
+    virtual void d44();
+    virtual void d48();
+    virtual void d4C();
+    virtual void d50();
+    virtual void d54();
+    virtual void d58();
+    virtual void d5C();
+    virtual void d60();
+    virtual void d64();
+    virtual void m68(S32B *, char *);
+    virtual void d6C();
+    virtual void m70();
+    virtual void d74();
+    virtual void d78();
+    virtual void d7C();
+    virtual void d80();
+    virtual void d84();
+    virtual void d88();
+    virtual void d8C();
+    virtual void d90();
+    virtual void d94();
+    virtual void d98();
+    virtual void d9C();
+    virtual void dA0();
+    virtual void dA4();
+    virtual void dA8();
+    virtual void dAC();
+    virtual void dB0();
+    virtual void mB4(int);
+};
+
+extern "C" void func_00320B60(char *p, S32B *s, char *q) {
+    if (*(unsigned char *)(p + 0x1D) == 3) return;
+    *(S32B *)(p + 0x3C) = *s;
+    switch ((*(Q32B **)(p + 0xC))->m10()) {
+    case 0:
+        switch ((*(Q32B **)(p + 0xC))->m18()) {
+        case 1:
+            break;
+        case 4:
+        case 7:
+            ((P32B *)p)->mB4(0xA);
+            break;
+        case 5:
+            ((P32B *)p)->mB4(0xB);
+            break;
+        default:
+            switch ((*(Q32B **)(p + 0xC))->m14()) {
+            case 4:
+                break;
+            }
+            switch (s->a) {
+            case 6:
+                ((P32B *)p)->mB4(0xC);
+                break;
+            default:
+                    switch ((unsigned char)s->c3C) {
+                    case 0:
+                        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+    	sqc2 $vf4, 0x0(%0)" : : "r"(p + 0x20), "r"(q + 0x10) : "memory");
+                        ((P32B *)p)->m70();
+                        if ((short)(*(short *)(p + 0x30) - *(short *)(*(char **)(p + 0x10) + 0x50) + 0x4000) > 0) {
+                            ((P32B *)p)->mB4(0);
+                        } else {
+                            ((P32B *)p)->mB4(1);
+                        }
+                        break;
+                    case 1:
+                        if ((short)(*(short *)(q + 0x50) - *(short *)(*(char **)(p + 0x10) + 0x50) - 0x4000) > 0) {
+                            ((P32B *)p)->mB4(0);
+                        } else {
+                            ((P32B *)p)->mB4(1);
+                        }
+                        break;
+                    }
+                break;
+            }
+            break;
+        }
+        break;
+    case 1:
+        switch ((*(Q32B **)(p + 0xC))->m18()) {
+        case 1:
+            break;
+        default:
+            switch (s->a) {
+            case 3:
+                ((P32B *)p)->mB4(7);
+                break;
+            default:
+                switch (s->c) {
+                case 0:
+                    ((P32B *)p)->mB4(9);
+                    break;
+                case 1:
+                    ((P32B *)p)->mB4(8);
+                    break;
+                }
+                break;
+            }
+            break;
+        }
+        break;
+    }
+    ((P32B *)p)->m68(s, q);
+}
