@@ -5811,6 +5811,30 @@ void func_0042D400(char *);
 void func_00494960(char *);
 void func_004E63D0(char *);
 void func_004E9590(char *);
+void func_0044C190(char *);
+void func_0033BB50(char *);
+void func_004B8AE0(char *);
+void func_004E1D40(char *);
+void func_00484AC0(char *);
+void func_0048C820(char *);
+void func_003221A0(char *);
+void func_00495280(char *);
+void func_002F8090(char *);
+void func_004BCA90(char *);
+void func_0032D5A0(char *);
+void func_0032D6E0(char *, char *, float);
+void func_00417FA0(char *);
+void func_002E84C0(char *, char *);
+typedef struct { float f[3]; } SF3;
+void func_003703B0(char *);
+void func_002EA110(char *);
+void func_00456F20(char *);
+void func_00457F00(char *, char *);
+void func_002FF910(char *);
+void func_002FF9D0(char *);
+int func_002FFA10(char *);
+void func_001AD140(char *);
+void func_0046F580(char *);
 
 char *func_003E0E70(char *s) {
     char *ret;
@@ -6300,4 +6324,1040 @@ unsigned char func_003C8130(char *p, unsigned char k) {
     }
     *(short *)(p + 0x90) = (int)(0.5f + 65536.0f * cur / 360.0f);
     return r;
+}
+
+char *func_0044C030(char *p, char *s, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x430, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x430, t);
+        if (r != 0) {
+            func_0044C190(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x420) = p;
+        *(char **)(ret + 0x3D0) = s;
+        *(float *)(ret + 0x428) = f;
+        *(unsigned char *)(ret + 0x45) = 4;
+    }
+    return ret;
+}
+
+char *func_0033B9F0(char *p, char *s, short h) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0xC00, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0xC00, t);
+        if (r != 0) {
+            func_0033BB50(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x8, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0xBC8) = s;
+        *(short *)(ret + 0x90) = h;
+        *(char **)(ret + 0xBC0) = p;
+        *(unsigned char *)(ret + 0x45) = 2;
+        *(signed char *)(ret + 0x46) = *(signed char *)(p + 0x46);
+    }
+    return ret;
+}
+
+char *func_004B8980(char *p, char *s, short h) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x400, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x400, t);
+        if (r != 0) {
+            func_004B8AE0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x8, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x38C) = s;
+        *(short *)(ret + 0x90) = h;
+        *(char **)(ret + 0x3FC) = p;
+        *(unsigned char *)(ret + 0x45) = 2;
+        *(signed char *)(ret + 0x46) = *(signed char *)(p + 0x46);
+    }
+    return ret;
+}
+
+char *func_004E1BE0(char *p, char *s, unsigned char c) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x750, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x750, t);
+        if (r != 0) {
+            func_004E1D40(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x744) = p;
+        *(char **)(ret + 0x740) = s;
+        *(unsigned char *)(ret + 0x641) = c;
+        *(signed char *)(ret + 0x44) = -1;
+        *(unsigned char *)(ret + 0x45) = 4;
+    }
+    return ret;
+}
+
+char *func_00484960(float *v, float *w, int n, unsigned char c) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char *o;
+    b.pp = &ret;
+    *b.pp = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    *b.pp = func_001B0FD0(a, 0xB00, 1);
+    if ((t = *b.pp) != 0) {
+        r = func_001B1610(0xB00, t);
+        if (r != 0) {
+            func_00484AC0(r);
+        }
+        func_001B1440((char *)&b, *b.pp, a);
+        func_001959E0(D_00645A30, 0x9, *b.pp);
+        func_001B1430(*b.pp, 1);
+        goto ok;
+    }
+    *b.pp = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0x50), "r"(v) : "memory");
+        *(int *)(ret + 0x470) = n;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0xF0), "r"(w) : "memory");
+        *(unsigned char *)(ret + 0xAF5) = c;
+    }
+    return ret;
+}
+
+char *func_0048C6C0(float *v, float *w, int n, int c) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char *o;
+    b.pp = &ret;
+    *b.pp = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    *b.pp = func_001B0FD0(a, 0x1140, 1);
+    if ((t = *b.pp) != 0) {
+        r = func_001B1610(0x1140, t);
+        if (r != 0) {
+            func_0048C820(r);
+        }
+        func_001B1440((char *)&b, *b.pp, a);
+        func_001959E0(D_00645A30, 0x9, *b.pp);
+        func_001B1430(*b.pp, 1);
+        goto ok;
+    }
+    *b.pp = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0x50), "r"(v) : "memory");
+        *(int *)(ret + 0x480) = n;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0xF0), "r"(w) : "memory");
+        *(int *)(ret + 0x1130) = c;
+    }
+    return ret;
+}
+
+char *func_00322030(char *p, char *s) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x500, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x500, t);
+        if (r != 0) {
+            func_003221A0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x1A4) = p;
+        *(unsigned char *)(ret + 0x45) = 4;
+        *(char **)(ret + 0x4F4) = s;
+        *(int *)(ret + 0x448) = 0;
+        *(int *)(ret + 0x44C) = 0;
+        *(int *)(ret + 0x450) = 0;
+        *(int *)(ret + 0x454) = 0;
+    }
+    return ret;
+}
+
+char *func_00495110(char *p, char *s, short h) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    if (p == 0) {
+        return 0;
+    }
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x410, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x410, t);
+        if (r != 0) {
+            func_00495280(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x8, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x3F8) = s;
+        *(short *)(ret + 0x374) = h;
+        *(char **)(ret + 0x3F0) = p;
+        *(unsigned char *)(ret + 0x45) = 2;
+        *(signed char *)(ret + 0x46) = *(signed char *)(p + 0x46);
+    }
+    return ret;
+}
+
+char *func_002F7F10(char *p, char *s, short h, unsigned char c) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x460, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x460, t);
+        if (r != 0) {
+            func_002F8090(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x8, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x3F0) = s;
+        *(short *)(ret + 0x3F4) = h;
+        *(char **)(ret + 0x45C) = p;
+        *(unsigned char *)(ret + 0x45) = 2;
+        *(signed char *)(ret + 0x46) = *(signed char *)(p + 0x46);
+        *(unsigned char *)(ret + 0x458) = c;
+    }
+    return ret;
+}
+
+char *func_004BC900(char *p, char *s, short h, unsigned char c, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x400, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x400, t);
+        if (r != 0) {
+            func_004BCA90(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x8, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x3F0) = p;
+        *(unsigned char *)(ret + 0x45) = 2;
+        *(signed char *)(ret + 0x46) = *(signed char *)(p + 0x46);
+        *(char **)(ret + 0x3F4) = s;
+        *(short *)(ret + 0x90) = h;
+        *(unsigned char *)(ret + 0x370) = c;
+        *(float *)(ret + 0x3E8) = f;
+    }
+    return ret;
+}
+
+char *func_0032D410(unsigned char p, char *s, char *tt, char *u, float f1, float f2) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0xE0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0xE0, t);
+        if (r != 0) {
+            func_0032D5A0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0xE, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(unsigned char *)(ret + 0xA0) = p;
+        *(float *)(ret + 0xC8) = f1;
+        *(char **)(ret + 0x90) = s;
+        *(char **)(ret + 0xC0) = tt;
+        func_0032D6E0(ret, u, f2);
+    }
+    return ret;
+}
+
+char *func_00417E20(char *p, char *s) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0xE0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0xE0, t);
+        if (r != 0) {
+            func_00417FA0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x4, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        func_002E84C0(ret, p);
+        o = ret;
+        *(unsigned char *)(o + 0x38) = *(unsigned char *)s;
+        *(S3 *)(o + 0x39) = *(S3 *)(s + 1);
+        *(SF3 *)(o + 0x3C) = *(SF3 *)(s + 4);
+        *(float *)(o + 0x48) = *(float *)(s + 0x10);
+    }
+    return ret;
+}
+
+char *func_00370240(char *p, float *v, int n, int m) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char *o;
+    b.pp = &ret;
+    *b.pp = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    *b.pp = func_001B0FD0(a, 0x590, 1);
+    if ((t = *b.pp) != 0) {
+        r = func_001B1610(0x590, t);
+        if (r != 0) {
+            func_003703B0(r);
+        }
+        func_001B1440((char *)&b, *b.pp, a);
+        func_001959E0(D_00645A30, 0x9, *b.pp);
+        func_001B1430(*b.pp, 1);
+        goto ok;
+    }
+    *b.pp = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x480) = p;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0x490), "r"(v) : "memory");
+        *(int *)(ret + 0x57C) = n;
+        *(int *)(ret + 0x584) = m;
+        *(unsigned char *)(ret + 0x45) = 4;
+        *(int *)(ret + 0x578) = 0;
+    }
+    return ret;
+}
+
+char *func_002E9F70(char *p, char *s, unsigned char c, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x110, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x110, t);
+        if (r != 0) {
+            func_002EA110(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x4, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        func_002E84C0(ret, p);
+        o = ret;
+        *(unsigned char *)(o + 0x38) = *(unsigned char *)s;
+        *(S3 *)(o + 0x39) = *(S3 *)(s + 1);
+        *(SF3 *)(o + 0x3C) = *(SF3 *)(s + 4);
+        *(float *)(o + 0x48) = *(float *)(s + 0x10);
+        *(unsigned char *)(ret + 0x92) = c;
+        *(float *)(ret + 0x98) = f;
+    }
+    return ret;
+}
+
+char *func_00456D70(char *p, char *s, unsigned char x, unsigned char y, unsigned char z, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x510, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x510, t);
+        if (r != 0) {
+            func_00456F20(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    o = ret;
+    if (o != 0) {
+        *(char **)(o + 0x500) = p;
+        if (*(char **)(o + 0x500) != 0) {
+            *(unsigned char *)(o + 0x3D0) = 1;
+        }
+        func_00457F00(ret, s);
+        *(unsigned char *)(ret + 0x3D1) = y;
+        *(unsigned char *)(ret + 0x3D2) = z;
+        *(unsigned char *)(ret + 0x3D4) = x;
+        *(float *)(ret + 0x3E0) = f;
+        *(unsigned char *)(ret + 0x45) = 4;
+    }
+    return ret;
+}
+
+char *func_002FF750(short h, char *p, unsigned char c) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x6C0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x6C0, t);
+        if (r != 0) {
+            func_002FF910(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0xE, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        func_002FF9D0(ret);
+        *(char **)(ret + 0x3C) = p;
+        *(short *)(ret + 0x3A) = h;
+        o = ret;
+        *(signed char *)(o + 0x39) = *(signed char *)(*(char **)(o + 0x40) + *(short *)(o + 0x3A) * 0xB0);
+        if ((unsigned char)func_002FFA10(ret) == 0) {
+            func_001AD140(ret);
+            return 0;
+        }
+        *(unsigned char *)(ret + 0x6A4) = c;
+        *(unsigned int *)(ret + 0xC) = *(unsigned int *)(ret + 0xC) | 0x40;
+    }
+    return ret;
+}
+
+typedef struct { float f[4]; } SF4;
+void func_003D0EA0(char *);
+void func_00471520(char *);
+void func_003E05E0(char *);
+void func_001B1450(char *);
+void func_00207410(char *, char *, char *, char *);
+void func_00207460(char *, char *, char *);
+void func_001B1620(char *, char *);
+extern char D_01DF7E20[];
+char *func_0013D2A0(char *, char *, int);
+void func_0042CB10(char *);
+void func_00205D40(char *);
+void func_00205DE0(char *, char *);
+
+char *func_0046F3A0(char *sc, char *p, unsigned char c) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x290, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x290, t);
+        if (r != 0) {
+            func_0046F580(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x6, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    o = ret;
+    if (o == 0) {
+        return o;
+    }
+    *(signed char *)(o + 0x210) = *(signed char *)sc;
+    *(SF4 *)(o + 0x220) = *(SF4 *)(sc + 0x10);
+    *(short *)(o + 0x230) = *(short *)(sc + 0x20);
+    *(unsigned short *)(o + 0x232) = *(unsigned short *)(sc + 0x22);
+    *(unsigned short *)(o + 0x234) = *(unsigned short *)(sc + 0x24);
+    *(SF4 *)(o + 0x238) = *(SF4 *)(sc + 0x28);
+    *(char **)(ret + 0x250) = p;
+    *(unsigned char *)(ret + 0x254) = c;
+    *(int *)(ret + 0x270) = 0;
+    *(int *)(ret + 0x26C) = 0;
+    *(int *)(ret + 0x268) = 0;
+    *(int *)(ret + 0x264) = 0;
+    return ret;
+}
+
+char *func_003D0CB0(char *sc, char *pa, char *pb, char *pc, char *pd, char *pe) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0xBC0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0xBC0, t);
+        if (r != 0) {
+            func_003D0EA0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    o = ret;
+    if (o != 0) {
+        *(signed char *)(o + 0x150) = *(signed char *)sc;
+        *(SF4 *)(o + 0x160) = *(SF4 *)(sc + 0x10);
+        *(short *)(o + 0x170) = *(short *)(sc + 0x20);
+        *(unsigned short *)(o + 0x172) = *(unsigned short *)(sc + 0x22);
+        *(unsigned short *)(o + 0x174) = *(unsigned short *)(sc + 0x24);
+        *(SF4 *)(o + 0x178) = *(SF4 *)(sc + 0x28);
+        *(char **)(ret + 0x190) = pa;
+        *(char **)(ret + 0xD0) = pb;
+        *(char **)(ret + 0x194) = pc;
+        *(char **)(ret + 0xB84) = pd;
+        *(char **)(ret + 0xB88) = pe;
+    }
+    return ret;
+}
+
+char *func_00471330(char *p, float *v, int n, int m, float *w, unsigned char c, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char *o;
+    b.pp = &ret;
+    *b.pp = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    *b.pp = func_001B0FD0(a, 0x4C0, 1);
+    if ((t = *b.pp) != 0) {
+        r = func_001B1610(0x4C0, t);
+        if (r != 0) {
+            func_00471520(r);
+        }
+        func_001B1440((char *)&b, *b.pp, a);
+        func_001959E0(D_00645A30, 0x8, *b.pp);
+        func_001B1430(*b.pp, 1);
+        goto ok;
+    }
+    *b.pp = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x464) = p;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0x50), "r"(v) : "memory");
+        *(float *)(ret + 0x5C) = 1.0f;
+        *(int *)(ret + 0x46C) = n;
+        *(int *)(ret + 0x468) = m;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0x490), "r"(w) : "memory");
+        *(float *)(ret + 0x49C) = 1.0f;
+        *(float *)(ret + 0x470) = f;
+        *(unsigned char *)(ret + 0x4B1) = c;
+        *(signed char *)(ret + 0x44) = -1;
+        *(unsigned char *)(ret + 0x45) = 2;
+        *(signed char *)(ret + 0x46) = *(signed char *)(p + 0x46);
+    }
+    return ret;
+}
+
+char *func_003E03E0(char *sc) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0xC0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0xC0, t);
+        if (r != 0) {
+            func_003E05E0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x3, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    o = ret;
+    if (o == 0) {
+        return 0;
+    }
+    *(unsigned char *)(o + 0x50) = *(unsigned char *)sc;
+    *(unsigned char *)(o + 0x51) = *(unsigned char *)(sc + 1);
+    *(int *)(o + 0x54) = *(int *)(sc + 4);
+    *(SF4 *)(o + 0x58) = *(SF4 *)(sc + 8);
+    *(SF4 *)(o + 0x68) = *(SF4 *)(sc + 0x18);
+    *(SF4 *)(o + 0x78) = *(SF4 *)(sc + 0x28);
+    *(SF4 *)(o + 0x88) = *(SF4 *)(sc + 0x38);
+    *(SF4 *)(o + 0xA0) = *(SF4 *)(sc + 0x50);
+    *(int *)(o + 0xB0) = *(int *)(sc + 0x60);
+    *(int *)(o + 0xB4) = *(int *)(sc + 0x64);
+    *(int *)(o + 0xB8) = *(int *)(sc + 0x68);
+    return ret;
+}
+
+char *func_001B1270(char *a0, char *a1, char *a2, char *a3, char *a4, char *a5, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    if (D_01DF7E20 == 0) {
+        **q = func_001B0FD0(a, 0x120, 1);
+    } else {
+        **q = func_0013D2A0(a, D_01DF7E20, 0x120);
+    }
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x120, t);
+        if (r != 0) {
+            func_001B1450(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0xA, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        func_00207410(ret, a0, a3, a4);
+        func_00207460(ret, a1, a5);
+        *(float *)(ret + 0x40) = f;
+        func_001B1620(ret, a2);
+    }
+    return ret;
+}
+
+char *func_0042C9B0(char *p, char *s, int n) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x4C0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x4C0, t);
+        if (r != 0) {
+            func_0042CB10(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x4A0) = p;
+        func_00105300((float *)(ret + 0x420), s);
+        *(int *)(ret + 0x4B4) = n;
+        *(unsigned char *)(ret + 0x45) = 4;
+    }
+    return ret;
+}
+
+char *func_00205AC0(char *a0, char *a1, char *a2, char *a3, char *a4, char *a5, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    int i;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    if (D_01DF7E20 == 0) {
+        **q = func_001B0FD0(a, 0xE0, 1);
+    } else {
+        **q = func_0013D2A0(a, D_01DF7E20, 0xE0);
+    }
+    if ((t = **q) != 0) {
+        r = func_001B1610(0xE0, t);
+        if (r != 0) {
+            func_00205D40(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0xB, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        func_00207410(ret, a0, a3, a4);
+        func_00207460(ret, a1, a5);
+        *(float *)(ret + 0x40) = f;
+        func_00205DE0(ret, a2);
+        for (i = 0; i < 8; i++) {
+            *(unsigned char *)(ret + i + 0xC4) = 0;
+            *(int *)(ret + i * 4 + 0xA4) = 0;
+            *(unsigned char *)(ret + i + 0xCC) = 0;
+        }
+    }
+    return ret;
 }
