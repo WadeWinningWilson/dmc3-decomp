@@ -10991,6 +10991,7 @@ public:
 };
 
 typedef struct { char *d; void *nx; } L2F1;
+extern "C" void func_002F2250(char *);
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -11036,4 +11037,100 @@ extern "C" void func_002CF780(char *p) {
 	lqc2 $vf5, 0x0(%1)
 	vadd.xyzw $vf6, $vf4, $vf5
 	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(p + 0x2F40) : "memory");
+}
+
+class O4767 {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24();
+    virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44();
+    virtual void d48(); virtual void d4C(); virtual void d50(); virtual void d54(); virtual void d58(); virtual void d5C(); virtual void d60(); virtual void d64();
+    virtual void d68(); virtual void d6C(); virtual void d70(); virtual void d74(); virtual void d78(); virtual void d7C(); virtual void d80(); virtual void d84();
+    virtual void d88(); virtual void d8C(); virtual void d90(); virtual void d94(); virtual void d98(); virtual void d9C(); virtual void dA0(); virtual void dA4();
+    virtual void dA8(); virtual void dAC(); virtual void dB0(); virtual void dB4(); virtual void dB8(); virtual void dBC(); virtual void dC0(); virtual void dC4();
+    virtual void dC8(); virtual void dCC(); virtual void dD0(); virtual void dD4(); virtual void dD8(); virtual void dDC(); virtual void dE0(); virtual void dE4();
+    virtual void dE8(); virtual void dEC(); virtual void dF0(); virtual void dF4(); virtual void dF8(); virtual void dFC(); virtual void d100(); virtual void d104();
+    virtual void d108(); virtual void d10C(); virtual void d110(); virtual void d114(); virtual void d118(); virtual void d11C(); virtual void d120(); virtual void d124();
+    virtual void d128(); virtual void d12C(); virtual void d130(); virtual void d134(); virtual void d138(); virtual void d13C(); virtual void d140(); virtual void d144();
+    virtual void d148(); virtual void d14C(); virtual void d150(); virtual void d154(); virtual void d158(); virtual void d15C(); virtual void d160(); virtual void d164();
+    virtual void d168(); virtual void d16C(); virtual void d170(); virtual void d174(); virtual void d178(); virtual void d17C(); virtual void d180(); virtual void d184();
+    virtual void d188(); virtual void d18C(); virtual void d190(); virtual void d194();
+    virtual void m198();
+};
+
+typedef struct { unsigned char b0; char pad[15]; float pos[4]; short ang; short h92; short h94; short pad2; int w98; int w9C; int wA0; int wA4; } S4767 __attribute__((aligned(16)));
+
+extern "C" O4767 *func_002F2850(char *, S4767 *);
+
+extern "C" void func_00476780(char *p, unsigned char k, int m) {
+    S4767 s;
+    float d[4] __attribute__((aligned(16)));
+    int i;
+    O4767 *o;
+    short t;
+    func_002F2250(*(char **)(*(char **)D_01CAFF0C + 0x20));
+    for (i = 0; i < 3; i++) {
+        if (((int *)(p + 0xF04))[i] == 0) break;
+    }
+    s.b0 = k;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(s.pos), "r"(p + 0xEF0) : "memory");
+    s.pos[1] += 100.0f;
+    s.pos[3] = 1.0f;
+    t = 0.5f + 65536.0f * *(float *)(p + 0xF00) / 6.283185f;
+    s.ang = (short)(unsigned short)t;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(p + 0xEC0) : "memory");
+    switch (i) {
+    case 0:
+        break;
+    case 1:
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	lqc2 $vf6, 0x0(%0)
+	vmulx.xyz $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(d), "f"(200.0f) : "t0", "memory");
+        break;
+    case 2:
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	lqc2 $vf6, 0x0(%0)
+	vmulx.xyz $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(d), "f"(-200.0f) : "t0", "memory");
+        break;
+    }
+    __asm__ volatile("lqc2 $vf4, 0x0(%2)
+	lqc2 $vf5, 0x0(%1)
+	lqc2 $vf6, 0x0(%0)
+	vadd.xyz $vf6, $vf5, $vf4
+	sqc2 $vf6, 0x0(%0)" : : "r"(s.pos), "r"(s.pos), "r"(d) : "memory");
+    s.h94 = 0;
+    s.w98 = 0;
+    s.w9C = 0;
+    s.wA0 = 0;
+    s.wA4 = 0;
+    switch (m) {
+    case 0: s.h94 = 0; break;
+    case 1: s.h94 = 2; break;
+    case 2: s.h94 = 3; break;
+    }
+    switch (*(unsigned char *)(p + 0xF13)) {
+    case 0:
+        s.h92 = 0xE;
+        o = func_002F2850(*(char **)(*(char **)D_01CAFF0C + 0x20), &s);
+        break;
+    case 1:
+        s.h92 = 0;
+        o = func_002F2850(*(char **)(*(char **)D_01CAFF0C + 0x20), &s);
+        if (o != 0) o->m198();
+        break;
+    }
+    if (o != 0) {
+        ((O4767 **)(p + 0xF04))[i] = o;
+        if (*(unsigned char *)(p + 0xF13) == 0) ((unsigned char *)(p + 0xF10))[i] = 0;
+        else ((unsigned char *)(p + 0xF10))[i] = 1;
+    }
 }

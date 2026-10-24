@@ -8071,6 +8071,12 @@ typedef struct { unsigned short fl; unsigned char b2; unsigned char b3; unsigned
 typedef struct { int cmd; int w4; S2FAA s; } C36;
 
 int func_002FAEF0(S2FAA *, int);
+void func_003B88D0(char *);
+void func_003BA170(char *, char *, char *);
+void func_002F2E30(char *, char *);
+void func_0030DA60(char *);
+extern float D_005BDEC0;
+void func_004F5110(char *, int);
 
 int func_002FAEF0(S2FAA *t, int cmd) {
     C36 s = { 0 };
@@ -8104,4 +8110,171 @@ int func_002FAEF0(S2FAA *t, int cmd) {
     if (func_002FAE60((F2FAE *)&s.s) == -1) return -1;
     func_002FA530(1, &s, 0x24);
     return 0;
+}
+
+char *func_003B8720(char *p, char *s, char *u) {
+    char *qq;
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x5C0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x5C0, t);
+        if (r != 0) {
+            func_003B88D0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    o = ret;
+    if (o != 0) {
+        *(char **)(o + 0x1DC) = p;
+        if (*(char **)(o + 0x1DC) != 0) {
+            *(unsigned char *)(o + 0x1B4) = 1;
+        }
+        func_003BA170(ret, s, u);
+        *(signed char *)(ret + 0x44) = -1;
+        *(unsigned char *)(ret + 0x45) = 3;
+        *(unsigned char *)(ret + 0x46) = 0x2A;
+        *(unsigned char *)(ret + 0x47) = 0x18;
+        qq = ret;
+        if ((t = *(char **)(*(char **)D_01CAFF0C + 0x20)) != 0) {
+            func_002F2E30(t, qq);
+        }
+    }
+    return ret;
+}
+
+unsigned char func_0030D8E0(unsigned char p, char *s, int n) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    unsigned char r2;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x5C, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x5C, t);
+        if (r != 0) {
+            func_0030DA60(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0xF, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(unsigned char *)(ret + 0x4C) = p;
+        o = ret;
+        *(int *)(o + 0x38) = *(int *)(s + 0);
+        *(int *)(o + 0x3C) = *(int *)(s + 4);
+        *(int *)(o + 0x40) = *(int *)(s + 8);
+        *(int *)(o + 0x44) = *(int *)(s + 0xC);
+        *(int *)(ret + 0x48) = n;
+    } else {
+        return 0;
+    }
+    return 1;
+}
+
+void func_004F40D0(char *p) {
+    float d[4] __attribute__((aligned(16)));
+    char *o;
+    char *a;
+    char *b;
+    short t;
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        (*(unsigned char *)(p + 6))++;
+        o = func_00207480(3, 0x34A, 0, 0x10);
+        if (o != 0) {
+            *(char **)(o + 0x90) = p + 0x170;
+            *(unsigned char *)(o + 0x9A) = 3;
+            *(unsigned char *)(o + 0x3A) = 1;
+        }
+        func_00330BD0(D_01DFABA0, 0x70, p + 0x50, 0x23, 0);
+        *(float *)(p + 0xBE0) = 10.0f;
+        *(short *)(p + 0xBE8) = 0;
+        break;
+    case 1:
+        if ((*(float *)(p + 0xBE0) -= *(float *)(p + 0x10)) < 0.0f) {
+            *(unsigned char *)(p + 0xBED) = 1;
+            (*(unsigned char *)(p + 6))++;
+            *(float *)(p + 0xBE0) = 300.0f;
+        }
+        t = 0.5f + 65536.0f * (D_005BDEC0 * *(float *)(p + 0x10)) / 360.0f;
+        *(short *)(p + 0xBE8) += (short)(unsigned short)t;
+        func_004F5110(p, *(short *)(p + 0xBE8));
+        break;
+    case 2:
+        if ((*(float *)(p + 0xBE0) -= *(float *)(p + 0x10)) < 0.0f) {
+            (*(unsigned char *)(p + 6))++;
+            o = func_00207480(3, 0x34A, 0, 0x10);
+            if (o != 0) {
+                *(char **)(o + 0x90) = p + 0x170;
+                *(unsigned char *)(o + 0x9A) = 3;
+                *(unsigned char *)(o + 0x3A) = 1;
+            }
+            func_00330BD0(D_01DFABA0, 0x70, p + 0x50, 0x23, 0);
+            *(float *)(p + 0xBE0) = 10.0f;
+        }
+        t = 0.5f + 65536.0f * (D_005BDEC0 * *(float *)(p + 0x10)) / 360.0f;
+        *(short *)(p + 0xBE8) += (short)(unsigned short)t;
+        func_004F5110(p, *(short *)(p + 0xBE8));
+        break;
+    case 3:
+        if ((*(float *)(p + 0xBE0) -= *(float *)(p + 0x10)) < 0.0f) {
+            (*(unsigned char *)(p + 6))++;
+            *(float *)(p + 0xBE0) = 10.0f;
+            *(unsigned char *)(p + 0xBED) = 0;
+        }
+        break;
+    case 4:
+        if ((*(float *)(p + 0xBE0) -= *(float *)(p + 0x10)) < 0.0f) {
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 0xBC4) + 1;
+            *(unsigned char *)(p + 6) = 0;
+            a = *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50;
+            b = *(char **)(*(char **)(func_004D2740(*(char **)(p + 0x484)) + 0xC) + 0x104) + 0x30;
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	lqc2 $vf5, 0x0(%2)
+	vsub.xyzw $vf6, $vf5, $vf4
+	sqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(a), "r"(b) : "memory");
+            *(short *)(p + 0xBEA) = func_00131D10(d[0], d[2]);
+        }
+        break;
+    }
 }

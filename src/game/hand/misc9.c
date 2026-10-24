@@ -25378,6 +25378,21 @@ typedef struct { short h0; short h2; unsigned char c4; char pad[0x17]; } C28;
 int func_002FAEF0(S2FAA *, int);
 void func_002FB250(char *, char *, int *);
 float func_00104D00(float *, float *);
+void func_00104E78(char *, char *);
+void func_001AC9C0(char *);
+void func_00253310(char *);
+void func_002534D0(char *, int);
+extern int D_005BE0C8;
+void func_001BF4F0(int *, char *, float (*)[4]);
+void func_001BF590(int *, char *, float (*)[4], int);
+void func_0047CE30(char *, int);
+void func_004DC3A0(char *);
+int func_002FD110(char *);
+void func_002FDDD0(char *, int);
+void func_002FDD40(char *);
+void func_0040EB90(char *);
+void func_0040F220(char *);
+void func_0040F320(char *);
 
 void func_002FAB20(int a) {
     C28 s = { 0 };
@@ -25570,4 +25585,438 @@ void func_002779F0(int u, char *o, unsigned char *l, float *pos) {
 	vmulx.xyz $vf6, $vf4, $vf5x
 	sqc2 $vf6, 0x0(%0)" : : "r"(o + 0x10), "r"(o + 0x10), "f"(-1.0f) : "t0", "memory");
     }
+}
+
+void func_001AC900(char *p, char *m) {
+    *(int *)(p + 0x23C) = 0;
+    func_00105300(p + 0x100, m);
+    func_00104E78(p + 0x1E0, p + 0x100);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(p + 0x220), "r"(p + 0x200) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	lqc2 $vf6, 0x0(%0)
+	vmulx.xyz $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x220), "r"(p + 0x220), "f"(-1.0f) : "t0", "memory");
+    func_001AC9C0(p);
+}
+
+void func_00253110(char *p, int x, unsigned short fl, float dt) {
+    float tmp[4] __attribute__((aligned(16)));
+    *(float *)(p + 0x12C) -= dt;
+    *(float *)(p + 0x134) -= dt;
+    if (*(unsigned char *)(p + 0x148) == 1 && *(float *)(p + 0x134) <= 0.0f) {
+        *(float *)(p + 0x134) = *(float *)(p + 0x130);
+        func_00253310(p);
+    } else {
+        func_00131650(p + 0xF0, p + 0xF0);
+    }
+    if (fl & 2) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	mfc1 $t0, %1
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0xF0), "f"(*(float *)(p + 0x110)) : "t0", "memory");
+    }
+    if (fl & 1) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + 0xF0), "f"(dt) : "t0", "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(tmp) : "memory");
+    }
+}
+
+void func_00253220(char *p, int x, unsigned short fl, float dt) {
+    float tmp[4] __attribute__((aligned(16)));
+    *(float *)(p + 0x12C) -= dt;
+    *(float *)(p + 0x134) -= dt;
+    if (*(unsigned char *)(p + 0x148) == 1 && *(float *)(p + 0x134) <= 0.0f) {
+        *(float *)(p + 0x134) = *(float *)(p + 0x130);
+        func_002534D0(p, x);
+    }
+    if (fl & 2) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0xF0), "r"(p + 0x100) : "memory");
+    }
+    if (fl & 1) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + 0xF0), "f"(dt) : "t0", "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(tmp) : "memory");
+    }
+}
+
+void func_001AA220(char *p, float *a, float *m) {
+    char *o = ((char **)(p + 0x40))[D_005BE0D8[0xE]];
+    __asm__ volatile("mfc1 $t0, %4
+	nop
+	qmtc2.ni $t0, $vf5
+	lqc2 $vf4, 0x0(%0)
+	vmulx.xyz $vf4, $vf4, $vf5x
+	sqc2 $vf4, 0x0(%3)
+	lqc2 $vf4, 0x10(%0)
+	vmulx.xyz $vf4, $vf4, $vf5x
+	sqc2 $vf4, 0x10(%3)
+	lqc2 $vf4, 0x20(%0)
+	vmulx.xyz $vf4, $vf4, $vf5x
+	sqc2 $vf4, 0x20(%3)
+	lqc2 $vf4, 0x30(%0)
+	vmulx.xyz $vf4, $vf4, $vf5x
+	sqc2 $vf4, 0x30(%3)
+	lq $t0, 0x0(%1)
+	lq $t1, 0x10(%1)
+	lq $t2, 0x20(%1)
+	lq $t3, 0x30(%1)
+	pextlw $t4, $t1, $t0
+	pextuw $t5, $t1, $t0
+	pextlw $t6, $t3, $t2
+	pextuw $t7, $t3, $t2
+	pcpyld $t0, $t6, $t4
+	pcpyud $t1, $t4, $t6
+	pcpyld $t2, $t7, $t5
+	pcpyud $t3, $t5, $t7
+	sq $t0, 0x0(%2)
+	sq $t1, 0x10(%2)
+	sq $t2, 0x20(%2)
+	sq $t3, 0x30(%2)" : : "r"(a), "r"(m), "r"(o + 0xF0), "r"(o + 0xB0), "f"(1.0f / 255.0f) : "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "memory");
+}
+
+void func_001FF490(char *p, char *s) {
+    float m[4][4] __attribute__((aligned(16)));
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[0]), "r"(s + 0x4) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[1]), "r"(s + 0x10) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[2]), "r"(s + 0x1C) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[3]), "r"(s + 0x28) : "t0", "t1", "memory");
+    func_001BF4F0(&D_005BE0C8, p, m);
+}
+
+void func_001FF550(char *p, char *s, int k) {
+    float m[4][4] __attribute__((aligned(16)));
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[0]), "r"(s + 0x4) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[1]), "r"(s + 0x10) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[2]), "r"(s + 0x1C) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(m[3]), "r"(s + 0x28) : "t0", "t1", "memory");
+    func_001BF590(&D_005BE0C8, p, m, k);
+}
+
+void func_002022F0(int u, char *d, char *s) {
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(d), "r"(s + 0x4) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(d + 0x10), "r"(s + 0x10) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(d + 0x20), "r"(s + 0x1C) : "t0", "t1", "memory");
+    __asm__ volatile("ldl $t0, 0x7(%1)
+	ldr $t0, 0x0(%1)
+	lw $t1, 0x8(%1)
+	pcpyld $t0, $t1, $t0
+	qmtc2.ni $t0, $vf8
+	vmove.w $vf8, $vf0
+	sqc2 $vf8, 0x0(%0)" : : "r"(d + 0x30), "r"(s + 0x28) : "t0", "t1", "memory");
+}
+
+float func_001C1B00(char *u, float *x, float *y, float a) {
+    float t[4] __attribute__((aligned(16)));
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	lqc2 $vf5, 0x0(%2)
+	vmul.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(t), "r"(y), "r"(x) : "memory");
+    return a + (t[2] + (t[0] + t[1]));
+}
+
+static inline int flag_47C(int s) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    unsigned int *w;
+    unsigned int m;
+    if (s < 32) {
+        w = (unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18);
+        m = 1 << (s & 31);
+        return (*w & m) != 0;
+    } else {
+        int t = s - 32;
+        w = (unsigned int *)((char *)(t / 32 * 4) + (int)g + 0x44);
+        m = 1 << (t & 31);
+        return (*w & m) != 0;
+    }
+}
+
+static inline void setflag_47C(int s) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    if (s < 32) {
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) |= 1 << (s & 31);
+    } else {
+        s -= 32;
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) |= 1 << (s & 31);
+    }
+}
+
+void func_0047CB50(char *p) {
+    int i;
+    int n = 0;
+    int s;
+    for (i = 0; i < 15; i++) {
+        func_0047CE30(p, (unsigned char)i);
+        if (*(unsigned char *)(p + i * 0xA0 + 0xE0) == 2) n++;
+    }
+    s = *(short *)(p + 0xDE);
+    if (s != -1 && !(unsigned char)flag_47C(s) && n == 15) {
+        setflag_47C(s);
+        *(unsigned char *)(p + 0xDD) = 1;
+    }
+}
+
+static inline void chk4DC(char *p, int k) {
+    char *g;
+    unsigned int *w;
+    unsigned int m;
+    int r;
+    if (k == -1) return;
+    g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    if (k < 32) {
+        w = (unsigned int *)((char *)(k / 32 * 4) + (int)g + 0x18);
+        m = 1 << (k & 31);
+        r = (*w & m) != 0;
+    } else {
+        int t = k - 32;
+        w = (unsigned int *)((char *)(t / 32 * 4) + (int)g + 0x44);
+        m = 1 << (t & 31);
+        r = (*w & m) != 0;
+    }
+    if (r) func_004DC3A0(p);
+}
+
+static inline int tst4DC(int *a, int k) { int w = a[k / 32]; return (w & (1 << (k & 31))) != 0; }
+
+void func_004DC1B0(char *p) {
+    *(float *)(p + 0xD80) *= 0.95f;
+    *(float *)(p + 0xD84) -= 1.0f;
+    *(float *)(p + 0xD88) *= 0.95f;
+    *(float *)(p + 0xCE0) = 0.95f * *(float *)(p + 0xCE0) + 0.05f * *(float *)(p + 0xCA0);
+    *(float *)(p + 0xCE8) = 0.95f * *(float *)(p + 0xCE8) + 0.05f * *(float *)(p + 0xCA8);
+    switch (*(int *)(p + 0x12B8)) {
+    case 0:
+        chk4DC(p, *(short *)(p + 0x12B0));
+        break;
+    case 1:
+        chk4DC(p, *(short *)(*(char **)(p + 0x12BC) + 0x12B2));
+        break;
+    }
+}
+
+static inline void flag_clear(int k) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    if (k < 32) {
+        ((int *)(g + 0x18))[k / 32] &= ~(1 << (k & 31));
+    } else {
+        k -= 32;
+        ((int *)(g + 0x44))[k / 32] &= ~(1 << (k & 31));
+    }
+}
+
+static inline int ft2FC(int k) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    unsigned int *w;
+    unsigned int m;
+    if (k < 32) {
+        w = (unsigned int *)((char *)(k / 32 * 4) + (int)g + 0x18);
+        m = 1 << (k & 31);
+        return (*w & m) != 0;
+    } else {
+        int t = k - 32;
+        w = (unsigned int *)((char *)(t / 32 * 4) + (int)g + 0x44);
+        m = 1 << (t & 31);
+        return (*w & m) != 0;
+    }
+}
+
+void func_002FC700(char *p) {
+    unsigned char r;
+    int k = *(short *)(p + 0xDC);
+    if (k != -1 && !(unsigned char)ft2FC(k)) {
+        *(unsigned char *)(p + 0x822) = 1;
+    }
+    if (!(*(float *)(p + 0x838) <= 0.0f)) {
+        *(float *)(p + 0x83C) = *(float *)(p + 0x83C) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x83C) < 0.0f) {
+            *(unsigned char *)(p + 0x822) = 1;
+        }
+    }
+    if (*(unsigned char *)(p + 0x822) != 0) {
+        r = func_002FD110(p);
+        if (r != 0) return;
+        *(unsigned char *)(p + 0x822) = 0;
+        if (*(short *)(p + 0xDC) != -1) {
+            flag_clear(*(short *)(p + 0xDC));
+        }
+        *(unsigned char *)(p + 0x821) = 0;
+        return;
+    }
+    if (*(unsigned char *)(p + 0x824) == 0) {
+        switch (*(unsigned char *)(p + 0x828)) {
+        case 0:
+            if (*(unsigned char *)(p + 0x825) == 0) {
+                func_002FDDD0(p, 2);
+                *(unsigned char *)(p + 0x826) = 1;
+                *(unsigned char *)(p + 0x828) = *(unsigned char *)(p + 0x828) + 1;
+                func_002FDD40(p);
+            }
+            break;
+        case 1:
+            if (*(unsigned char *)(p + 0x826) == 0) {
+                func_002FDDD0(p, 1);
+                *(unsigned char *)(p + 0x825) = 1;
+                *(unsigned char *)(p + 0x828) = 0;
+                func_002FDD40(p);
+            }
+            break;
+        }
+    }
+    func_002FCF10(p);
+}
+
+static inline unsigned int mt_40E(void) {
+    unsigned int y;
+    if (D_01DF8810[0] >= 0x270) {
+        func_00207A90(D_01DF7E50);
+    }
+    {
+        unsigned int i = D_01DF8810[0];
+        D_01DF8810[0] = i + 1;
+        y = D_01DF7E50[i];
+    }
+    y ^= y >> 11;
+    y ^= (y << 7) & 0x9D2C5680;
+    y ^= (y << 15) & 0xEFC60000;
+    y ^= y >> 18;
+    return y;
+}
+
+static inline int ft40E(int k) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    unsigned int *w;
+    unsigned int m;
+    if (k < 32) {
+        w = (unsigned int *)((char *)(k / 32 * 4) + (int)g + 0x18);
+        m = 1 << (k & 31);
+        return (*w & m) != 0;
+    } else {
+        int t = k - 32;
+        w = (unsigned int *)((char *)(t / 32 * 4) + (int)g + 0x44);
+        m = 1 << (t & 31);
+        return (*w & m) != 0;
+    }
+}
+
+void func_0040E890(char *p) {
+    int k;
+    *(unsigned char *)(p + 0x45) = 6;
+    k = *(short *)(p + 0xDC);
+    if (k != -1 && ft40E(k)) {
+        *(unsigned char *)(p + 0xE0) = 0;
+        return;
+    }
+    if (*(short *)(p + 0xF8) == 2) {
+        *(short *)(p + 0xF8) = mt_40E() % 6 + 2;
+        if (*(short *)(p + 0xF8) > 7) *(short *)(p + 0xF8) = 2;
+    }
+    func_0040EB90(p);
+    func_0040F220(p);
+    func_0040F320(p);
+    *(int *)(p + 0xC) |= 0x40;
+}
+
+int func_004837F0(char *p, signed char k, int b) {
+    int r;
+    unsigned int *w;
+    unsigned int m;
+    if (k == 8 && b > 31) {
+        r = (*(unsigned int *)(p + 0xC0) & (1 << (b - 32))) != 0;
+    } else if (k < 26 && b < 32) {
+        w = (unsigned int *)((char *)(k * 4) + (int)p + 0x68);
+        m = 1 << b;
+        r = (*w & m) != 0;
+    } else {
+        r = 0;
+    }
+    return r;
 }

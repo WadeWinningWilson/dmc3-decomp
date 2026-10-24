@@ -10822,6 +10822,11 @@ void func_00132300(char *, float, float, float);
 extern signed char D_005BE144;
 unsigned char func_002F5220(char *);
 void func_002F55E0(char *);
+void func_004BC190(char *, int, int, int);
+void func_004BC0C0(char *);
+extern unsigned int D_0058AFF0[];
+int func_002E8780(int);
+int func_0020F9B0(char *);
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -10935,4 +10940,109 @@ void func_002F4FA0(char *p) {
     if (!(f <= 180.0f)) *(float *)(q + 0x2C) = f - 360.0f;
     if (*(float *)(q + 0x2C) < -180.0f) *(float *)(q + 0x2C) += 360.0f;
     func_002F55E0(p);
+}
+
+static inline float fabBB(float x) { return x < 0.0f ? -x : x; }
+
+void func_004BBED0(char *p) {
+    float tmp[4] __attribute__((aligned(16)));
+    float t;
+    float y;
+    float d;
+    unsigned int f;
+    unsigned char k;
+    float *dst;
+    float *src;
+    func_001AD100(p);
+    *(float *)(p + 0x3D4) = *(float *)(p + 0x3D4) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0x3D4) < 0.0f) {
+        func_001AD140(p);
+        return;
+    }
+    f = 0;
+    if (*(char **)(p + 0x1CC) != 0) {
+        f = *(unsigned int *)(*(char **)(p + 0x1CC) + 8);
+    }
+    if (f & 0x30000) {
+        func_001AD140(p);
+        return;
+    }
+    t = func_0034C160(*(float *)(p + 0x3D0), 3.0f, 3.0f * *(float *)(p + 0x10));
+    *(float *)(p + 0x3D0) = t;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + 0x3C0), "f"(t * t) : "t0", "memory");
+    *(float *)(p + 0x50) = *(float *)(p + 0x50) + tmp[0] * *(float *)(p + 0x10);
+    *(float *)(p + 0x58) = *(float *)(p + 0x58) + tmp[2] * *(float *)(p + 0x10);
+    switch (D_01CAFF38[0]) {
+    case 0x67:
+    case 0x70:
+    case 0x71:
+    case 0xD8:
+    case 0xD4:
+        y = *(float *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x2924);
+        d = fabBB(y - *(float *)(p + 0x54));
+        if (d < 100.0f) {
+            *(float *)(p + 0x54) = y;
+        }
+        break;
+    }
+    *(float *)(p + 0x3D8) = *(float *)(p + 0x3D8) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0x3D8) < 0.0f) {
+        k = *(unsigned char *)(p + 0x3DC);
+        *(unsigned char *)(p + 0x3DC) = k + 1;
+        func_004BC190(p + 0x380, *(short *)(p + 0x90), k, *(int *)(p + 0x3E0));
+        *(float *)(p + 0x3D8) = 7.0f;
+    }
+    func_004BC0C0(p);
+    func_0028C5C0(p + 0x150, 0, *(float *)(p + 0x10));
+}
+
+static inline short find20F(char *p, int k, int x) {
+    unsigned int c1 = ((unsigned char)k << 24) | x;
+    unsigned int c2 = ((unsigned char)k << 24) | (x & 0xFF03FFFF);
+    int j;
+    for (j = 0; j < 0x40; j++) {
+        if (D_0058AFF0[j] == c1 || ((D_0058AFF0[j] & 0xFC0000) == 0 && D_0058AFF0[j] == c2)) {
+            unsigned int *w = (unsigned int *)((char *)(j / 32 * 4) + (int)p + 0x618);
+            unsigned int m = 1 << (j & 0x1F);
+            if (*w & m) return -1;
+            return j;
+        }
+    }
+    return -1;
+}
+
+int func_0020F3E0(char *p, int k, int x) {
+    short i;
+    short t;
+    int c;
+    unsigned int *w;
+    unsigned int m;
+    switch ((signed char)func_002E8780(k)) {
+    case 0:
+        i = func_0020F9B0(p);
+        t = 0;
+        break;
+    case 1:
+        i = find20F(p, k, x);
+        t = 1;
+        break;
+    case 2:
+        c = (signed char)k;
+        w = (unsigned int *)((char *)(c / 32 * 4) + (int)p + 0x680);
+        m = 1 << (c & 0x1F);
+        if (*w & m) {
+            i = -1;
+        } else {
+            i = c;
+        }
+        t = 2;
+        break;
+    }
+    if (i == -1) return -1;
+    return (t << 16) | i;
 }

@@ -5798,6 +5798,8 @@ void func_00105300(char *, float *);
 float func_00104D00(char *, char *);
 void func_003DD5B0(char *);
 void func_003DD4D0(char *);
+void func_00105578(float *, float *, float);
+extern int D_0058B1E0[];
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -6122,4 +6124,119 @@ void func_003DC730(char *p) {
         break;
     }
     func_002EF940(*(char **)D_01CAFF0C, p + 0xAF0);
+}
+
+#define E3DF(i) ((char *)((i) * 64) + (int)p)
+
+void func_003DF0C0(char *p, float dt) {
+    float m[16] __attribute__((aligned(16)));
+    float tmp[4] __attribute__((aligned(16)));
+    int i;
+    float f;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    func_00105578(m, m, 0.17453292f * dt);
+    for (i = 0; i < *(int *)(p + 0xB10); i++) {
+        if (*(unsigned char *)(E3DF(i) + 0x41) == 0 && *(signed char *)(E3DF(i) + 0x42) < 3) {
+            switch (*(unsigned char *)(p + 0xB30)) {
+            case 0:
+                break;
+            case 1:
+                switch (*(unsigned char *)(p + 0xB31)) {
+                case 1: func_00104C00(*(char **)(*(char **)(E3DF(i) + 0x10) + 0x104), *(char **)(*(char **)(E3DF(i) + 0x10) + 0x104), m); break;
+                case 2: func_00104C00(*(char **)(E3DF(i) + 0x10), *(char **)(E3DF(i) + 0x10), m); break;
+                case 0: break;
+                }
+                break;
+            case 2:
+                if (*(signed char *)(E3DF(i) + 0x42) == 0) break;
+                switch (*(unsigned char *)(p + 0xB31)) {
+                case 1: func_00104C00(*(char **)(*(char **)(E3DF(i) + 0x10) + 0x104), *(char **)(*(char **)(E3DF(i) + 0x10) + 0x104), m); break;
+                case 2: func_00104C00(*(char **)(E3DF(i) + 0x10), *(char **)(E3DF(i) + 0x10), m); break;
+                case 0: break;
+                }
+                break;
+            }
+        }
+        *(float *)(E3DF(i) + 0x34) += *(float *)(p + 0xB18) * dt;
+        *(float *)(E3DF(i) + 0x34) = *(float *)(E3DF(i) + 0x34) > -100.0f ? *(float *)(E3DF(i) + 0x34) : -100.0f;
+        *(float *)(E3DF(i) + 0x30) *= *(float *)(p + 0xB24);
+        *(float *)(E3DF(i) + 0x38) *= *(float *)(p + 0xB24);
+        switch (*(unsigned char *)(p + 0xB31)) {
+        case 1:
+            __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	sqc2 $vf4, 0x0(%1)" : : "r"(*(char **)(*(char **)(E3DF(i) + 0x10) + 0x104) + 0x30), "r"(p + i * 64 + 0x20) : "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + i * 64 + 0x30), "f"(dt) : "t0", "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(*(char **)(*(char **)(E3DF(i) + 0x10) + 0x104) + 0x30), "r"(tmp) : "memory");
+            *(float *)(*(char **)(*(char **)(E3DF(i) + 0x10) + 0x104) + 0x3C) = 1.0f;
+            break;
+        case 2:
+            __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	sqc2 $vf4, 0x0(%1)" : : "r"(*(char **)(E3DF(i) + 0x10) + 0x30), "r"(p + i * 64 + 0x20) : "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + i * 64 + 0x30), "f"(dt) : "t0", "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(*(char **)(E3DF(i) + 0x10) + 0x30), "r"(tmp) : "memory");
+            *(float *)(*(char **)(E3DF(i) + 0x10) + 0x3C) = 1.0f;
+            break;
+        case 0:
+            break;
+        }
+    }
+    f = (*(float *)(p + 0xB18) *= *(float *)(p + 0xB1C));
+    *(float *)(p + 0xB18) = f < *(float *)(p + 0xB20) ? f : *(float *)(p + 0xB20);
+}
+
+static inline int flag_4D9(short s) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    if (s < 32) {
+        unsigned int *w = (unsigned int *)(g + s / 32 * 4 + 0x18);
+        return (*w & (1 << (s & 31))) != 0;
+    } else {
+        unsigned int *w = (unsigned int *)(g + (s - 32) / 32 * 4 + 0x44);
+        return (*w & (1 << ((s - 32) & 31))) != 0;
+    }
+}
+
+static inline void setflag_4D9(short k) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    int s = k;
+    if (s < 32) {
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) |= 1 << (s & 31);
+    } else {
+        s -= 32;
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) |= 1 << (s & 31);
+    }
+}
+
+void func_004D9B90(char *p, unsigned char a) {
+    int i;
+    short s;
+    if (a == 0) {
+        for (i = 1; i < 10; i++) {
+            s = *(short *)(p + i * 2 + 0x564);
+            if (s != -1 && flag_4D9(s)) func_001A1F30(func_0027A710(p + 0xE0), D_0058B1E0[i]);
+        }
+    } else {
+        func_001A1F30(func_0027A710(p + 0xE0), D_0058B1E0[*(signed char *)(p + 0x57B)]);
+        s = *(short *)((char *)(*(signed char *)(p + 0x57B) * 2) + (int)p + 0x564);
+        if (s != -1) setflag_4D9(s);
+        func_003305E0(D_01DFABA0, 8, 0x8C, p + 0x50, 0x2C, 0, 0);
+    }
 }

@@ -29431,6 +29431,7 @@ extern "C" char D_00587920[];
 extern "C" char D_00587EA0[];
 extern "C" void func_004F5110(char *, int);
 extern "C" float D_00573260[];
+extern "C" void func_0044D560(char *);
 
 static inline float frand4266(void) { return 2.3283064e-10f * (float)mt_rand(); }
 
@@ -30019,4 +30020,52 @@ extern "C" void func_003E56D0(char *p, char *a, char *w) {
         }
     }
     ((O3E5 *)p)->m314(a, w);
+}
+
+class O44B {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20();
+    virtual char *g24(int);
+    virtual void d28();
+    virtual void g2C(int, int);
+};
+
+static inline int ft44C(int k) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    unsigned int *w;
+    unsigned int m;
+    if (k < 32) {
+        w = (unsigned int *)((char *)(k / 32 * 4) + (int)g + 0x18);
+        m = 1 << (k & 31);
+        return (*w & m) != 0;
+    } else {
+        int t = k - 32;
+        w = (unsigned int *)((char *)(t / 32 * 4) + (int)g + 0x44);
+        m = 1 << (t & 31);
+        return (*w & m) != 0;
+    }
+}
+
+extern "C" void func_0044CB20(char *p) {
+    int i;
+    O44B *o;
+    O44B *q;
+    int k;
+    *(unsigned char *)(p + 0xDF) = 0;
+    *(unsigned char *)(p + 0x45) = 6;
+    func_0044D560(p);
+    o = (O44B *)func_002F7C10(0x5A, 0);
+    if (o == 0) return;
+    for (i = 0; i < 5; i++) {
+        func_00105300(p + i * 0x40 + 0x110, o->g24(i + 1));
+    }
+    k = *(short *)(p + 0xDC);
+    if (k != -1 && ft44C(k)) {
+        for (i = 0; i < 5; i++) {
+            func_0044CF70(p, i, 1);
+            q = (O44B *)func_002F7C10(0x65, 0);
+            if (q != 0) q->g2C(1, 1);
+            *(unsigned char *)(p + 0xDF) = 1;
+        }
+    }
 }
