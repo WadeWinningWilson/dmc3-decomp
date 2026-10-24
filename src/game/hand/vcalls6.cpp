@@ -767,6 +767,16 @@ extern "C" void func_004F92D0(char *, int);
 extern "C" void func_004F8FB0(char *);
 extern "C" void func_004F8F20(char *);
 extern "C" void func_004F8BB0(char *);
+extern "C" float D_005786B0[];
+extern "C" float D_005786E0[];
+extern "C" void func_0044E700(char *, int, int);
+extern "C" void func_00450550(char *, int);
+extern "C" void func_0044FCA0(char *, int);
+extern "C" short D_0054A0C0[];
+extern "C" short D_01CAFF38[];
+extern "C" float D_0055E1E0[];
+extern "C" void func_002EB8A0(int, float *, int, int, float, float, float);
+extern "C" void func_003586F0(char *, int);
 
 static inline float frand476(void) { return 2.3283064e-10f * (float)mt_rand(); }
 
@@ -933,4 +943,120 @@ extern "C" void func_004F7EB0(char *p) {
         break;
     }
     func_004F8BB0(p);
+}
+
+class V44E {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24();
+    virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44();
+    virtual void d48(); virtual void d4C(); virtual void d50(); virtual void d54(); virtual void d58(); virtual void d5C(); virtual void d60(); virtual void d64();
+    virtual void d68(); virtual void d6C(); virtual void d70(); virtual void d74(); virtual void d78(); virtual void d7C(); virtual void d80(); virtual void d84();
+    virtual void d88(); virtual void d8C(); virtual void d90(); virtual void d94(); virtual void d98(); virtual void d9C(); virtual void dA0(); virtual void dA4();
+    virtual void dA8(); virtual void dAC(); virtual void dB0(); virtual void dB4(); virtual void dB8();
+    virtual int gBC(float);
+};
+
+extern "C" void func_0044EE30(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    unsigned char r;
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        (*(unsigned char *)(p + 4))++;
+        func_0044E700(p, 0, 1);
+        func_0044E700(p, 1, 1);
+        func_0044E700(p, 2, 0);
+        __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(*(char **)(*(char **)(p + 0x1E4) + 0x104)) : "memory");
+        func_003305E0(D_01DFABA0, 8, 0x7F, v, 0x2D, 0, 0);
+        *(float *)(p + 0x838) = 55.0f;
+        *(unsigned char *)(p + 5) = 0;
+        break;
+    case 1:
+        switch (*(unsigned char *)(p + 5)) {
+        case 0:
+            if ((*(float *)(p + 0x838) -= *(float *)(p + 0x10)) < 0.0f) {
+                *(unsigned char *)(p + 0x80F) = 1;
+                (*(unsigned char *)(p + 5))++;
+            }
+            break;
+        case 1:
+            break;
+        }
+        r = ((V44E *)(p + 0x200))->gBC(*(float *)(p + 0x10));
+        if (r == 4 || r == 0) {
+            if (*(unsigned char *)(p + 0x804) == 0) *(float *)(p + 0x834) = D_005786B0[*(unsigned char *)(p + 0x803) + *(unsigned char *)(p + 0x802) * 2];
+            else *(float *)(p + 0x834) = D_005786E0[*(unsigned char *)(p + 0x803) + *(unsigned char *)(p + 0x802) * 2];
+            *(unsigned char *)(p + 0x804) = 0;
+            (*(unsigned char *)(p + 4))++;
+        }
+        break;
+    case 2:
+        ((V44E *)(p + 0x200))->gBC(*(float *)(p + 0x10));
+        if ((*(float *)(p + 0x834) -= *(float *)(p + 0x10)) < 0.0f) {
+            func_00450550(p, 3);
+            __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(*(char **)(*(char **)(p + 0x1E4) + 0x104)) : "memory");
+            func_003305E0(D_01DFABA0, 8, 0x80, v, 0x2D, 0, 0);
+            (*(unsigned char *)(p + 4))++;
+        }
+        break;
+    case 3:
+        r = ((V44E *)(p + 0x200))->gBC(*(float *)(p + 0x10));
+        if (r == 4 || r == 0) {
+            *(unsigned char *)(p + 0x80F) = 0;
+            func_0044FCA0(p, 0);
+        }
+        break;
+    }
+}
+
+class V358 {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24();
+    virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44();
+    virtual void d48(); virtual void d4C(); virtual void d50(); virtual void d54(); virtual void d58(); virtual void d5C(); virtual void d60(); virtual void d64();
+    virtual float g68();
+};
+
+extern "C" void func_00358420(char *p, char *s, V358 *o, int a3) {
+    float w[4] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    char *g;
+    int i;
+    int k;
+    unsigned short key;
+    short k2;
+    int n;
+    unsigned short *e;
+    if (s != 0 && o != 0 && *(signed char *)(s + 2) == 0) {
+        if (*(unsigned char *)(p + 0x7E2) == 0) {
+            *(unsigned char *)(p + 0x7E2) = 1;
+            *(int *)(p + 0x7E8) = 0;
+            k2 = D_01CAFF38[0];
+            g = *(char **)((*(char **)D_01CAFF0C) + 0x18);
+            key = (short)(k2 % 100 + D_0054A0C0[k2 / 100]) | 0x100;
+            for (i = 0; i < 0x30; i++) {
+                e = (unsigned short *)((char *)(i * 2) + (int)g);
+                if (e[0x310] == key) break;
+                if (e[0x310] == 0) {
+                    e[0x310] = key;
+                    break;
+                }
+            }
+        }
+        *(float *)(p + 0x7E4) = *(float *)(p + 0x7E4) + *(float *)(s + 4) * o->g68();
+        if (*(float *)(p + 0x7EC) <= 0.0f) {
+            k = *(float *)(p + 0x7E4) / 750.0f;
+            if (k > 6) k = 6;
+            n = 0.1f * *(float *)(p + 0x7E4) * D_0055E1E0[k];
+            w[0] = *(float *)(p + 0x550);
+            w[1] = 70.0f + *(float *)(p + 0x554);
+            w[2] = *(float *)(p + 0x558);
+            w[3] = 1.0f;
+            func_002EB8A0(n, w, 0, 1, 120.0f, 50.0f, -100.0f + *(float *)(p + 0x554));
+            *(float *)(p + 0x7EC) = 30.0f;
+        }
+        func_003586F0(p, a3);
+        __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(p + 0x520) : "memory");
+        v[3] = 1.0f;
+        func_003305E0(D_01DFABA0, 8, 0x14, v, 0x21, 0, 0);
+    }
 }

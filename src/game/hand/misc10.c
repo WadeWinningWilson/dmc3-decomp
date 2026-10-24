@@ -337,6 +337,8 @@ extern float D_005BDEE4;
 extern float D_005BDEE8;
 extern float D_005BDEEC;
 extern float D_005BDEF0;
+void func_0034BA60(int, char *, int, int, int);
+void func_00133890(char *, float *, float *);
 
 void func_0039D0F0(char *p, unsigned char k) {
     T39D a = D_00563EE0;
@@ -786,4 +788,50 @@ void func_004F4A40(char *p) {
         }
         break;
     }
+}
+
+#define VUNIT506(m) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory")
+
+#define VCOPY506(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_00506210(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    char *o;
+    char *e;
+    o = *(char **)((*(char **)D_01CAFF0C) + 0xC);
+    if (*(int *)(p + 0x598) != *(int *)(*(char **)(p + 0x218) + 0x65CC)) {
+        func_001AD140(p);
+        return;
+    }
+    *(float *)(p + 0x20C) = *(float *)(p + 0x20C) + *(float *)(p + 0x10);
+    if (!(*(float *)(p + 0x20C) < *(float *)(p + 0x204))) {
+        (*(unsigned char *)(p + 5))++;
+        VCOPY506(p + 0x1F0, *(char **)(p + 0x218) + 0x700);
+        *(float *)(p + 0x1F0) = *(float *)(p + 0x1F0) + *(float *)(*(char **)(p + 0x218) + 0x6E0) * *(float *)(p + 0x208);
+        *(float *)(p + 0x1F4) = *(float *)(p + 0x1F4) + *(float *)(*(char **)(p + 0x218) + 0x6E4) * *(float *)(p + 0x208);
+        *(float *)(p + 0x1F8) = *(float *)(p + 0x1F8) + *(float *)(*(char **)(p + 0x218) + 0x6E8) * *(float *)(p + 0x208);
+        *(int *)(p + 0x2F8) = 0xCC0;
+        func_0028C8E0(p + 0x220, 0);
+        *(int *)(p + 0x2F8) = 0x20041;
+        *(unsigned char *)(p + 0x223) = 0;
+        if ((e = func_0028C3A0(p + 0x220, 0, -1, p + 0x1B0)) != 0) e[2] = 1;
+        func_0028C3A0(p + 0x220, 1, -1, p + 0x1B0);
+        func_0034BA60(0x28, p + 0x1E0, 0x29, 0, 1);
+        return;
+    }
+    VUNIT506(m);
+    VUNIT506(p + 0x1B0);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(*(char **)(p + 0x218) + 0x78B0), "r"(o + 0x50) : "memory");
+    d[1] = 0.0f;
+    r[0] = 0.0f;
+    r[1] = 1.0f;
+    r[2] = 0.0f;
+    r[3] = 0.0f;
+    func_00133890(p + 0x1B0, d, r);
+    VCOPY506(p + 0x1E0, *(char **)(p + 0x218) + 0x78B0);
+    *(float *)(p + 0x1E0) = *(float *)(p + 0x1E0) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A0) * *(float *)(p + 0x10);
+    *(float *)(p + 0x1E4) = *(float *)(p + 0x1E4) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A4) * *(float *)(p + 0x10);
+    *(float *)(p + 0x1E8) = *(float *)(p + 0x1E8) + 230.0f * *(float *)(*(char **)(p + 0x218) + 0x78A8) * *(float *)(p + 0x10);
 }

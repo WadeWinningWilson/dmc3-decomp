@@ -170,6 +170,9 @@ float func_001324E0(float *);
 short func_00131D10(float, float);
 char *func_00207480(int, int, char *, int);
 void func_0034BA60(int, char *, int, int, int);
+void func_003305E0(char *, int, int, float *, int, int, int);
+void func_0040FAD0(char *, int);
+void func_0040FAF0(char *, int);
 
 void func_004B6500(char *p) {
     float tmp[4] __attribute__((aligned(16)));
@@ -265,4 +268,50 @@ void func_005055F0(char *p) {
         *(float *)(p + 0x21C) = *(float *)(p + 0x220);
         func_0034BA60(0x29, p + 0x1E0, 0x29, 0, 1);
     }
+}
+
+static inline void setf40F(short k) {
+    char *g = *(char **)((*(char **)D_01CAFF0C) + 0x18);
+    int s = k;
+    if (s < 32) {
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x18) |= 1 << (s & 31);
+    } else {
+        s -= 32;
+        *(unsigned int *)((char *)(s / 32 * 4) + (int)g + 0x44) |= 1 << (s & 31);
+    }
+}
+
+int func_0040FB80(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    int i;
+    int f;
+    for (i = 0; i < *(short *)(p + 0xE2); i++) {
+        if (*(unsigned char *)*(char **)((char *)(i * 4) + (int)p + 0x108) != 1) continue;
+        if (*(unsigned char *)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 1) != 1) continue;
+        switch (*(unsigned short *)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 2)) {
+        case 0:
+        case 1:
+        default:
+            continue;
+        case 2:
+        case 3:
+            break;
+        }
+        f = 0;
+        if (*(char **)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 0x51C) != 0) f = *(int *)(*(char **)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 0x51C) + 8);
+        if (!(f & 1)) continue;
+        *(unsigned char *)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 1) = 0;
+        (*(short *)(p + 0xE4))--;
+        func_0040FAD0(p, i);
+        func_0040FAF0(p, i);
+        __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(*(char **)((char *)(i * 4) + (int)p + 0x108) + 0x450) : "memory");
+        if (*(unsigned short *)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 2) == 2) func_003305E0(D_01DFABA0, 8, 0x32, v, 0x24, 0, 0);
+        else func_003305E0(D_01DFABA0, 8, 0x35, v, 0x24, 0, 0);
+        if (*(int *)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 0x498) != 0 || *(unsigned short *)(*(char **)((char *)(i * 4) + (int)p + 0x108) + 2) == 3) {
+            if (*(short *)(p + 0xDE) != -1) setf40F(*(short *)(p + 0xDE));
+            return 1;
+        }
+        return 0;
+    }
+    return 0;
 }

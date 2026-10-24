@@ -5804,6 +5804,10 @@ float func_001C1A90(char *, char *, char *, float *);
 void func_00131680(float *, float *, float *, float);
 float func_00133BD0(float);
 int func_00277EF0(char *, float);
+int func_001971B0(int);
+int func_001A97E0(int);
+extern float D_005BCCC8;
+extern short D_005BCCCC;
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -6357,4 +6361,117 @@ void func_00385810(char *p, unsigned char f) {
     }
     func_00277E70(p + 0xF0);
     if (*(unsigned char *)(p + 0x47) == 0 && (unsigned char)func_00277EF0(p + 0xF0, *(float *)(p + 0x10)) == 1) func_00278060(p + 0xF0, D_01CAFF14[0]);
+}
+
+static inline void set13C(char *p, unsigned int i, int v) {
+    if (i < *(unsigned short *)(p + 0xA8)) *(int *)(*(char **)(p + 0xBC) + i * 0x340 + 0x13C) = v;
+}
+
+void func_001A3370(char *p, int a1) {
+    unsigned char m;
+    int k;
+    int i;
+    int j;
+    char *t;
+    char *s;
+    char *e;
+    switch (func_001A97E0(*(int *)(p + 0xC0))) {
+    case 0x10000000:
+        m = 0xA;
+        break;
+    case 0x20000000:
+        m = 0xB;
+        break;
+    default:
+        return;
+    }
+    *(int *)(p + 0xA0) &= ~0x70;
+    *(int *)(p + 0xA0) |= 0x10;
+    if (a1 & 1) *(int *)(p + 0xA0) |= 0x20;
+    if (a1 & 2) {
+        *(int *)(p + 0xA0) |= 0x40;
+    } else {
+        *(int *)(p + 0x1AC) = 0xFF;
+        for (k = 0; k < *(unsigned short *)(p + 0xA8); k++) set13C(p, k, 0xFF0);
+    }
+    *(int *)(p + 0x194) = 0;
+    *(int *)(p + 0x190) = 0;
+    for (i = 0; i < (int)*(unsigned short *)(p + 0xA8); i++) {
+        t = *(char **)(p + 0xBC) + i * 0x340;
+        if (*(unsigned char *)(t + 5) != m) {
+            *(unsigned char *)(t + 6) = *(unsigned char *)(t + 5);
+            *(unsigned char *)(t + 5) = m;
+            for (j = 0; j < (int)*(unsigned char *)(t + 0xC); j++) {
+                e = D_005BE0D8;
+                s = *(char **)(t + 0x1C) + j * 0x150;
+                *(long long *)(s + 0x10) = (long long)*(unsigned short *)(e + 0x48) | (long long)(*(short *)(e + 0x20) / 64) << 14 | 0x100000 |
+                    (long long)func_001971B0(*(short *)(D_005BE0D8 + 0x20)) << 26 | (long long)func_001971B0(*(short *)(e + 0x22)) << 30 | (long long)4 << 32;
+                *(signed char *)(s + 0x30) = 3;
+            }
+        }
+    }
+}
+
+typedef struct { float a; short b; } T39D;
+
+void func_0039DB80(char *p) {
+    float d[4] __attribute__((aligned(16)));
+    T39D t;
+    T39D *q;
+    float fa;
+    short sb;
+    short a;
+    int i;
+    int j;
+    unsigned short u;
+    unsigned short w;
+    char *e;
+    char *g;
+    q = &t;
+    fa = D_005BCCC8;
+    sb = D_005BCCCC;
+    q->a = fa;
+    q->b = sb;
+    if (*(unsigned char *)(p + 0x2F3D) >= 3) return;
+    if (*(unsigned char *)(p + 0x2EE1) > 1) {
+        *(unsigned char *)(p + 0x2EE2) = ((unsigned char *)&t)[*(unsigned short *)(p + 0x2EDE) & 0xF];
+    } else {
+        *(unsigned char *)(p + 0x2EE2) = 1;
+        return;
+    }
+    *(short *)(p + 0x2EF6) = 0;
+    *(short *)(p + 0x2EF4) = 0;
+    *(short *)(p + 0x2EF2) = 0;
+    *(short *)(p + 0x2EF0) = 0;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(*(char **)((*(char **)D_01CAFF0C) + 0xC) + 0x50), "r"(p + 0x50) : "memory");
+    a = func_00131D10(d[0], d[2]);
+    for (i = 0; i < *(unsigned char *)(p + 0x2EE1); i++) {
+        if (*(char **)((char *)(i * 4) + (int)p + 0x2EC8) != 0 && *(unsigned char *)(p + 0x2EE0) != i) {
+            g = (*(char **)D_01CAFF0C);
+            e = *(char **)((char *)(i * 4) + (int)p + 0x2EC8);
+            __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(e + 0x50), "r"(*(char **)(g + 0xC) + 0x50) : "memory");
+            *(short *)((char *)(i * 2) + (int)p + 0x2EF0) = a - (short)func_00131D10(d[0], d[2]);
+        }
+    }
+    switch (*(unsigned char *)(p + 0x2EE1)) {
+    case 2:
+        if (*(unsigned char *)(p + 0x2EE0) != 0) j = 0;
+        else j = 1;
+        u = *(unsigned short *)((char *)(j * 2) + (int)p + 0x2EF0);
+        if (u < 0x8000) {
+            w = 0x7FFF - u;
+            if (w < 0x1400) *(unsigned char *)(p + 0x2EE3) = 0;
+            else if (w < 0x4800) *(unsigned char *)(p + 0x2EE3) = 1;
+            else *(unsigned char *)(p + 0x2EE3) = 2;
+        } else {
+            w = u - 0x7FFF;
+            if (w < 0x1400) *(unsigned char *)(p + 0x2EE3) = 0;
+            else if (w < 0x4800) *(unsigned char *)(p + 0x2EE3) = 3;
+            else *(unsigned char *)(p + 0x2EE3) = 4;
+        }
+        break;
+    case 3:
+    case 4:
+        break;
+    }
 }
