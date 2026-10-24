@@ -5614,6 +5614,7 @@ typedef struct { float v[4]; } __attribute__((aligned(16))) V1BF;
 
 int func_001C1180(char *, V1BF *, V1BF *);
 int func_001BFA00(char *, V1BF *, V1BF *, V1BF *, int, V1BF *);
+void func_0041E190(float *, float *, float);
 
 int func_001BFB50(char *a, V1BF *box, V1BF *tri, V1BF *out) {
     V1BF e[2];
@@ -5638,4 +5639,113 @@ int func_001BFB50(char *a, V1BF *box, V1BF *tri, V1BF *out) {
         }
     }
     return 0;
+}
+
+void func_003D14C0(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    float d;
+    v[1] = 60.0f;
+    v[0] = 0.0f;
+    v[2] = 150.0f;
+    v[3] = 1.0f;
+    *(float *)(p + 0x60) = 0.0f;
+    *(float *)(p + 0x64) = 30.0f;
+    *(float *)(p + 0x68) = 20.0f;
+    *(float *)(p + 0x6C) = 1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(p + 0x50), "r"(*(char **)(*(char **)(p + 0x194) + 0x104) + 0x30) : "memory");
+    func_0041E190(v, v, 6.283185f * ((float)*(short *)(*(char **)(p + 0xD0) + 0x90) / 65536.0f));
+    __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(p + 0x50), "r"(v) : "memory");
+    d = func_0041DB20(p + 0x50);
+    if (!(d <= 4000.0f)) d = 4000.0f;
+    if (d < 1000.0f) d = 1000.0f;
+    *(float *)(p + 0x68) = d / (85.0f - (float)(*(unsigned int *)(p + 0xB88) * 2));
+    *(short *)(p + 0x90) = func_0034B940(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, p + 0x50);
+    *(short *)(p + 0x90) = *(short *)(p + 0x90) - 0x222;
+    *(short *)(p + 0x90) = *(short *)(p + 0x90) + (short)(*(unsigned int *)(p + 0xB88) % 3 * 0x222);
+    *(float *)(p + 0x84) = 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f);
+}
+
+typedef struct { float v[4]; } __attribute__((aligned(16))) V1C0;
+
+float func_001C2B60(char *, V1C0 *, V1C0 *, V1C0 *, V1C0 *);
+void func_00132540(V1C0 *, V1C0 *, float);
+char *func_001B4250(float *, int, int, int);
+char *func_001EDE80(float *, int, int, int);
+char *func_001B11B0(float *, int, int, int);
+char *func_00205A00(float *, int, int, int);
+
+int func_001BFE50(char *a, V1C0 *tri, V1C0 *cap, V1C0 *out) {
+    V1C0 c2;
+    V1C0 c1;
+    V1C0 bc[2];
+    V1C0 dd;
+    V1C0 e[2];
+    V1C0 seg[2];
+    float best;
+    float d;
+    int i;
+    best = -1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(&seg[0]), "r"(&cap[0]) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(&seg[1]), "r"(&cap[1]) : "memory");
+    for (i = 0; i < 3; i++) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(&e[0]), "r"(&tri[i]) : "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(&e[1]), "r"(&tri[D_005BBA28[i]]) : "memory");
+        d = func_001C2B60(a, seg, e, &c1, &c2);
+        if (d < cap[2].v[0]) {
+            if (best == -1.0f || d < best) {
+                best = d;
+                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(&bc[0]), "r"(&c1) : "memory");
+                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(&bc[1]), "r"(&c2) : "memory");
+            }
+        }
+    }
+    if (best != -1.0f) {
+        if (out != 0) {
+            if (best < 0.001f) {
+                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(out), "r"(&bc[0]) : "memory");
+            } else {
+                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(&dd), "r"(&bc[1]), "r"(&bc[0]) : "memory");
+                func_00132540(&dd, &dd, cap[2].v[0]);
+                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(out), "r"(&bc[0]), "r"(&dd) : "memory");
+            }
+        }
+        return 1;
+    }
+    return 0;
+}
+
+void func_002EED10(char *e) {
+    float r[4] __attribute__((aligned(16)));
+    float t[4] __attribute__((aligned(16)));
+    float s[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    char *h;
+    int i;
+    char *o;
+    h = e;
+    for (i = 0, e += 0x10; i < *(unsigned short *)(h + 6); e += 0x28, i++) {
+        t[0] = *(float *)(e + 4);
+        t[1] = *(float *)(e + 8);
+        t[2] = *(float *)(e + 0xC);
+        t[3] = 1.0f;
+        r[0] = 6.283185f * (*(float *)(e + 0x10) / 360.0f);
+        r[1] = 6.283185f * (*(float *)(e + 0x14) / 360.0f);
+        r[2] = 6.283185f * (*(float *)(e + 0x18) / 360.0f);
+        r[3] = 1.0f;
+        s[0] = *(float *)(e + 0x1C);
+        s[1] = *(float *)(e + 0x20);
+        s[2] = *(float *)(e + 0x24);
+        s[3] = 1.0f;
+        __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+        func_00131700(m, m, r);
+        func_00105230(m, m, t);
+        func_001318E0(m, m, s);
+        switch (*(short *)e) {
+        case 0: o = func_001B4250(m, 0, *(short *)(e + 2), 0); break;
+        case 1: o = func_001EDE80(m, 0, *(short *)(e + 2), 0); break;
+        case 2: o = func_001B11B0(m, 0, *(short *)(e + 2), 0); break;
+        case 3: o = func_00205A00(m, 0, *(short *)(e + 2), 0); break;
+        }
+        if (o != 0) *(int *)(o + 0xC) |= 0x40;
+    }
 }

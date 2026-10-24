@@ -705,6 +705,15 @@ void func_003023F0(char *);
 extern char D_00562DB0[];
 void func_0038B130(char *);
 void func_002F7660(char *, char *);
+void func_00131700(float *, float *, float *);
+void func_00104B80(char *, float *, float *);
+void func_003DD4D0(char *);
+extern unsigned char D_01CAFF3C[];
+extern float D_005BD9EC;
+void func_0043A150(char *, float *, char *);
+char *func_004361D0(char *);
+int func_004722C0(char *, float *, int);
+void func_00330BD0(char *, int, char *, int, int);
 
 int func_0036F5E0(char *p, int a, int id) {
     Buf66 b;
@@ -1979,4 +1988,100 @@ void func_0038AE40(char *p) {
     col38A(o, *(unsigned char *)(p + 0x410), *(unsigned short *)(p + 0x110));
     *(unsigned char *)(p + 0x45) = 6;
     *(int *)(p + 0xC) |= 0x40;
+}
+
+static inline unsigned int mt_3DA(void) {
+    unsigned int y;
+    if (D_01DF8810[0] >= 0x270) {
+        func_00207A90(D_01DF7E50);
+    }
+    {
+        unsigned int i = D_01DF8810[0];
+        D_01DF8810[0] = i + 1;
+        y = D_01DF7E50[i];
+    }
+    y ^= y >> 11;
+    y ^= (y << 7) & 0x9D2C5680;
+    y ^= (y << 15) & 0xEFC60000;
+    y ^= y >> 18;
+    return y;
+}
+
+void func_003DAEC0(char *p) {
+    float r[4] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    short a;
+    int i;
+    *(float *)(p + 0xEC4) = 40.0f;
+    *(unsigned char *)(p + 0xEFD) = 3;
+    *(unsigned char *)(p + 0xF06) = 1;
+    *(unsigned char *)(p + 5) = 0;
+    i = *(unsigned char *)(p + 0xF02);
+    a = func_0034B940(((char **)(*(char **)D_01CAFF0C + 0xC))[i] + 0x50, p + 0x50);
+    a = (int)((float)a + 6.283185f * ((float)(int)(mt_3DA() % 10 - 5) / 360.0f));
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    r[0] = 0.0f;
+    r[1] = 6.283185f * ((float)a / 65536.0f);
+    r[2] = 0.0f;
+    r[3] = 1.0f;
+    func_00131700(m, m, r);
+    v[2] = 15.0f;
+    v[3] = 1.0f;
+    v[0] = 0.0f;
+    v[1] = 0.0f;
+    func_00104B80(p + 0x60, m, v);
+    *(short *)(p + 0x90) = a;
+    func_003DD4D0(p);
+    *(unsigned char *)(p + 0x1E1) = 0;
+}
+
+void func_0043BCD0(char *p, unsigned char k) {
+    float v[4] __attribute__((aligned(16)));
+    float w[4] __attribute__((aligned(16)));
+    char *o;
+    float sc;
+    float *dst;
+    float *src;
+    if (*(int *)(p + 0x47DC) > 0) {
+        v[1] = 0.0f;
+        v[0] = -1.0f;
+        v[2] = 0.0f;
+        v[3] = 1.0f;
+        func_0043A150(p, v, *(char **)(*(char **)(p + 0x568) + 0x104));
+        if (k == 0) {
+            o = *(char **)D_01CAFF0C;
+            w[0] = *(float *)(*(char **)(o + 0xC) + 0x50) - *(float *)(p + 0x50);
+            w[1] = *(float *)(*(char **)(o + 0xC) + 0x54) - *(float *)(p + 0x54);
+            w[2] = *(float *)(*(char **)(o + 0xC) + 0x58) - *(float *)(p + 0x58);
+            w[3] = 1.0f;
+            if (!(func_00132D80(v, w) <= 0.866025f)) {
+                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(w) : "memory");
+            }
+        }
+        func_00131650(v, v);
+        sc = D_005BD9EC;
+        src = v;
+        dst = v;
+        asm {
+            lqc2 vf4, 0x0(src)
+            mfc1 t0, sc
+            nop
+            qmtc2.ni t0, vf5
+            vmulx.xyzw vf6, vf4, vf5x
+            sqc2 vf6, 0x0(dst)
+        }
+        if (func_004722C0(func_004361D0(p), v, *(unsigned char *)(p + 0x485E)) != 0) {
+            if (D_01CAFF3C[0] != 4 && *(unsigned char *)(p + 0x485E) != 1) {
+                *(int *)(p + 0x47DC) = *(int *)(p + 0x47DC) - 1;
+            }
+            if (!(*(float *)(p + 0x4834) < 4.0f)) {
+                *(float *)(p + 0x4834) = 0.0f;
+                func_00330BD0(D_01DFABA0, 0x3E, func_004361D0(p), 0x22, 0);
+            }
+        }
+    } else if (!(*(float *)(p + 0x4834) < 4.0f)) {
+        *(float *)(p + 0x4834) = 0.0f;
+        func_00330BD0(D_01DFABA0, 0x3C, func_004361D0(p), 0x22, 0);
+    }
 }

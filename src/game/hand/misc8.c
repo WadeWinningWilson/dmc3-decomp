@@ -10087,6 +10087,13 @@ float func_00131B50(float);
 void func_00132580(float *, float *, float);
 extern char D_00540720[];
 void func_001B9910(int *);
+extern float D_00567B30[];
+int func_001BE6F0(char *, float *, char *, float *);
+int func_001BE780(char *, float *, char *, float *, int);
+int func_001BE9F0(char *, float *, char *, float *);
+int func_001BEAA0(char *, float *, char *, float *);
+extern char D_01CAF2B0[];
+void func_001ECB80(char *, int *, float *);
 
 int func_001ED110(char *p) {
     int r;
@@ -10200,5 +10207,131 @@ int func_001B9AB0(int *g, char *out, float *m, float *in, unsigned int n) {
         out += 0x10;
     }
     *(unsigned int *)(o + 0xC) = (sum >> (g[0] - 13)) / n;
+    return 0;
+}
+
+void func_004587D0(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    char *o;
+    char *e;
+    func_00382A50(p + 0x214);
+    if (*(int *)(p + 0x214) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    switch (*(int *)(p + 0x1A0)) {
+    case 0:
+        func_00105300(p + 0x1B0, *(char **)(*(char **)(((char **)(*(char **)(p + 0x214) + 0x69F8))[*(int *)(p + 0x19C)] + 0x9D8) + 0x104));
+        break;
+    case 1:
+        func_00105300(p + 0x1B0, *(char **)(*(char **)(((char **)(*(char **)(p + 0x214) + 0x69F8))[*(int *)(p + 0x19C)] + 0x9E4) + 0x104));
+        break;
+    }
+    *(char **)(p + 0x218) = 0;
+    *(char **)(p + 0x218) = func_00207480(3, 0x1BD, (char *)m, 0x10);
+    if ((o = *(char **)(p + 0x218)) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    o[0x3A] = 1;
+    e = *(char **)(p + 0x218);
+    *(char **)(e + 0x90) = p + 0x1B0;
+    e[0x9A] = 1;
+    *(float *)(p + 0x194) = D_00567B30[*(int *)(p + 0x220)];
+    *(unsigned char *)(p + 0x450) = 2;
+    *(float *)(p + 0x460) = 0.0f;
+    *(float *)(p + 0x464) = 0.0f;
+    *(float *)(p + 0x468) = 0.0f;
+    *(float *)(p + 0x46C) = 1.0f;
+    *(float *)(p + 0x470) = 50.0f;
+    *(unsigned char *)(p + 0x4F0) = 5;
+    *(unsigned char *)(p + 0x4F1) = 0;
+    *(short *)(p + 0x4F2) = 0;
+    *(unsigned char *)(p + 0x4A0) = 2;
+    *(float *)(p + 0x4B0) = 0.0f;
+    *(float *)(p + 0x4B4) = 0.0f;
+    *(float *)(p + 0x4B8) = 0.0f;
+    *(float *)(p + 0x4BC) = 1.0f;
+    *(float *)(p + 0x4C0) = 150.0f;
+    *(unsigned char *)(p + 0x4F4) = 2;
+    *(unsigned char *)(p + 0x4F5) = 0;
+    *(short *)(p + 0x4F6) = 1;
+    func_0028C200(p + 0x230, p + 0x4F0, p + 0x450, 3, D_00567610, p, 0);
+    *(unsigned char *)(p + 4) = *(unsigned char *)(p + 4) + 1;
+    *(unsigned char *)(p + 5) = 0;
+    *(unsigned char *)(p + 0x198) = 0;
+    *(unsigned char *)(p + 0x199) = 0;
+    *(int *)(p + 0x20C) = 0;
+    *(float *)(p + 0x210) = 20.0f;
+}
+
+unsigned int func_002F7950(char *o, float *pos) {
+    float b[4] __attribute__((aligned(16)));
+    float a[4] __attribute__((aligned(16)));
+    float buf[4] __attribute__((aligned(16)));
+    unsigned char hit;
+    float d;
+    if (o == 0) return 0x80;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(a), "r"(*(char **)(D_005BE09C + 0x23C) + 0x70) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(b), "r"(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50) : "memory");
+    b[1] = b[1] + 100.0f;
+    hit = 0;
+    switch (*(unsigned char *)(o + 0x110)) {
+    case 2:
+        hit = func_001BE6F0(D_005BE0C8, a, o + 0x120, buf);
+        break;
+    case 3:
+        hit = func_001BE780(D_005BE0C8, a, o + 0x120, buf, 0);
+        break;
+    case 4:
+        hit = func_001BE9F0(D_005BE0C8, a, o + 0x120, buf);
+        break;
+    case 6:
+        hit = func_001BEAA0(D_005BE0C8, a, o + 0x120, buf);
+        break;
+    }
+    if (hit == 0) return 0x80;
+    d = func_00132470((char *)a, pos);
+    if (!(d < 500.0f)) return 0x40;
+    if (d <= 100.0f) return 0;
+    return (unsigned int)(64.0f * (d - 100.0f) / 400.0f);
+}
+
+int func_0034D2D0(char *p, float *pos, char *o) {
+    float v[4] __attribute__((aligned(16)));
+    int scr[4] __attribute__((aligned(16)));
+    float c[4] __attribute__((aligned(16)));
+    float d;
+    float s;
+    float y;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(pos) : "memory");
+    v[3] = 1.0f;
+    func_001ECB80(D_01CAF2B0, scr, v);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(c), "r"(*(char **)(D_005BE09C + 0x23C) + 0x70) : "memory");
+    d = func_00132470((char *)c, pos);
+    if (d < 300.0f) {
+        s = 1.0f;
+    } else if (!(d <= 1000.0f)) {
+        s = 0.5f;
+    } else {
+        s = (1.0f + (700.0f - (d - 300.0f)) / 700.0f) / 2.0f;
+    }
+    *(float *)(o + 0x30) = s;
+    *(float *)(o + 0x34) = s;
+    *(float *)(o + 0x38) = s;
+    *(float *)(o + 0x3C) = 1.0f;
+    if (!((float)scr[2] < 0.0f)) {
+        y = -1.0f * (1.7142857f * ((float)scr[1] - 2048.0f));
+        *(float *)(o + 0x10) = (float)scr[0] - 2048.0f;
+        *(float *)(o + 0x14) = y;
+        *(float *)(o + 0x18) = 0.0f;
+        *(float *)(o + 0x1C) = 1.0f;
+        __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(o + 0x40) : "memory");
+        func_00131700(o + 0x40, o + 0x40, (float *)(o + 0x20));
+        func_00105230(o + 0x40, o + 0x40, (float *)(o + 0x10));
+        func_001318E0(o + 0x40, o + 0x40, (float *)(o + 0x30));
+        return 1;
+    }
     return 0;
 }
