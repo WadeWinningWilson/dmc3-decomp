@@ -9287,3 +9287,97 @@ extern "C" void func_004B7550(char *p) {
         break;
     }
 }
+
+class A413 {
+public:
+    virtual void u8();
+    virtual void uC();
+    virtual void u10();
+    virtual void u14();
+    virtual void u18();
+    virtual void m1C(float);
+    virtual void m20(float, int);
+};
+
+class W413 {
+public:
+    virtual void u8();
+    virtual void uC();
+    virtual void u10();
+    virtual void u14();
+    virtual void u18();
+    virtual void u1C();
+    virtual void u20();
+    virtual void u24();
+    virtual void u28();
+    virtual void u2C();
+    virtual void u30();
+    virtual void u34();
+    virtual void u38();
+    virtual void u3C();
+    virtual void u40();
+    virtual void u44();
+    virtual void u48();
+    virtual void u4C();
+    virtual void u50();
+    virtual void u54();
+    virtual void u58();
+    virtual void u5C();
+    virtual void u60();
+    virtual void u64();
+    virtual void u68();
+    virtual void u6C();
+    virtual void u70();
+    virtual void u74();
+    virtual void u78();
+    virtual void u7C();
+    virtual void u80();
+    virtual void u84();
+    virtual void u88();
+    virtual void u8C();
+    virtual void u90();
+    virtual void u94();
+    virtual void u98();
+    virtual void u9C();
+    virtual void uA0();
+    virtual void uA4();
+    virtual void uA8();
+    virtual void uAC();
+    virtual void uB0();
+    virtual void uB4();
+    virtual void uB8();
+    virtual void uBC();
+    virtual void uC0();
+    virtual void uC4();
+    virtual void mC8(char *);
+};
+
+extern "C" void func_00413DB0(char *p, int k) {
+    char *q;
+    switch (k) {
+    case 4:
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(14.0f, 2);
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(14.0f, 0);
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(1.0f, 3);
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(1.0f, 1);
+        ((A413 *)func_002792A0(p + 0x13C0))->m1C(14.0f);
+        ((A413 *)func_002792A0(p + 0xDC0))->m1C(1.0f);
+        break;
+    case 8:
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(1.0f, 2);
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(1.0f, 0);
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(14.0f, 3);
+        ((A413 *)func_002792A0(p + 0x7C0))->m20(14.0f, 1);
+        ((A413 *)func_002792A0(p + 0xDC0))->m1C(14.0f);
+        ((A413 *)func_002792A0(p + 0x13C0))->m1C(1.0f);
+        break;
+    }
+    *(float *)(*(char **)(p + 0x31C4) + 0x184) = 1.1f;
+    *(float *)(*(char **)(p + 0x31C4) + 0x198) = 1.1f;
+    *(float *)(*(char **)(p + 0x31C8) + 0x184) = 1.1f;
+    *(float *)(*(char **)(p + 0x31C8) + 0x198) = 1.1f;
+    q = p + 0x3260;
+    ((W413 *)(p + 0xDC0))->mC8(q);
+    ((W413 *)(p + 0x13C0))->mC8(q);
+    ((W413 *)(p + 0x7C0))->mC8(q);
+}

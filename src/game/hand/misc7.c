@@ -5530,6 +5530,9 @@ extern float D_00577DD4[];
 extern float D_00577DD8[];
 extern float D_005BD9CC;
 extern float D_005BD9D0;
+extern char D_01DFA340[];
+extern char *D_005819B0[];
+void func_0030FD40(char *, char *, int, int, int, int, int, int);
 
 int func_004FC2E0(char *p, int *q, char *r) {
     char name[32];
@@ -5633,4 +5636,135 @@ void func_003DBA00(char *p) {
     *(float *)(p + 0x58) = *(float *)(q + 8) + ((float)(mt_rand() % 600U) - 300.0f);
     *(float *)(p + 0x5C) = 1.0f;
     *(unsigned char *)(p + 0x1E1) = 0;
+}
+
+typedef struct { int x0; int y0; int c0; int o0; int x1; int y1; int c1; int o1; } R47A;
+
+typedef struct { int a0; int a4; R47A *r; int c; int a10; int a14; unsigned int *col; int a1C[5]; unsigned char b30; char p31; short h32; short h34; char p36[7]; unsigned char b3D; char p3E[0x1A]; } B47A;
+
+void func_001B96E0(char *, B47A *);
+void func_003C4EF0(unsigned char *);
+void func_003C4F70(unsigned char *, int);
+void func_003C3CA0(unsigned char *, int);
+
+void func_0047A2F0(char *p) {
+    unsigned int col[2];
+    B47A b;
+    R47A r;
+    int i;
+    int y;
+    signed char c;
+    char *t;
+    for (i = 0, y = 0x18; i < 16; i++, y += 12) {
+        c = *(signed char *)(p + i + 0x9850);
+        if (c != -1) {
+            t = D_005819B0[c];
+            if (*(unsigned char *)(p + 0x978A) & 4) {
+                func_0030FD40(D_01DFA340, t, 0x100, y, i == *(short *)(p + 0x978E) ? 0xC0C0C0 : 0x303030, 0, 0xFFFFF2, 0);
+            } else if (*(unsigned char *)(p + 0x97AD) == 1 && i == *(short *)(p + 0x978E)) {
+                func_0030FD40(D_01DFA340, t, 0x20, 0x20, 0x40C0C0, 0, 0xFFFFF2, 1);
+            }
+        }
+    }
+    if (!(*(unsigned char *)(p + 0x978A) & 4) && *(unsigned char *)(p + 0x97AD) == 1) {
+        r.x0 = 0x20;
+        r.y0 = 0x2C;
+        r.c0 = 0xFFFFFF;
+        r.o0 = 1;
+        r.x1 = 0xC0;
+        r.y1 = 0x2C;
+        r.c1 = 0xFFFFFF;
+        r.o1 = 1;
+        col[1] = 0x80008080;
+        col[0] = 0x80008080;
+        b.r = &r;
+        b.col = col;
+        b.h34 = 1;
+        b.b30 = 4;
+        b.b3D = 1;
+        b.c = 0;
+        b.h32 = 0;
+        func_001B96E0(D_01C61820, &b);
+    }
+}
+
+unsigned char func_003C7C30(unsigned char *p) {
+    int s;
+    unsigned char r = 1;
+    if (p[0x1CEB]) {
+        p[0x1CEB] = 0;
+        s = 10;
+    } else if (p[0x1CED]) {
+        s = 3;
+        func_003C4EF0(p);
+        func_003C4F70(p, 0);
+        p[0x1CE8] = 0;
+        p[0x1CED] = 0;
+    } else if (p[0x1CEC]) {
+        switch (p[0x1424]) {
+        case 0: case 1: case 0xD: case 0xE: case 0xF: case 0x10: case 0x11: case 0xC:
+            s = 6; break;
+        case 0xB: case 0x15: case 0x16: case 0x17: case 0x18:
+            r = 0; break;
+        default:
+            r = 0; break;
+        }
+        p[0x1CEC] = 0;
+    } else if (p[0x1CEE]) {
+        switch (p[0x1424]) {
+        case 0: case 1: s = 0xB; break;
+        default: r = 0; break;
+        }
+        p[0x1CEE] = 0;
+    } else if (p[0x1CF5]) {
+        switch (p[0x1424]) {
+        case 0: case 1: s = 0x15; break;
+        default: r = 0; break;
+        }
+        p[0x1CF5] = 0;
+    } else if (p[0x1CF4]) {
+        switch (p[0x1424]) {
+        case 0: case 1: s = 0x12; break;
+        default: r = 0; break;
+        }
+        p[0x1CF4] = 0;
+    } else if (p[0x1CEF]) {
+        switch (p[0x1424]) {
+        case 0: case 1: s = 0xC; break;
+        default: r = 0; break;
+        }
+        p[0x1CEF] = 0;
+    } else if (p[0x1CF0]) {
+        switch (p[0x1424]) {
+        case 0: case 1: s = 0xF; break;
+        default: r = 0; break;
+        }
+        p[0x1CF0] = 0;
+    } else if (p[0x1CF1]) {
+        switch (p[0x1424]) {
+        case 0: case 1:
+            if (p[0x15D1] == 0) s = 0xD; else s = 0xE;
+            break;
+        default: r = 0; break;
+        }
+        p[0x1CF1] = 0;
+    } else if (p[0x1CF2]) {
+        switch (p[0x1424]) {
+        case 0: case 1:
+            if (p[0x15D1] == 0) s = 0x10; else s = 0x11;
+            break;
+        default: r = 0; break;
+        }
+        p[0x1CF2] = 0;
+    } else if (p[0x1CF3]) {
+        switch (p[0x1424]) {
+        case 0: case 1: s = 2; break;
+        default: r = 0; break;
+        }
+        p[0x1CF3] = 0;
+    } else {
+        r = 0;
+    }
+    if (r == 1) func_003C3CA0(p, s);
+    return r;
 }
