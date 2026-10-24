@@ -5744,6 +5744,9 @@ extern "C" void func_00356470(char *);
 extern "C" void func_003AB550(char *);
 extern "C" void func_003AA6C0(char *);
 extern "C" void func_0042C9B0(char *, char *, int);
+extern "C" char D_00578580[];
+extern "C" void func_003DEBF0(char *, char *, char *, int, char *);
+extern "C" void func_003DF0C0(char *, float);
 
 extern "C" void func_0038E490(char *p) {
     float m[16] __attribute__((aligned(16)));
@@ -7059,4 +7062,199 @@ extern "C" void func_003A9C60(char *p) {
         break;
     }
     func_002EF940(*(int *)D_01CAFF0C, p + 0x5080);
+}
+
+class Obj1F4 {
+public:
+    virtual void w0();
+    virtual void w1();
+    virtual void w2();
+    virtual void w3();
+    virtual void w4();
+    virtual void w5();
+    virtual void w6();
+    virtual void w7();
+    virtual void w8();
+    virtual void w9();
+    virtual void w10();
+    virtual void w11();
+    virtual void w12();
+    virtual void w13();
+    virtual void w14();
+    virtual void w15();
+    virtual void w16();
+    virtual void w17();
+    virtual void w18();
+    virtual void w19();
+    virtual void w20();
+    virtual void w21();
+    virtual void w22();
+    virtual void w23();
+    virtual void w24();
+    virtual void w25();
+    virtual void w26();
+    virtual void w27();
+    virtual void w28();
+    virtual void w29();
+    virtual void w30();
+    virtual void w31();
+    virtual void w32();
+    virtual void w33();
+    virtual void w34();
+    virtual void w35();
+    virtual void w36();
+    virtual void w37();
+    virtual void w38();
+    virtual void w39();
+    virtual void w40();
+    virtual void w41();
+    virtual void w42();
+    virtual void w43();
+    virtual void w44();
+    virtual void w45();
+    virtual void w46();
+    virtual void w47();
+    virtual void w48();
+    virtual void w49();
+    virtual void w50();
+    virtual void w51();
+    virtual void w52();
+    virtual void w53();
+    virtual void w54();
+    virtual void w55();
+    virtual void w56();
+    virtual void w57();
+    virtual void w58();
+    virtual void w59();
+    virtual void w60();
+    virtual void w61();
+    virtual void w62();
+    virtual void w63();
+    virtual void w64();
+    virtual void w65();
+    virtual void w66();
+    virtual void w67();
+    virtual void w68();
+    virtual void w69();
+    virtual void w70();
+    virtual void w71();
+    virtual void w72();
+    virtual void w73();
+    virtual void w74();
+    virtual void w75();
+    virtual void w76();
+    virtual void w77();
+    virtual void w78();
+    virtual void w79();
+    virtual void w80();
+    virtual void w81();
+    virtual void w82();
+    virtual void w83();
+    virtual void w84();
+    virtual void w85();
+    virtual void w86();
+    virtual void w87();
+    virtual void w88();
+    virtual void w89();
+    virtual void w90();
+    virtual void w91();
+    virtual void w92();
+    virtual void w93();
+    virtual void w94();
+    virtual void w95();
+    virtual void w96();
+    virtual void w97();
+    virtual void w98();
+    virtual void w99();
+    virtual void w100();
+    virtual void w101();
+    virtual void w102();
+    virtual void w103();
+    virtual void w104();
+    virtual void w105();
+    virtual void w106();
+    virtual void w107();
+    virtual void w108();
+    virtual void w109();
+    virtual void w110();
+    virtual void w111();
+    virtual void w112();
+    virtual void w113();
+    virtual void w114();
+    virtual void w115();
+    virtual void w116();
+    virtual void w117();
+    virtual void w118();
+    virtual void w119();
+    virtual void w120();
+    virtual void w121();
+    virtual void w122();
+    virtual void m1F4(char *, int);
+};
+
+extern "C" void func_003BFE30(char *p) {
+    char m[64] __attribute__((aligned(16)));
+    float z = 0.0f;
+    *(int *)(p + 0x1668) = 0;
+    *(unsigned char *)(p + 0x1BC6) = 0;
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        *(unsigned char *)(p + 6) = 0;
+    case 1:
+        if ((unsigned char)func_0024E780(p + 0x1680, 0, 0) == 1) {
+            func_0024E7B0(p + 0x1680, 0, 0);
+            *(unsigned char *)(p + 0x1BC5) = 0;
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+            *(float *)(p + 0x1B98) = 60.0f;
+            __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+            __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(m + 0x30), "r"(*(char **)(*(char **)(p + 0x8B8) + 0x104) + 0x30) : "memory");
+            *(float *)(m + 0x3C) = 1.0f;
+            *(char **)(p + 0x2728) = func_00207480(3, 0x206, m, 0x10);
+            func_0034BA60(0x22, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+        }
+        break;
+    case 2:
+        *(float *)(p + 0x1B98) = *(float *)(p + 0x1B98) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x1B98) < z) {
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+            func_003DEBF0(p + 0x1BD0, p + 0x8B0, D_00578580, 0x1C, p);
+            *(float *)(p + 0x1B98) = 90.0f;
+            func_0034BA60(0x1A, p + 0x50, *(signed char *)(p + 0x46), 0, 1);
+        }
+        break;
+    case 3:
+        *(float *)(p + 0x1B98) = *(float *)(p + 0x1B98) - *(float *)(p + 0x10);
+        *(float *)(p + 0x1BB4) = *(float *)(p + 0x1BB4) - 0.01f * *(float *)(p + 0x10);
+        *(float *)(p + 0x1BB8) = *(float *)(p + 0x1BB8) - 0.01f * *(float *)(p + 0x10);
+        if (*(float *)(p + 0x1BB4) < z) {
+            *(float *)(p + 0x1BB4) = z;
+        }
+        if (*(float *)(p + 0x1BB8) < 0.0f) {
+            *(float *)(p + 0x1BB8) = 0.0f;
+        }
+        if (*(float *)(p + 0x1B98) < 0.0f) {
+            *(unsigned char *)(p + 5) = *(unsigned char *)(p + 5) + 1;
+        }
+        func_003DF0C0(p + 0x1BD0, *(float *)(p + 0x10));
+        break;
+    case 4:
+        *(unsigned char *)(p + 4) = 2;
+        *(unsigned char *)(p + 5) = 0;
+        break;
+    }
+    switch (*(unsigned char *)(p + 6)) {
+    case 0:
+        *(unsigned char *)(p + 6) = *(unsigned char *)(p + 6) + 1;
+        *(float *)(p + 0x1B9C) = 30.0f;
+    case 1:
+        *(float *)(p + 0x1B9C) = *(float *)(p + 0x1B9C) - *(float *)(p + 0x10);
+        if (*(float *)(p + 0x1B9C) < 0.0f) {
+            *(unsigned char *)(p + 6) = *(unsigned char *)(p + 6) + 1;
+            ((Obj1F4 *)p)->m1F4(p + 0x550, 0);
+        }
+        break;
+    case 2:
+        break;
+    }
 }

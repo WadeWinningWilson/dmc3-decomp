@@ -193,7 +193,7 @@ def main():
                         if mm and not lines[j].rstrip().endswith(";"):
                             drop.add(mm.group(1))
                             break
-                if not drop:
+                if not drop or not drop & {k[0] for k in keep}:  # only earlier clones failing: stop, or this loops forever
                     keep = []
                     break
                 keep = [k for k in keep if k[0] not in drop]

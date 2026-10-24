@@ -470,6 +470,14 @@ void func_00104B80(float *, float *, float *);
 unsigned char func_002018A0(char *, float *, float *, float *, char *, int);
 void func_00207470(int, int);
 void func_00105578(float *, float *, float);
+void func_001AAD30(char *);
+char *func_001B0FD0(char *, int, int);
+char *func_001B1610(int, char *);
+void func_00407070(char *);
+void func_001B1440(char *, char *, char *);
+void func_001959E0(char *, int, char *);
+void func_001B1430(char *, int);
+void func_0013D240(char *, int);
 
 void func_003A6340(unsigned char *p) {
     unsigned char go;
@@ -885,4 +893,46 @@ void func_0041DDC0(signed char k, float *a, float *b, float *out) {
     func_00105760(m, m, 6.283185f * ((float)s / 65536.0f));
     func_00104B80(v80, m, v80);
     __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(out), "r"(v80), "r"(a) : "memory");
+}
+
+typedef struct { unsigned char f; int x; char **pp; } HB;
+
+char *func_00406F20(char *p, char *s) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *o;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0x420, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0x420, t);
+        if (r != 0) {
+            func_00407070(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x410) = p;
+        func_00105300((float *)(ret + 0x3D0), s);
+        *(unsigned char *)(ret + 0x45) = 4;
+    }
+    return ret;
 }
