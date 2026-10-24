@@ -2276,6 +2276,12 @@ void func_0046EBE0(char *);
 void func_0013D6A0(char *);
 void func_00332650(char *);
 void func_0028C110(char *);
+int func_0022CBA0(char *);
+void func_0022CBB0(char *, char *);
+int func_0012B1A0(char *, char *);
+int func_0022CD60(char *);
+extern char D_005BC740[8];
+extern char D_005BC748[8];
 
 char *func_003850B0(char *sc) {
     char *ret;
@@ -2445,4 +2451,52 @@ char *func_00202A50(char *p) {
     *(int *)(p + 0x29D0) = 0;
     *(int *)(p + 0x2890) = 0;
     return p;
+}
+
+typedef struct { signed char a0; unsigned char a1; signed char a2; unsigned char a3; char pad4[0xC]; float f10[12]; } S311;
+
+int func_00312120(char *, int *, int *, int *, S311 *);
+int func_002F6690(S311 *, char *, char *);
+
+static inline int *ent311(int *q, int n) { if ((unsigned int)q[1] < n + 1) return 0; if (*(int *)((char *)q + n * 4 + 8) == 0) return 0; return (int *)((char *)q + *(int *)((char *)q + n * 4 + 8)); }
+
+int func_00311E70(char *p, int *q, char *r) {
+    char name[32];
+    S311 s;
+    unsigned int k;
+    int v;
+    k = -1;
+    s.a1 = 0;
+    s.a3 = 0;
+    s.f10[0] = 0.0f;
+    s.a0 = -1;
+    s.a2 = -1;
+    s.f10[1] = 0.0f;
+    s.f10[2] = 0.0f;
+    s.f10[3] = 1.0f;
+    s.f10[4] = 0.0f;
+    s.f10[5] = 0.0f;
+    s.f10[6] = 0.0f;
+    s.f10[7] = 1.0f;
+    s.f10[8] = 1.0f;
+    s.f10[9] = 1.0f;
+    s.f10[10] = 1.0f;
+    s.f10[11] = 1.0f;
+    while (!func_0022CBA0(r)) {
+        func_0022CBB0(r, name);
+        if (func_0012B1A0(name, D_005BC740) == 0) {
+            if (k == -1) {
+                v = func_00312120(p, ent311(q, s.a0 * 10), 0, 0, &s);
+            } else {
+                v = func_00312120(p, ent311(q, s.a0 * 10), ent311(q, k * 10), ent311(q, k * 10 + 1), &s);
+            }
+            return v;
+        }
+        if (func_002F6690(&s, name, r) == 0) {
+            if (func_0012B1A0(name, D_005BC748) == 0) {
+                k = func_0022CD60(r);
+            }
+        }
+    }
+    return 0;
 }

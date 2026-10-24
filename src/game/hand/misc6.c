@@ -8036,3 +8036,27 @@ void func_004B6310(char *p) {
     func_0028C3A0(p + 0x190, 1, -1, p + 0x150);
     *(float *)(p + 0x468) = 120.0f;
 }
+
+static inline float frand4DE(void) { return 2.3283064e-10f * (float)mt_rand(); }
+
+void func_004DE570(char *p, int i) {
+    float v[4] __attribute__((aligned(16)));
+    char *m;
+    ((float *)(p + 0x1540))[i] -= *(float *)(p + 0x10);
+    m = *(char **)(func_0027A710(p + 0x180) + 0x108) + i * 64;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory");
+    *(float *)(m + 0x30) = *(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x850) + 0x104) + 0x30);
+    *(float *)(m + 0x34) = *(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x850) + 0x104) + 0x34);
+    *(float *)(m + 0x38) = *(float *)(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x850) + 0x104) + 0x38);
+    *(float *)(m + 0x3C) = 1.0f;
+    if (((float *)(p + 0x1540))[i] <= 0.0f) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(*(char **)(*(char **)(*(char **)(p + 0x5E8) + 0x850) + 0x104) + 0x20) : "memory");
+        v[0] = v[0] * (-1.0f + 0.2f * frand4DE());
+        v[1] = 0.0f;
+        v[2] = v[2] * (-1.0f + 0.2f * frand4DE());
+        func_00133890((float *)m, v, (float *)(m + 0x10));
+        ((float *)(p + 0x16B4))[i] = 5.0f + 10.0f * frand4DE();
+        ((int *)(p + 0x1828))[i] = 0;
+        ((unsigned char *)(p + 0x5EC))[i] = 9;
+    }
+}
