@@ -3969,10 +3969,114 @@ extern float D_00569520[];
 extern float D_00569524[];
 extern float D_00569528[];
 extern float D_0056952C[];
+void func_00407D80(char *, char *);
+void func_003A6F20(char *);
+extern signed char D_005BE1B4;
+void func_003B9BD0(char *);
+void func_003BA870(char *);
+void func_003B9BA0(char *);
+void func_003B96A0(char *);
+void func_003B8DE0(char *);
+void func_003B8EF0(char *);
+void func_003B90F0(char *);
+void func_003B9120(char *);
+void func_00253BC0(char *, char *);
+extern float D_0056ED50[];
+void func_0050F150(char *);
+void func_0013D640(char *, char *);
+void func_001959E0(char *, int, char *);
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+static inline void set4(float *v, float x, float y, float z, float w) { v[0] = x; v[1] = y; v[2] = z; v[3] = w; }
+
+static inline void vunit(float *m) { __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory"); }
+
+
+
+typedef struct { unsigned char f; int x; char **pp; } HB;
+extern char D_005B2290[];
+extern char D_005B22B4[];
+extern char D_005B2334[];
+void func_00252FA0(char *);
+void func_002E82A0(char *);
+extern char D_005BA990[];
+extern char D_005BA9B4[];
+extern char D_005BAA34[];
+extern char D_005BAAC8[];
+extern char D_005B2150[];
+extern char D_005B2174[];
+extern char D_005B21F4[];
+extern char D_005B8A80[];
+extern char D_005B8AA4[];
+extern char D_005B8B24[];
+extern char D_005BAF70[];
+extern char D_005BAF94[];
+extern char D_005BB014[];
+void func_0030AFB0(char *);
+void func_0030C180(char *);
+void func_00506F70(char *);
+void func_0031B750(char *);
+int func_0031B9E0(char *);
+void func_00504FD0(char *);
+void func_00505980(char *);
+void func_004F20A0(char *);
+void func_004E71D0(char *);
+void func_00458470(char *);
+extern char D_005B8090[];
+extern char D_005B80B4[];
+extern char D_005B8134[];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+typedef struct { float f[4]; } SF4;
+extern char D_005B8800[];
+extern char D_005B8824[];
+extern char D_005B88A4[];
+void func_00304D90(char *);
+int func_003050D0(char *);
 
 
 
@@ -4171,4 +4275,85 @@ int func_00216940(char *p, char *src, char *ctx) {
         }
     } while (!done);
     return 1;
+}
+
+char *func_0042E520(int p0, int p1, int p2) {
+    extern char D_005B3CB0[];
+    extern char D_005B3CD4[];
+    extern char D_005B3D54[];
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char ***q;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_0013D6A0(a);
+    **q = func_001B0FD0(a, 0x480, 1);
+    if ((t = **q) != 0) {
+        if (t != 0) {
+            func_00252FA0(t);
+            *(char **)t = D_005B3CB0;
+            *(char **)(t + 0x40) = D_005B3CD4;
+            *(char **)(t + 0xA0) = D_005B3D54;
+            *(char *)(t + 0x160) = 0;
+            func_0028C110(t + 0x1E0);
+        }
+        func_0013D640(**q + 0x24, a);
+        func_001959E0(D_00645A30, 0x9, **q);
+        (**q)[0x18] = 1;
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(int *)(ret + 0xD0) = p0;
+        *(int *)(ret + 0x470) = p1;
+        *(int *)(ret + 0x474) = p2;
+    }
+    return ret;
+}
+
+char *func_0050A8C0(int p0) {
+    void func_0050A720(char *);
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char ***q;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_0013D6A0(a);
+    **q = func_001B0FD0(a, 0xD40, 1);
+    if ((t = **q) != 0) {
+        if (t != 0) {
+            func_0050A720(t);
+        }
+        func_0013D640(**q + 0x24, a);
+        func_001959E0(D_00645A30, 0x2C, **q);
+        (**q)[0x18] = 1;
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(int *)(ret + 0x38) = p0;
+    }
+    return ret;
 }
