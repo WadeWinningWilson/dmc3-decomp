@@ -10998,4 +10998,42 @@ static inline int end2F1(L2F1 *x) { return ok2F1(x) ^ 1; }
 
 static inline char *nxt2F2(char *p) { char *r; L2F1 *x = *(L2F1 **)(p + 0x83C); r = 0; if (!end2F1(x)) { r = x->d; *(L2F1 **)(p + 0x83C) = (L2F1 *)x->nx; } return r; }
 
+class O2CF7 {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24();
+    virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44();
+    virtual void d48(); virtual void d4C(); virtual void d50(); virtual void d54(); virtual void d58(); virtual void d5C(); virtual void d60(); virtual void d64();
+    virtual void d68(); virtual void d6C(); virtual void d70(); virtual void d74(); virtual void d78(); virtual void d7C(); virtual void d80(); virtual void d84();
+    virtual void d88(); virtual void d8C(); virtual void d90(); virtual void d94(); virtual void d98(); virtual void d9C(); virtual void dA0(); virtual void dA4();
+    virtual void dA8(); virtual void dAC(); virtual void dB0(); virtual void dB4(); virtual void dB8(); virtual void dBC(); virtual void dC0();
+    virtual float *mC4();
+};
 
+extern "C" void func_002CF780(char *p) {
+    float n[16] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    float *v;
+    v = ((O2CF7 *)(p + 0x640))->mC4();
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(p + 0x2F40), "r"(v) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	lqc2 $vf6, 0x0(%0)
+	vmulx.xyz $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x2F40), "r"(p + 0x2F40), "f"(*(float *)(p + 0x2D70)) : "t0", "memory");
+    __asm__ volatile("lqc2 $vf5, 0x0(%1)
+	lqc2 $vf4, 0x30(%0)
+	vmove.xyz $vf4, $vf5
+	sqc2 $vf4, 0x30(%0)" : : "r"(n), "r"(p + 0x2F40) : "memory");
+    func_00105760(m, n, 6.283185f * ((float)*(short *)(p + 0x90) / 65536.0f));
+    __asm__ volatile("lqc2 $vf4, 0x30(%1)
+	lqc2 $vf5, 0x0(%0)
+	vmove.xyz $vf5, $vf4
+	sqc2 $vf5, 0x0(%0)" : : "r"(p + 0x2F40), "r"(m) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	lqc2 $vf5, 0x0(%1)
+	vadd.xyzw $vf6, $vf4, $vf5
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(p + 0x2F40) : "memory");
+}

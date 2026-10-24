@@ -2457,6 +2457,8 @@ typedef struct { signed char a0; unsigned char a1; signed char a2; unsigned char
 
 int func_00312120(char *, int *, int *, int *, S311 *);
 int func_002F6690(S311 *, char *, char *);
+float func_001324E0(float *);
+extern float D_005BDF44;
 
 static inline int *ent311(int *q, int n) { if ((unsigned int)q[1] < n + 1) return 0; if (*(int *)((char *)q + n * 4 + 8) == 0) return 0; return (int *)((char *)q + *(int *)((char *)q + n * 4 + 8)); }
 
@@ -2499,4 +2501,61 @@ int func_00311E70(char *p, int *q, char *r) {
         }
     }
     return 0;
+}
+
+void func_003B9F50(char *p) {
+    float t[4] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    float l;
+    char *g = *(char **)D_01CAFF0C;
+    t[0] = *(float *)(*(char **)(g + 0xC) + 0x50);
+    t[1] = 150.0f + *(float *)(*(char **)(g + 0xC) + 0x54);
+    t[2] = *(float *)(*(char **)(g + 0xC) + 0x58);
+    t[3] = 1.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%2)
+	lqc2 $vf5, 0x0(%1)
+	vsub.xyzw $vf6, $vf5, $vf4
+	sqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(t), "r"(p + 0x50) : "memory");
+    l = func_001324E0(d);
+    func_00131650(d, d);
+    d[3] = 1.0f;
+    l += 300.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(d), "f"(l) : "t0", "memory");
+    *(float *)(p + 0x230) = *(float *)(p + 0x50) + d[0];
+    *(float *)(p + 0x234) = *(float *)(p + 0x54) + d[1];
+    *(float *)(p + 0x238) = *(float *)(p + 0x58) + d[2];
+    *(float *)(p + 0x23C) = 1.0f;
+    *(unsigned char *)(p + 0x1B6) = 1;
+}
+
+void func_004D30B0(char *p) {
+    float d[4] __attribute__((aligned(16)));
+    float l;
+    char *g;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	lqc2 $vf5, 0x0(%2)
+	vsub.xyzw $vf6, $vf5, $vf4
+	sqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(p + 0x50), "r"(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50) : "memory");
+    l = func_001324E0(d);
+    l /= 100.0f;
+    l = 1.0f > l ? 1.0f : l;
+    l = D_005BDF44 / (l * l);
+    func_00131650(d, d);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(d), "f"(l * *(float *)(p + 0x10)) : "t0", "memory");
+    g = *(char **)D_01CAFF0C;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	lqc2 $vf5, 0x0(%0)
+	vadd.xyzw $vf6, $vf5, $vf4
+	sqc2 $vf6, 0x0(%2)" : : "r"(*(char **)(g + 0xC) + 0x50), "r"(d), "r"(*(char **)(g + 0xC) + 0x50) : "memory");
+    *(float *)(*(char **)(g + 0xC) + 0x5C) = 1.0f;
 }

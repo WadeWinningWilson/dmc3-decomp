@@ -2374,3 +2374,39 @@ void func_004BA670(char *p) {
     func_0041D840(q, p + 0x420, *(float *)(p + 0x50C));
     func_0028C5C0(p + 0x1A0, 0, 1.0f);
 }
+
+void func_00495D20(char *p) {
+    float t[4] __attribute__((aligned(16)));
+    float tmp[4] __attribute__((aligned(16)));
+    float s;
+    float q;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(t), "r"(*(char **)(p + 0x3F0) + 0x50) : "memory");
+    t[1] += 120.0f;
+    t[3] = 1.0f;
+    if (func_00132470(t, p + 0x50) < 100.0f) {
+        func_001AD140(p);
+        return;
+    }
+    __asm__ volatile("lqc2 $vf4, 0x0(%2)
+	lqc2 $vf5, 0x0(%1)
+	vsub.xyzw $vf6, $vf5, $vf4
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x3A0), "r"(t), "r"(p + 0x50) : "memory");
+    func_00131650(p + 0x3A0, p + 0x3A0);
+    *(float *)(p + 0x3AC) = 1.0f;
+    s = func_0034C160(*(float *)(p + 0x378), 80.0f, 10.0f * *(float *)(p + 0x10));
+    q = s * s;
+    *(float *)(p + 0x378) = s;
+    if (!(q <= 80.0f)) q = 80.0f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(tmp), "r"(p + 0x3A0), "f"(q) : "t0", "memory");
+    *(float *)(p + 0x50) += tmp[0] * *(float *)(p + 0x10);
+    *(float *)(p + 0x54) += tmp[1] * *(float *)(p + 0x10);
+    *(float *)(p + 0x58) += tmp[2] * *(float *)(p + 0x10);
+    func_004960F0(p);
+    func_0028C5C0(p + 0x150, 0, *(float *)(p + 0x10));
+}

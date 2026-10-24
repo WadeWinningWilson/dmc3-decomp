@@ -10818,6 +10818,10 @@ void func_0032FB30(char *p) {
 
 typedef struct { char *d; void *nx; } L2F1;
 void func_004FEA70(char *);
+void func_00132300(char *, float, float, float);
+extern signed char D_005BE144;
+unsigned char func_002F5220(char *);
+void func_002F55E0(char *);
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -10857,4 +10861,78 @@ void func_004FE960(char *p, int x, unsigned short fl, float dt) {
 	vadd.xyzw $vf6, $vf4, $vf5
 	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x50), "r"(tmp) : "memory");
     }
+}
+
+static inline void setf470(short s) { char *g = *(char **)(*(char **)D_01CAFF0C + 0x18); int k = s; if (k < 32) { ((int *)(g + 0x18))[k / 32] |= 1 << (k & 31); } else { k -= 32; ((int *)(g + 0x44))[k / 32] |= 1 << (k & 31); } }
+
+static inline int tst470(short s) { char *g = *(char **)(*(char **)D_01CAFF0C + 0x18); if (s < 32) return (((int *)(g + 0x18))[s / 32] & (1 << (s & 31))) != 0; return (((int *)(g + 0x44))[(s - 32) / 32] & (1 << ((s - 32) & 31))) != 0; }
+
+void func_00470CE0(char *p) {
+    float v[4] __attribute__((aligned(16)));
+    *(unsigned char *)(p + 0xDC) = 3;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	vmove.w $vf4, $vf0
+	sqc2 $vf4, 0x30(%0)" : : "r"(p + 0x520), "r"(p + 0x570) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(p + 0x590) : "memory");
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	mfc1 $t0, %2
+	nop
+	qmtc2.ni $t0, $vf5
+	lqc2 $vf6, 0x0(%0)
+	vmulx.xyz $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(v), "r"(v), "f"(*(float *)(p + 0x5A4)) : "t0", "memory");
+    func_00105230(p + 0x520, p + 0x520, v);
+    func_00105300(p + 0x890, p + 0x520);
+    func_00132300(p + 0x890, 0.0f, 100.0f, 0.0f);
+    *(unsigned char *)(p + 0x5B1) = 0xFD;
+    if (*(short *)(p + 0x562) != -1) setf470(*(short *)(p + 0x562));
+}
+
+void func_002F4FA0(char *p) {
+    int i;
+    float f;
+    char *q;
+    func_001AD100(p);
+    for (i = 0; i < 2; i++) func_00206730(p + i * 4 + 0x84);
+    for (i = 0; i < 2; i++) {
+        if (((char **)(p + 0x84))[i] == 0 && i == 0) {
+            func_001AD140(p);
+            return;
+        }
+    }
+    if (D_005BE144) {
+        func_001AD140(p);
+        return;
+    }
+    f = *(float *)(p + 0x128) * *(float *)(p + 0x10);
+    if (!(f < 1.0f)) f = 0.999f;
+    __asm__ volatile("lqc2 $vf4, 0x0(%0)
+	mfc1 $t0, %1
+	nop
+	qmtc2.ni $t0, $vf5
+	vmulx.xyzw $vf6, $vf4, $vf5x
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0x110), "f"(f) : "t0", "memory");
+    *(float *)(p + 0x114) += *(float *)(p + 0x12C) * *(float *)(p + 0x10);
+    __asm__ volatile("lqc2 $vf4, 0x0(%2)
+	lqc2 $vf5, 0x0(%1)
+	lqc2 $vf6, 0x0(%0)
+	vadd.xyz $vf6, $vf5, $vf4
+	sqc2 $vf6, 0x0(%0)" : : "r"(p + 0xF0), "r"(p + 0xF0), "r"(p + 0x110) : "memory");
+    if (!((*(float *)(p + 0x134) += *(float *)(p + 0x10)) < 1.0f)) {
+        *(float *)(p + 0x134) = 0.0f;
+        if (*(unsigned char *)(p + 0xA1) == 0 && func_002F5220(p) == 1) (*(int *)(p + 0x120))--;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)
+	sqc2 $vf4, 0x0(%0)" : : "r"(p + 0x100), "r"(p + 0xF0) : "memory");
+    }
+    *(float *)(p + 0x124) -= *(float *)(p + 0x10);
+    if (*(int *)(p + 0x120) <= 0 || *(float *)(p + 0x124) < 0.0f) {
+        func_001AD140(p);
+        return;
+    }
+    q = *(char **)(p + 0x84) + 0x6E8;
+    f = (*(float *)(q + 0x2C) += *(float *)(p + 0x130) * *(float *)(p + 0x10));
+    if (!(f <= 180.0f)) *(float *)(q + 0x2C) = f - 360.0f;
+    if (*(float *)(q + 0x2C) < -180.0f) *(float *)(q + 0x2C) += 360.0f;
+    func_002F55E0(p);
 }
