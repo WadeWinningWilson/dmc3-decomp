@@ -496,6 +496,16 @@ void func_001ACC30(int, int, int, int, int);
 void func_0036DF10(char *, int, int, int, int, int);
 char *func_00207480(int, int, char *, int);
 void func_002D6C60(char *, int);
+extern int D_005BD0C8;
+extern float D_0058BDC0[];
+unsigned char func_004F8E00(char *, char *, float, float);
+void func_0028C200(char *, char *, char *, int, int, char *, int);
+void func_0028C910(char *);
+void func_0028C8E0(char *, int);
+void func_0028C3A0(char *, int, int, char *);
+void func_004F92D0(char *, int);
+void func_004F9270(char *);
+void func_001AD140(char *);
 
 char *func_002EC460(char *p, int *q, char *r) {
     char name[32];
@@ -666,4 +676,64 @@ void func_002D3270(char *p) {
         func_00207480(3, 0x319, p + 0x1EF0, 0x10);
     }
     func_002D6C60(p, *(short *)(p + 0x38FE));
+}
+
+#define UNIT(m) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(m) : "memory")
+
+#define VCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+void func_004F8710(char *p) {
+    int i;
+    int k;
+    func_00206730(p + 0x138);
+    switch (*(unsigned char *)(p + 5)) {
+    case 0:
+        if (func_004F8E00(p, p + 0x600, 1.0f, 0.0f) == 1) {
+            (*(unsigned char *)(p + 5))++;
+            *(float *)(p + 0x600) = 55.0f;
+            *(float *)(p + 0x604) = 15.0f;
+            *(unsigned char *)(p + 0x619) = 1;
+            func_0028C200(p + 0x140, p + 0x360, p + 0x370, 3, D_005BD0C8, p, 0);
+            func_0028C910(p + 0x140);
+            *(float *)(p + 0x224) = 1.0f;
+            *(int *)(p + 0x218) = 0x40;
+            func_0028C8E0(p + 0x140, 10);
+            for (i = 0; i < 3; i++) {
+                *(unsigned char *)((char *)(i * 4) + (int)p + 0x360) = 1;
+                *(unsigned char *)((char *)(i * 4) + (int)p + 0x361) = 0;
+                *(short *)((char *)(i * 4) + (int)p + 0x362) = i;
+                *(unsigned char *)((char *)(i * 0x50) + (int)p + 0x370) = 2;
+                *(float *)((char *)(i * 0x50) + (int)p + 0x380) = 0.0f;
+                *(float *)((char *)(i * 0x50) + (int)p + 0x384) = 0.0f;
+                *(float *)((char *)(i * 0x50) + (int)p + 0x388) = 0.0f;
+                *(float *)((char *)(i * 0x50) + (int)p + 0x38C) = 1.0f;
+                *(float *)((char *)(i * 0x50) + (int)p + 0x390) = 120.0f;
+                func_0028C3A0(p + 0x140, i, -1, p + i * 0x40 + 0x4B0);
+                UNIT(p + i * 0x40 + 0x4B0);
+                VCOPY(p + i * 0x40 + 0x4E0, p + 0x50);
+                *(float *)((char *)(i * 0x40) + (int)p + 0x4E4) = *(float *)((char *)(i * 0x40) + (int)p + 0x4E4) + -160.0f;
+            }
+            func_004F92D0(p, 0x22);
+        }
+        break;
+    case 1:
+        if (func_004F8E00(p, p + 0x600, 1.0f, 0.0f) == 1) {
+            (*(unsigned char *)(p + 5))++;
+            *(unsigned char *)(p + 0x619) = 0;
+            func_004F9270(p);
+        }
+        break;
+    case 2:
+        if (*(int *)(p + 0x138) == 0) {
+            func_004F9270(p);
+            func_001AD140(p);
+            return;
+        }
+        break;
+    }
+    if (*(unsigned char *)(p + 0x619) != 0 && func_004F8E00(p, p + 0x604, 1.0f, 0.0f) == 0) {
+        for (k = 0; k < 3; k++) {
+            *(float *)((char *)(k * 0x40) + (int)p + 0x4E4) = *(float *)((char *)(k * 0x40) + (int)p + 0x4E4) + D_0058BDC0[k];
+        }
+    }
 }
