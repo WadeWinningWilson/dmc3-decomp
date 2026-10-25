@@ -8104,6 +8104,10 @@ extern int D_01DFA340[];
 extern int D_01DFA344[];
 extern int D_01DFA348[];
 void func_004E2BC0(char *);
+extern int D_01DFAB74[];
+extern int D_01DFAB78[];
+extern int D_01DFAB84[];
+extern int D_01DFAB88[];
 
 int func_002FAEF0(S2FAA *t, int cmd) {
     C36 s = { 0 };
@@ -8530,4 +8534,124 @@ done:
         *(unsigned char *)(ret + 0x45) = 4;
     }
     return ret;
+}
+
+#define F(id, o) func_002F30B0(id, *(int *)(((char **)(p + (o)))[func_002D9EB0(p)] + 0x104), p)
+
+void func_00225F30(char *p, unsigned char k) {
+    switch (k) {
+    case 1:
+        switch (*(signed char *)(p + 0x46)) {
+        case 0:
+            switch (*(signed char *)(p + 0x28A8)) {
+            case 0:
+            case 5:
+                F(0x20, 0x1384);
+                break;
+            case 1:
+                F(0x21, 0x1384);
+                break;
+            case 2:
+                F(0x22, 0x1384);
+                break;
+            case 3:
+                F(0x23, 0x1384);
+                break;
+            case 4:
+                F(0x24, 0x1384);
+                break;
+            }
+            break;
+        case 1:
+            switch (*(signed char *)(p + 0x28A8)) {
+            case 4:
+                F(0x26, 0x13B8);
+                break;
+            case 0:
+                F(0x26, 0x13B8);
+                break;
+            }
+            break;
+        }
+        break;
+    case 2:
+    default:
+        switch (*(signed char *)(p + 0x46)) {
+        case 0:
+            D_01DFAB74[0] |= 0x1;
+            D_01DFAB78[0] |= 0x4;
+            D_01DFAB74[0] |= 0x2;
+            D_01DFAB78[0] |= 0x8;
+            D_01DFAB74[0] |= 0x4;
+            D_01DFAB78[0] |= 0x10;
+            D_01DFAB74[0] |= 0x8;
+            D_01DFAB78[0] |= 0x20;
+            D_01DFAB74[0] |= 0x10;
+            D_01DFAB78[0] |= 0x40;
+            break;
+        case 1:
+            D_01DFAB74[0] |= 0x40;
+            D_01DFAB78[0] |= 0x100;
+            D_01DFAB74[0] |= 0x40;
+            D_01DFAB78[0] |= 0x100;
+            break;
+        }
+        break;
+    case 3:
+        switch (*(signed char *)(p + 0x46)) {
+        case 0:
+            switch (*(signed char *)(p + 0x28A8)) {
+            case 0:
+            case 5:
+                F(0x42, 0x1384);
+                break;
+            case 1:
+                F(0x43, 0x1384);
+                break;
+            case 2:
+                F(0x44, 0x1384);
+                break;
+            case 3:
+                F(0x45, 0x1384);
+                break;
+            case 4:
+                F(0x46, 0x1384);
+                break;
+            }
+            break;
+        case 1:
+            switch (*(signed char *)(p + 0x28A8)) {
+            case 4:
+                F(0x48, 0x13B8);
+                break;
+            case 0:
+                F(0x48, 0x13B8);
+                break;
+            }
+            break;
+        }
+        break;
+    case 4:
+        switch (*(signed char *)(p + 0x46)) {
+        case 0:
+            D_01DFAB84[0] |= 0x1;
+            D_01DFAB88[0] |= 0x4;
+            D_01DFAB84[0] |= 0x2;
+            D_01DFAB88[0] |= 0x8;
+            D_01DFAB84[0] |= 0x4;
+            D_01DFAB88[0] |= 0x10;
+            D_01DFAB84[0] |= 0x8;
+            D_01DFAB88[0] |= 0x20;
+            D_01DFAB84[0] |= 0x10;
+            D_01DFAB88[0] |= 0x40;
+            break;
+        case 1:
+            D_01DFAB84[0] |= 0x40;
+            D_01DFAB88[0] |= 0x100;
+            D_01DFAB84[0] |= 0x40;
+            D_01DFAB88[0] |= 0x100;
+            break;
+        }
+        break;
+    }
 }
