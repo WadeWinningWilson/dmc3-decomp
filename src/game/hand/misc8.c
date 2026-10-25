@@ -10842,6 +10842,8 @@ unsigned int func_003047F0(char *);
 unsigned int func_00304790(char *);
 extern unsigned long D_01DFAD00[];
 extern int D_005BCA38;
+void func_001F9EC0(char *);
+void func_001FB670(char *, float *, int);
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -11651,4 +11653,114 @@ void func_003528C0(unsigned long seed) {
         seed = 69069 * seed + 1;
     }
     D_005BCA38 = 624;
+}
+
+int func_001F9EE0(char *o, int idx, char *d) {
+    char *e;
+    char *q;
+    int i;
+    int n;
+    int r;
+    float b[8];
+    q = d + *(int *)d;
+    e = q + 4;
+    if (idx >= *(int *)q) {
+        func_001F9EC0(o);
+        return 0;
+    }
+    n = idx / 10;
+    r = idx % 10;
+    for (i = 0; i < n; i++) {
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+        e += *(unsigned short *)e;
+    }
+    for (i = 0; i < r; i++) e += *(unsigned short *)e;
+    *(char **)(o + 8) = e;
+    switch (*(unsigned char *)(*(char **)(o + 8) + 4)) {
+    case 0:
+    case 1:
+    case 6:
+        e += 8;
+        break;
+    case 2:
+    case 7:
+        e += 0x10;
+        break;
+    case 3:
+        e += 0x20;
+        break;
+    case 4:
+    case 5:
+        break;
+    }
+    *(char **)(o + 0xC) = e;
+    func_001FB670(o, b, 0);
+    *(float *)o = b[2];
+    return 1;
+}
+
+int func_001FA370(char *o, int idx, char *d, int prev, char **cache) {
+    char *e;
+    char *q;
+    int i;
+    int n;
+    int r;
+    float b[8];
+    q = d + *(int *)d;
+    e = q + 4;
+    if (idx >= *(int *)q) {
+        func_001F9EC0(o);
+        return 0;
+    }
+    if (idx == prev + 1) {
+        e = *cache;
+        e += *(unsigned short *)e;
+    } else if (idx != 0) {
+        n = idx / 10;
+        r = idx % 10;
+        for (i = 0; i < n; i++) {
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+            e += *(unsigned short *)e;
+        }
+        for (i = 0; i < r; i++) e += *(unsigned short *)e;
+    }
+    *cache = e;
+    *(char **)(o + 8) = e;
+    switch (*(unsigned char *)(*(char **)(o + 8) + 4)) {
+    case 0:
+    case 1:
+    case 6:
+        e += 8;
+        break;
+    case 2:
+    case 7:
+        e += 0x10;
+        break;
+    case 3:
+        e += 0x20;
+        break;
+    case 4:
+    case 5:
+        break;
+    }
+    *(char **)(o + 0xC) = e;
+    func_001FB670(o, b, 0);
+    *(float *)o = b[2];
+    return 1;
 }
