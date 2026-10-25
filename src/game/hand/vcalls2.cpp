@@ -8319,6 +8319,8 @@ extern "C" void func_0037C550(char *, int);
 extern "C" void func_0037D300(char *, int);
 extern "C" void func_0037E150(char *);
 extern "C" void func_0037E8A0(char *);
+extern "C" void func_0022BFA0(char *, char *, char *, int);
+extern "C" unsigned int func_0022C430(char *);
 
 static inline float frand3F8B(void) {
     unsigned int y;
@@ -9636,4 +9638,79 @@ extern "C" void func_0037B280(char *p) {
         for (i = 1; i < *(int *)(p + 0x6E78); i++) func_002EC050(3, *(char **)((char *)(i * 4) + (int)p + 0x69F8) + 0x1270, 100.0f);
     }
     func_00195E20(D_005BE098, p);
+}
+
+struct O3C9 {
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual unsigned char m2C(int, int);
+    virtual void e10();
+    virtual void e11();
+    virtual void e12();
+    virtual void e13();
+    virtual void e14();
+    virtual void e15();
+    virtual void e16();
+    virtual void e17();
+    virtual void e18();
+    virtual void e19();
+    virtual void e20();
+    virtual void e21();
+    virtual void e22();
+    virtual void e23();
+    virtual void e24();
+    virtual void e25();
+    virtual void e26();
+    virtual void e27();
+    virtual void e28();
+    virtual void e29();
+    virtual void e30();
+    virtual void e31();
+    virtual void e32();
+    virtual void e33();
+    virtual void e34();
+    virtual void e35();
+    virtual void e36();
+    virtual void e37();
+    virtual void e38();
+    virtual void e39();
+    virtual void e40();
+    virtual void e41();
+    virtual void mB0(int, char *);
+};
+
+#define ID3C9(k) func_001AED80(D_00666750, 2, (unsigned short)(*(signed char *)(p + 0x46) * 15 + 14), k)
+
+extern "C" void func_003C95E0(char *p) {
+    char *r;
+    unsigned int i;
+    int n;
+    int a;
+    a = ID3C9(0);
+    if (((O3C9 *)(p + 0xB00))->m2C(ID3C9(1), a) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    *(char **)(p + 0xE8) = p + 0xB00;
+    a = ID3C9(3);
+    if (((O3C9 *)(p + 0x1100))->m2C(ID3C9(4), a) == 0) {
+        func_001AD140(p);
+        return;
+    }
+    *(char **)(p + 0xEC) = p + 0x1100;
+    *(int *)(p + 0x1CC) = ID3C9(8);
+    ((O3C9 *)(p + 0xB00))->mB0(*(int *)(p + 0x1CC), p + 0x1C4);
+    ((O3C9 *)(p + 0x1100))->mB0(0, p + 0x1D0);
+    r = (char *)ID3C9(5);
+    n = func_0022C430(r);
+    for (i = 0; i < (unsigned int)n; i++)
+        func_0022BFA0(p + i * 0xC0 + 0x200, p + 0x1D0, r, i);
+    func_00208050(ID3C9(7), 1);
 }

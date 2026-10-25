@@ -26111,6 +26111,11 @@ int func_00383E10(char *, int);
 int func_003C9120(char *, int);
 int func_003CA630(char *, int);
 int func_003CAD30(char *, int);
+void func_001A2D00(char *, int);
+signed char func_00406C60(char *, signed char);
+int func_001AD430(char *p);
+void func_001AE050(char *p, void *b);
+unsigned char *func_001AE180(char *p, int n);
 
 int func_001C5350(char *p, char *e) {
     int i;
@@ -26639,4 +26644,80 @@ void func_00205000(char *p) {
     *(int *)(p + 0x3D7C) = 0;
     *(int *)(p + 0x3D80) = 0;
     *(int *)(p + 0x3D84) = 0;
+}
+
+void func_00413630(char *p) {
+    func_001A2D70(func_00279290(p + 0x7C0), 2, 0x80606060);
+    func_001A2D70(func_00279290(p + 0x7C0), 0, 0x80606060);
+    func_001A2D70(func_00279290(p + 0x7C0), 3, 0x80606060);
+    func_001A2D70(func_00279290(p + 0x7C0), 1, 0x80606060);
+    if (*(unsigned char *)(p + 0x33C4) == 1) func_001A2D70(func_00279290(p + 0x25C0), 0, 0x80606060);
+    if (*(unsigned char *)(p + 0x33CB) == 1) func_001A2D70(func_00279290(p + 0x2BC0), 0, 0x80606060);
+    switch (*(unsigned char *)(p + 0x33AB)) {
+    case 4:
+        if (*(signed char *)(*(char **)(p + 0x33A0) + 0x4E) != -1) {
+            if (*(unsigned char *)(p + 0x33AA) == func_00406C60(*(char **)(p + 0x33A0), *(signed char *)(*(char **)(p + 0x33A0) + 0x4E)) - *(signed char *)(p + 0x33A6)) {
+                func_001A2D70(func_00279290(p + 0x7C0), 2, 0x80A0A0A0);
+                if (*(unsigned char *)(p + 0x33C4) == 1) func_001A2D00(func_00279290(p + 0x25C0), 0x80C0C0C0);
+            }
+        }
+        if (*(signed char *)(*(char **)(p + 0x33A0) + 0x4F) != -1) {
+            if (*(unsigned char *)(p + 0x33AA) == func_00406C60(*(char **)(p + 0x33A0), *(signed char *)(*(char **)(p + 0x33A0) + 0x4F)) - *(signed char *)(p + 0x33A6)) {
+                func_001A2D70(func_00279290(p + 0x7C0), 0, 0x80A0A0A0);
+                if (*(unsigned char *)(p + 0x33CB) == 1) func_001A2D00(func_00279290(p + 0x2BC0), 0x80C0C0C0);
+            }
+        }
+        break;
+    case 8:
+        if (*(signed char *)(*(char **)(p + 0x33A0) + 0x4C) != -1) {
+            if (*(unsigned char *)(p + 0x33AA) == func_00406C60(*(char **)(p + 0x33A0), *(signed char *)(*(char **)(p + 0x33A0) + 0x4C)) - *(signed char *)(p + 0x33A8)) {
+                func_001A2D70(func_00279290(p + 0x7C0), 3, 0x80A0A0A0);
+                if (*(unsigned char *)(p + 0x33C4) == 1) func_001A2D00(func_00279290(p + 0x25C0), 0x80C0C0C0);
+            }
+        }
+        if (*(signed char *)(*(char **)(p + 0x33A0) + 0x4D) != -1) {
+            if (*(unsigned char *)(p + 0x33AA) == func_00406C60(*(char **)(p + 0x33A0), *(signed char *)(*(char **)(p + 0x33A0) + 0x4D)) - *(signed char *)(p + 0x33A8)) {
+                func_001A2D70(func_00279290(p + 0x7C0), 1, 0x80A0A0A0);
+                if (*(unsigned char *)(p + 0x33CB) == 1) func_001A2D00(func_00279290(p + 0x2BC0), 0x80C0C0C0);
+            }
+        }
+        break;
+    }
+}
+
+typedef struct { unsigned short now, old, trg, rel; int x8; unsigned short c, e; } PadBtn;
+
+typedef struct { unsigned short now, old, trg, rel; int x8; PadBtn b[2]; } PadSt;
+
+typedef struct { char pad[0x318]; short a[2][4]; } PadT;
+
+void func_001ADE70(char *p) {
+    PadSt *ps;
+    int i;
+    int j;
+    PadBtn *b;
+    unsigned char *s;
+    ps = (PadSt *)(p + 0x2C0);
+    s = func_001AE180(p, 0);
+    func_001AD430(p);
+    for (i = 0; i < 2; i++, ps++, s += 0x50) {
+        ps->old = ps->now;
+        ps->now = *(unsigned short *)(s + 4);
+        ps->trg = ps->now & ~ps->old;
+        ps->rel = ps->old & ~ps->now;
+        func_001AE050(p, ps);
+        for (b = ps->b, j = 0; j < 2; j++, b++) {
+            b->old = b->now;
+            b->now = *(unsigned short *)(s + 0x20 + j * 8);
+            b->trg = b->now & ~b->old;
+            b->rel = b->old & ~b->now;
+            b->c = *(unsigned short *)(s + 0x38 + j * 2);
+            b->e = *(unsigned short *)(s + 0x3C + j * 2);
+            func_001AE050(p, b);
+        }
+        for (j = 0; j < 4; j++)
+            ((PadT *)p)->a[i][j] = s[0x10 + j] - 0x80;
+        for (j = 0; j < 12; j++)
+            (p + i * 12)[0x328 + j] = s[0x14 + j];
+    }
 }

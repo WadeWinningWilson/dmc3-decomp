@@ -11157,3 +11157,37 @@ void func_001AC630(char *p, float fov) {
     *(float *)(p + 0xE8) = (-*(float *)(p + 0x1D8) + *(float *)(p + 0x1DC)) / 2.0f;
     *(float *)(p + 0xF8) = (*(float *)(p + 0x1D8) + *(float *)(p + 0x1DC)) / 2.0f;
 }
+
+#define AP239(o, t, s) *(int *)(p + (o)) = func_0034C1C0(*(int *)(p + (o)), t, s)
+
+int func_00239680(char *p) {
+    char *e;
+    e = func_0027BE40(p + 0x18EA8, 1);
+    if (e == 0) return 0;
+    AP239(0x18F68, 0x12C, 0xA);
+    AP239(0x18F6C, 0x96, 5);
+    AP239(0x18F70, 0x190, 0xD);
+    AP239(0x18F74, 0x50, 2);
+    if (*(unsigned char *)(p + 0x18FF8) == 0) {
+        AP239(0x18F78, 0xAF, 5);
+        AP239(0x18F7C, 0x80, 4);
+        AP239(0x18F80, 0x80, 4);
+    } else {
+        AP239(0x18F78, 0x80, 4);
+        AP239(0x18F7C, 0x80, 4);
+        AP239(0x18F80, 0xAF, 5);
+    }
+    AP239(0x18F84, 0x80, 4);
+    *(int *)(e + 0x18) = *(int *)(p + 0x18F68);
+    *(int *)(e + 0x1C) = *(int *)(p + 0x18F6C);
+    *(int *)(e + 0x20) = *(int *)(p + 0x18F70);
+    *(int *)(e + 0x24) = *(int *)(p + 0x18F74);
+    *(int *)(e + 0x14) = (*(int *)(p + 0x18F84) << 24) + ((*(int *)(p + 0x18F80) << 16) + (*(int *)(p + 0x18F78) + (*(int *)(p + 0x18F7C) << 8)));
+    e = func_0027BE40(p + 0x18EA8, 0xF);
+    if (e == 0) return 0;
+    AP239(0x18F88, 0xFF, 8);
+    AP239(0x18F8C, 0xFF, 8);
+    *(signed char *)(e + 0x25) = *(int *)(p + 0x18F88);
+    *(int *)(e + 0x1C) = *(int *)(p + 0x18F8C);
+    return 1;
+}

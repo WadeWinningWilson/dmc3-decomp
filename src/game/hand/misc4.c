@@ -2579,6 +2579,15 @@ void func_0024E7B0(char *, int, int);
 void func_002965E0(char *, int);
 void func_00132DF0(char *, float *, float *);
 extern float D_00567EB0[];
+void func_001B6470(int *, int *);
+void func_001B6480(int *, int);
+void func_001B64B0(int *, int *);
+void func_001B6510(int *, int);
+void func_001B6520(int *, int);
+void func_001B6530(int *, int);
+void func_001B6550(int *, int);
+void func_001B7E20(int *, int);
+extern int D_01C61820[];
 
 int func_003B3CF0(char *p) {
     T3B3 z = { 0 };
@@ -2813,5 +2822,68 @@ void func_004F2D30(char *p) {
     if (*(float *)(p + 0x5CC) < 0.0f) {
         *(float *)(p + 0x5CC) = *(float *)(p + 0x5C8);
         func_0034BA60(0x2D, p + 0x50, 0x29, 0, 1);
+    }
+}
+
+void func_0028C9B0(char *p) {
+    int v[16];
+    int c[4];
+    int i;
+    int k;
+    if (*(unsigned char *)(p + 5) == 0) return;
+    c[0] = c[1] = c[2] = c[3] = *(int *)p | *(signed char *)(p + 4) << 24;
+    for (i = 0; i < 8; i++) {
+        v[0] = i * 64;
+        v[1] = 0;
+        v[2] = 0xFFFFF0;
+        v[3] = 1;
+        k = (i + 1) * 64;
+        v[4] = i * 64;
+        v[5] = *(unsigned short *)(p + 6);
+        v[6] = 0xFFFFF0;
+        v[7] = 1;
+        v[8] = k;
+        v[9] = 0;
+        v[10] = 0xFFFFF0;
+        v[11] = 1;
+        v[12] = k;
+        v[13] = *(unsigned short *)(p + 6);
+        v[14] = 0xFFFFF0;
+        v[15] = 1;
+        func_001B6470(D_01C61820, v);
+        func_001B6480(D_01C61820, 0);
+        func_001B64B0(D_01C61820, c);
+        func_001B6530(D_01C61820, 4);
+        func_001B6520(D_01C61820, 0xF);
+        func_001B6510(D_01C61820, 4);
+        func_001B6550(D_01C61820, 1);
+        func_001B7E20(D_01C61820, 0);
+    }
+    for (i = 0; i < 8; i++) {
+        v[0] = i * 64;
+        v[1] = *(short *)(D_005BE0D8 + 0x24) - *(unsigned short *)(p + 8);
+        v[2] = 0xFFFFF0;
+        k = (i + 1) * 64;
+        v[3] = 1;
+        v[4] = i * 64;
+        v[5] = *(short *)(D_005BE0D8 + 0x22);
+        v[6] = 0xFFFFF0;
+        v[7] = 1;
+        v[8] = k;
+        v[9] = *(short *)(D_005BE0D8 + 0x24) - *(unsigned short *)(p + 8);
+        v[10] = 0xFFFFF0;
+        v[11] = 1;
+        v[12] = k;
+        v[13] = *(short *)(D_005BE0D8 + 0x22);
+        v[14] = 0xFFFFF0;
+        v[15] = 1;
+        func_001B6470(D_01C61820, v);
+        func_001B6480(D_01C61820, 0);
+        func_001B64B0(D_01C61820, c);
+        func_001B6530(D_01C61820, 4);
+        func_001B6520(D_01C61820, 0xF);
+        func_001B6510(D_01C61820, 4);
+        func_001B6550(D_01C61820, 1);
+        func_001B7E20(D_01C61820, 0);
     }
 }

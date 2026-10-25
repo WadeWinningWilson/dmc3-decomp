@@ -322,6 +322,26 @@ void func_002F0650(char *);
 extern char D_01DF5D20[];
 
 typedef struct { char pad[0x818]; P2F0 pl; } B2F0;
+float func_0011DBE0(float, float);
+void func_00195E20(char *, char *);
+void func_00206730(char *);
+void func_00207470(int, int, float *);
+void func_00253110(float, char *, int, int);
+int func_002536B0(char *, int);
+void func_00286040(char *);
+void func_0028C5C0(char *, int, float);
+void func_003023F0(int);
+void func_00330BD0(int *, int, char *, int, int);
+void func_00332AE0(char *, int *, float, float);
+void func_004E6FF0(char *);
+int func_004E70B0(char *);
+extern int D_005880A0[];
+extern float D_005880C4[];
+extern float D_005880C8[];
+extern float D_005BDF88;
+extern float D_005BDF8C;
+extern char D_005BE098[4];
+extern int D_01DFABA0[];
 
 static inline void init2F0(B2F0 *b) {
     int i;
@@ -368,4 +388,58 @@ unsigned char func_002F0740(char *p, unsigned char a, unsigned char b) {
     }
     func_002F0650(p);
     return r;
+}
+
+void func_004E6840(char *p) {
+    float v;
+    short s;
+    func_00206730(p + 0x470);
+    func_00286040(p + 0x474);
+    if (!(*(float *)(p + 0xB1C) <= 0.0f)) {
+        v = *(float *)(p + 0xB1C) - D_005BDF88;
+        *(float *)(p + 0xB1C) = v > 0.0f ? v : 0.0f;
+    }
+    func_00253110(*(float *)(p + 0x10), p, func_004E70B0(p), 3);
+    if (*(int *)(p + 0x474) != 0) func_003023F0(*(int *)(p + 0x474));
+    switch (func_002536B0(p, func_004E70B0(p))) {
+    case 1:
+        *(signed char *)(p + 0x148) = 0;
+        break;
+    case -1:
+        *(signed char *)(p + 4) = 3;
+        *(signed char *)(p + 5) = 0;
+        break;
+    }
+    if (*(char **)(p + 0x21C) != 0) {
+        if (*(int *)(*(char **)(p + 0x21C) + 8) & 0x40) {
+            *(signed char *)(p + 4) = 2;
+            *(signed char *)(p + 5) = 0;
+            *(signed char *)(p + 0x148) = 1;
+        } else if (*(int *)(*(char **)(p + 0x21C) + 8) & 0x30000) {
+            *(signed char *)(p + 4) = 3;
+            *(signed char *)(p + 5) = 0;
+            func_00330BD0(D_01DFABA0, 8, p + 0x50, 0x23, 0);
+        }
+    }
+    if (*(char **)(p + 0x220) != 0) {
+        if (*(int *)(*(char **)(p + 0x220) + 8) & 1) {
+            *(signed char *)(p + 4) = 3;
+            *(signed char *)(p + 5) = 0;
+            func_00207470(3, 0x1C, (float *)(p + 0x150));
+            func_00330BD0(D_01DFABA0, 8, p + 0x50, 0x23, 0);
+            func_00332AE0(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x3D90, D_005880A0, D_005880C8[0], D_005880C4[0]);
+        } else if (*(int *)(*(char **)(p + 0x220) + 8) & 2) {
+            *(float *)(p + 0xB1C) += D_005BDF8C;
+            func_00207470(3, 4, (float *)(p + 0x150));
+            func_00330BD0(D_01DFABA0, 6, p + 0x50, 0x23, 0);
+        }
+    }
+    *(float *)(p + 0x84) = func_0011DBE0(*(float *)(p + 0xF0), *(float *)(p + 0xF8));
+    *(short *)(p + 0x90) = (int)(0.5f + 65536.0f * *(float *)(p + 0x84) / 6.283185f);
+    s = *(short *)(p + 0xB10);
+    *(short *)(p + 0xB10) = (int)((float)s + 5461.0f * *(float *)(p + 0x10));
+    if (*(short *)(p + 0xB10) * s < 0) func_00330BD0(D_01DFABA0, 0x73, p + 0x50, 0x23, 0);
+    func_004E6FF0(p);
+    func_0028C5C0(p + 0x1A0, 0, *(float *)(p + 0x10));
+    func_00195E20(D_005BE098, p);
 }

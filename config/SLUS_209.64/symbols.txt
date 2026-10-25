@@ -64,5 +64,6 @@ _dpflt = 0x100310; // a < b
 fptodp = 0x11FA58; // (double)float
 dpmul = 0x11FF50; // a * b
 dptofp = 0x120610; // (float)double
+_dpfgt = 0x100360; // a > b
 // data tables addressed through their base in matched code (the asm only labels a later element)
 D_005628F0 = 0x5628F0; // signed char table indexed [i - 0x24] by func_0036FD60

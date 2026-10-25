@@ -29440,6 +29440,12 @@ extern "C" int func_0021D320(char *, int, int, unsigned char, unsigned char);
 extern "C" void func_003C3CA0(char *, int);
 extern "C" void func_0021CCF0(char *, int, int, float);
 extern "C" void func_003C6060(char *);
+extern "C" int func_0020F3E0(char *, int, int);
+extern "C" void func_00455A90(char *);
+extern "C" void func_00455C30(char *);
+extern "C" void func_00455CF0(char *, int);
+extern "C" char *func_002EA290(int, int, float *, int);
+extern "C" void func_00208830(char *, int);
 
 static inline float frand4266(void) { return 2.3283064e-10f * (float)mt_rand(); }
 
@@ -30136,4 +30142,122 @@ extern "C" void func_003C6F70(char *p) {
         break;
     }
     func_002EF940((*(char **)D_01CAFF0C), p + 0x1BD0);
+}
+
+struct O455 {
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void mB4(int, int, int, int);
+};
+
+struct O455b {
+    virtual void e0();
+    virtual void mC(int);
+};
+
+static inline void tgtInit(char *t) {
+    int i;
+    *(unsigned char *)(t + 0) = 0;
+    *(unsigned char *)(t + 1) = 0;
+    *(short *)(t + 2) = 0;
+    *(int *)(t + 8) = 0;
+    *(int *)(t + 0xC) = 0;
+    *(int *)(t + 0x10) = 0;
+    *(int *)(t + 0x20) = 0;
+    *(int *)(t + 0x24) = 0;
+    *(int *)(t + 0x28) = 0;
+    *(float *)(t + 0x2C) = 1.0f;
+    *(float *)(t + 0x30) = 100000.0f;
+    *(unsigned char *)(t + 0x34) = 0;
+    *(unsigned char *)(t + 0x35) = 0;
+    *(short *)(t + 0x36) = 0;
+    for (i = 0; i < 10; i++)
+        *(short *)(t + i * 2 + 0x38) = -1;
+}
+
+static inline void tgtSet(char *t, char *p, char *o) {
+    tgtInit(t);
+    *(unsigned char *)(t + 0) = 0;
+    *(unsigned char *)(t + 1) = 0;
+    *(short *)(t + 2) = 1;
+    *(short *)(t + 4) = 0;
+    *(char **)(t + 8) = p;
+    *(int *)(t + 0xC) = 0;
+    *(char **)(t + 0x10) = o;
+    __asm__ volatile("lqc2 $vf4, 0x30(%0)
+	lqc2 $vf5, 0x0(%1)
+	vmove.xyz $vf5, $vf4
+	sqc2 $vf5, 0x0(%1)" : : "r"(o), "r"(t + 0x20) : "memory");
+}
+
+extern "C" void func_004550D0(char *p) {
+    float v[4];
+    O455b *b;
+    if (*(short *)(p + 0x64A) != -1 && func_0020F3E0(*(char **)(*(char **)D_01CAFF0C + 0x18), 9, *(short *)(p + 0x64A)) == -1) {
+        func_001AD140(p);
+        return;
+    }
+    *(signed char *)(p + 0x642) = 0;
+    func_00455A90(p);
+    func_00455C30(p);
+    func_00455CF0(p, 1);
+    ((O455 *)(p + 0x200))->mB4(0, 0, 0, 0);
+    tgtSet(p + 0x990, p, *(char **)(*(char **)(p + 0x1C8) + 0x104));
+    *(int *)(p + 0xC) |= 0x40;
+    if (*(short *)(p + 0x64A) != -1) {
+        v[0] = *(float *)(p + 0x680);
+        v[1] = 50.0f + *(float *)(p + 0x684);
+        v[2] = *(float *)(p + 0x688);
+        v[3] = 1.0f;
+        *(char **)(p + 0x690) = func_002EA290(9, (unsigned char)*(short *)(p + 0x64A), v, 1);
+        if (*(char **)(p + 0x690) != 0)
+            *(signed char *)(*(char **)(p + 0x690) + 0x90) = 1;
+    }
+    b = (O455b *)func_002F7C10(*(short *)(p + 0x646), 0);
+    if (b != 0)
+        b->mC(0);
+    if (*(short *)(p + 0x648) != -1)
+        func_00208830(*(char **)(*(char **)D_01CAFF0C + 0x1C), *(short *)(p + 0x648));
+    *(unsigned char *)(p + 4) += 1;
 }
