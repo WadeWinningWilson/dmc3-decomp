@@ -11137,6 +11137,10 @@ extern "C" void func_00437000(char *);
 extern "C" void func_004370C0(char *);
 extern "C" void func_004369C0(char *);
 extern "C" char *func_0043B1B0(char *, char *);
+extern "C" void func_003CF4B0(char *);
+extern "C" float func_001324E0(float *);
+extern "C" void func_001323A0(float *);
+extern "C" float func_001C1B00(float, char *, float *, char *);
 
 extern "C" void func_00476780(char *p, unsigned char k, int m) {
     S4767 s;
@@ -12546,4 +12550,162 @@ extern "C" void func_00433650(char *p) {
         FB(int, 0x47A4) = 0;
         break;
     }
+}
+
+class C1FC {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24(); virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34(); virtual void d38(); virtual void d3C(); virtual void d40(); virtual void d44(); virtual void d48(); virtual void d4C(); virtual void d50(); virtual void d54(); virtual void d58(); virtual void d5C(); virtual void d60(); virtual void d64(); virtual void d68(); virtual void d6C(); virtual void d70();
+    virtual void m74(float);
+};
+
+#define E1FC(i) (((char **)*(char **)(p + 0x14))[i])
+
+extern "C" void func_001FBC70(char *p, char *a, char **arr) {
+    int i;
+    int j;
+    float *s;
+    char *e;
+    unsigned char c;
+    func_001FBAF0(p);
+    *(int *)(p + 4) = *(int *)(a + 8);
+    *(int *)(p + 8) = *(int *)(a + 4);
+    *(int *)(p + 0xC) = *(int *)(a + 0xC);
+    *(int *)(p + 0x10) = *(unsigned short *)(a + 0xAA);
+    *(char ***)(p + 0x14) = arr;
+    *(char **)(p + 0xB8) = a;
+    *(signed char *)(p + 0xB4) = 0;
+    *(signed char *)(p + 0xAC) = 2;
+    *(signed char *)(p + 0xAD) = 2;
+    *(signed char *)(p + 0xAE) = 2;
+    *(signed char *)(p + 0xAF) = 2;
+    *(signed char *)(p + 0xB0) = 2;
+    *(signed char *)(p + 0xB1) = 2;
+    *(signed char *)(p + 0xB2) = 2;
+    *(signed char *)(p + 0xB3) = 2;
+    s = *(float **)(a + 0x10);
+    for (i = 0; i < *(int *)(p + 0x10); i++) {
+        *(short *)(E1FC(i) + 0xF6) = i;
+        *(char **)(E1FC(i) + 0x104) = *(char **)(a + 0x108) + i * 0x40;
+        e = E1FC(i);
+        *(char **)(e + 0x100) = e + 0x40;
+        *(char **)(E1FC(i) + 0x80) = *(char **)a + i * 0x90;
+        c = (*(unsigned char **)(p + 8))[i];
+        if (c != 0xFF) {
+            *(char **)(E1FC((*(unsigned char **)(p + 4))[i]) + 0xF0) = E1FC(c);
+        } else {
+            *(char **)(E1FC((*(unsigned char **)(p + 4))[i]) + 0xF0) = 0;
+        }
+        *(short *)(E1FC((*(unsigned char **)(p + 4))[i]) + 0xF4) = (*(unsigned char **)(p + 0xC))[i];
+        *(int *)(E1FC(i) + 0xFC) = 0;
+        *(float *)(E1FC(i) + 0x110) = s[0];
+        *(float *)(E1FC(i) + 0x124) = s[1];
+        *(float *)(E1FC(i) + 0x138) = s[2];
+        *(float *)(E1FC(i) + 0x14C) = s[4];
+        *(float *)(E1FC(i) + 0x160) = s[5];
+        *(float *)(E1FC(i) + 0x174) = s[6];
+        s += 8;
+        *(float *)(E1FC(i) + 0x188) = 1.0f;
+        *(float *)(E1FC(i) + 0x19C) = 1.0f;
+        *(float *)(E1FC(i) + 0x1B0) = 1.0f;
+        for (j = 0; j < 9; j++) func_001F9EC0(*(char **)((char *)(i * 4) + *(int *)(p + 0x14)) + j * 0x14 + 0x10C);
+    }
+    ((C1FC *)p)->m74(0.0f);
+}
+
+extern "C" char *func_003CF260(char *p, char *h, short *sc) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    char ***q;
+    char *e;
+    int i;
+    if (p == 0) {
+        return 0;
+    }
+    if (h == 0) {
+        return 0;
+    }
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    **q = func_001B0FD0(a, 0xACF0, 1);
+    if ((t = **q) != 0) {
+        r = func_001B1610(0xACF0, t);
+        if (r != 0) {
+            func_003CF4B0(r);
+        }
+        func_001B1440((char *)&b, **q, a);
+        func_001959E0(D_00645A30, 0x3, **q);
+        func_001B1430(**q, 1);
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret == 0) {
+        return 0;
+    }
+    e = ent10(h, *sc * 10);
+    for (i = 0; i < 0x18; i++) {
+        if ((unsigned char)((ObjG2C *)(ret + i * 0x720 + 0xE0))->m2C(e, p) == 0) {
+            func_001AD140(ret);
+            return 0;
+        }
+        func_001A5C30(((ObjG2C *)(ret + i * 0x720 + 0xE0))->mC());
+    }
+    *(unsigned char *)(ret + 0xACE6) = *(unsigned char *)((char *)sc + 2);
+    return ret;
+}
+
+extern "C" unsigned char func_00202010(char *p, char *a, char *b) {
+    float d[4] __attribute__((aligned(16)));
+    float e[4] __attribute__((aligned(16)));
+    unsigned int vis[200];
+    float seg[8] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    float r[4] __attribute__((aligned(16)));
+    char buf[0x30];
+    float f;
+    int n;
+    int *ids;
+    int i;
+    int *lst;
+    unsigned char *t;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(b), "r"(a) : "memory");
+    f = func_001324E0(d);
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(e), "r"(d) : "memory");
+    func_001323A0(e);
+    if (!(f <= 0.001f)) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(seg), "r"(a) : "memory");
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(seg + 4), "r"(b) : "memory");
+        lst = func_001F95B0(((char **)(p + 8))[*(int *)p]);
+        n = func_001F8FA0(((char **)(p + 8))[*(int *)p], (char *)seg);
+        func_00128488((char *)vis, 0, 0x320);
+        for (i = 0; i < n; i++) {
+            for (ids = func_001F95C0(((char **)(p + 8))[*(int *)p], lst[i]); *ids != -1; ids++) {
+                if (tasFAC(vis, (unsigned int)*ids / 56) == 1) {
+                    t = func_001F9610(((char **)(p + 8))[*(int *)p], *ids);
+                    if (hasFAC(t, 8) == 0) {
+                        func_002022F0(p, buf, t);
+                        if (!(func_001C1B00(*(float *)(t + 0x34), D_005BE0C8, r, b) < 0.0f)) {
+                            if ((unsigned char)func_001BF9F0(D_005BE0C8, (char *)seg, buf, v) == 1)
+                                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(seg), "r"(v) : "memory");
+                        }
+                    }
+                }
+            }
+        }
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(a), "r"(seg) : "memory");
+        return 1;
+    }
+    return 0;
 }

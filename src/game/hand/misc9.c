@@ -26690,6 +26690,10 @@ typedef struct { unsigned short now, old, trg, rel; int x8; unsigned short c, e;
 typedef struct { unsigned short now, old, trg, rel; int x8; PadBtn b[2]; } PadSt;
 
 typedef struct { char pad[0x318]; short a[2][4]; } PadT;
+extern char D_005BD968[8];
+extern char D_005BD970[8];
+extern char D_005BD978[4];
+extern char D_005BD97C[4];
 
 void func_001ADE70(char *p) {
     PadSt *ps;
@@ -26720,4 +26724,48 @@ void func_001ADE70(char *p) {
         for (j = 0; j < 12; j++)
             (p + i * 12)[0x328 + j] = s[0x14 + j];
     }
+}
+
+typedef struct { short h0, h1, h2; short pad; int pad2[2]; float v[4]; int k[8]; } S43C;
+
+int func_0043C9C0(char *, int *, int *, int *, int *, int *, int *, S43C *);
+
+static inline int *ent43C(int *q, int n) { if ((unsigned int)q[1] < n + 1) return 0; if (*(int *)((char *)q + n * 4 + 8) == 0) return 0; return (int *)((char *)q + *(int *)((char *)q + n * 4 + 8)); }
+
+int func_0043C580(char *p, int *q, char *r) {
+    char name[32];
+    S43C s;
+    s.h0 = s.h1 = s.h2 = -1;
+    s.v[0] = 0.0f;
+    s.v[1] = 0.0f;
+    s.v[2] = 0.0f;
+    s.v[3] = 1.0f;
+    s.k[0] = s.k[1] = s.k[2] = s.k[3] = s.k[4] = s.k[5] = s.k[6] = s.k[7] = 0;
+    while (!func_0022CBA0(r)) {
+        func_0022CBB0(r, name);
+        if (func_0012B1A0(name, D_005BD968) == 0) {
+            return func_0043C9C0(p, ent43C(q, s.h0 * 10), ent43C(q, s.h0 * 10 + 1), ent43C(q, s.h1 * 10), ent43C(q, s.h1 * 10 + 1),
+                                 ent43C(q, s.h2 * 10), ent43C(q, s.h2 * 10 + 1), &s);
+        }
+        if (func_0012B1A0(name, D_005BD970) == 0) {
+            s.h0 = func_0022CD60(r);
+            s.h1 = func_0022CD60(r);
+            s.h2 = func_0022CD60(r);
+        } else if (func_0012B1A0(name, D_005BD978) == 0) {
+            s.v[0] = func_0022CD90(r);
+            s.v[1] = func_0022CD90(r);
+            s.v[2] = func_0022CD90(r);
+            s.v[3] = 1.0f;
+        } else if (func_0012B1A0(name, D_005BD97C) == 0) {
+            s.k[0] = func_0022CD60(r);
+            s.k[1] = func_0022CD60(r);
+            s.k[2] = func_0022CD60(r);
+            s.k[3] = func_0022CD60(r);
+            s.k[4] = func_0022CD60(r);
+            s.k[5] = func_0022CD60(r);
+            s.k[6] = func_0022CD60(r);
+            s.k[7] = func_0022CD60(r);
+        }
+    }
+    return 0;
 }

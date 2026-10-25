@@ -9574,6 +9574,7 @@ extern "C" float D_00577C68[];
 extern "C" float D_005BD9C8;
 extern "C" int func_00437C50(char *);
 extern "C" void func_004398D0(char *, int);
+extern "C" void func_001A2D00(char *, unsigned int);
 
 extern "C" char *func_003CA630(char *p, char c) {
     char *ret;
@@ -11010,4 +11011,84 @@ extern "C" void func_00433BD0(char *p) {
         }
         break;
     }
+}
+
+#define B47A(o) (*(unsigned char *)(p + (o)))
+
+#define S47A(o) (*(signed char *)(p + (o)))
+
+extern "C" int func_0047A710(char *p) {
+    if (B47A(0x979F) == 1) {
+        if (B47A(0x978A) & 0x10)
+            func_001A2D00(func_00279290(p + 0x680), 0x80404040);
+        else
+            func_001A2D00(func_00279290(p + 0x680), 0x80808080);
+    }
+    switch (S47A(0x979D)) {
+    case 0:
+        if (B47A(0x97A0) == 0) break;
+        if (S47A(0x9799) == S47A(0x979E)) {
+            B47A(0x97A0) = 0;
+            break;
+        }
+        S47A(0x979E) = S47A(0x9799);
+        if (B47A(0x979F) == 1) {
+            B47A(0x97A2) = 0x40;
+            B47A(0x979D) = 1;
+        } else {
+            B47A(0x979D) = 3;
+        }
+        break;
+    case 1:
+        if (0 < B47A(0x97A2)) {
+            ((W2A80 *)(p + 0x680))->m84(B47A(0x97A2), 1);
+            B47A(0x97A2) = B47A(0x97A2) - 4;
+        } else {
+            ((W2A80 *)(p + 0x680))->m8C();
+            B47A(0x979F) = 0;
+            S47A(0x97A1) = 2;
+            B47A(0x979D) = 2;
+        }
+        break;
+    case 2:
+        if (--S47A(0x97A1) == 0) {
+            ((W2A80 *)(p + 0x680))->mD0();
+            B47A(0x979D) = 3;
+        }
+        break;
+    case 3:
+        if (*(int *)(p + 0x3C) != 0) {
+            func_001AF080(D_00666750, *(int *)(p + 0x3C));
+            *(int *)(p + 0x3C) = 0;
+        }
+        *(int *)(p + 0x3C) = func_001AFB90(D_00666750, S47A(0x979E) + 0x76D, 0, 8);
+        B47A(0x979D) = 4;
+    case 4: {
+        char *o;
+        char *a;
+        char *b;
+        if ((unsigned char)ok040(*(unsigned char **)(p + 0x3C)) == 0) break;
+        o = *(char **)(p + 0x3C);
+        b = getB44(o);
+        a = getA44(o);
+        ((W2A80 *)(p + 0x680))->m24(1);
+        if (((W2A80 *)(p + 0x680))->m2C(a, b) == 0) return 0;
+        ((W2A80 *)(p + 0x680))->m3C(1);
+        B47A(0x97A2) = 0;
+        ((W2A80 *)(p + 0x680))->m84(B47A(0x97A2), 1);
+        B47A(0x979F) = 1;
+        B47A(0x979D) = 5;
+    }
+    case 5:
+        if (B47A(0x97A2) < 0x40) {
+            B47A(0x97A2) = B47A(0x97A2) + 4;
+            ((W2A80 *)(p + 0x680))->m84(B47A(0x97A2), 1);
+        } else {
+            ((W2A80 *)(p + 0x680))->m8C();
+            B47A(0x97A0) = 0;
+            B47A(0x979D) = 0;
+        }
+        break;
+    }
+    return 1;
 }

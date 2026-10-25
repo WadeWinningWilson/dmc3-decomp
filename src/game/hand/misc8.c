@@ -10833,6 +10833,9 @@ void func_00508D70(char *);
 void func_0037B9C0(char *);
 void func_0037D300(char *, int);
 void func_0037B920(char *);
+void func_0043A750(char *, int, int, int);
+void func_0043A1A0(char *);
+void func_0043B970(char *, int, int);
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -11190,4 +11193,392 @@ int func_00239680(char *p) {
     *(signed char *)(e + 0x25) = *(int *)(p + 0x18F88);
     *(int *)(e + 0x1C) = *(int *)(p + 0x18F8C);
     return 1;
+}
+
+#define FB(t, o) (*(t *)(p + (o)))
+
+void func_00439970(char *p, unsigned char m, int x) {
+    FB(unsigned char, 0x47BE) = m;
+    FB(unsigned char, 5) = 0;
+    switch (FB(unsigned char, 0x47BE)) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        func_0043A750(p, 0, FB(unsigned char, 0x47BE), x);
+        func_0043A1A0(p);
+        break;
+    case 4:
+    case 5:
+    case 6:
+    case 12:
+    case 13:
+    case 14:
+        FB(unsigned char, 0x47B4) = 1;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        func_0043A750(p, 0, FB(unsigned char, 0x47BE), x);
+        func_0043A1A0(p);
+        break;
+    case 15:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 22:
+    case 24:
+    case 25:
+    case 26:
+    case 35:
+    case 40:
+    case 41:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 2;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        func_0043A750(p, 1, FB(unsigned char, 0x47BE) - 0xF, x);
+        func_0043A1A0(p);
+        break;
+    case 123:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 2;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        FB(unsigned char, 0x314C) = 0;
+        func_0024DA80(p + 0x4270, 4, FB(unsigned char, 0x47BE) - 0x53);
+        break;
+    case 124:
+    case 125:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 2;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        func_0043B970(p, 0, 1);
+        FB(unsigned char, 0x314C) = 0;
+        func_0024DA80(p + 0x4270, 4, FB(unsigned char, 0x47BE) - 0x53);
+        break;
+    case 128:
+    case 130:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 2;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        break;
+    case 38:
+    case 39:
+        FB(unsigned char, 0x47B4) = 1;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 3;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        func_0043A750(p, 1, FB(unsigned char, 0x47BE) - 0xF, x);
+        func_0043A1A0(p);
+        break;
+    case 126:
+        FB(unsigned char, 0x47B4) = 1;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 3;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        break;
+    case 42:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        func_0043A750(p, 2, FB(unsigned char, 0x47BE) - 0x2A, x);
+        func_0043A1A0(p);
+        break;
+    case 43:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        func_0043A750(p, 2, FB(unsigned char, 0x47BE) - 0x2A, x);
+        func_0043A1A0(p);
+        break;
+    case 44:
+    case 45:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        func_0043A750(p, 2, FB(unsigned char, 0x47BE) - 0x2A, x);
+        func_0043A1A0(p);
+        break;
+    case 55:
+    case 56:
+    case 57:
+    case 58:
+    case 59:
+    case 60:
+    case 61:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 3, FB(unsigned char, 0x47BE) - 0x2E, 1);
+        func_0043A750(p, 0, 1, 0);
+        func_0043A1A0(p);
+        func_0043B970(p, 1, 1);
+        break;
+    case 62:
+    case 63:
+    case 64:
+    case 65:
+    case 66:
+    case 67:
+    case 68:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 3, FB(unsigned char, 0x47BE) - 0x2E, 1);
+        func_0043A750(p, 3, 0x10, 0);
+        func_0043A1A0(p);
+        func_0043B970(p, 1, 1);
+        break;
+    case 69:
+    case 70:
+    case 71:
+    case 72:
+    case 73:
+    case 74:
+    case 75:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 3, FB(unsigned char, 0x47BE) - 0x2E, 1);
+        func_0043A750(p, 3, 0x17, 0);
+        func_0043A1A0(p);
+        func_0043B970(p, 1, 1);
+        break;
+    case 76:
+    case 77:
+    case 78:
+    case 79:
+    case 80:
+    case 81:
+    case 82:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 3, FB(unsigned char, 0x47BE) - 0x2E, 1);
+        func_0043A750(p, 3, 0x1E, 0);
+        func_0043A1A0(p);
+        func_0043B970(p, 1, 1);
+        break;
+    case 46:
+    case 48:
+    case 49:
+    case 50:
+    case 51:
+    case 52:
+    case 53:
+    case 54:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 3, FB(unsigned char, 0x47BE) - 0x2E, x);
+        func_0043A1A0(p);
+        func_0043B970(p, 1, 1);
+        break;
+    case 96:
+    case 99:
+        FB(unsigned char, 0x47B4) = 1;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        FB(unsigned char, 0x4857) = 0;
+        FB(int, 0x4834) = 0;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        func_0043B970(p, 0, 1);
+        FB(unsigned char, 0x314C) = 1;
+        func_0043B970(p, 4, 1);
+        break;
+    case 95:
+    case 98:
+        FB(unsigned char, 0x47B4) = 1;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        func_0043B970(p, 0, 1);
+        FB(unsigned char, 0x314C) = 1;
+        break;
+    case 90:
+    case 91:
+    case 92:
+    case 93:
+    case 100:
+    case 101:
+    case 102:
+    case 103:
+    case 104:
+    case 105:
+    case 106:
+    case 107:
+    case 108:
+    case 109:
+    case 110:
+    case 111:
+    case 112:
+    case 113:
+    case 114:
+    case 115:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        FB(unsigned char, 0x314C) = 0;
+        func_0024DA80(p + 0x4270, 4, FB(unsigned char, 0x47BE) - 0x53);
+        break;
+    case 83:
+    case 84:
+    case 85:
+    case 86:
+    case 87:
+    case 88:
+    case 89:
+    case 94:
+    case 97:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        func_0043B970(p, 0, 1);
+        FB(unsigned char, 0x314C) = 1;
+        break;
+    case 127:
+        FB(unsigned char, 0x47B4) = 1;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 3;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        func_0043B970(p, 1, 1);
+        func_0043B970(p, 2, 1);
+        break;
+    case 129:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 3;
+        FB(unsigned char, 0x47B6) = 3;
+        FB(unsigned char, 0x47B7) = 2;
+        FB(unsigned char, 0x47B8) = 2;
+        FB(unsigned char, 0x4857) = 1;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        func_0043B970(p, 3, 1);
+        break;
+    case 133:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        FB(int, 0x4834) = 0;
+        FB(unsigned char, 0x4857) = 0;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        break;
+    case 143:
+        FB(unsigned char, 0x47B4) = 0;
+        FB(unsigned char, 0x47B5) = 0;
+        FB(unsigned char, 0x47B6) = 0;
+        FB(unsigned char, 0x47B7) = 0;
+        FB(unsigned char, 0x47B8) = 0;
+        func_0043A750(p, 4, FB(unsigned char, 0x47BE) - 0x53, x);
+        func_0043A1A0(p);
+        break;
+    case 7:
+    case 21:
+    case 23:
+    case 27:
+    case 28:
+    case 29:
+    case 30:
+    case 31:
+    case 32:
+    case 33:
+    case 34:
+    case 36:
+    case 37:
+    case 47:
+    case 116:
+    case 117:
+    case 118:
+    case 119:
+    case 120:
+    case 121:
+    case 122:
+    case 131:
+    case 132:
+    case 134:
+    case 135:
+    case 136:
+    case 137:
+    case 138:
+    case 139:
+    case 140:
+    case 141:
+    case 142:
+    case 144:
+        break;
+    }
 }

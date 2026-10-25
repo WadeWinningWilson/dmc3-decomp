@@ -8103,6 +8103,7 @@ extern signed char D_00666712[];
 extern int D_01DFA340[];
 extern int D_01DFA344[];
 extern int D_01DFA348[];
+void func_004E2BC0(char *);
 
 int func_002FAEF0(S2FAA *t, int cmd) {
     C36 s = { 0 };
@@ -8481,4 +8482,52 @@ void func_004E5F90(char *p, int id, int sel) {
         func_0030FDF0(D_01DFA340, D_005829F4[D_00666712[0] * 2], x, y, d, 0, 0xFFFFF0, 1);
         break;
     }
+}
+
+static inline void cp4E2(char *d, char *s) { __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory"); }
+
+static inline char *cam4E2(void) { return *(char **)(*(char **)D_01CAFF0C + 0xC); }
+
+char *func_004E29F0(char *p, float *v, int n, float f) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char *r;
+    b.pp = &ret;
+    *b.pp = 0;
+    b.x = 0;
+    func_001AAD30(a);
+    *b.pp = func_001B0FD0(a, 0x690, 1);
+    if ((t = *b.pp) != 0) {
+        r = func_001B1610(0x690, t);
+        if (r != 0) {
+            func_004E2BC0(r);
+        }
+        func_001B1440((char *)&b, *b.pp, a);
+        func_001959E0(D_00645A30, 0x9, *b.pp);
+        func_001B1430(*b.pp, 1);
+        goto ok;
+    }
+    *b.pp = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(char **)(ret + 0x634) = p;
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(ret + 0x50), "r"(v) : "memory");
+        *(float *)(ret + 0x5C) = 1.0f;
+        *(int *)(ret + 0x638) = n;
+        cp4E2(ret + 0x660, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50);
+        *(float *)(ret + 0x664) += 100.0f;
+        *(float *)(ret + 0x66C) = 1.0f;
+        *(float *)(ret + 0x63C) = f;
+        *(signed char *)(ret + 0x44) = -1;
+        *(unsigned char *)(ret + 0x45) = 4;
+    }
+    return ret;
 }

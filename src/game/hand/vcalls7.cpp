@@ -145,6 +145,22 @@ extern "C" float D_00577C60[];
 extern "C" float D_00577C64[];
 extern "C" float D_00577C68[];
 extern "C" float D_005BD9C8;
+extern "C" void func_0024E7B0(char *, int, int);
+extern "C" void func_00277DE0(char *, char *, char *, int);
+extern "C" void func_00277E70(char *);
+extern "C" void func_00277ED0(char *);
+extern "C" void func_00278060(char *, int);
+extern "C" int D_01CAFF14[];
+extern "C" char D_0058AE50[];
+extern "C" int D_005875E0[];
+extern "C" int func_002D9EB0(char *);
+extern "C" void func_004E8DB0(float *, float *, int);
+extern "C" float D_0058ADF0[];
+extern "C" float D_005BDE34;
+extern "C" short D_005BDE30;
+extern "C" short D_005BDE32;
+extern "C" unsigned char D_005BDE38[8];
+extern "C" float D_005BDF34;
 
 static inline void set3A1(char *v, float x, float y, float z) { *(float *)(v + 0) = x; *(float *)(v + 4) = y; *(float *)(v + 8) = z; *(float *)(v + 0xC) = 0.0f; }
 
@@ -1786,6 +1802,209 @@ extern "C" void func_004343E0(char *p) {
             break;
         }
         ((A433 *)p)->m2F4(0x28);
+        break;
+    }
+}
+
+static inline int is23(char *p) {
+    unsigned char r = 1;
+    if (FB(unsigned char, 0xB2C9) != 2 && FB(unsigned char, 0xB2C9) != 3) {
+        r = 0;
+    }
+    return r;
+}
+
+static inline unsigned char ne1(unsigned char x) {
+    if (x == 1) return 0;
+    return 1;
+}
+
+static inline void spawn4C9(char *p) {
+    int i;
+    char *e;
+    for (i = 0; i < 4; i++) {
+        e = func_00207480(3, 0x283, 0, 0x10);
+        if (e != 0) {
+            attach4C9(e, *(char **)(*(char **)((char *)(D_005875E0[i] * 4) + (int)p + 0x115C) + 0x104));
+            *(float *)(e + 0x14) = FB(float, 0xACB4);
+        }
+    }
+}
+
+extern "C" void func_004C9540(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    char *e;
+    switch (FB(unsigned char, 0xB158)) {
+    case 0:
+        if (FB(unsigned char, 0xB2C8) != 1) {
+            ((O4C9 *)p)->m2F8(0x17);
+            break;
+        }
+        if (func_00132470(p + 0x50, D_0058ADC0 + FB(unsigned char, 0xB2C8) * 16) < 50.0f) {
+            FB(unsigned char, 0xB158) = 5;
+            break;
+        }
+        FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+        ((O4C9 *)p)->m300(0x54);
+        break;
+    case 1:
+        if (((O4C9 *)p)->m2EC() == 0x77) {
+            FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+            FB(float, 0xB178) = 120.0f;
+            UNIT(m);
+            func_00105760(3.1415925f, m, m);
+            func_00104C00((char *)m, *(int *)(func_004D2740(p)[1] + 0x104), (char *)m);
+            func_00207480(3, 0x338, (char *)m, 0x10);
+            ((O4C9 *)p)->m300(0x55);
+        }
+        break;
+    case 2:
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(D_0058ADC0 + (unsigned char)FB(unsigned char, 0xB2C8) * 16) : "memory");
+        if ((unsigned char)func_004D2890(D_005BDE0C, p, v, 2) == 1) {
+            FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+            func_00207480(3, 0x338, *(char **)(func_004D2740(p)[1] + 0x104), 0x10);
+        }
+        break;
+    case 3:
+        FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+        ((O4C9 *)p)->m300(0x54);
+        FB(short, 0x90) = (unsigned short)(short)(int)(0.5f + 65536.0f * *(float *)(*(char **)(*(char **)D_01CAFF0C + 0xC) + 0x84) / 6.283185f) + 0x8000;
+        break;
+    case 4:
+        if (((O4C9 *)p)->m2EC() == 0x77)
+            FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+        break;
+    case 5:
+        FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+        ((O4C9 *)p)->m300(0x72);
+        FB(unsigned char, 0xAD23) = 0xC;
+        if ((unsigned char)is23(p) == 1)
+            FB(unsigned char, 0xB2CC) = 1;
+        FB(unsigned char, 0xB2D7) = ne1(FB(unsigned char, 0xB2D7));
+        break;
+    case 6:
+        if ((unsigned char)func_0024E780(FB(char *, 0xAB00), 1, 0) == 1) {
+            func_0024E7B0(FB(char *, 0xAB00), 1, 0);
+            e = func_00207480(3, 0x90, 0, 0x10);
+            if (e != 0) {
+                attach4C9(e, *(char **)(func_004D2740(p)[1] + 0x104));
+                *(unsigned char *)(e + 0x3A) = 1;
+            }
+            spawn4C9(p);
+            func_00277DE0(p + 0xB190, D_0058AE50, p + 0x5A20, 1);
+            func_00277E70(p + 0xB190);
+            func_00277ED0(p + 0xB190);
+            { int k = D_01CAFF14[0]; func_00278060(p + 0xB190, k); }
+        }
+        if (((O4C9 *)p)->m2EC() == 0x77) {
+            if (FB(float, 0x164) < 500.0f)
+                ((O4C9 *)p)->m2F8(0x2D);
+            else
+                ((O4C9 *)p)->m2F8(0x30);
+            FB(unsigned char, 0xAD23) = 5;
+        }
+        break;
+    }
+}
+
+static inline float frand4C7(void) {
+    unsigned int y;
+    if (D_01DF8810[0] >= 0x270) {
+        func_00207A90(D_01DF7E50);
+    }
+    {
+        unsigned int i = D_01DF8810[0];
+        D_01DF8810[0] = i + 1;
+        y = D_01DF7E50[i];
+    }
+    y ^= y >> 11;
+    y ^= (y << 7) & 0x9D2C5680;
+    y ^= (y << 15) & 0xEFC60000;
+    y ^= y >> 18;
+    return 2.3283064e-10f * (float)y;
+}
+
+extern "C" void func_004C7520(char *p) {
+    float d[4] __attribute__((aligned(16)));
+    float v[4] __attribute__((aligned(16)));
+    float n[16] __attribute__((aligned(16)));
+    float m[16] __attribute__((aligned(16)));
+    char *e;
+    char *pl;
+    switch (FB(unsigned char, 0xB158)) {
+    case 0:
+        if ((unsigned char)func_004D2D90(p)) {
+            FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+            ((O4C9 *)p)->m300(0x2B);
+            FB(float, 0xB178) = D_0058ADF0[FB(int, 0xB2C0)];
+            FB(int, 0xB184) = D_005BDE38[FB(int, 0xB2C0)];
+        }
+        break;
+    case 1:
+        if (((O4C9 *)p)->m2EC() == 0x77) {
+            FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+            func_00207480(3, 0x323, *(char **)(func_004D2740(p)[0] + 0x104), 0x10);
+            ((O4C9 *)p)->m300(0x2C);
+            e = func_00207480(3, 0x349, *(char **)(func_004D2740(p)[0] + 0x104), 0x10);
+            if (e != 0)
+                *(float *)(e + 0x14) = FB(float, 0xACB4);
+        }
+        break;
+    case 2:
+        if ((FB(float, 0xB178) -= FB(float, 0x10)) < 0.0f && ((O4C9 *)p)->m2EC() == 0x77) {
+            FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+            if ((unsigned char)func_0034B800(D_005BDE34, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, p + 0x50, D_005BDE30 + FB(short, 0x90), D_005BDE32) == 1) {
+                pl = *(char **)(*(char **)D_01CAFF0C + 0xC);
+                e = *(char **)(((char **)(pl + 0x1388))[func_002D9EB0(pl)] + 0x104) + 0x30;
+                __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(v), "r"(e) : "memory");
+                v[0] += 100.0f * frand4C7();
+                v[1] += 100.0f * frand4C7();
+                v[2] += 100.0f * frand4C7();
+                v[3] = 1.0f;
+            } else {
+                v[0] = 0.0f;
+                v[1] = 100.0f * frand4C7();
+                v[2] = 250.0f + 250.0f * frand4C7();
+                v[3] = 1.0f;
+                __asm__ volatile("lqc2 $vf5, 0x0(%1)\n\tlqc2 $vf4, 0x30(%0)\n\tvmove.xyz $vf4, $vf5\n\tsqc2 $vf4, 0x30(%0)" : : "r"(n), "r"(v) : "memory");
+                func_00105760(6.283185f * ((float)FB(short, 0x90) / 65536.0f), m, n);
+                __asm__ volatile("lqc2 $vf4, 0x30(%1)\n\tlqc2 $vf5, 0x0(%0)\n\tvmove.xyz $vf5, $vf4\n\tsqc2 $vf5, 0x0(%0)" : : "r"(v), "r"(m) : "memory");
+                __asm__ volatile("lqc2 $vf4, 0x0(%0)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(v), "r"(p + 0x50) : "memory");
+                v[1] = *(float *)(*(char **)(func_004D2740(p)[1] + 0x104) + 0x34);
+                v[3] = 1.0f;
+            }
+            __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(v), "r"(p + 0x50) : "memory");
+            func_004E8DB0(v, d, 0);
+        }
+        break;
+    case 3:
+        if (((O4C9 *)p)->m2EC() == 0x77) {
+            if (--FB(int, 0xB184) > 0) {
+                FB(unsigned char, 0xB158) = 2;
+                FB(float, 0xB178) = 0.0f;
+                ((O4C9 *)p)->m300(0x2C);
+                e = func_00207480(3, 0x349, *(char **)(func_004D2740(p)[0] + 0x104), 0x10);
+                if (e != 0)
+                    *(float *)(e + 0x14) = FB(float, 0xACB4);
+                FB(short, 0xB150) = FB(short, 0x160) - FB(short, 0x90);
+                func_0034B8C0(p + 0x90, p + 0xB150, 8192.0f * FB(float, 0x10));
+            } else if (FB(unsigned char, 0xB154) == 0x2C) {
+                FB(unsigned char, 0xB158) = FB(unsigned char, 0xB158) + 1;
+                FB(float, 0xB178) = D_005BDF34;
+            } else {
+                FB(unsigned char, 0xB158) = 5;
+                ((O4C9 *)p)->m300(0x2D);
+            }
+        }
+        break;
+    case 4:
+        if ((FB(float, 0xB178) -= FB(float, 0x10)) < 0.0f)
+            ((O4C9 *)p)->m2F8(0x2E);
+        break;
+    case 5:
+        if (((O4C9 *)p)->m2EC() == 0x77)
+            ((O4C9 *)p)->m2F8(0x17);
         break;
     }
 }
