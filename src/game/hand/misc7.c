@@ -6587,6 +6587,23 @@ extern char D_00542430[];
 extern char D_00542440[];
 extern char D_00542470[];
 extern char D_00542480[];
+extern int D_005BE0C8;
+int func_002DA950(char *);
+void func_002DA9F0(char *);
+int func_001C1250(char *, char *, char *);
+void func_0020E8D0(char *, int, int, int);
+void func_0020E8E0(char *, int, signed char, signed char, signed char);
+void func_00483870(char *, signed char, signed char);
+void func_0020E7E0(char *, int, int);
+void func_0020E820(char *, int);
+extern char D_0053F840[];
+void func_001A0050(char *, int, int, unsigned int, char *);
+void func_002078F0(char *, int);
+void func_001ABE60(char *, char);
+void func_001AC350(char *);
+void func_00131920(float *, float *, float *, float *);
+void func_001AC900(char *, float *);
+void func_00195320(char *);
 
 static inline int *ent454(int *q, int n) { if ((unsigned int)q[1] < n + 1) return 0; if (*(int *)((char *)q + n * 4 + 8) == 0) return 0; return (int *)((char *)q + *(int *)((char *)q + n * 4 + 8)); }
 
@@ -6763,5 +6780,136 @@ int func_00215FE0(char *unused, char *s0, int id) {
             *(float *)(o + 0x30) = v;
         }
     } while (nd215(done));
+    return 1;
+}
+
+static inline unsigned char flg209(short s) {
+    char *g = *(char **)(*(char **)D_01CAFF0C + 0x18);
+    if (s < 32) {
+        unsigned int *w = (unsigned int *)(g + s / 32 * 4 + 0x18);
+        return (*w & (1 << (s & 31))) != 0;
+    } else {
+        unsigned int *w = (unsigned int *)(g + (s - 32) / 32 * 4 + 0x44);
+        return (*w & (1 << ((s - 32) & 31))) != 0;
+    }
+}
+
+void func_002090E0(char *p) {
+    int i;
+    char *e;
+    char *q;
+    int x;
+    for (i = 0; i < *(short *)p; i++) {
+        q = p + i * 0xD0;
+        e = q + 0x10;
+        if (*(unsigned char *)(q + 0x11) == 0) continue;
+        if (*(unsigned char *)(e + 0xC9) == 1) continue;
+        if (*(int *)(e + 0xCC) != -1 && flg209(*(int *)(e + 0xCC)) == 1) continue;
+        if (*(unsigned char *)(p + 0x9E0) == 0) {
+            if ((*(unsigned char *)(e + 6) == 0 && func_002DA950(*(char **)(*(char **)D_01CAFF0C + 0xC)) != 0) || *(unsigned char *)(e + 6) == 1) {
+            if (func_001C1250((char *)&D_005BE0C8, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, e + 0x10) != 0) {
+                if (*(unsigned char *)(e + 6) == 0) func_002DA9F0(*(char **)(*(char **)D_01CAFF0C + 0xC));
+                if (*(unsigned char *)(e + 0xB0) == 0) {
+                    func_0020E8D0(*(char **)(p + 0x9E4), 0, *(short *)(e + 0xB2), *(unsigned char *)(e + 0xB4));
+                } else {
+                    func_0020E8D0(*(char **)(p + 0x9E4), 1, *(short *)(e + 0xB2), 0);
+                }
+                func_0020E8E0(*(char **)(p + 0x9E4), *(signed char *)(e + 0), *(signed char *)(e + 2), *(signed char *)(e + 3), *(signed char *)(e + 7));
+                x = *(signed char *)(e + 2);
+                if (x != 0 || x != 0) {
+                    func_00483870(*(char **)(*(char **)(*(char **)D_01CAFF0C + 4) + 0x14), x, *(signed char *)(e + 3));
+                }
+                x = *(signed char *)(e + 4);
+                if (x != 0 || x != 0) {
+                    func_00483870(*(char **)(*(char **)(*(char **)D_01CAFF0C + 4) + 0x14), x, *(signed char *)(e + 5));
+                }
+            }
+            }
+        }
+    chk:
+        if (func_001C1250((char *)&D_005BE0C8, *(char **)(*(char **)D_01CAFF0C + 0xC) + 0x50, e + 0x60) != 0) {
+            if (*(unsigned char *)(e + 0xC1) == 0) {
+                if (*(unsigned char *)(e + 0xB0) == 0) {
+                    func_0020E7E0(*(char **)(p + 0x9E4), *(short *)(e + 0xB2), *(unsigned char *)(e + 0xB4));
+                } else {
+                    func_0020E820(*(char **)(p + 0x9E4), *(short *)(e + 0xB2));
+                }
+            }
+            *(unsigned char *)(e + 0xC1) = 1;
+        } else {
+            *(unsigned char *)(e + 0xC1) = 0;
+        }
+    }
+}
+
+void func_001A0020(char *p, int a, char *c) {
+    if (c == 0) c = D_0053F840;
+    func_001A0050(p, a, *(int *)(c + 0x38), *(int *)(c + 0x3C), c);
+}
+
+static inline void put1DD(char *p, long a) {
+    char *q = *(char **)(p + 0x158A8);
+    unsigned short k = *(unsigned short *)(q + 0x2E);
+    long *d;
+    *(unsigned short *)(q + 0x2E) = k + 1;
+    d = (long *)(*(char **)(*(char **)(p + 0x158A8) + 0x28) + *(unsigned short *)(q + k * 2 + 0x30) * 16);
+    d[0] = a;
+    d[1] = 3;
+}
+
+void func_001DDB10(char *p, char *e) {
+    unsigned int n;
+    unsigned int sx;
+    int y;
+    int x;
+    unsigned int sy;
+    unsigned int t;
+    if ((n = *(unsigned int *)(e + 0x14)) != 0) {
+        t = *(unsigned int *)(e + 0x8C) + 1;
+        *(unsigned int *)(e + 0x8C) = t;
+        if (!(t < n)) {
+            *(unsigned int *)(e + 0x8C) = 0;
+            *(unsigned int *)(e + 0x90) = mt_rand();
+        }
+    }
+    func_002078F0(D_01DF7E50, *(int *)(e + 0x90));
+    sx = (unsigned int)(*(int *)(e + 0x28) * 64) / 100;
+    sy = (unsigned int)(*(int *)(e + 0x2C) * 32) / 100;
+    for (y = 0; y < *(int *)(p + 0x15928); y += sx) {
+        for (x = 0; x < *(int *)(p + 0x1592C); x += sy) {
+            *(short *)(e + 0x94) = mt_rand() & 0x3F;
+            *(short *)(e + 0x96) = mt_rand() & 0x1F;
+            put1DD(p, (long)(*(short *)(e + 0x94) * 16 + 8) | ((long)(*(short *)(e + 0x96) * 16 + 8) << 16));
+            put1DD(p, (long)((*(short *)(e + 0x94) + 0x40) * 16 + 9) | ((long)((*(short *)(e + 0x96) + 0x20) * 16 + 9) << 16));
+        }
+    }
+}
+
+int func_00195390(char *p) {
+    float m[16] __attribute__((aligned(16)));
+    float eye[4] __attribute__((aligned(16)));
+    float at[4] __attribute__((aligned(16)));
+    float up[4] __attribute__((aligned(16)));
+    unsigned int i;
+    for (i = 0; i < 0x40; i++) {
+        if (((int *)p)[i] != 0) return 0;
+    }
+    func_001ABE60(p + 0x200, 0);
+    func_001AC350(p + 0x200);
+    eye[0] = 0.0f;
+    eye[1] = 0.0f;
+    eye[2] = 100.0f;
+    eye[3] = 1.0f;
+    at[0] = 0.0f;
+    at[1] = 0.0f;
+    at[2] = 0.0f;
+    at[3] = 1.0f;
+    up[0] = 0.0f;
+    up[1] = 1.0f;
+    up[2] = 0.0f;
+    up[3] = 1.0f;
+    func_00131920(m, eye, at, up);
+    func_001AC900(p + 0x200, m);
+    func_00195320(p);
     return 1;
 }

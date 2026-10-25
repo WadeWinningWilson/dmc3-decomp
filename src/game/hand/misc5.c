@@ -2309,6 +2309,14 @@ extern char D_00542398[];
 extern char D_005423A8[];
 extern char D_005423B8[];
 extern char D_00542B10[];
+int func_0013D670(char *);
+int func_0032FCD0(char *, int);
+int func_0032FD00(char *, int);
+int func_0032FD90(char *, char *);
+void func_001282D0(int, char *, int);
+void func_002F9790(char *, int, int);
+void func_002F9780(char *, int, int);
+void func_002F97B0(char *, int, char *, int, int);
 
 void func_00371FB0(char *p) {
 //P<
@@ -2624,4 +2632,51 @@ int func_0021A110(char *p, char *src, int ctx, char **aux) {
         }
     }
     return 1;
+}
+
+static inline char *ent32F(char *t, int i) {
+    if (*(unsigned int *)(t + 4) < i + 1) return 0;
+    if (*(int *)(t + 8 + i * 4) == 0) return 0;
+    return t + *(int *)(t + 8 + i * 4);
+}
+
+static inline char *chk32F(char *h, int i) {
+    if (**(unsigned short **)(h + 8) == 0) return ent32F(*(char **)(h + 0xC), i);
+    return *(char **)(h + 0xC);
+}
+
+static inline int csz32F(char *h, int i) {
+    int n;
+    char *t;
+    char *a;
+    char *b;
+    int r;
+    if (**(unsigned short **)(h + 8) == 0) {
+        t = *(char **)(h + 0xC);
+        n = *(int *)(t + 4);
+        if (i >= n) return 0;
+        a = ent32F(t, i);
+        if (n - 1 == i) b = *(char **)(h + 0xC) + func_0013D670(h + 0x10);
+        else b = ent32F(t, i + 1);
+        return b - a;
+    }
+    return func_0013D670(h + 0x10);
+}
+
+void func_0032FDB0(char *a, int b, char *h) {
+    int sz;
+    char *d;
+    int r;
+    sz = csz32F(h, 0);
+    d = chk32F(h, 0);
+    r = func_0032FCD0(a, b);
+    func_001282D0(r, d, sz);
+    func_002F9790(a, b, r);
+    sz = csz32F(h, 1);
+    d = chk32F(h, 1);
+    r = func_0032FD00(a, b);
+    func_001282D0(r, d, sz);
+    func_002F9780(a, b, r);
+    r = func_0032FD90(a, d);
+    func_002F97B0(a, b, chk32F(h, 2), r, 0);
 }

@@ -10836,6 +10836,12 @@ void func_0037B920(char *);
 void func_0043A750(char *, int, int, int);
 void func_0043A1A0(char *);
 void func_0043B970(char *, int, int);
+void func_001AE4F0(int);
+void func_00304AE0(char *, float *, char *, char *, char *);
+unsigned int func_003047F0(char *);
+unsigned int func_00304790(char *);
+extern unsigned long D_01DFAD00[];
+extern int D_005BCA38;
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -11581,4 +11587,68 @@ void func_00439970(char *p, unsigned char m, int x) {
     case 144:
         break;
     }
+}
+
+void func_00304850(char *p, int k, char *verts, float *n) {
+    int idx = *(signed char *)(D_005BE0D8 + 0xE);
+    unsigned char *fl = (unsigned char *)func_001AE4B0(0x10);
+    char *o = *(char **)(p + 0x18) + k * 0x60;
+    int i;
+    int *t;
+    float v[4] __attribute__((aligned(16)));
+    char *c;
+    char *d;
+    unsigned short *ix;
+    int *w;
+    char *q;
+    int j;
+    for (i = 0; i < *(int *)(o + 8); i++) {
+        t = (int *)(*(char **)(o + 0x20) + i * 0x10);
+        func_00304AE0(p, v, verts + t[0] * 16, verts + t[1] * 16, verts + t[2] * 16);
+        if (func_00104D00(n, v) < 0.0f) {
+            fl[i] = 1;
+        } else {
+            fl[i] = 0;
+            continue;
+        }
+        if (func_003047F0(p) & 0x3FFFF) {
+            fl[i] = 0;
+            continue;
+        }
+        if (func_00304790(p) & 0x3FFFF) {
+            fl[i] = 0;
+            continue;
+        }
+        (*(int *)(o + 0xC))++;
+    }
+    if (*(int *)(o + 0xC) > 0) {
+        func_001282D0(((char **)(o + 0x40))[idx], verts, *(int *)(o + 4) << 4);
+        c = (char *)((*(unsigned int *)((char *)(idx * 4) + (int)o + 0x30) + 0x20) & 0x0FFFFFFF);
+        for (j = 0; j < *(int *)(o + 8); j++) {
+            if (fl[j]) {
+                d = *(char **)((char *)(idx * 4) + (int)o + 0x50) + j * 0x30;
+                ix = (unsigned short *)(*(char **)(o + 0x24) + j * 8);
+                w = (int *)(*(char **)((char *)(idx * 4) + (int)o + 0x48) + j * 0x10);
+                w[0] = fl[ix[0]];
+                w[1] = fl[ix[1]];
+                w[2] = fl[ix[2]];
+                w[3] = 0;
+                *(char **)(c + 4) = d;
+                c = d + 0x20;
+            }
+        }
+        *(int *)(c + 4) = ((int *)(o + 0x38))[idx];
+    }
+    func_001AE4F0(0x10);
+}
+
+void func_003528C0(unsigned long seed) {
+    int i;
+    for (i = 0; i < 624; i++) {
+        D_01DFAD00[i] = seed & 0xFFFF0000;
+        seed = 69069 * seed + 1;
+        D_01DFAD00[i] |= (seed & 0xFFFF0000) >> 16;
+        seed = 69069 * seed + 1;
+    }
+    D_005BCA38 = 624;
 }

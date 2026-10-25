@@ -359,6 +359,20 @@ extern char D_005BC478[8];
 extern char D_005BC480[4];
 extern char D_005BC484[4];
 extern char D_005BC488[4];
+extern signed char D_01CAFF3C[];
+extern unsigned char D_01CAFF3D[];
+extern char D_01CAFF10[];
+extern char D_01CAFF30[];
+extern char D_01CB0520[];
+extern int D_005BE098;
+extern char D_006663C0[];
+unsigned char func_002A67F0(signed char, unsigned char);
+unsigned char func_004D5370(char *);
+void func_004D5980(char *);
+unsigned short func_001AE360(char *, int);
+void func_003303F0(char *, int, int, int, int);
+void func_004D6100(char *);
+void func_00195E20(int *, char *);
 
 void func_0039D0F0(char *p, unsigned char k) {
     T39D a = D_00563EE0;
@@ -953,4 +967,75 @@ int func_002F6690(S46F *s, char *name, char *r) {
         return 0;
     }
     return 1;
+}
+
+static inline unsigned char gg4D4(signed char n) {
+    return *(unsigned char *)(*(char **)((*(char **)D_01CAFF10) + 4) + (signed char)(n - 1) + 0x690);
+}
+
+static inline int nz4D4(int x) { return x != 0; }
+
+void func_004D4E00(char *p) {
+    int j;
+    int i;
+    char *d;
+    int k;
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        for (i = 0; i < 5; i++) {
+            *(signed char *)(p + i + 0x4EC1) = 0;
+            for (j = 1; j < 21; j++) {
+                if (*(int *)(p + 0x4F3C) == 8 && i == func_002A67F0(D_01CAFF3C[0], D_01CAFF3D[0])) {
+                    *(signed char *)(p + i * 0x15 + j + 0x4EC6) = *(signed char *)((*(char **)D_01CAFF10) + j + 0x71);
+                } else {
+                    *(signed char *)(p + i * 0x15 + j + 0x4EC6) = *(signed char *)(D_01CAFF30 + i * 0x15 + j + 0x560);
+                }
+                if (*(signed char *)(p + i * 0x15 + j + 0x4EC6) != -1) *(signed char *)(p + i + 0x4EC1) = j;
+            }
+        }
+        *(unsigned char *)(p + 0x4F44) = 0;
+        for (k = 0; k < 12; k++) {
+            if (*(int *)(p + 0x4F3C) == 8) {
+                d = p + k + 0x4F2F;
+                *(unsigned char *)d = gg4D4(k + 1);
+            } else {
+                d = p + k + 0x4F2F;
+                *(unsigned char *)d = *(unsigned char *)(D_01CAFF30 + (signed char)k + 0xE4);
+            }
+            if (*(signed char *)d != 0) *(unsigned char *)(p + 0x4F44) = 1;
+        }
+        if (nz4D4(*(int *)D_01CB0520 & 1) == 1) *(unsigned char *)(p + 0x4F40) = 1;
+        if (nz4D4(*(int *)D_01CB0520 & 2) == 1) *(unsigned char *)(p + 0x4F41) = 1;
+        if (nz4D4(*(int *)D_01CB0520 & 4) == 1) *(unsigned char *)(p + 0x4F42) = 1;
+        if (*(signed char *)(p + 0x4EC1) >= 11 || *(signed char *)(p + 0x4EC2) >= 11 || *(signed char *)(p + 0x4EC3) >= 11 ||
+            *(signed char *)(p + 0x4EC4) >= 11) {
+            *(unsigned char *)(p + 0x4F43) = 1;
+        } else {
+            *(unsigned char *)(p + 0x4F43) = 0;
+        }
+        if (func_004D5370(p) == 0) goto fail;
+        func_004D5980(p);
+        *(unsigned char *)(p + 4) = 1;
+        *(unsigned char *)(p + 5) = 0;
+    case 1:
+        if (func_001AE360(D_006663C0, 0) & 0x50) {
+            func_003303F0(D_01DFABA0, 0, 3, 0, 0);
+            *(unsigned char *)(p + 4) = *(unsigned char *)(p + 0x4EC0) = 2;
+            *(unsigned char *)(p + 5) = 0;
+        }
+        break;
+    case 2:
+        *(unsigned char *)(p + 4) = 3;
+        *(unsigned char *)(p + 5) = 0;
+        break;
+    case 3:
+        break;
+    }
+    func_004D6100(p);
+    func_00195E20(&D_005BE098, p);
+    return;
+fail:
+    func_001AD140(p);
+    *(unsigned char *)(p + 4) = 3;
+    *(unsigned char *)(p + 5) = 0;
 }
