@@ -161,6 +161,50 @@ void func_003305E0(char *, int, int, char *, int, int, int);
 void func_0036DF70(char *, int);
 void func_00207470(int, int, float *);
 void func_00387970(char *);
+void func_0022CB30(char *);
+void func_0022CB50(char *, char *);
+int func_0022CBA0(char *);
+char *func_0022CBB0(char *, char *);
+int func_0012B1A0(char *, char *);
+int func_0022CD60(char *);
+int func_002F64E0(char *, char *);
+int func_002F6FC0(char *, char *);
+void func_002F62C0(char *, char *);
+short func_0020F9B0(char *);
+extern char D_005BC3F0[4];
+extern char D_005BC3F4[4];
+char *func_002E3DE0(char *, char *, char *);
+char *func_002EC460(char *, char *, char *);
+char *func_00357900(char *, char *, char *);
+char *func_00311E70(char *, char *, char *);
+char *func_002FBA30(char *, char *, char *);
+char *func_003831D0(char *, char *, char *);
+char *func_00384AC0(char *, char *, char *);
+char *func_00385BF0(char *, char *, char *);
+char *func_004DA480(char *, char *, char *);
+char *func_0038A620(char *, char *, char *);
+char *func_0038B410(char *, char *, char *);
+char *func_003CF150(char *, char *, char *);
+char *func_003D3E10(char *, char *, char *);
+char *func_003DFF00(char *, char *, char *);
+char *func_003E0B10(char *, char *, char *);
+char *func_004011B0(char *, char *, char *);
+char *func_0040E090(char *, char *, char *);
+char *func_0043C580(char *, char *, char *);
+char *func_0043DD20(char *, char *, char *);
+char *func_0044C820(char *);
+char *func_0044D7E0(char *, char *, char *);
+char *func_00450770(char *);
+char *func_00451C00(char *, char *, char *);
+char *func_00454440(char *, char *, char *);
+char *func_0046FDD0(char *, char *, char *);
+char *func_00474450(char *, char *, char *);
+char *func_0047C5A0(char *, char *, char *);
+char *func_004801E0(char *, char *, char *);
+char *func_00482A10(char *, char *, char *);
+char *func_004D9280(char *, char *, char *);
+char *func_004FC2E0(char *, char *, char *);
+char *func_002E3A40(char *, char *, char *);
 
 void func_003FE180(char *p, S3FE *s, int unused, float *pos) {
     float v[4];
@@ -366,5 +410,273 @@ void func_00388370(char *p, char *s, int u, float *pos) {
         m[14] = pos[2];
         func_00207470(3, 6, m);
         func_003305E0(D_01DFABA0, 8, 0x95, p + 0xCE0, 0x21, 0, 0);
+    }
+}
+
+static inline char *ent2F5(int *q, unsigned int *c, int n) { if (*c < n + 1) return 0; if (*(int *)((char *)q + n * 4 + 8) == 0) return 0; return (char *)q + *(int *)((char *)q + n * 4 + 8); }
+
+void func_002F5AC0(char *p, int *h, unsigned char mode) {
+    char r[16];
+    char w[32];
+    char *tp;
+    int t;
+    int k;
+    char *a;
+    char *b;
+    int st;
+    char *o;
+    unsigned int *c;
+    c = (unsigned int *)(h + 1);
+    if (*c <= 4) return;
+    *(char **)p = ent2F5(h, c, 4);
+    *(unsigned char *)(p + 4) = mode;
+    a = ent2F5(h, c, 1);
+    b = ent2F5(h, c, 5);
+    func_0022CB30(r);
+    st = 0;
+    *(unsigned char *)(p + 0x10) = 1;
+    *(float *)(p + 0x14) = -1.0f;
+    *(float *)(p + 0x18) = -1.0f;
+    *(float *)(p + 0x1C) = -1.0f;
+    *(float *)(p + 0x20) = -1.0f;
+    *(unsigned char *)(p + 0xB0) = 0;
+    func_0022CB50(r, *(char **)p);
+    while (!func_0022CBA0(r)) {
+        switch (st) {
+        case 0:
+            if (func_002F64E0(p, r)) st = 1;
+            break;
+        case 1:
+            func_0022CBB0(r, w);
+            if (func_0012B1A0(w, D_005BC3F0) == 0) st = 2;
+            break;
+        case 2:
+            func_0022CBB0(r, w);
+            if (func_0012B1A0(w, D_005BC3F4) == 0) {
+                k = func_0022CD60(r);
+                t = func_002F6FC0(p, func_0022CBB0(r, w));
+                if ((unsigned char)t == 1 || (unsigned char)t == 0) {
+                    st = 1;
+                } else if (*(unsigned char *)(p + 4) == 0) {
+                    switch ((unsigned char)t) {
+                    case 2:
+                        tp = func_002E3DE0(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 3:
+                        tp = func_002EC460(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 4:
+                        tp = func_00357900(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 5:
+                        tp = func_00311E70(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 6:
+                        tp = func_002FBA30(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 7:
+                        tp = func_003831D0(a, b, r);
+                        if (tp != 0) tp += 0x38;
+                        o = tp;
+                        break;
+                    case 8:
+                        tp = func_00384AC0(a, b, r);
+                        if (tp != 0) tp += 0x38;
+                        o = tp;
+                        break;
+                    case 9:
+                        tp = func_00385BF0(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 10:
+                        tp = func_004DA480(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 11:
+                        tp = func_0038A620(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 12:
+                        tp = func_0038B410(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 13:
+                        tp = func_003CF150(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 14:
+                        tp = func_003D3E10(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 15:
+                        tp = func_003DFF00(a, b, r);
+                        if (tp != 0) tp += 0x38;
+                        o = tp;
+                        break;
+                    case 16:
+                        tp = func_003E0B10(a, b, r);
+                        if (tp != 0) tp += 0x38;
+                        o = tp;
+                        break;
+                    case 17:
+                        tp = func_004011B0(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 18:
+                        tp = func_0040E090(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 19:
+                        tp = func_0043C580(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 20:
+                        tp = func_0043DD20(a, b, r);
+                        if (tp != 0) tp += 0x130;
+                        o = tp;
+                        break;
+                    case 21:
+                        tp = func_0044C820(r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 22:
+                        tp = func_0044D7E0(a, b, r);
+                        if (tp != 0) tp += 0x130;
+                        o = tp;
+                        break;
+                    case 23:
+                        tp = func_00450770(r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 24:
+                        tp = func_00451C00(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 25:
+                        tp = func_00454440(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 26:
+                        tp = func_0046FDD0(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 27:
+                        tp = func_00474450(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 28:
+                        tp = func_0047C5A0(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 29:
+                        tp = func_004801E0(a, b, r);
+                        if (tp != 0) tp += 0x130;
+                        o = tp;
+                        break;
+                    case 30:
+                        tp = func_00482A10(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 31:
+                        tp = func_004D9280(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 32:
+                        tp = func_004FC2E0(a, b, r);
+                        if (tp != 0) tp += 0xD0;
+                        o = tp;
+                        break;
+                    case 33:
+                        func_002F62C0(p, r);
+                        o = 0;
+                        break;
+                    }
+                    if (o != 0) {
+                        *(int *)(o + 8) = k;
+                        *(unsigned char *)(o + 4) = t;
+                    }
+                } else if (*(unsigned char *)(p + 4) == 1) {
+                    switch ((unsigned char)t) {
+                    case 2:
+                    case 3:
+                        if (*(unsigned char *)(p + 5) != 0) {
+                            tp = func_002E3A40(a, b, r);
+                            if (tp != 0) tp += 0xD0;
+                            if (tp != 0) {
+                                *(int *)(tp + 8) = k;
+                                *(unsigned char *)(tp + 4) = t;
+                            }
+                        }
+                        break;
+                    case 4:
+                        func_0020F9B0(*(char **)(*(char **)D_01CAFF0C + 0x18));
+                        break;
+                    case 0:
+                    case 1:
+                    case 5:
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                    case 21:
+                    case 22:
+                    case 23:
+                    case 24:
+                    case 25:
+                    case 26:
+                    case 27:
+                    case 28:
+                    case 29:
+                    case 30:
+                    case 31:
+                    case 32:
+                    case 33:
+                        break;
+                    }
+                }
+            } else {
+                st = 0;
+            }
+            break;
+        }
     }
 }

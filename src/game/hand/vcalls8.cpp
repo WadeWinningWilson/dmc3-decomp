@@ -2537,6 +2537,7 @@ extern "C" int func_004361D0(char *);
 extern "C" int func_00437250(char *);
 extern "C" int func_002018A0(char *, int, int, char *, char *, int);
 extern "C" float D_01DF5D20[];
+extern "C" char D_00562090[][3][84];
 
 extern "C" void func_0045A630(char *p, S45A *s, char *q) {
     if (*(unsigned char *)(p + 0x1D) == 3) return;
@@ -2948,4 +2949,84 @@ extern "C" void func_0043A3A0(char *p) {
         k = 0;
     func_0028C5C0(FB(float, 0x10), p + 0x43B0, k);
     func_00195E20(D_005BE098, p);
+}
+
+class B2C6 {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10(); virtual void d14(); virtual void d18(); virtual void d1C(); virtual void d20(); virtual void d24();
+    virtual void d28(); virtual void d2C(); virtual void d30(); virtual void d34();
+    virtual void m38(char *, Sub40 *);
+};
+
+class U2C6 {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10();
+    virtual void m14(char *, B2C6 *, char *);
+};
+
+class W2C6 {
+public:
+    virtual void d8(); virtual void dC(); virtual void d10();
+    virtual void m14(int, char *, char *, B2C6 *);
+};
+
+class O2C6 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual int m1C();
+    virtual int m20();
+};
+
+extern "C" void func_002C6D50(Hit40 *h, char *a, B2C6 *b, char *c) {
+    char *p = (char *)h;
+    switch (*(signed char *)(a + 2)) {
+    case 0:
+        switch ((unsigned char)((O2C6 *)(p + 0x1D0))->m1C()) {
+        case 0:
+            func_0034BA60(*(int *)(a + 0x34), c, *(signed char *)(p + 0x46), 0, 1);
+            ((W2C6 *)(p + 0x2E3C))->m14(0, c, a, b);
+            ((U2C6 *)(p + 0x2E24))->m14(a, b, D_00562090[FB(unsigned char, 0x2F2E)][FB(unsigned char, 0x5C2)]);
+            b->m38(a, h);
+            break;
+        case 1:
+            ((W2C6 *)(p + 0x2E3C))->m14(1, c, a, b);
+            func_00321490(p + 0x130, a, h);
+            b->m38(a, h);
+            break;
+        case 2:
+            func_0034BA60(*(int *)(a + 0x34), c, *(signed char *)(p + 0x46), 0, 1);
+            ((W2C6 *)(p + 0x2E3C))->m14(0, c, a, b);
+            break;
+        case 3:
+        case 4:
+        case 5:
+            break;
+        }
+        break;
+    case 1:
+        switch ((unsigned char)((O2C6 *)(p + 0x1D0))->m20()) {
+        case 0:
+            func_0034BA60(*(int *)(a + 0x34), c, *(signed char *)(p + 0x46), 0, 1);
+            ((W2C6 *)(p + 0x2E3C))->m14(0, c, a, b);
+            ((U2C6 *)(p + 0x2E24))->m14(a, b, D_00562090[FB(unsigned char, 0x2F2E)][FB(unsigned char, 0x5C2)]);
+            b->m38(a, h);
+            break;
+        case 1:
+            ((W2C6 *)(p + 0x2E3C))->m14(1, c, a, b);
+            b->m38(a, h);
+            break;
+        case 2:
+            func_0034BA60(*(int *)(a + 0x34), c, *(signed char *)(p + 0x46), 0, 1);
+            ((W2C6 *)(p + 0x2E3C))->m14(0, c, a, b);
+            break;
+        case 3:
+            break;
+        }
+        break;
+    }
+    FB(short, 0x2F2C) = *(short *)((char *)b + 0x50);
 }

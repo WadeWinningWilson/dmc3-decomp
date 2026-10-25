@@ -29446,6 +29446,11 @@ extern "C" void func_00455C30(char *);
 extern "C" void func_00455CF0(char *, int);
 extern "C" char *func_002EA290(int, int, float *, int);
 extern "C" void func_00208830(char *, int);
+extern "C" int func_004B5D60(char *, int);
+extern "C" unsigned int func_004B60D0(char *, int);
+extern "C" void func_004B4DF0(char *);
+extern "C" int func_004B5CA0(char *, int);
+extern "C" signed char D_005BDD50[8];
 
 static inline float frand4266(void) { return 2.3283064e-10f * (float)mt_rand(); }
 
@@ -30260,4 +30265,154 @@ extern "C" void func_004550D0(char *p) {
     if (*(short *)(p + 0x648) != -1)
         func_00208830(*(char **)(*(char **)D_01CAFF0C + 0x1C), *(short *)(p + 0x648));
     *(unsigned char *)(p + 4) += 1;
+}
+
+#define B4B4(o) (*(unsigned char *)(p + (o)))
+
+#define S4B4(o) (*(signed char *)(p + (o)))
+
+#define I4B4(o) (*(int *)(p + (o)))
+
+extern "C" void func_004B4710(char *p) {
+    unsigned int r;
+    if (S4B4(0x3378) == 0 || S4B4(0x3378) == 3) {
+        if (B4B4(0x3377) == 0) {
+            if (S4B4(0x3375) != S4B4(0x3379) || B4B4(0x3376) == 0) {
+                B4B4(0x3377) = 1;
+            }
+        }
+    }
+    switch (B4B4(5)) {
+    case 0:
+        switch (func_004B5D60(p, S4B4(0x3375))) {
+        case 0:
+            func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+            I4B4(0x337C) = 0x4E85;
+            B4B4(5) = 0x14;
+            break;
+        case 1:
+            func_003303F0(D_01DFABA0, 0, 0x13, 0, 0);
+            I4B4(0x337C) = 0x4E87;
+            B4B4(5) = 10;
+            break;
+        case 2:
+            func_003303F0(D_01DFABA0, 0, 0x13, 0, 0);
+            I4B4(0x337C) = 0x2B33;
+            B4B4(5) = 10;
+            break;
+        case 3:
+            func_003303F0(D_01DFABA0, 0, 0x13, 0, 0);
+            I4B4(0x337C) = 0x4E86;
+            B4B4(5) = 10;
+            break;
+        case 4:
+            func_003303F0(D_01DFABA0, 0, 0x13, 0, 0);
+            I4B4(0x337C) = 0x4E88;
+            B4B4(5) = 10;
+            break;
+        default:
+            B4B4(5) = B4B4(5) + 1;
+            break;
+        }
+        func_001B6BD0(D_01C61820, 0x20000000, 0xFFFFF0);
+        break;
+    case 1:
+        func_003303F0(D_01DFABA0, 0, 3, 0, 0);
+        B4B4(4) = 2;
+        B4B4(5) = 0;
+        break;
+    case 10:
+        B4B4(5) = B4B4(5) + 1;
+    case 11:
+        r = func_004B60D0(p, I4B4(0x337C));
+        func_001B69F0(D_01C61820, 0x100, 0x84, 0xFFFFF1, (short)(r >> 16), (short)(r & 0xFFFF), 0x80404040, I4B4(0x1D4));
+        func_001B6BD0(D_01C61820, 0x20000000, 0xFFFFF0);
+        if (func_001AE360(D_006663C0, 0) & 0xD0) {
+            func_003303F0(D_01DFABA0, 0, 3, 0, 0);
+            B4B4(5) = B4B4(5) + 1;
+        }
+        break;
+    case 12:
+        B4B4(4) = 2;
+        B4B4(5) = 0;
+        break;
+    case 0x14:
+        func_001ECFF0(D_01CAF2B0, 0x100, 0x84, I4B4(0x337C));
+        B4B4(5) = B4B4(5) + 1;
+    case 0x15:
+        r = func_004B60D0(p, I4B4(0x337C)) + 10;
+        func_001B69F0(D_01C61820, 0x100, 0x84, 0xFFFFF1, (short)(r >> 16), (short)(r & 0xFFFF), 0x80404040, I4B4(0x1D4));
+        func_001B6BD0(D_01C61820, 0x20000000, 0xFFFFF0);
+        if (func_001AE360(D_006663C0, 0) & 0x80) {
+            func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+            B4B4(5) = 0x1E;
+            break;
+        }
+        switch (func_001ED110(D_01CAF2B0)) {
+        case 0:
+            break;
+        case 1:
+            switch (D_005BDD50[S4B4(0x3375)]) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 6:
+            case 7:
+                func_004B4DF0(p);
+                func_003303F0(D_01DFABA0, 0, 0x19, 0, 0);
+                B4B4(5) = 0x18;
+                break;
+            case 4:
+            case 5:
+                D_005BC1A8->m18(0x80808080, 4);
+                func_003303F0(D_01DFABA0, 0, 0x19, 0, 0);
+                B4B4(5) = B4B4(5) + 1;
+                break;
+            default:
+                B4B4(5) = 0x18;
+                break;
+            }
+            break;
+        case 2:
+        case -1:
+            func_003303F0(D_01DFABA0, 0, 3, 0, 0);
+            B4B4(5) = 0x18;
+            break;
+        default:
+            B4B4(5) = 0x18;
+            break;
+        }
+        break;
+    case 0x16:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            D_005BC1A8->m14(0x20000000, 8);
+            B4B4(5) = B4B4(5) + 1;
+        }
+        break;
+    case 0x17:
+        if ((unsigned char)D_005BC1A8->m2C() == 1) {
+            func_004B4DF0(p);
+            B4B4(5) = B4B4(5) + 1;
+        }
+        break;
+    case 0x18:
+        ((ObjSnd24 *)D_005BC1A8)->m24(0, 0);
+        B4B4(4) = 2;
+        B4B4(5) = 0;
+        break;
+    case 0x1E:
+        func_0030EA90(D_01DFA340, func_004B5CA0(p, S4B4(0x3379)));
+        B4B4(5) = B4B4(5) + 1;
+    case 0x1F:
+        if (func_001AE360(D_006663C0, 0) & 0xD0) {
+            func_003303F0(D_01DFABA0, 0, 3, 0, 0);
+            D_01DFA340[0] = 0;
+            B4B4(5) = 0x14;
+        } else {
+            func_001B69F0(D_01C61820, 0x40, 0x84, 0xFFFFF1, 0x180, 0x34, 0x80404040, I4B4(0x1D4));
+        }
+        func_001B6BD0(D_01C61820, 0x20000000, 0xFFFFF0);
+        break;
+    }
 }

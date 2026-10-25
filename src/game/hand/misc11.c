@@ -210,6 +210,20 @@ extern int D_005BE1AC;
 void func_001AD140(char *);
 extern float D_00567C10[][3];
 extern float D_00567C70[][3];
+int func_0022CBA0(char *);
+void func_0022CBB0(char *, char *);
+int func_0012B1A0(char *, char *);
+int func_0022CD60(char *);
+float func_0022CD90(char *);
+int func_002F7400(char *);
+extern char D_005BC298[8];
+extern char D_005BC2A0[8];
+extern char D_005BC2A8[4];
+extern char D_005BC2AC[4];
+extern char D_005BC2B0[8];
+extern char D_005BC2B8[8];
+extern char D_005BC2C0[8];
+extern char D_005BC2C8[8];
 
 void func_004B6500(char *p) {
     float tmp[4] __attribute__((aligned(16)));
@@ -529,4 +543,209 @@ void func_00458CB0(char *p) {
         }
         *(float *)(p + 0x208) = 0.0f;
     }
+}
+
+typedef struct { signed char a0; unsigned char a1; signed char a2; unsigned char a3; char pad4[0xC]; float f10[12]; } S2E3h;
+
+typedef struct { signed char b0; signed char b1; unsigned char b2; char pad3[0x1D]; int e0; int e4; int e8; } S2E3s;
+
+typedef struct { int x0; int x4; short x8; char pad[2]; unsigned char on; int a; int b; int pad2[2]; } S2E3t;
+
+typedef struct { unsigned char b0; unsigned char b1; unsigned char b2; char pad; short h4; char pad2[2]; float v[3]; } S2E3o;
+
+typedef struct { S2E3o o; S2E3s u; S2E3t t; } S2E3x;
+
+char *func_002E4A50(char *, int *, S2E3h *, S2E3o *);
+int func_002F6690(S2E3h *, char *, char *);
+int func_002F69A0(S2E3s *, char *, char *);
+int func_002F6D40(S2E3t *, char *, char *);
+
+char *func_002E3DE0(char *p, int *q, char *r) {
+    char name[32];
+    char w[16];
+    S2E3h s;
+    S2E3x x;
+    char *e;
+    int k2;
+    int k3;
+    int k0;
+    int k1;
+    s.a1 = 0;
+    s.a3 = 0;
+    s.f10[0] = 0.0f;
+    s.a0 = -1;
+    s.a2 = -1;
+    s.f10[1] = 0.0f;
+    s.f10[2] = 0.0f;
+    s.f10[3] = 1.0f;
+    s.f10[4] = 0.0f;
+    s.f10[5] = 0.0f;
+    s.f10[6] = 0.0f;
+    s.f10[7] = 1.0f;
+    s.f10[8] = 1.0f;
+    s.f10[9] = 1.0f;
+    s.f10[10] = 1.0f;
+    s.f10[11] = 1.0f;
+    x.o.b0 = 0;
+    x.o.b1 = 1;
+    x.o.h4 = -1;
+    x.o.v[2] = 0.0f;
+    x.o.v[1] = 0.0f;
+    x.o.v[0] = 0.0f;
+    x.u.b0 = -1;
+    x.u.b1 = -1;
+    x.u.b2 = 0;
+    x.u.e8 = 0;
+    x.u.e4 = 0;
+    x.u.e0 = 0;
+    x.t.x0 = 0;
+    x.t.x4 = 0xF000;
+    x.t.x8 = 0x180C;
+    x.t.on = 0;
+    x.t.a = -1;
+    x.t.b = -1;
+    k3 = 0;
+    k2 = 0;
+    k1 = 0;
+    k0 = 0;
+    while (!func_0022CBA0(r)) {
+        func_0022CBB0(r, name);
+        if (func_0012B1A0(name, D_005BC298) == 0) {
+            if (s.a0 != -1)
+                e = func_002E4A50(p, q, &s, &x.o);
+            else
+                e = func_002E4A50(0, 0, &s, &x.o);
+            *(int *)(e + 0x228) = k0;
+            *(int *)(e + 0x22C) = k1;
+            *(int *)(e + 0x220) = k2;
+            *(int *)(e + 0x224) = k3;
+            return e;
+        }
+        if (func_002F6690(&s, name, r) == 0 && func_002F69A0(&x.u, name, r) == 0 && func_002F6D40(&x.t, name, r) == 0) {
+            if (func_0012B1A0(name, D_005BC2A0) == 0) {
+                func_0022CBB0(r, w);
+                if (func_0012B1A0(w, D_005BC2A8) == 0)
+                    x.o.b0 = 1;
+                else
+                    x.o.b0 = 0;
+            } else if (func_0012B1A0(name, D_005BC2AC) == 0) {
+                func_0022CBB0(r, w);
+                x.o.b2 = func_002F7400(w);
+                x.o.h4 = func_0022CD60(r);
+            } else if (func_0012B1A0(name, D_005BC2B0) == 0) {
+                x.o.v[0] = func_0022CD90(r);
+                x.o.v[1] = func_0022CD90(r);
+                x.o.v[2] = func_0022CD90(r);
+            } else if (func_0012B1A0(name, D_005BC2B8) == 0) {
+                func_0022CBB0(r, w);
+                x.o.b1 = 0;
+            } else if (func_0012B1A0(name, D_005BC2C0) == 0) {
+                k0 = func_0022CD60(r);
+                k1 = func_0022CD60(r);
+                k2 = func_0022CD60(r);
+                k3 = func_0022CD60(r);
+            } else if (func_0012B1A0(name, D_005BC2C8) == 0) {
+                x.t.on = 1;
+                x.t.a = func_0022CD60(r);
+                x.t.b = func_0022CD60(r);
+            }
+        }
+    }
+    return 0;
+}
+
+char *func_002E4180(char *, int *, S2E3h *, S2E3o *);
+
+char *func_002E3A40(char *p, int *q, char *r) {
+    char name[32];
+    char w[16];
+    S2E3h s;
+    S2E3x x;
+    char *e;
+    int k2;
+    int k3;
+    int k0;
+    int k1;
+    s.a1 = 0;
+    s.a3 = 0;
+    s.f10[0] = 0.0f;
+    s.a0 = -1;
+    s.a2 = -1;
+    s.f10[1] = 0.0f;
+    s.f10[2] = 0.0f;
+    s.f10[3] = 1.0f;
+    s.f10[4] = 0.0f;
+    s.f10[5] = 0.0f;
+    s.f10[6] = 0.0f;
+    s.f10[7] = 1.0f;
+    s.f10[8] = 1.0f;
+    s.f10[9] = 1.0f;
+    s.f10[10] = 1.0f;
+    s.f10[11] = 1.0f;
+    x.o.b0 = 0;
+    x.o.b1 = 1;
+    x.o.h4 = -1;
+    x.o.v[2] = 0.0f;
+    x.o.v[1] = 0.0f;
+    x.o.v[0] = 0.0f;
+    x.u.b0 = -1;
+    x.u.b1 = -1;
+    x.u.b2 = 0;
+    x.u.e8 = 0;
+    x.u.e4 = 0;
+    x.u.e0 = 0;
+    x.t.x0 = 0;
+    x.t.x4 = 0xF000;
+    x.t.x8 = 0x180C;
+    x.t.on = 0;
+    x.t.a = -1;
+    x.t.b = -1;
+    k3 = 0;
+    k2 = 0;
+    k1 = 0;
+    k0 = 0;
+    while (!func_0022CBA0(r)) {
+        func_0022CBB0(r, name);
+        if (func_0012B1A0(name, D_005BC298) == 0) {
+            if (s.a0 != -1)
+                e = func_002E4180(p, q, &s, &x.o);
+            else
+                return 0;
+            *(int *)(e + 0x228) = k0;
+            *(int *)(e + 0x22C) = k1;
+            *(int *)(e + 0x220) = k2;
+            *(int *)(e + 0x224) = k3;
+            return e;
+        }
+        if (func_002F6690(&s, name, r) == 0 && func_002F69A0(&x.u, name, r) == 0 && func_002F6D40(&x.t, name, r) == 0) {
+            if (func_0012B1A0(name, D_005BC2A0) == 0) {
+                func_0022CBB0(r, w);
+                if (func_0012B1A0(w, D_005BC2A8) == 0)
+                    x.o.b0 = 1;
+                else
+                    x.o.b0 = 0;
+            } else if (func_0012B1A0(name, D_005BC2AC) == 0) {
+                func_0022CBB0(r, w);
+                x.o.b2 = func_002F7400(w);
+                x.o.h4 = func_0022CD60(r);
+            } else if (func_0012B1A0(name, D_005BC2B0) == 0) {
+                x.o.v[0] = func_0022CD90(r);
+                x.o.v[1] = func_0022CD90(r);
+                x.o.v[2] = func_0022CD90(r);
+            } else if (func_0012B1A0(name, D_005BC2B8) == 0) {
+                func_0022CBB0(r, w);
+                x.o.b1 = 0;
+            } else if (func_0012B1A0(name, D_005BC2C0) == 0) {
+                k0 = func_0022CD60(r);
+                k1 = func_0022CD60(r);
+                k2 = func_0022CD60(r);
+                k3 = func_0022CD60(r);
+            } else if (func_0012B1A0(name, D_005BC2C8) == 0) {
+                x.t.on = 1;
+                x.t.a = func_0022CD60(r);
+                x.t.b = func_0022CD60(r);
+            }
+        }
+    }
+    return 0;
 }

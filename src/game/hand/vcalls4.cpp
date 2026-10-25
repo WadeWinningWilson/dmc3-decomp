@@ -11141,6 +11141,7 @@ extern "C" void func_003CF4B0(char *);
 extern "C" float func_001324E0(float *);
 extern "C" void func_001323A0(float *);
 extern "C" float func_001C1B00(float, char *, float *, char *);
+extern "C" int func_001FF180(float *, unsigned char *, float *);
 
 extern "C" void func_00476780(char *p, unsigned char k, int m) {
     S4767 s;
@@ -12706,6 +12707,161 @@ extern "C" unsigned char func_00202010(char *p, char *a, char *b) {
         }
         __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(a), "r"(seg) : "memory");
         return 1;
+    }
+    return 0;
+}
+
+typedef struct { float f[8]; } S1FF;
+extern "C" int func_0022CBA0(char *);
+extern "C" char D_005BCBB0[8];
+extern "C" char D_005BCBB8[8];
+extern "C" char D_005BCBC0[8];
+extern "C" char D_005BCBC8[8];
+extern "C" char D_005BCBD0[8];
+extern "C" char D_00562D00[];
+extern "C" float D_00562C14[];
+extern "C" float D_00562C18[];
+extern "C" float D_00562C1C[];
+extern "C" float D_00562C20[];
+extern "C" float D_00562C24[];
+extern "C" float D_00562C28[];
+extern "C" float D_00562C2C[];
+extern "C" float D_00562C30[];
+extern "C" float D_00562C34[];
+extern "C" float D_00562C38[];
+extern "C" float D_00562C3C[];
+
+extern "C" unsigned char func_001FF7B0(char *p, float *s, int mask) {
+    float out[4] __attribute__((aligned(16)));
+    float c[8] __attribute__((aligned(16)));
+    float d[4] __attribute__((aligned(16)));
+    unsigned int vis[200];
+    int n;
+    int i;
+    int *ids;
+    unsigned char found;
+    int *lst;
+    unsigned char *t;
+    found = 0;
+    func_00128488((char *)vis, 0, 0x320);
+    *(S1FF *)c = *(S1FF *)s;
+    __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(s + 4), "r"(s) : "memory");
+    if (!(func_001324E0(d) <= 0.001f))
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvadd.xyzw $vf6, $vf4, $vf5\n\tsqc2 $vf6, 0x0(%0)" : : "r"(s + 4), "r"(s + 4), "r"(d) : "memory");
+    lst = func_001F95B0(((char **)(p + 8))[*(int *)p]);
+    n = func_001F8FA0(((char **)(p + 8))[*(int *)p], (char *)s);
+    for (i = 0; i < n; i++) {
+        for (ids = func_001F95C0(((char **)(p + 8))[*(int *)p], lst[i]); *ids != -1; ids++) {
+            if (tasFAC(vis, (unsigned int)*ids / 56) == 1) {
+                t = func_001F9610(((char **)(p + 8))[*(int *)p], *ids);
+                if (mask == 0 || (mask != 0 && hasFAC(t, mask) == 0)) {
+                    if ((unsigned char)func_001FF180(s, t, out) == 1) {
+                        found = 1;
+                        s[0] += out[0];
+                        s[1] += out[1];
+                        s[2] += out[2];
+                    }
+                }
+            }
+        }
+    }
+    s[4] = c[4];
+    s[5] = c[5];
+    s[6] = c[6];
+    return found;
+}
+
+class O385 {
+public:
+    virtual void d8();
+    virtual void dC();
+    virtual void d10();
+    virtual void d14();
+    virtual void d18();
+    virtual float m1C();
+};
+
+typedef struct { signed char a0; unsigned char a1; signed char a2; unsigned char a3; char pad4[0xC]; float f10[12]; } S385;
+
+static inline float hp385(void) {
+    char *a = *(char **)(*(char **)D_01CAFF0C + 4);
+    if (a != 0 && *(char **)(a + 0x10) != 0)
+        return (*(O385 **)(a + 0x10))->m1C();
+    return 0.0f;
+}
+
+extern "C" char *func_00386170(char *, int *, S385 *);
+extern "C" int func_002F6690(S385 *, char *, char *);
+
+extern "C" char *func_00385BF0(char *p, int *q, char *r) {
+    char name[32];
+    S385 s;
+    unsigned short h0;
+    unsigned short h1;
+    unsigned short h2;
+    unsigned short k0;
+    unsigned short k1;
+    unsigned short k2;
+    unsigned short k3;
+    char *e;
+    float x;
+    k0 = 1000;
+    k1 = 1000;
+    k2 = 20;
+    k3 = 1500;
+    s.a1 = 0;
+    s.a3 = 0;
+    s.f10[0] = 0.0f;
+    s.a0 = -1;
+    s.a2 = -1;
+    s.f10[1] = 0.0f;
+    s.f10[2] = 0.0f;
+    s.f10[3] = 1.0f;
+    s.f10[4] = 0.0f;
+    s.f10[5] = 0.0f;
+    s.f10[6] = 0.0f;
+    s.f10[7] = 1.0f;
+    s.f10[8] = 1.0f;
+    s.f10[9] = 1.0f;
+    s.f10[10] = 1.0f;
+    s.f10[11] = 1.0f;
+    while (!func_0022CBA0(r)) {
+        func_0022CBB0(r, name);
+        if (func_0012B1A0(name, D_005BCBB0) == 0) {
+            e = func_00386170(p, q, &s);
+            if (e != 0) {
+                *(unsigned short *)(e + 0x1314) = h0;
+                *(unsigned short *)(e + 0x1316) = h1;
+                *(unsigned short *)(e + 0x1318) = h2;
+                *(float *)(e + 0xDA4) = (float)k0;
+                *(float *)(e + 0xDA0) = (float)k2;
+                *(float *)(e + 0xDA8) = (float)k1;
+                *(float *)(e + 0xDB4) = (float)k3;
+                x = hp385();
+                if (x < D_00562C18[0]) *(float *)(e + 0xDB4) += D_00562C14[0];
+                else if (D_00562C18[0] <= x && x < D_00562C20[0]) *(float *)(e + 0xDB4) += D_00562C1C[0];
+                else if (D_00562C20[0] <= x && x < D_00562C28[0]) *(float *)(e + 0xDB4) += D_00562C24[0];
+                else if (D_00562C28[0] <= x && x < D_00562C30[0]) *(float *)(e + 0xDB4) += D_00562C2C[0];
+                else if (D_00562C30[0] <= x && x < D_00562C38[0]) *(float *)(e + 0xDB4) += D_00562C34[0];
+                else if (D_00562C38[0] <= x) *(float *)(e + 0xDB4) += D_00562C3C[0];
+            }
+            return e;
+        }
+        if (func_002F6690(&s, name, r) == 0) {
+            if (func_0012B1A0(name, D_005BCBB8) == 0) {
+                h0 = func_0022CD60(r);
+                h1 = func_0022CD60(r);
+                h2 = func_0022CD60(r);
+            } else if (func_0012B1A0(name, D_005BCBC0) == 0) {
+                k0 = (unsigned int)func_0022CD90(r);
+            } else if (func_0012B1A0(name, D_00562D00) == 0) {
+                k1 = (unsigned int)func_0022CD90(r);
+            } else if (func_0012B1A0(name, D_005BCBC8) == 0) {
+                k2 = (unsigned int)func_0022CD90(r);
+            } else if (func_0012B1A0(name, D_005BCBD0) == 0) {
+                k3 = (unsigned int)func_0022CD90(r);
+            }
+        }
     }
     return 0;
 }
