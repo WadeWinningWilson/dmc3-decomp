@@ -1,0 +1,151 @@
+extern "C" void func_00195E20(char *, char *);
+
+extern "C" char D_005BE098[4];
+
+extern "C" void func_00131700(char *, char *, char *);
+
+extern "C" void func_00105230(char *, char *, char *);
+
+extern "C" void func_001318E0(char *, char *, char *);
+
+extern "C" void func_001AD140(char *);
+
+class O4D8 {
+public:
+    virtual void u8();
+    virtual void uC();
+    virtual void u10();
+    virtual void u14();
+    virtual void u18();
+    virtual void u1C();
+    virtual void u20();
+    virtual void m24(int);
+    virtual void u28();
+    virtual int m2C(char *, char *);
+    virtual void u30();
+    virtual void u34();
+    virtual void u38();
+    virtual void m3C(short);
+    virtual void u40();
+    virtual void u44();
+    virtual void u48();
+    virtual void u4C();
+    virtual void u50();
+    virtual void m54(int, int, int);
+    virtual void u58();
+    virtual void m5C(int, int, int);
+    virtual void u60();
+    virtual void u64();
+    virtual void u68();
+    virtual void u6C();
+    virtual void u70();
+    virtual void u74();
+    virtual void u78();
+    virtual void u7C();
+    virtual void u80();
+    virtual void m84(int, int);
+};
+
+static inline char *ent4D8(char *q, unsigned short i) { char *r; if (*(unsigned int *)(q + 4) < i + 1) { r = 0; } else if (((int *)(q + 8))[i] == 0) { r = 0; } else { r = q + ((int *)(q + 8))[i]; } return r; }
+
+static inline char *gch4D8(char *h, unsigned short i) { char *r; if (**(unsigned short **)(h + 8) == 0) { r = ent4D8(*(char **)(h + 0xC), i); } else { r = *(char **)(h + 0xC); } return r; }
+
+extern "C" void func_004D8FC0(char *p) {
+    char *a;
+    char *b;
+    switch (*(unsigned char *)(p + 4)) {
+    case 0:
+        *(unsigned char *)(p + 0x640) = 0;
+        *(float *)(p + 0x650) = 0.0f;
+        *(float *)(p + 0x654) = 0.0f;
+        *(float *)(p + 0x658) = 0.0f;
+        *(float *)(p + 0x65C) = 1.0f;
+        *(float *)(p + 0x660) = 0.0f;
+        *(float *)(p + 0x664) = 0.0f;
+        *(float *)(p + 0x668) = 0.0f;
+        *(float *)(p + 0x66C) = 1.0f;
+        *(float *)(p + 0x670) = 1.0f;
+        *(float *)(p + 0x674) = 1.0f;
+        *(float *)(p + 0x678) = 1.0f;
+        *(float *)(p + 0x67C) = 1.0f;
+        __asm__ volatile("sqc2 $vf0, 0x30(%0)
+	sqc2 $vf1, 0x20(%0)
+	sqc2 $vf2, 0x10(%0)
+	sqc2 $vf3, 0x0(%0)" : : "r"(p + 0x680) : "memory");
+        func_00131700(p + 0x680, p + 0x680, p + 0x660);
+        func_00105230(p + 0x680, p + 0x680, p + 0x650);
+        func_001318E0(p + 0x680, p + 0x680, p + 0x670);
+        a = gch4D8(*(char **)(p + 0x38), 0);
+        b = gch4D8(*(char **)(p + 0x38), 1);
+        ((O4D8 *)(p + 0x40))->m24(1);
+        if (!(unsigned char)((O4D8 *)(p + 0x40))->m2C(a, b)) {
+            goto fail;
+        }
+        ((O4D8 *)(p + 0x40))->m3C(*(short *)(p + 0x6C0));
+        ((O4D8 *)(p + 0x40))->m54(0, 0, 0);
+        ((O4D8 *)(p + 0x40))->m84(0x20, 3);
+        (*(unsigned char *)(p + 4))++;
+    case 1:
+        ((O4D8 *)(p + 0x40))->m5C(0, -10, 0);
+        break;
+    case 2:
+        break;
+    }
+    func_00195E20(D_005BE098, p);
+    return;
+fail:
+    func_001AD140(p);
+    *(unsigned char *)(p + 4) = 2;
+}
+
+extern "C" void func_0013D6A0(char *);
+
+extern "C" char *func_001B0FD0(char *, int, int);
+
+extern "C" void func_0013D640(char *, char *);
+
+extern "C" void func_001959E0(char *, int, char *);
+
+extern "C" void func_0013D240(char *, int);
+
+extern "C" char D_00645A30[];
+
+typedef struct { unsigned char f; int x; char **pp; } HB;
+
+extern "C" void func_004D8D80(char *);
+
+extern "C" char *func_004D8EA0(int p0, int p1) {
+    char *ret;
+    HB b;
+    char a[16] __attribute__((aligned(16)));
+    char *t;
+    char ***q;
+    q = &b.pp;
+    *q = &ret;
+    **q = 0;
+    b.x = 0;
+    func_0013D6A0(a);
+    **q = func_001B0FD0(a, 0x700, 1);
+    if ((t = **q) != 0) {
+        if (t != 0) {
+            func_004D8D80(t);
+        }
+        func_0013D640(**q + 0x24, a);
+        func_001959E0(D_00645A30, 0x2C, **q);
+        (**q)[0x18] = 1;
+        goto ok;
+    }
+    **q = 0;
+    b.f = 0;
+    func_0013D240(a, -1);
+    goto done;
+ok:
+    b.f = 1;
+    func_0013D240(a, -1);
+done:
+    if (ret != 0) {
+        *(int *)(ret + 0x38) = p0;
+        *(int *)(ret + 0x6C0) = p1;
+    }
+    return ret;
+}

@@ -21,7 +21,9 @@ the address in brackets is an example.
 1. Read the function: the asm is in `asm/us/text.s` (search for `nonmatching func_XXXXXXXX`;
    `awk '/^nonmatching /{p=($2=="func_004EF610,")} p' asm/us/text.s` prints one function).
    Ghidra's decompiler output is a guide to the logic only; do not paste it.
-2. Write C/C++ in the right source file. Give the function its mangled name in
+2. Write C/C++ in the right source file: the file of the translation unit the address falls
+   in (`python -I tools/split_tus.py --where func_XXXXXXXX`; units are listed in
+   `config/SLUS_209.64/tus.txt`, see [the TU map](research/DMC3_TU_MAP.md)). Give the function its mangled name in
    `config/SLUS_209.64/symbols.txt` (e.g. `Save__8CMcAppliFi = 0x4EFDF0;`). Plain C functions can
    keep the `func_XXXXXXXX` name.
 3. Diff: `python -I tools/try.py src/game/mc/mcappli.cpp Save__8CMcAppliFi -v`. Relocated fields
@@ -159,3 +161,5 @@ byte-for-byte:
 | `tools/gen_class_dtors.py` | destructors that call their parent's (single or multiple inheritance) |
 
 Re-run a generator after the code it depends on changes; the full build re-verifies everything.
+Generators write into `auto/` directories; `python -I tools/split_tus.py --apply <files>` then
+moves their output into the unit files (check the build afterwards).

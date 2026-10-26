@@ -31,8 +31,8 @@ of `.text`, as on decomp.dev.
 
 | Measure | USA |
 |---|---|
-| Code | **48.38%** (game code 54.36%, libraries 12.64%) |
-| Functions | 11,138 / 14,722 (75.66%) |
+| Code | **48.38%** (game code 54.36%, libraries 12.66%) |
+| Functions | 11,145 / 14,722 (75.70%) |
 
 The function count runs well ahead of code size: many matched functions are small (accessors,
 destructors, forwarders), while the large gameplay functions are mostly still assembly.
@@ -145,8 +145,10 @@ config/<VERSION>/   splat.yaml, symbols.txt (names → addresses), rtti.txt, mai
 orig/<VERSION>/     your game executable (git-ignored)
 asm/                splat output (generated, git-ignored)
 src/                decompiled C/C++ (first line `// cc: <compiler> <flags>` overrides the default)
-  game/auto/        generated game code (MW), byte-verified
-  lib/auto/         generated library code (ee-gcc SDK/middleware, MW runtime), byte-verified
+  game/<group>/     game code, one file per inferred translation unit (enemy/Em010.cpp,
+                    ui/UIDResult.cpp, unsorted/unit_XXXXXXXX.c, ...; see config/<VERSION>/tus.txt)
+  game/auto/        generated destructors (MW), byte-verified
+  lib/<library>/    library objects (cri/adx, sce/libkernl, sdk, ...), one file per object
 include/            shared headers (include/game/work.h: CWork, the root of most game objects)
 nonmatch/           work-in-progress functions that do not match yet
 tools/              build.py, try.py, generators, splat/objdiff helpers, Docker image

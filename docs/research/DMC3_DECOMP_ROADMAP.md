@@ -48,9 +48,12 @@ byte-identical. Generated functions use placeholder types and names: they are
 - [ ] C++ specifics: MW vtable layout, ctor/dtor/`__sinit` codegen, EH tables, mangling
 
 ## Milestone 3: Find TU boundaries
-- [ ] Use the 44 `__sinit` functions (one per C++ TU with globals) and the `.ctors` order
-- [ ] Use 16-byte alignment gaps, string-pool locality and rodata-per-TU
-- [ ] Identify and separate the SDK 2.8.0 and CRI libraries (ee-gcc), with signatures shared with other PS2 projects
+- [x] Use the 44 `__sinit` functions (one per C++ TU with globals), RTTI vtables and local data
+  (`tools/tu_map.py` writes `config/SLUS_209.64/tus.txt`; method in [DMC3_TU_MAP.md](DMC3_TU_MAP.md))
+- [x] Use 16-byte alignment gaps for the ee-gcc library objects
+- [x] Lay `src/` out by unit (`tools/split_tus.py`)
+- [ ] Name the 150 `unit_XXXXXXXX` units (strings, call graph, PC-HD symbols)
+- [ ] Identify the remaining 632 SDK objects by signature (shared with other PS2 projects)
 
 ## Milestone 4: First subsystem
 Candidates, in order of how testable they are:

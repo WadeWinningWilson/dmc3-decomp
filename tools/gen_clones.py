@@ -27,7 +27,55 @@ spec2 = importlib.util.spec_from_file_location("build", ROOT / "tools/build.py")
 bd = importlib.util.module_from_spec(spec2)
 spec2.loader.exec_module(bd)
 
-HEADER = re.compile(r"^(?:extern \"C\" )?\w[\w *]*?[ *](func_[0-9A-F]{8})\([^;{}\n]*\)[^{}\n]*\{\n.*?^\}", re.M | re.S)
+HEAD = re.compile(r"^(?:extern \"C\" )?\w[\w *]*?[ *](func_[0-9A-F]{8})\([^;{}\n]*\)[^{}\n]*\{\n", re.M)
+
+
+class Def:
+    def __init__(self, text, start, end, name):
+        self.text, self.start, self.end, self.name = text, start, end, name
+
+    def group(self, k):
+        return self.text[self.start:self.end] if k == 0 else self.name
+
+
+def definitions(text):
+    """Multi-line func_ definitions, each up to its matching closing brace (a regex up to
+    the next `}` in column 0 would swallow the functions after a body closed mid-line)."""
+    pos = 0
+    while True:
+        m = HEAD.search(text, pos)
+        if not m:
+            return
+        depth, i = 0, m.end() - 2
+        while i < len(text):
+            if text.startswith("//", i):
+                i = text.find("\n", i) % (len(text) + 1)
+                continue
+            if text.startswith("/*", i):
+                i = text.find("*/", i) % (len(text) + 1) + 2
+                continue
+            c = text[i]
+            if c in "\"'":
+                j = i + 1
+                while j < len(text) and text[j] != c:
+                    j += 2 if text[j] == "\\" else 1
+                i = j + 1
+                continue
+            depth += (c == "{") - (c == "}")
+            if depth == 0:
+                break
+            i += 1
+        end = min(i + 1, len(text))
+        yield Def(text, m.start(), end, m.group(1))
+        pos = end
+
+
+def strip_definitions(text):
+    out, pos = [], 0
+    for d in definitions(text):
+        out.append(text[pos:d.start])
+        pos = d.end
+    return "".join(out) + text[pos:]
 
 
 def asm_functions():
@@ -111,7 +159,7 @@ def main():
     for f in sorted(list((ROOT / "src").rglob("*.c")) + list((ROOT / "src").rglob("*.cpp"))):
         if f.name.startswith("clones_"):
             continue
-        for m in HEADER.finditer(f.read_text(errors="replace")):
+        for m in definitions(f.read_text(errors="replace")):
             defined.setdefault(m.group(1), (f, m.group(0)))
     for f in list((ROOT / "src").rglob("*.c")) + list((ROOT / "src").rglob("*.cpp")):
         for m in re.finditer(r"^(?:extern \"C\" )?(?:static )?\w[\w *]*?[ *](func_[0-9A-F]{8})\([^;{}\n]*\)[^{}\n]*\{",
@@ -146,7 +194,7 @@ def main():
             new = substitute(code, pairs).replace(m_, u)
             # a substituted symbol needs a declaration: the original's, renamed, at block scope
             if f not in file_decls:
-                file_decls[f] = [l for l in HEADER.sub("", f.read_text(errors="replace")).splitlines()
+                file_decls[f] = [l for l in strip_definitions(f.read_text(errors="replace")).splitlines()
                                  if l.rstrip().endswith(";") and not l.startswith((" ", "\t", "//"))]
             extra = []
             for a, b in pairs:
@@ -163,7 +211,7 @@ def main():
         cc, flags = bd.file_flags(f)
         first = text.splitlines()[0] if text.startswith("// cc:") else None
         # the declarations of the source file (everything that is not a function definition)
-        decls = HEADER.sub("", text)
+        decls = strip_definitions(text)
         # one-line definitions (`int f(...) { return ...; }`) are not declarations either
         decls = "\n".join(l for l in decls.splitlines() if not l.startswith("// cc:") and
                           not re.match(r"\w[^;\n]*\bfunc_[0-9A-F]{8}\([^)]*\)[^;\n]*\{.*\}\s*$", l))
@@ -173,7 +221,7 @@ def main():
         out.parent.mkdir(parents=True, exist_ok=True)
         # clones from earlier runs stay (they are verified); new ones are added after them
         orig_text = out.read_text(errors="replace") if out.exists() else None
-        old_defs = [m.group(0) for m in HEADER.finditer(orig_text)] if orig_text else []
+        old_defs = [m.group(0) for m in definitions(orig_text)] if orig_text else []
         keep = items
         while keep:
             body = ((first + "\n") if first else "") + \

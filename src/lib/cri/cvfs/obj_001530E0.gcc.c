@@ -1,0 +1,6 @@
+// cc: ee-gcc2.96 -O2 -G0
+extern char D_00631A18[];
+
+int func_001530E0() {
+    return (int)D_00631A18;
+}
