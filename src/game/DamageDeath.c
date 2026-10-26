@@ -51,3 +51,6 @@ void func_002E7CB0(char *p0, int p1, int p2) {
     *(int *)(p0 + 68) = p1;
     *(int *)(p0 + 72) = p2;
 }
+
+void func_002E8440(char *p) {
+    extern void func_002E78A0(); func_002E78A0(p + -4); }

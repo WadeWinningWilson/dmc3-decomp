@@ -488,9 +488,8 @@ void func_00197D10(char *p) {
     *(int *)(p + 8) = 0;
 }
 
-float func_00104D00(char *, char *);
-
 void func_001A9CF0(char *p, char *a, float *b) {
+    float func_00104D00(char *, char *);
     extern char *D_005BE0D8;
     void func_00105300(char *, float *);
     char *e;
@@ -3413,3 +3412,30 @@ typedef unsigned short u16;
 typedef struct { u8 pad[0x184]; u16 unk184; u16 unk186; } Obj1A5B90;
 
 void func_001A5B90(Obj1A5B90 *p) { p->unk184 = p->unk186; }
+
+void func_00131650(float *, float *);
+
+void func_0019E0F0(char *p) {
+    float func_00104D00(float *, float *);
+    char *q = *(char **)(p + 0x5C);
+    float v[4] __attribute__((aligned(16)));
+    float t;
+    func_00131650(v, (float *)(*(char **)(q + 0x108) + *(unsigned char *)(p + 7) * 64 + 0x20));
+    t = func_00104D00(v, (float *)(q + 0x60));
+    t += 1.0f;
+    t *= 0.5f;
+    if (!(t < 0.0f)) t = 1.0f - t;
+    else t = t + 1.0f;
+    if (0.0f == *(float *)(p + 0x20) || 0.0f == (float)*(short *)(p + 0x58)) {
+        *(unsigned short *)(p + 0xC) = 0;
+    } else {
+        *(float *)(p + 0x10) = (float)*(short *)(p + 0x58) * (t * *(float *)(p + 0x20));
+        *(unsigned short *)(p + 0xC) = (unsigned int)(4096.0f * *(float *)(p + 0x10));
+    }
+    if (0.0f == *(float *)(p + 0x28) || 0.0f == (float)*(short *)(p + 0x5A)) {
+        *(unsigned short *)(p + 0xE) = 0;
+    } else {
+        *(float *)(p + 0x18) = (float)*(short *)(p + 0x5A) * (t * *(float *)(p + 0x28));
+        *(unsigned short *)(p + 0xE) = (unsigned int)(4096.0f * *(float *)(p + 0x18));
+    }
+}

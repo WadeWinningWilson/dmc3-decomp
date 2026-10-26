@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 struct M207 { float m[16]; };
 
 extern "C" {
@@ -177,3 +178,7 @@ int func_002F8120(char *p0) {
     return v2;
 }
 }
+
+extern "C" void func_002F90E0(char *p) { ((VThunk *)*(char **)(p + 0x45C))->v57(); }
+
+extern "C" void func_002F90C0(char *p) { ((VThunk *)*(char **)(p + 0x45C))->v68(); }

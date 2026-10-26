@@ -775,9 +775,7 @@ void func_0038DD00(P38D *q) {
 }
 
 extern "C" {
-extern "C" {
 int func_001AD140(char *p);
-}
 }
 
 #define UNIT(e) __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(e) : "memory")

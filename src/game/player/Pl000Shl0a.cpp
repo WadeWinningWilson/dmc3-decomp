@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 extern "C" {
 int func_004B9130(char *, int);
 }
@@ -100,3 +101,7 @@ int func_004B8B70(char *p0) {
     return v2;
 }
 }
+
+extern "C" void func_004B9610(char *p) { ((VThunk *)*(char **)(p + 0x3FC))->v57(); }
+
+extern "C" void func_004B95F0(char *p) { ((VThunk *)*(char **)(p + 0x3FC))->v68(); }

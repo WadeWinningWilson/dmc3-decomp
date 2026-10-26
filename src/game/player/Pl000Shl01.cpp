@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 extern "C" void func_002DFFD0(char *, char *, int, int, int, float, float, float, float);
 
 class O2E7 {
@@ -106,3 +107,7 @@ extern "C" void func_002E69E0(char *p, char *a, int c, float x, float y, float z
         break;
     }
 }
+
+extern "C" void func_002E6B80(void) {}
+
+extern "C" void func_002E6B60(char *p) { ((VThunk *)*(char **)(p + 0x8E4))->v57(); }

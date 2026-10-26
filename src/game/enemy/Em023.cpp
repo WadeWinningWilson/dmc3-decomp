@@ -1,4 +1,5 @@
 #include "game/mt_rand.h"
+#include "game/vthunk.h"
 /* Emits two effects for every active entry pair (sub-object at +0x130 gives the rate). */
 class Sub130 {
 public:
@@ -4967,3 +4968,11 @@ int func_00379B20(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int 
     return v2;
 }
 }
+
+extern "C" void func_0037ED30(char *p) { ((VThunk *)p)->v196(); }
+
+extern "C" void func_00381B50(char *p) { ((VThunk *)p)->v195(); }
+
+extern "C" void func_00381BE0(void) {}
+
+extern "C" void func_0037ED20(char *p) { ((VThunk *)p)->v196(); }

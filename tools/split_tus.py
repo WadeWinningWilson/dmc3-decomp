@@ -565,11 +565,27 @@ def main(argv):
 
 def apply_split(outs, origin, moved_items):
     """Write the new files into the tree and take their functions out of the old ones. A
-    source left with no function definitions is deleted. Run the full build afterwards: it is
-    the gate (git restores the tree if it does not match)."""
+    source left with no function definitions is deleted. A unit file given as a source is
+    rewritten in place, so passing a unit's files together with new code merges the two.
+    Run the full build afterwards: it is the gate (`git checkout` + `git clean` src/ if it
+    does not match)."""
+    remain, removed = {}, 0
+    for src, its in moved_items.items():
+        text = src.read_text(errors="ignore")
+        for it in its:
+            k = text.find(it.text)
+            assert k >= 0, (src, next(iter(it.names)))
+            text = text[:k] + text[k + len(it.text):]
+        remain[src.resolve()] = text if any(it.kind == "func" for it in parse(text)) else None
+    for src, text in remain.items():
+        if text is None:
+            src.unlink()
+            removed += 1
+        else:
+            src.write_text(re.sub(r"\n{3,}", "\n\n", text))
     for of in outs.values():
-        # a unit file that already exists is left alone: the functions go to the next free
-        # overflow name (merge them by hand if wanted)
+        # an existing file that is not being replaced is left alone: the functions go to the
+        # next free overflow name
         k = 1
         while (ROOT / of.path).exists():
             k += 1
@@ -577,18 +593,6 @@ def apply_split(outs, origin, moved_items):
         p = ROOT / of.path
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(of.text())
-    removed = 0
-    for src, its in moved_items.items():
-        text = src.read_text(errors="ignore")
-        for it in its:
-            k = text.find(it.text)
-            assert k >= 0, (src, next(iter(it.names)))
-            text = text[:k] + text[k + len(it.text):]
-        if any(it.kind == "func" for it in parse(text)):
-            src.write_text(re.sub(r"\n{3,}", "\n\n", text))
-        else:
-            src.unlink()
-            removed += 1
     print("wrote %d files; deleted %d emptied sources" % (len(outs), removed))
 
 

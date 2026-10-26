@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 class Sub40 {
 public:
     int x;
@@ -150,3 +151,7 @@ int func_002E7BB0(char *p0, char *p1, char *p2) {
     return tmp0;
 }
 }
+
+extern "C" void func_002E7A20(void) {}
+
+extern "C" void func_002E7A10(char *p) { ((VThunk *)p)->v1(); }

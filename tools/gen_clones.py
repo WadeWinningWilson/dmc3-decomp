@@ -20,6 +20,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+GAME_START = 0x195158   # below: SDK and middleware built with ee-gcc
 spec = importlib.util.spec_from_file_location("funcdiff", ROOT / "tools/funcdiff.py")
 fd = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fd)
@@ -183,6 +184,9 @@ def main():
         f, code = defined[m_]
         ta = tokens(asm[m_])
         for u in todo:
+            # library code (ee-gcc) and game code (MW) use different compilers
+            if (int(m_[5:], 16) < GAME_START) != (int(u[5:], 16) < GAME_START):
+                continue
             tb = tokens(asm[u])
             if len(ta) != len(tb):
                 continue

@@ -194,9 +194,8 @@ static inline int bit_on(unsigned int *a, int k) {
     return (*w & (1 << (k & 31))) != 0;
 }
 
-ret12 func_0050D630(int, int, int);
-
 unsigned char func_0050D720(int a, int b, int c) {
+    ret12 func_0050D630(int, int, int);
     unsigned char r = 0;
     ret12 s = func_0050D630(a, b, c);
     signed char k = *(signed char *)&s;
@@ -338,3 +337,46 @@ int func_0050D7E0(p0, p1) int p0; int p1; {
 }
 
 void func_0050C030(void) {}
+
+typedef struct { signed char c; int a; int b; } R50D;
+
+unsigned short func_001AE310(char *, int);
+
+int func_0050C460(char *p) {
+    R50D func_0050D630(char *, int, int);
+    int r = 0;
+    unsigned short m;
+    if (!(func_001AE310(D_006663C0, 0) & 0xC)) {
+        if (!(*(int *)(p + 0x39D0) == *(int *)(p + 0x39E4) && *(unsigned char *)(p + 0x39E8) != 0)
+            && *(unsigned char *)(p + 0x39E9) == 0) {
+            *(unsigned char *)(p + 0x39E9) = 1;
+        }
+    } else {
+        *(unsigned char *)(p + 0x39E9) = 0;
+    }
+    m = func_001AE3B0(D_006663C0, 0) | func_001AE360(D_006663C0, 0);
+    if (func_001AE360(D_006663C0, 0) & 0x40) {
+        r = 1;
+    } else if (func_001AE360(D_006663C0, 0) & 0x10) {
+        r = 2;
+    } else if (m & 8) {
+        func_003303F0(D_01DFABA0, 0, 2, 0, 0);
+        (*(int *)(p + 0x39D0))++;
+        if (*(int *)(p + 0x39D0) < 30) {
+            R50D t;
+            R50D u;
+            u = func_0050D630(p, *(int *)(p + 0x39CC), *(int *)(p + 0x39D0));
+            t.c = u.c;
+            t.a = u.a;
+            t.b = u.b;
+            if (*(signed char *)&t == -1) (*(int *)(p + 0x39D0))--;
+        } else {
+            *(int *)(p + 0x39D0) = 29;
+        }
+    } else if (m & 4) {
+        func_003303F0(D_01DFABA0, 0, 2, 0, 0);
+        (*(int *)(p + 0x39D0))--;
+        if (*(int *)(p + 0x39D0) < 0) *(int *)(p + 0x39D0) = 0;
+    }
+    return r;
+}

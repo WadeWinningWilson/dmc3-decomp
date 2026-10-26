@@ -161,3 +161,35 @@ void func_00323FB0(p0) char *p0; {
 }
 
 void *func_003230A0(void *p) { return p; }
+
+extern int D_0055DF00[];
+
+unsigned char func_0013DDC0(char *);
+
+void func_0013DC30(char *, int, int);
+
+void func_0013DD10(char *, int);
+
+void func_003257E0(char *p, int i, float x, float y) {
+    char *s;
+    ((unsigned char *)(p + 4))[i] = 1;
+    s = D_005D0E70 + (unsigned char)i * 0x30384 + 8;
+    switch (func_0013DDC0(s)) {
+    case 0:
+        if (((int *)(p + 8))[i] != ((int *)(p + 0x10))[i]) ((int *)(p + 8))[i] = ((int *)(p + 0x10))[i];
+        func_0013DC30(s, D_0055DF00[((int *)(p + 8))[i]], 0);
+        func_0013E040(s + 0x30354, (int)x, 1);
+        break;
+    case 1:
+    case 2:
+        if (*(int *)(p + i * 4 + 8) != ((int *)(p + 0x10))[i]) {
+            ((int *)(p + 8))[i] = ((int *)(p + 0x10))[i];
+            func_0013DC30(s, D_0055DF00[((int *)(p + 8))[i]], 0);
+            func_0013E040(s + 0x30354, (int)x, 1);
+        } else {
+            func_0013E040(s + 0x30354, (int)y, 0);
+        }
+        break;
+    }
+    func_0013DD10(s, 0);
+}

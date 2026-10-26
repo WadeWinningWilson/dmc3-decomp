@@ -4262,3 +4262,74 @@ int func_003CD2C0(char *p0, int p1, int p2, int p3, int p4, int p5, int p6, int 
     return tmp5;
 }
 }
+
+class A3CE {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void m6C();
+    virtual void m70();
+    virtual void m74();
+    virtual int m78(short, short);
+};
+
+class B3CE {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual int m24();
+};
+
+#define ANG3CE (*(short *)(*(char **)(p + 0x10) + 0x50))
+
+static inline void turn3CE(char *p, int k) {
+    short d = (short)((short)((A3CE *)p)->m78(*(short *)(p + 0x30), ANG3CE) + k);
+    if (d > 182) d = 182;
+    if (d < -181) d = -181;
+    ANG3CE += (float)d * *(float *)(p + 0xB0);
+}
+
+extern "C" int func_003CE020(char *p) {
+    ((A3CE *)p)->m6C();
+    ((A3CE *)p)->m70();
+    ((A3CE *)p)->m74();
+    switch (*(unsigned char *)(p + 0x10C)) {
+    case 0:
+        if (*(float *)(p + 0x34) < 550.0f) turn3CE(p, 0x471C);
+        if (*(float *)(p + 0x34) > 650.0f) turn3CE(p, 0x2AAB);
+        break;
+    case 1:
+        if (*(float *)(p + 0x34) < 550.0f) turn3CE(p, -0x471C);
+        if (*(float *)(p + 0x34) > 650.0f) turn3CE(p, -0x2AAB);
+        break;
+    }
+    return ((B3CE *)*(char **)(p + 0xA8))->m24();
+}

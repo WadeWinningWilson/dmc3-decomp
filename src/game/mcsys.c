@@ -76,3 +76,49 @@ int func_004EE870(int f, int v, unsigned char *out, int w) {
 }
 
 void func_004EAAC0(char *p) { *(int *)(p + 0) = 0; }
+
+extern char D_01DFABA0[];
+
+extern char D_006663C0[];
+
+void func_003303F0(char *, int, int, int, int);
+
+unsigned short func_001AE360(char *, int);
+
+int func_004E9CD0(void);
+
+void func_004EA690(void);
+
+int func_004F1010(char *p, int a) {
+    int r;
+    if (*(int *)(p + 0x208) == 0) {
+        r = a;
+        if (func_001AE360(D_006663C0, 0) & 0x50) {
+            func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+            switch (func_004E9CD0()) {
+            case 1:
+            case 2:
+            case 3:
+                *(int *)(p + 0x208) = 1;
+                break;
+            case 0:
+            case 4:
+            case 5:
+            default:
+                func_004EA690();
+                break;
+            }
+        }
+    } else {
+        switch (func_004E9CD0()) {
+        case 1: r = 0x4E34; break;
+        case 2: r = 0x4E35; break;
+        case 3: r = 0x4E36; break;
+        }
+        if (func_001AE360(D_006663C0, 0) & 0x50) {
+            func_003303F0(D_01DFABA0, 0, 4, 0, 0);
+            func_004EA690();
+        }
+    }
+    return r;
+}

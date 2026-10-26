@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 extern "C" void func_002E7590(char *);
 
 static inline unsigned char fnz(float d) {
@@ -21,3 +22,7 @@ extern "C" void func_002E7510(char *o, unsigned char a, unsigned char b, unsigne
     *(int *)(o + 0x1C) = c;
     func_002E7590(o);
 }
+
+extern "C" void func_002E7460(void) {}
+
+extern "C" void func_002E7440(char *p) { ((VThunk *)*(char **)(p + 0x404))->v57(); }

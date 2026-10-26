@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 class ObjC0 {
 public:
     virtual void d0();
@@ -126,3 +127,7 @@ int func_00405F70(char *p0) {
     return tmp1;
 }
 }
+
+extern "C" void func_00405F60(void) {}
+
+extern "C" void func_00405F40(char *p) { ((VThunk *)*(char **)(p + 0x450))->v68(); }

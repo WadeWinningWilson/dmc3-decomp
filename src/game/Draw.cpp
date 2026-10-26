@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 class Obj64 {
 public:
     virtual void d0();
@@ -349,3 +350,75 @@ extern "C" int func_0027B130(char *p, int k) {
     }
     return r;
 }
+
+extern "C" void func_0027A350(char *p) { ((VThunk *)(p + 0x400))->v28(); }
+
+extern "C" void func_0027A370(char *p) { ((VThunk *)(p + 0x400))->v29(); }
+
+extern "C" void func_0027A390(char *p) { ((VThunk *)(p + 0x400))->v30(); }
+
+extern "C" void func_0027A3B0(char *p) { ((VThunk *)(p + 0x400))->v31(); }
+
+extern "C" void func_0027A3D0(char *p) { ((VThunk *)(p + 0x400))->v32(); }
+
+extern "C" void func_0027A3F0(char *p) { ((VThunk *)(p + 0x400))->v33(); }
+
+extern "C" void func_0027A410(char *p) { ((VThunk *)(p + 0x400))->v34(); }
+
+extern "C" void func_0027A430(char *p) { ((VThunk *)(p + 0x400))->v35(); }
+
+extern "C" void func_0027A450(char *p) { ((VThunk *)(p + 0x400))->v36(); }
+
+extern "C" void func_0027A470(char *p) { ((VThunk *)(p + 0x400))->v37(); }
+
+extern "C" void func_0027A490(char *p) { ((VThunk *)(p + 0x400))->v38(); }
+
+extern "C" void func_0027A4B0(char *p) { ((VThunk *)(p + 0x400))->v39(); }
+
+extern "C" void func_0027A4D0(char *p) { ((VThunk *)(p + 0x400))->v40(); }
+
+extern "C" void func_0027A4F0(char *p) { ((VThunk *)(p + 0x400))->v41(); }
+
+extern "C" void func_0027A510(char *p) { ((VThunk *)(p + 0x400))->v42(); }
+
+extern "C" void func_0027A530(char *p) { ((VThunk *)(p + 0x400))->v43(); }
+
+extern "C" void func_0027A550(char *p) { ((VThunk *)(p + 0x400))->v44(); }
+
+extern "C" void func_0027B680(char *p) { ((VThunk *)(p + 0x270))->v28(); }
+
+extern "C" void func_0027B6A0(char *p) { ((VThunk *)(p + 0x270))->v29(); }
+
+extern "C" void func_0027B6C0(char *p) { ((VThunk *)(p + 0x270))->v30(); }
+
+extern "C" void func_0027B6E0(char *p) { ((VThunk *)(p + 0x270))->v31(); }
+
+extern "C" void func_0027B700(char *p) { ((VThunk *)(p + 0x270))->v32(); }
+
+extern "C" void func_0027B720(char *p) { ((VThunk *)(p + 0x270))->v33(); }
+
+extern "C" void func_0027B740(char *p) { ((VThunk *)(p + 0x270))->v34(); }
+
+extern "C" void func_0027B760(char *p) { ((VThunk *)(p + 0x270))->v35(); }
+
+extern "C" void func_0027B780(char *p) { ((VThunk *)(p + 0x270))->v36(); }
+
+extern "C" void func_0027B7A0(char *p) { ((VThunk *)(p + 0x270))->v37(); }
+
+extern "C" void func_0027B7C0(char *p) { ((VThunk *)(p + 0x270))->v38(); }
+
+extern "C" void func_0027B7E0(char *p) { ((VThunk *)(p + 0x270))->v39(); }
+
+extern "C" void func_0027B800(char *p) { ((VThunk *)(p + 0x270))->v40(); }
+
+extern "C" void func_0027B820(char *p) { ((VThunk *)(p + 0x270))->v41(); }
+
+extern "C" void func_0027B840(char *p) { ((VThunk *)(p + 0x270))->v42(); }
+
+extern "C" void func_0027B860(char *p) { ((VThunk *)(p + 0x270))->v43(); }
+
+extern "C" void func_0027B880(char *p) { ((VThunk *)(p + 0x270))->v44(); }
+
+extern "C" void func_0027A330(char *p) { ((VThunk *)(p + 0x400))->v27(); }
+
+extern "C" void func_0027B660(char *p) { ((VThunk *)(p + 0x270))->v27(); }

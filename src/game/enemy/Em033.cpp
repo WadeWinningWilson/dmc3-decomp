@@ -46,9 +46,7 @@ extern "C" void func_003DD5B0(char *p) {
 }
 
 extern "C" {
-extern "C" {
 int func_001AD140(char *p);
-}
 }
 
 extern "C" char D_01CAFF0C[];

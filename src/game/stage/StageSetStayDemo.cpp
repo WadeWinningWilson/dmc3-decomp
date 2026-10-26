@@ -1,3 +1,4 @@
+#include "game/vthunk.h"
 class ObjB4E {
 public:
     virtual void d0();
@@ -284,3 +285,7 @@ int func_002E5630(char *p0) {
     return v1;
 }
 }
+
+extern "C" void func_002E58F0(char *p) { ((VThunk *)*(char **)(p + 0x240))->v28(); }
+
+extern "C" void func_002E58D0(char *p) { ((VThunk *)*(char **)(p + 0x240))->v27(); }

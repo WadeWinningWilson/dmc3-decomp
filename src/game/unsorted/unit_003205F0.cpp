@@ -1,4 +1,5 @@
 #include "game/mt_rand.h"
+#include "game/vthunk.h"
 class Anim4 {
 public:
     virtual void d0();
@@ -1221,3 +1222,5 @@ void func_00321F90(int p0) {
     }
 }
 }
+
+extern "C" void func_003206E0(char *p) { ((VThunk *)p)->v24(); }

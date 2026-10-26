@@ -614,9 +614,7 @@ extern "C" void func_003F2800(char *p) {
 }
 
 extern "C" {
-extern "C" {
 int func_001AD140(char *p);
-}
 }
 
 extern "C" void func_003F2E90(char *);

@@ -993,3 +993,5 @@ float func_00279820(char *p0, float f0, float f1) {
     *(float *)(p0 + 468) = (*(float *)(p0 + 468) + f1);
     return t1;
 }
+
+int func_0027B8A0(char *p) { return *(signed char *)(p + 8); }
