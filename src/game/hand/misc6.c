@@ -8108,6 +8108,10 @@ extern int D_01DFAB74[];
 extern int D_01DFAB78[];
 extern int D_01DFAB84[];
 extern int D_01DFAB88[];
+void func_00277DA0(char *);
+void func_00277DE0(char *, char *, char *, unsigned char);
+void func_00385810(char *, int);
+int func_003B4FA0(char *);
 
 int func_002FAEF0(S2FAA *t, int cmd) {
     C36 s = { 0 };
@@ -8654,4 +8658,31 @@ void func_00225F30(char *p, unsigned char k) {
         }
         break;
     }
+}
+
+void func_00385460(char *p) {
+    unsigned char f;
+    __asm__ volatile("sqc2 $vf0, 0x30(%0)\n\tsqc2 $vf1, 0x20(%0)\n\tsqc2 $vf2, 0x10(%0)\n\tsqc2 $vf3, 0x0(%0)" : : "r"(p + 0xB0) : "memory");
+    func_00277DA0(p + 0xF0);
+    f = 0;
+    if (*(signed char *)(p + 0x58) == 1) {
+        f = 1;
+    } else if (*(unsigned char *)(p + 0xA0) == 1) {
+        f = 1;
+    }
+    {
+        char *q = p + 0x100;
+        func_00277DE0(p + 0xF0, q, p + 0xB0, f);
+    }
+    func_00385810(p, 0);
+    *(int *)(p + 0xC) |= 0x40;
+    *(unsigned char *)(p + 5) = 0;
+}
+
+int func_003B4F60(char *p) {
+    unsigned char b = *(unsigned char *)(p + 0x21CA) == 1;
+    if (b != 1) goto call;
+    return 0;
+call:
+    return func_003B4FA0(p);
 }

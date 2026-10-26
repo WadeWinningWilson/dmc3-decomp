@@ -29444,6 +29444,10 @@ void func_0028B090(char *p, int t) {
 typedef struct { int x; int y; } P2_4D5;
 
 extern P2_4D5 D_0058AF50[];
+void func_0019D410();
+void func_002788D0(char *, signed char);
+int func_004448D0(char *, signed char, signed char);
+int func_003B5A00(char *, short);
 
 void func_004D5980(char *p) {
     int i;
@@ -29562,4 +29566,124 @@ void func_004D5980(char *p) {
             SHOW(0x4840, i);
         }
     }
+}
+
+int func_0019D340(char *p, int buf) {
+    int start;
+    int n;
+    int i;
+    int off;
+    if (*(int *)(p + 72) == 0) return 0;
+    start = buf;
+    i = 0;
+    *(short *)(p + 80) = *(unsigned char *)(*(char **)(p + 192) + 24);
+    *(int *)(p + 76) = buf;
+    n = *(unsigned short *)(p + 80);
+    buf = (*(int *)(p + 76) + n * 116 + 15) & -16;
+    if (0 < n) {
+        off = 0;
+        do {
+            i = i + 1;
+            *(int *)(*(char **)(p + 76) + off) = 0;
+            off = off + 116;
+        } while (i < *(unsigned short *)(p + 80));
+    }
+    func_0019D410(p, n, i);
+    *(int *)(p + 68) = buf - start;
+    return *(int *)(p + 68);
+}
+
+int func_003B6AB0(char *p) {
+    short k = *(short *)(p + 0x20D0);
+    if (k != 0x23) goto other;
+    return 2;
+other:
+    return k == 0x24;
+}
+
+int func_001F1170(char *p) {
+    if (*(unsigned char *)(*(char **)(p + 0xA0) + 1) != 5) goto other;
+    return 1;
+other:
+    return 1;
+}
+
+int func_001AB4A0(char *p) {
+    if (*(unsigned char *)p != 0) goto other;
+    return 1;
+other:
+    return *(unsigned char *)(p + 0xA4) == 3;
+}
+
+int func_003C4D80(char *p, int a) {
+    switch (a) {
+    case 0:
+        return 0;
+    default:
+        return 0;
+    }
+}
+
+int func_0020F360(char *p) {
+    if (D_01CAFF30[0] == 3) goto a;
+    return 0;
+a:
+    return *(int *)(p + 0x34) == 1;
+}
+
+int func_0020F3A0(char *p) {
+    if (D_01CAFF30[0] == 9) goto a;
+    return 0;
+a:
+    return (*(int *)(p + 0x18) & 2) != 0;
+}
+
+void func_00278870(char *p, signed char k) {
+    switch (*(unsigned char *)(p + 0x2998)) {
+    case 1:
+    switch (k) {
+    case 0:
+        break;
+    case 1:
+        func_002788D0(p, k);
+        break;
+    }
+        break;
+    }
+}
+
+int func_00444870(char *p, signed char a, signed char b) {
+    if (((int *)(p + 0xA954))[a] <= b) return 1;
+    return func_004448D0(p, a, b);
+}
+
+int func_003B4650(char *p) {
+    unsigned char b;
+    if (*(unsigned char *)(p + 0x14D) != 3) goto a;
+    return 0;
+a:
+    b = *(unsigned char *)(p + 0x2219) == 1;
+    if (b) goto c;
+    return 0;
+c:
+    b = *(unsigned char *)(p + 0x2218) == 1;
+    if (b) goto d;
+    return 0;
+d:
+    if ((unsigned char)func_003B5A00(p, *(short *)(p + 0x21FC))) goto e;
+    return 0;
+e:
+    return !(func_003B5650(p, *(int *)(p + 0x21FC), 0) > 400.0f);
+}
+
+typedef struct { signed char a[5]; } T5_2D8;
+
+extern T5_2D8 D_005BC270;
+
+signed char func_002D8600(char *p) {
+    T5_2D8 t = D_005BC270;
+    signed char k = *(signed char *)(*(unsigned char *)(p + 0x28A0) + (int)p + 0x28A2);
+    if (k == -1) return *(signed char *)(*(unsigned char *)(p + 0x3D4A) + (int)p + 0x3D4C);
+    if (k == 5) return -1;
+    return t.a[k];
 }

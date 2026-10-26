@@ -10844,6 +10844,14 @@ extern unsigned long D_01DFAD00[];
 extern int D_005BCA38;
 void func_001F9EC0(char *);
 void func_001FB670(char *, float *, int);
+int func_002443D0(char *, int, int, int);
+int func_00241650(char *, unsigned char *);
+int func_00244C60(char *, unsigned char *, unsigned char *);
+int func_002417B0(char *, unsigned char *, int);
+extern signed char D_0058C2B0[];
+extern char D_01CB0510[];
+void func_0050A580(char *, int);
+int func_003A0F60(char *);
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -11763,4 +11771,127 @@ int func_001FA370(char *o, int idx, char *d, int prev, char **cache) {
     func_001FB670(o, b, 0);
     *(float *)o = b[2];
     return 1;
+}
+
+unsigned char func_00241230(char *p) {
+    unsigned char *e;
+    unsigned char *c;
+    int k;
+    unsigned char sel;
+    e = *(unsigned char **)(p + 0x2838);
+    c = e;
+    if (*(unsigned char *)(p + 0x28AA) == 2) return 0;
+    if (*(unsigned char *)(p + 0x28AC) == 1) return 0;
+    if (func_0021CBA0(p) & 0x400) goto found;
+    if ((unsigned char)func_00244E60(p, 0x8000000F)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x80000000)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x80000001)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x80000002)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x80000003)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x80000004)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x80000007)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x8000000A)) goto found;
+    if ((unsigned char)func_00244E60(p, 0x80000008)) goto found;
+    goto none;
+found:
+    while (e[0] != 5) {
+        if (c[2] == *(unsigned char *)(p + 0x2998)) break;
+        c += 0x28;
+    }
+    if (*(unsigned char *)(p + 0x290D) == 1) return 0;
+    for (; e[0] != 5; e += 0x28) {
+        sel = 0;
+        if (e[3] == 10) continue;
+        {
+            int w = *(int *)(p + ((unsigned int)e[2] >> 5) * 4 + 0x29D8);
+            if (!(w & (1 << (e[2] % 32)))) continue;
+        }
+        if ((unsigned char)func_002443D0(p, 2, (signed char)e[0xB], e[0xC]) != 1) continue;
+        if ((signed char)e[1] != -1) {
+            if (*(unsigned char *)(p + 0x28A7) == 0) continue;
+            if ((signed char)e[1] != *(signed char *)(p + 0x28A8)) continue;
+        }
+        if ((unsigned char)func_00241650(p, e) != 1) continue;
+        if (*(int *)(p + 0x2898) & 0x10000) {
+            if (c[2] == e[2]) continue;
+            k = *(int *)(e + 4);
+            if (!(k & 0x200)) continue;
+            if (c[0] == 2 || c[0] != e[0] || (c[0] == e[0] && c[3] < e[3] && c[0xB] == e[0xB])
+                || ((k & 0x100) && c[0xB] != e[0xB]) || ((k & 0x100) && c[3] == 9)) {
+                if ((unsigned char)func_00244C60(p, e, &sel) != 1) continue;
+                if ((unsigned char)func_002417B0(p, e, sel) != 1) continue;
+                return 1;
+            }
+        } else {
+            if (!(*(int *)(e + 4) & 0x100)) continue;
+            if (!(func_0021CBA0(p) & 0x400)) {
+                if (func_0021CBA0(p) & 0x400) continue;
+                if ((unsigned char)func_00244C60(p, e, &sel) != 1) continue;
+            }
+            if ((unsigned char)func_002417B0(p, e, sel) != 1) continue;
+            return 1;
+        }
+    }
+none:
+    return 0;
+}
+
+static inline int tst50A(char *base, int k) {
+    int w = *(int *)(base + k / 32 * 4 + 0x10);
+    return (w & (1 << (k & 0x1F))) != 0;
+}
+
+void func_0050A210(char *p) {
+    int j;
+    int i;
+    signed char *q;
+    signed char s;
+    signed char t[3];
+    signed char *pc;
+    signed char *pb;
+    pc = &t[2];
+    pb = &t[1];
+    for (i = 0; i < 11; i++) {
+        if (!(*(int *)(p + 0x18) & (1 << i))) continue;
+        j = 0;
+        q = D_0058C2B0;
+        s = i;
+        for (; j < 0x58; j++, q += 3) {
+            t[0] = q[0];
+            *pb = q[1];
+            *pc = q[2];
+            if (tst50A(D_01CB0510, *pc) == 1) continue;
+            if (t[0] != s && *pb != s) continue;
+            switch (j) {
+            case 0: func_0050A580(p, 0x4E20); break;
+            case 1: func_0050A580(p, 0x4E21); break;
+            case 2: func_0050A580(p, 0x4E22); break;
+            case 3: func_0050A580(p, 0x4E23); break;
+            case 4: break;
+            case 5: func_0050A580(p, 0x4E24); break;
+            default:
+                if (j < 12) func_0050A580(p, 0x4E25);
+                else if (j < 16) func_0050A580(p, 0x4E26);
+                else func_0050A580(p, 0x4E27);
+                break;
+            }
+        }
+    }
+}
+
+int func_003A0F20(char *p) {
+    unsigned char b = *(unsigned char *)(p + 0x2DE8) == 1;
+    if (b != 1) goto call;
+    return 0;
+call:
+    return func_003A0F60(p);
+}
+
+char *func_00206BC0(short *p, short k) {
+    int i;
+    for (i = 0; i < p[0]; i++) {
+        int v = *(short *)((char *)p + i * 12 + 4);
+        if (v == k) return (char *)p + i * 12 + 4;
+    }
+    return 0;
 }

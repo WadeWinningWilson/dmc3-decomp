@@ -14972,3 +14972,254 @@ extern "C" void func_003F8050(char *p, char *hit, Hit3F *obj, char *pos) {
     if (*(unsigned char *)(p + 0x48D) != 0) *(unsigned char *)(p + 0x48D) = 0;
 end:;
 }
+
+class V7C_0_f {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual float m(void);
+};
+
+class V80_1_fi {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual int m(float);
+};
+
+extern "C" bool func_00321900(char *p0) {
+    int tmp0;
+    float tmp2;
+    int tmp3;
+    tmp0 = *(int *)(*(char **)(p0 + 8) + 20);
+    tmp2 = ((V7C_0_f *)p0)->m();
+    tmp3 = ((V80_1_fi *)p0)->m(tmp2);
+    return *(float *)(p0 + 56) > *(float *)((char *)(tmp0 + (tmp3 << 2)) + 0);
+}
+
+class V1C_0_i {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual int m(void);
+};
+
+extern "C" void func_001957A0(char *p, signed char k) {
+    char *o;
+    int w = ((int *)(p + 0x450))[(unsigned int)k >> 5];
+    if (w & (1 << (k & 31))) return;
+    for (o = *(char **)(p + k * 4); o != 0; o = *(char **)(o + 32)) {
+        switch (*(unsigned char *)(o + 24)) {
+        case 2:
+            ((V1C_0_i *)o)->m();
+            break;
+        case 1:
+        case 3:
+        case 4:
+        case 0:
+            break;
+        }
+    }
+}
+
+class C3CD {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void m(int);
+};
+
+extern "C" void func_003CD4B0(char *p) {
+    switch (**(signed char **)(p + 4)) {
+    case 0x14:
+    case 0x15:
+    case 0x16:
+    case 0x17:
+        ((C3CD *)p)->m(0x19);
+        break;
+    }
+}
+
+class C384 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void d25();
+    virtual void d26();
+    virtual void d27();
+    virtual void d28();
+    virtual void d29();
+    virtual void d30();
+    virtual void d31();
+    virtual void d32();
+    virtual void d33();
+    virtual void d34();
+    virtual void d35();
+    virtual void d36();
+    virtual void d37();
+    virtual void d38();
+    virtual void d39();
+    virtual void d40();
+    virtual void d41();
+    virtual void d42();
+    virtual void d43();
+    virtual void d44();
+    virtual void d45();
+    virtual void d46();
+    virtual void d47();
+    virtual void d48();
+    virtual void m(char *);
+};
+
+extern "C" void func_003848A0(char *p) {
+    char *q = *(char **)(p + 0xE0);
+    unsigned char k = *(unsigned char *)(q + 0x28A0);
+    if (k == 0 || (q + 0x28A2)[k] == 4) {
+        ((C384 *)(p + 0x200))->m(p + 0x820);
+    }
+}
+
+extern "C" short func_0027BC50(char *p, unsigned char a, unsigned char b) {
+    int i;
+    for (i = 0; i < 20; i++) {
+        int v = *(short *)(p + i * 2 + 4);
+        if (v == a) {
+            int w = *(unsigned char *)(p + i + 0xAC);
+            if (w == b) return i;
+        }
+    }
+    return -1;
+}
+
+extern "C" void func_00414FF0(char *p, float f) {
+    int i;
+    for (i = 0; i < *(short *)(p + 4); i++) {
+        if (*(unsigned char *)(p + i * 8 + 8) == 0) {
+            ((unsigned char *)(p + 8))[i * 8] = 1;
+            ((float *)(p + 0xC))[i * 2] = f;
+            return;
+        }
+    }
+}

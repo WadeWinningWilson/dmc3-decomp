@@ -1060,6 +1060,12 @@ typedef struct { unsigned int e[5]; } Q_44A;
 
 extern R_44A D_005780B0[];
 extern Q_44A D_00578120[];
+void func_0019D320();
+void func_0019D330();
+void func_0019D340();
+int func_0019DA00();
+void func_0019DA50();
+int func_001B0FD0();
 
 void func_0044A930(char *p) {
     signed char i1 = *(signed char *)(p + 0x311C);
@@ -1170,4 +1176,21 @@ void func_0044A930(char *p) {
         *(unsigned char *)(p + 5) = 6;
         break;
     }
+}
+
+int func_004010A0(char *p, int h, int a) {
+    int n;
+    int r;
+    func_0019D320(h, a);
+    n = func_0019DA00(h);
+    r = func_001B0FD0(p + 4, n, -2);
+    if (r == 0) {
+        func_0019D330(h);
+        return 0;
+    }
+    func_0019D340(h, r);
+    func_0019DA50(h, n);
+    *(int *)(p + 24) = h;
+    *(char *)(p + 20) = 1;
+    return 1;
 }
