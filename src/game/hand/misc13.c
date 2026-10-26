@@ -205,6 +205,12 @@ char *func_00482A10(char *, char *, char *);
 char *func_004D9280(char *, char *, char *);
 char *func_004FC2E0(char *, char *, char *);
 char *func_002E3A40(char *, char *, char *);
+extern char D_0056C470[];
+void func_0041D840(char *, char *, float);
+void func_0028C200(char *, char *, char *, int, void *, char *, int);
+void func_0028C8E0(char *, int);
+void func_0028C910(char *);
+void func_0028C3A0(char *, int, int, char *);
 
 void func_003FE180(char *p, S3FE *s, int unused, float *pos) {
     float v[4];
@@ -679,4 +685,59 @@ void func_002F5AC0(char *p, int *h, unsigned char mode) {
             break;
         }
     }
+}
+
+#define VCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+static inline short ang42D(float d) { return 0.5f + 65536.0f * d / 6.283185f; }
+
+static inline char *base42D(char *p) { char *q = p; if (q != 0) q += 0x40; return q; }
+
+void func_0042D460(char *p) {
+    char *q;
+    char *r;
+    char *t;
+    char *e;
+    {
+        char *o = *(char **)(p + 0xD0);
+        *(signed char *)(p + 0x44) = -1;
+        *(unsigned char *)(p + 0x45) = 4;
+        VCOPY(p + 0x50, o + 0x50);
+        VCOPY(p + 0x80, o + 0x80);
+    }
+    {
+        short a = 0.5f + 65536.0f * *(float *)(p + 0x84) / 6.283185f;
+        *(short *)(p + 0x90) = (unsigned short)a;
+    }
+    func_0041D840(base42D(p), p + 0x150, 1.0f);
+    *(char **)(p + 0x450) = func_00207480(3, 0x36C, 0, 0x10);
+    e = *(char **)(p + 0x450);
+    if (e == 0) {
+        func_001AD140(p);
+        return;
+    }
+    t = p + 0x190;
+    *(char **)(e + 0x90) = t;
+    *(unsigned char *)(e + 0x9A) = 0;
+    q = *(char **)(p + 0x450);
+    *(unsigned char *)(q + 0x3A) = 1;
+    *(unsigned char *)(p + 0x3F0) = 1;
+    *(unsigned char *)(p + 0x3F1) = 0;
+    *(short *)(p + 0x3F2) = 0;
+    *(unsigned char *)(p + 0x400) = 6;
+    *(float *)(p + 0x410) = 0.0f;
+    *(float *)(p + 0x414) = 0.0f;
+    *(float *)(p + 0x418) = 0.0f;
+    *(float *)(p + 0x41C) = 1.0f;
+    *(float *)(p + 0x424) = 5.0f;
+    *(float *)(p + 0x420) = 100.0f;
+    func_0028C200(p + 0x1D0, p + 0x3F0, p + 0x400, 3, D_0056C470, p, 0);
+    *(int *)(p + 0x2A8) = 0x40;
+    func_0028C8E0(p + 0x1D0, 0);
+    func_0028C910(p + 0x1D0);
+    r = p + 0x190;
+    func_0028C3A0(p + 0x1D0, 0, -1, r);
+    *(int *)(p + 0x454) = 0;
+    *(unsigned char *)(p + 4) = 1;
+    *(unsigned char *)(p + 5) = 0;
 }

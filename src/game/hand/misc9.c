@@ -29904,3 +29904,11 @@ void func_0050E420(char *p) {
         *(unsigned char *)(p + 0x491) = 1;
     }
 }
+
+int func_00206190(char *p, int i) {
+    func_00206730(p + i * 4 + 0xA4);
+    if (*(char **)((char *)(i * 4) + (int)p + 0xA4) == 0) goto z;
+    return ((unsigned char)func_002077F0(*(char **)((char *)(i * 4) + (int)p + 0xA4)) ^ 1) != 0;
+z:
+    return 0;
+}

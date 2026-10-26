@@ -11941,3 +11941,43 @@ void func_003C0390(char *p, int a, short lim) {
     else if (v < -lim) v = -lim;
     *(short *)(p + 0x90) += v;
 }
+
+#define VCOPY(d, s) __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tsqc2 $vf4, 0x0(%0)" : : "r"(d), "r"(s) : "memory")
+
+static inline char *base4FE(char *p) { char *q = p; if (q != 0) q += 0x40; return q; }
+
+static inline void set4FE(float *v, float x, float y, float z, float w) { v[0] = x; v[1] = y; v[2] = z; v[3] = w; }
+
+static inline void set3FE(float *v, float x, float y, float z) { v[0] = x; v[1] = y; v[2] = z; }
+
+void func_004FEE70(char *p) {
+    char *q;
+    char *e;
+    *(signed char *)(p + 0x44) = -1;
+    *(unsigned char *)(p + 0x45) = 4;
+    VCOPY(p + 0x50, *(char **)(p + 0xD0) + 0x50);
+    set4FE((float *)(p + 0x80), 0.0f, 0.0f, 0.0f, 1.0f);
+    set4FE((float *)(p + 0x60), 0.0f, 0.0f, 0.0f, 1.0f);
+    {
+        short a = 0.5f + 65536.0f * *(float *)(p + 0x84) / 6.283185f;
+        *(short *)(p + 0x90) = (unsigned short)a;
+    }
+    set3FE((float *)(p + 0x464), 0.0f, 1.0f, 0.0f);
+    func_0041D840(base4FE(p), p + 0x160, 1.0f);
+    if (*(int *)(p + 0x470) == 0) {
+        *(char **)(p + 0x460) = func_00207480(3, 0x210, 0, 0x10);
+    } else {
+        *(char **)(p + 0x460) = func_00207480(3, 0x1EE, 0, 0x10);
+    }
+    e = *(char **)(p + 0x460);
+    q = p + 0x1A0;
+    if (e != 0) {
+        *(char **)(e + 0x90) = q;
+        *(unsigned char *)(e + 0x9A) = 0;
+    } else {
+        func_001AD140(p);
+        return;
+    }
+    *(unsigned char *)(p + 4) = 1;
+    *(unsigned char *)(p + 5) = 0;
+}
