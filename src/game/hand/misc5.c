@@ -2974,3 +2974,12 @@ void func_00287560(char *p) {
         *(int *)(p + 0x3D8) = 0;
     }
 }
+
+int func_0041DFD0(char *a, char *b, int ang, int w) {
+    short r = func_0034B940(a, b);
+    unsigned short h = (unsigned int)(unsigned short)w >> 1;
+    int d = (short)(r - (short)ang);
+    if (d < 0) d = -d;
+    if (h < d) return 0;
+    return 1;
+}

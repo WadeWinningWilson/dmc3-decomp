@@ -7335,6 +7335,8 @@ extern T3F D_0056CCD0[];
 extern T3F D_0056C8F0[];
 extern T3F D_0056C550[];
 int func_001AE310(char *, int);
+extern signed char D_00666713[];
+int func_0030EA90(char *, int);
 
 void func_003F9940(char *p) {
     T3F *q;
@@ -7467,4 +7469,14 @@ void func_00415EE0(char *p) {
             func_003303F0(D_01DFABA0, 0, 3, 0, 0);
         }
     }
+}
+
+int func_0030E380(char *p) {
+    float x = *(float *)(p + 0x10);
+    if (x < 0.0f) x = -x;
+    if (!(x <= 0.0001f)) goto a;
+    return 0;
+a:
+    if (D_00666713[0] == -1) return 1;
+    return func_0030EA90(D_01DFA340, *(int *)(p + 0x20));
 }

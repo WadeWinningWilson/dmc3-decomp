@@ -15223,3 +15223,63 @@ extern "C" void func_00414FF0(char *p, float f) {
         }
     }
 }
+
+extern "C" bool func_002CFC90(unsigned int k) {
+    return k == 0 || k == 1 || k == 5 || k == 6 || k == 7 || k - 0x4B <= 3 || k == 0x7B;
+}
+
+class O3C0 {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void d7();
+    virtual void d8();
+    virtual void d9();
+    virtual void d10();
+    virtual void d11();
+    virtual void d12();
+    virtual void d13();
+    virtual void d14();
+    virtual void d15();
+    virtual void d16();
+    virtual void d17();
+    virtual void d18();
+    virtual void d19();
+    virtual void d20();
+    virtual void d21();
+    virtual void d22();
+    virtual void d23();
+    virtual void d24();
+    virtual void m6C();
+    virtual void m70();
+};
+
+extern "C" void func_003C0280(char *p, short lim) {
+    ((O3C0 *)(p + 0x130))->m6C();
+    ((O3C0 *)(p + 0x130))->m70();
+    {
+        short t = *(short *)(p + 0x160);
+        short d = t - *(short *)(p + 0x90);
+        short v = d * *(float *)(p + 0x10);
+        if (lim < v) v = lim;
+        else if (v < -lim) v = -lim;
+        *(short *)(p + 0x90) += v;
+    }
+}
+
+extern "C" void func_00335EF0(char *p, short lim) {
+    ((O3C0 *)(p + 0x130))->m6C();
+    ((O3C0 *)(p + 0x130))->m70();
+    {
+        short t = *(short *)(p + 0x160);
+        short v = t - *(short *)(p + 0x90);
+        if (lim < v) v = lim;
+        else if (v < -lim) v = -lim;
+        *(short *)(p + 0x90) += v * *(float *)(p + 0x10);
+    }
+}

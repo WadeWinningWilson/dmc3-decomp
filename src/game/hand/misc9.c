@@ -29679,6 +29679,13 @@ e:
 typedef struct { signed char a[5]; } T5_2D8;
 
 extern T5_2D8 D_005BC270;
+void func_002080D0(char *, char *, int);
+void func_0013CDE0(void);
+extern unsigned char D_01CAF51F[];
+extern unsigned char D_00545598[];
+extern unsigned char D_005455A8[];
+int func_0027CB50(short *, short);
+char *func_0027CD80(short *, int, short);
 
 signed char func_002D8600(char *p) {
     T5_2D8 t = D_005BC270;
@@ -29686,4 +29693,214 @@ signed char func_002D8600(char *p) {
     if (k == -1) return *(signed char *)(*(unsigned char *)(p + 0x3D4A) + (int)p + 0x3D4C);
     if (k == 5) return -1;
     return t.a[k];
+}
+
+static inline char *g208(char *p, unsigned int i) {
+    if (*(unsigned int *)(p + 4) <= i) return 0;
+    if (((int *)(p + 8))[i] == 0) return 0;
+    return p + ((int *)(p + 8))[i];
+}
+
+void func_00208050(char *p, int a) {
+    func_002080D0(g208(p, 0), g208(p, 1), a);
+}
+
+int func_001F5040(char *p, unsigned int c) {
+    unsigned char *t = *(unsigned char **)(p + 0x1C);
+    unsigned char h = t[(c >> 8) & 0xFF];
+    unsigned short v;
+    if (h == 0) goto next;
+    v = ((unsigned short *)((unsigned char *)(h * 512) + (int)t - 0x100))[c & 0xFF];
+    if (v == 0) goto next;
+    return v - 1;
+next:
+    if (*(int *)(p + 0x94) != 0) goto rec;
+    return 0;
+rec:
+    return func_001F5040(p, 0x3F);
+}
+
+void func_001ED970(void) {
+    int *q;
+    char *g;
+    do {
+        while (*(signed char *)((g = D_005BE0D8) + 0x14) != 0) func_0013CDE0();
+        q = (int *)(g + 0x58);
+    } while (*q < *(signed char *)g + 1);
+    *q = 0;
+}
+
+int func_001ECEB0(char *p) {
+    if (*(unsigned char *)(p + 0x3CC) == 0) {
+        switch (D_01CAF51F[0]) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            return 0;
+        }
+        return *(unsigned char *)(p + 0x3CF) == 0;
+    }
+    return 0;
+}
+
+int func_0028B620(char *p) {
+    char *e = *(char **)(p + 0xE0);
+    signed char k = *(signed char *)(p + 0xD2);
+    int v = (*(unsigned short *)(e + 0x24C6) >> 8) & 0xFF;
+    if (v != D_00545598[k]) goto a;
+    return 1;
+a:
+    if (v != D_005455A8[k]) goto b;
+    return 1;
+b:
+    return *(signed char *)(e + 0x3D49) == k;
+}
+
+int func_004D1B90(char *p, unsigned char k) {
+    unsigned char t;
+    unsigned char x;
+    if (k != 1) goto a;
+    if (*(unsigned char *)(p + 0xB2D2) != 0) goto a;
+    return 0;
+a:
+    if (*(unsigned char *)(p + 0xB120) != 1) goto b;
+    return 0;
+b:
+    t = 1;
+    if ((unsigned int)(*(unsigned char *)(p + 0xB2C9) - 2) <= 1) goto c;
+    t = 0;
+c:
+    if (t != 1) goto d;
+    if (*(unsigned char *)(p + 0xB2CC) != 0) goto d;
+    return 0;
+d:
+    x = *(unsigned char *)(p + 0xB154);
+    if (x != 0x44) goto e;
+    return 0;
+e:
+    if (x != 0x32) goto g;
+    return 0;
+g:
+    if ((unsigned char)func_004D1CA0(p) == 1) return 2;
+    return 1;
+}
+
+int func_0027CBB0(short *p, short k, int j) {
+    char *r;
+    if (*p > k) goto a;
+    return -1;
+a:
+    {
+        short m = func_0027CB50(p, k);
+        j = (short)j;
+        if (m > j) goto b;
+    }
+    return -2;
+b:
+    r = func_0027CD80(p, *(int *)((char *)p + 0xA8), k);
+    if (r != 0) return *(int *)(r + j * 8 + 8);
+    return -1;
+}
+
+char *func_0027CCC0(short *p, short k, int j) {
+    char *r;
+    if (*p > k) goto a;
+    return 0;
+a:
+    {
+        short m = func_0027CB50(p, k);
+        j = (short)j;
+        if (m > j) goto b;
+    }
+    return 0;
+b:
+    r = func_0027CD80(p, *(int *)((char *)p + 0xA8), k);
+    if (r != 0) return r + *(int *)(r + j * 8 + 0xC);
+    return 0;
+}
+
+unsigned int func_00356C10(int u, unsigned int t) {
+    unsigned int h;
+    unsigned int s = t / D_01CAF516[0];
+    unsigned int m = s / 60;
+    unsigned int mm, ss;
+    h = m / 60 % 60;
+    mm = m % 60;
+    ss = s % 60;
+    if (h > 99) h = 99;
+    return ss + (h * 10000 + mm * 100);
+}
+
+static inline char *next2F2(char *p) {
+    char *n = *(char **)(p + 0x83C);
+    char *e = 0;
+    if (n != 0) {
+        e = *(char **)n;
+        *(char **)(p + 0x83C) = *(char **)(n + 4);
+    }
+    return e;
+}
+
+char *func_002F2EF0(char *p, float *pos, float r) {
+    float d[4] __attribute__((aligned(16)));
+    char *e;
+    char *res = 0;
+    float best;
+    r = r * r;
+    best = r;
+    *(char **)(p + 0x83C) = *(char **)(p + 0x834);
+    while ((e = next2F2(p)) != 0) {
+        __asm__ volatile("lqc2 $vf4, 0x0(%1)\n\tlqc2 $vf5, 0x0(%2)\n\tvsub.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"(d), "r"(pos), "r"(e + 0x50) : "memory");
+        {
+            float l = func_00104D00(d, d);
+            if (l < best) {
+                best = l;
+                res = e;
+            }
+        }
+    }
+    return res;
+}
+
+void func_0050E420(char *p) {
+    int f;
+    int i;
+    char *q;
+    char *e;
+    float v;
+    *(float *)(p + 0x46C) = *(float *)(p + 0x46C) - *(float *)(p + 0x10);
+    if (*(float *)(p + 0x46C) < 0.0f) {
+        func_001AD140(p);
+        return;
+    }
+    if (*(unsigned char *)(p + 0x491) != 0) {
+        f = 0;
+        for (i = 0, q = p; i < 2; i++, q += 4) {
+            e = *(char **)(q + 0x20C);
+            if (e != 0) {
+                f = *(int *)(e + 8);
+            }
+            if (f & 0x100) {
+                func_0050E880(p);
+                func_001AD140(p);
+                return;
+            }
+            if (f & 0x30000) {
+                func_0050E880(p);
+                func_001AD140(p);
+                return;
+            }
+        }
+    }
+    v = func_0034C160(*(float *)(p + 0x470), 20.0f, *(float *)(p + 0x10));
+    *(float *)(p + 0x470) = v;
+    {
+        float w = v * v;
+        *(float *)(p + 0x54) = *(float *)(p + 0x54) - w * *(float *)(p + 0x10);
+    }
+    if (*(unsigned char *)(p + 0x491) == 0 && func_00132470(p + 0x480, p + 0x50) < 800.0f) {
+        func_0050E680(p);
+        *(unsigned char *)(p + 0x491) = 1;
+    }
 }

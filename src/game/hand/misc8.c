@@ -10852,6 +10852,9 @@ extern signed char D_0058C2B0[];
 extern char D_01CB0510[];
 void func_0050A580(char *, int);
 int func_003A0F60(char *);
+extern char D_01DFC30C[];
+extern char D_01DFC1A0[];
+int func_003C0350(char *, int);
 
 static inline int ok2F1(L2F1 *x) { return x != 0; }
 
@@ -11894,4 +11897,47 @@ char *func_00206BC0(short *p, short k) {
         if (v == k) return (char *)p + i * 12 + 4;
     }
     return 0;
+}
+
+int func_004E9E90(int i, int j) {
+    char *g = D_01DFC30C;
+    char *e;
+    if (i < 0 || i >= 5) return 0;
+    e = D_01DFC1A0 + i * 64 + 0x2C;
+    if (*(int *)(e + 0x28) == 0) goto a;
+    return 0;
+a:
+    if (*(int *)g == i) goto b;
+    return 0;
+b:
+    if (*(int *)(e + 0x2C) > 0) goto c;
+    return 0;
+c:
+    if (*(int *)(e + 0x34) <= 0) return 0;
+    return *(int *)(*(char **)(g + 0x10) + j * 12 + 4);
+}
+
+void func_0047C4F0(char *p) {
+    int k;
+    int id;
+    int x;
+    int y;
+    unsigned int w;
+    k = *(unsigned char *)(p + 4);
+    if (k >= 3) {
+        id = k == 4 ? 0x310C : 0x3106;
+        w = func_003101B0(D_01DFA340, id, 16);
+        x = 0x1D8 - (w >> 16);
+        y = *(signed char *)(D_005BE0D8 + 3) != 0 ? 0xDE - *(short *)(D_005BE0D8 + 0x2E) : 0x1BD - *(short *)(D_005BE0D8 + 0x2E);
+        func_0030FD40(D_01DFA340, id, x, y, 0x585858, 16, 0xFFFFF2, 1);
+    }
+}
+
+void func_003C0390(char *p, int a, short lim) {
+    short t = func_003C0350(p, a);
+    short d = t - *(short *)(p + 0x90);
+    short v = d * *(float *)(p + 0x10);
+    if (lim < v) v = lim;
+    else if (v < -lim) v = -lim;
+    *(short *)(p + 0x90) += v;
 }

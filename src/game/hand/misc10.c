@@ -1066,6 +1066,8 @@ void func_0019D340();
 int func_0019DA00();
 void func_0019DA50();
 int func_001B0FD0();
+int func_0034B940(char *, char *);
+float func_001324B0(char *, char *);
 
 void func_0044A930(char *p) {
     signed char i1 = *(signed char *)(p + 0x311C);
@@ -1193,4 +1195,13 @@ int func_004010A0(char *p, int h, int a) {
     *(int *)(p + 24) = h;
     *(char *)(p + 20) = 1;
     return 1;
+}
+
+int func_0034B800(char *a, char *b, int ang, int w, float dist) {
+    short r = func_0034B940(a, b);
+    unsigned short h = (unsigned int)(unsigned short)w >> 1;
+    int d = (short)(r - (short)ang);
+    if (d < 0) d = -d;
+    if (h < d) return 0;
+    return !(func_001324B0(a, b) > dist);
 }
