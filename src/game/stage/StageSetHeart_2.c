@@ -115,3 +115,17 @@ void func_00450760(char *p) { func_004505D0(p + -304); }
 void func_004505B0(char *p) { *(char *)(p + 2053) = 0; }
 
 void func_004505C0(char *p, short v) { *(short *)(p + 500) = v; }
+
+void func_00450570(p0, p1) char *p0; int p1; {
+    *(char *)(p0 + 2053) = 1;
+    switch (p1) {
+    case 0:
+        break;
+    case 1:
+        *(char *)(p0 + 2056) = 1;
+        break;
+    case 2:
+        *(char *)(p0 + 2057) = 1;
+        break;
+    }
+}

@@ -119,3 +119,7 @@ void func_003CDF10(char *p0) {
     *(char *)(p0 + 206) = 0;
     *(char *)(p0 + 207) = 0;
 }
+
+void func_003CCF60(char *p) {
+    if (*(unsigned char *)(p + 0x1D) == 3) return;
+}

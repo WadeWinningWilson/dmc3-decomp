@@ -71,3 +71,23 @@ int func_0032FA30(p0) int p0; {
     *(char *)(v0 + 280) = 0;
     return (int)v0;
 }
+
+typedef struct { unsigned short x, y; } P32F;
+
+extern P32F D_0055B520[][8];
+
+float func_0032F690(int i, float x) {
+    P32F *t = D_0055B520[i];
+    unsigned int j;
+    float y0, r;
+    if (x <= t[0].x) return t[0].y;
+    if (!(x < t[7].x)) return t[7].y;
+    for (j = 0; j < 7; j++) {
+        if (t[j].x < x && x < t[j + 1].x) {
+            y0 = t[j].y;
+            r = (x - t[j].x) / (float)(t[j + 1].x - t[j].x);
+            return y0 - r * (y0 - t[j + 1].y);
+        }
+    }
+    return 0.0f;
+}

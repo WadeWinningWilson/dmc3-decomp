@@ -223,3 +223,56 @@ void func_002FF090(char *p0) {
     }
 }
 }
+
+extern "C" {
+extern unsigned char D_005BE188;
+}
+
+extern "C" {
+extern char D_006480D0[];
+}
+
+extern "C" {
+extern char D_01CAF51F[];
+}
+
+extern "C" {
+extern char D_01CAFF10[];
+}
+
+extern "C" {
+int func_00195F60(char *);
+}
+
+extern "C" {
+void func_001960F0(char *, int);
+}
+
+class V24_2_iiv {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void d3();
+    virtual void d4();
+    virtual void d5();
+    virtual void d6();
+    virtual void m(int, int);
+};
+
+extern "C" {
+int func_002FE7E0(char *p0) {
+    extern char * D_005BC1A8;
+    int v0;
+    unsigned char tmp1;
+    *(int *)(p0 + 32) = *(int *)D_01CAFF10;
+    tmp1 = D_005BE188;
+    *(char *)D_01CAF51F = 4;
+    if (tmp1 == 1) {
+        ((V24_2_iiv *)D_005BC1A8)->m(0x80000000, 0);
+        func_001960F0(D_006480D0, 36);
+        v0 = func_00195F60(D_006480D0);
+    }
+    return v0;
+}
+}

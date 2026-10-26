@@ -15,3 +15,7 @@ void func_0038C280(char *p) { func_0038C190(p + -160); }
 void func_0038C2B0(char *p) { func_0038C190(p + -208); }
 
 void func_0038C170(char *p) { *(char *)(p + 220) = 0; }
+
+void func_0038C160(char *p0) {
+    *(char *)(p0 + 220) = 1;
+}

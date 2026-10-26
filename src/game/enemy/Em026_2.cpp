@@ -998,3 +998,59 @@ void func_003A02D0(char *p) {
     }
 }
 }
+
+extern "C" int func_0021CAD0(char *);
+
+extern "C" void func_003A0EF0(char *);
+
+static inline bool on2DE5(char *p) { return *(unsigned char *)(p + 0x2DE5) == 1; }
+
+static inline bool f8_2DD8(char *p) { return (*(unsigned short *)(p + 0x2DD8) & 8) != 0; }
+
+static inline bool ne2EC3(char *p, short c) { return *(unsigned char *)(p + 0x2EC3) != c; }
+
+typedef struct { short h[3]; } Tab39F;
+extern "C" Tab39F D_005BCCD0;
+
+extern "C" bool func_0039FF60(char *p) {
+    Tab39F tab = D_005BCCD0;
+    bool r = false;
+    unsigned char c;
+    if (*(unsigned char *)(p + 0x2F3C) == 2) return false;
+    if (on2DE5(p) == false) return false;
+    if (f8_2DD8(p) == true) return false;
+    c = func_0021CAD0(*(char **)(*(char **)D_01CAFF0C + 0xC));
+    if (c == 0) {
+        *(unsigned char *)(p + 0x2EC3) = 0;
+        *(unsigned char *)(p + 0x2EC4) = 0;
+        return false;
+    }
+    if (ne2EC3(p, c) == false) return false;
+    func_003A0EF0(p);
+    switch (c) {
+    case 4:
+    case 0x5C:
+        if (*(unsigned char *)(p + 0x2DF4) < 2 && !(*(unsigned char *)(p + 0x2DF5) & 1)) r = true;
+        break;
+    case 0x26:
+    case 0x27:
+        if (*(unsigned char *)(p + 0x2DF4) < 3 && !(*(unsigned char *)(p + 0x2DF5) & 1)) r = true;
+        break;
+    case 7:
+    case 8:
+        if (*(unsigned char *)(p + 0x2DF4) < 3 && !(*(unsigned char *)(p + 0x2DF5) & 1) && *(unsigned short *)(p + 0x2DEE) < 0x8001) r = true;
+        break;
+    default:
+        switch (*(unsigned char *)(p + 0x2EC2)) {
+        case 0:
+            if (*(unsigned char *)(p + 0x2DF4) < 2 && !(*(unsigned char *)(p + 0x2DF5) & 1) && *(unsigned short *)(p + 0x2DEE) < 0x8001) r = true;
+            break;
+        case 1:
+            if (!(*(unsigned char *)(p + 0x2DF5) & 1) && *(unsigned short *)(p + 0x2DEE) < 0x8001) r = true;
+            break;
+        }
+        break;
+    }
+    if (r == true) *(short *)(p + 0x2DDA) = tab.h[*(unsigned char *)(p + 0x2F3C)];
+    return r;
+}

@@ -198,3 +198,11 @@ float func_00321D40(char *p0, float f0) {
     *(float *)(p0 + 132) = (*(float *)(p0 + 132) + f0);
     return t0;
 }
+
+void func_003206F0(char *p) {
+    if (*(unsigned char *)(p + 0x1D) == 3) return;
+}
+
+void func_00320700(char *p) {
+    if (*(unsigned char *)(p + 0x1D) == 3) return;
+}

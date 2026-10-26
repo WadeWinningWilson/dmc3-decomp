@@ -4976,3 +4976,25 @@ extern "C" void func_00381B50(char *p) { ((VThunk *)p)->v195(); }
 extern "C" void func_00381BE0(void) {}
 
 extern "C" void func_0037ED20(char *p) { ((VThunk *)p)->v196(); }
+
+extern "C" {
+int func_00381B20(char *p0) {
+    int tmp0;
+    *(char *)(p0 + 5200) = 1;
+    *(int *)(p0 + 5204) = 0x40a00000;
+    *(int *)(p0 + 5208) = 0x41a00000;
+    tmp0 = ((V314_0_i *)p0)->m();
+    return tmp0;
+}
+}
+
+extern "C" {
+int func_00381BB0(char *p0) {
+    int tmp0;
+    *(char *)(p0 + 5200) = 1;
+    *(int *)(p0 + 5204) = 0x40a00000;
+    *(int *)(p0 + 5208) = 0x42200000;
+    tmp0 = ((V314_0_i *)p0)->m();
+    return tmp0;
+}
+}

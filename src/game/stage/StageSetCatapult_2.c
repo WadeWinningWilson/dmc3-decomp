@@ -7,3 +7,7 @@ void func_00483520(char *p) { func_00483450(p + -160); }
 void func_00483550(char *p) { func_00483450(p + -208); }
 
 void func_00483440(char *p) { *(char *)(p + 1376) = 0; }
+
+void func_00483430(char *p0) {
+    *(char *)(p0 + 1376) = 1;
+}

@@ -767,10 +767,6 @@ void func_004AE3F0(Hit40 *h) {
 
 extern "C" float func_00132470(char *, char *);
 
-extern "C" char D_00562AA0[];
-
-extern "C" short func_0034B940(char *, char *);
-
 extern "C" void func_0034B8C0(char *, short *, int);
 
 extern "C" int func_0024E780(char *, int, int);
@@ -794,6 +790,8 @@ public:
 
 extern "C" {
 void func_004B0820(D_4B0 *self) {
+    extern char D_00562AA0[];
+    extern short func_0034B940(char *, char *);
     extern void func_0041D6E0(char *, char *, int, float);
     extern void func_00376E40(char *);
     extern void func_00376B80(char *, int);
@@ -862,6 +860,8 @@ public:
 
 extern "C" {
 void func_004B0A70(D_4B0a *self) {
+    extern char D_00562AA0[];
+    extern short func_0034B940(char *, char *);
     extern void func_0041D6E0(char *, char *, int, float);
     extern void func_00376E40(char *);
     extern void func_00376B80(char *, int);
@@ -1236,6 +1236,103 @@ void func_004B0740(int p0) {
         v4 = (int)v0;
         if (tmp4 == 1) {
             v3 = func_00376B40(v4, 19);
+        }
+        break;
+    }
+}
+}
+
+class V14_7_iiiiiiiv {
+public:
+    virtual void d0();
+    virtual void d1();
+    virtual void d2();
+    virtual void m(int, int, int, int, int, int, int);
+};
+
+extern "C" {
+extern char * D_005BC1A8;
+}
+
+extern "C" {
+extern char D_01CAFF0C[];
+}
+
+extern "C" {
+int func_0041E190(char *, char *, int, float);
+}
+
+extern "C" {
+void func_0046EC00(int, int, int, char *, int, int, int, int, float, float);
+}
+
+extern "C" {
+void func_004B0E20(char *p0) {
+    extern char D_00562AA0[];
+    int func_0034B940(int, char *);
+    int func_00376B40(char *, int);
+    void func_00376B80(char *, int);
+    int func_0041D6B0(char *, float);
+    char stk[0x10] __attribute__((aligned(16)));
+    int v0;
+    int v1;
+    int v2;
+    int v3;
+    int v4;
+    int v5;
+    char *v6;
+    int v7;
+    int tmp9;
+    short tmp10;
+    v6 = p0;
+    *(int *)(p0 + 2300) = (*(int *)(p0 + 2300) | 0x40000000);
+    *(int *)(p0 + 2300) = (*(int *)(p0 + 2300) | 0x2000000);
+    v0 = *(int *)(p0 + 2300);
+    *(int *)(p0 + 2300) = (v0 | 0x4000000);
+    v1 = *(int *)(p0 + 2300);
+    *(int *)(p0 + 2300) = (v1 | 0x20000000);
+    v2 = *(int *)(p0 + 2300);
+    *(int *)(p0 + 2300) = (v2 | 0x10000000);
+    v3 = *(int *)(p0 + 2300);
+    *(int *)(p0 + 2300) = (v3 | 0x8000000);
+    v4 = *(int *)(p0 + 2300);
+    *(int *)(p0 + 2300) = (v4 | 0x800000);
+    *(int *)(p0 + 2300) = (*(int *)(p0 + 2300) | 0x80000000);
+    v5 = *(unsigned char *)(p0 + 6);
+    switch (v5) {
+    case 0:
+        ((V14_7_iiiiiiiv *)D_005BC1A8)->m(0x80ffffff, 60, v4, v3, v2, v1, v0);
+        func_00376B80(v6, -1);
+        *(int *)(v6 + 2396) = 0;
+        *(int *)(v6 + 96) = 0;
+        *(int *)(v6 + 100) = 0;
+        *(int *)(v6 + 104) = 0x40000000;
+        *(int *)(v6 + 108) = 0x3f800000;
+        tmp9 = func_0034B940((*(int *)(*(char **)D_01CAFF0C + 12) + 80), D_00562AA0);
+        *(short *)(v6 + 144) = tmp9;
+        tmp10 = *(short *)(v6 + 144);
+        *(float *)(v6 + 132) = (6.283185005187988f * ((float)*(short *)(v6 + 144) / 65536.0f));
+        *(int *)((stk + -32) + 40) = 0xc4fa0000;
+        *(int *)((stk + -32) + 44) = 0x3f800000;
+        *(int *)((stk + -32) + 32) = 0;
+        *(int *)((stk + -32) + 36) = 0;
+        v7 = func_0041E190(((stk + -32) + 32), ((stk + -32) + 32), tmp10, *(float *)(v6 + 132));
+        __asm__ volatile("lqc2 $vf4, 0x0(%2)\n\tlqc2 $vf5, 0x0(%1)\n\tvadd.xyzw $vf6, $vf5, $vf4\n\tsqc2 $vf6, 0x0(%0)" : : "r"((v6 + 80)), "r"(D_00562AA0), "r"(((stk + -32) + 32)) : "memory");
+        *(float *)(v6 + 84) = (*(float *)(v6 + 84) + 470.0f);
+        *(char *)(v6 + 6) = 1;
+        break;
+    case 1:
+        func_0046EC00((*(int *)(*(char **)D_01CAFF0C + 12) + 15584), 1, (*(int *)(*(char **)D_01CAFF0C + 12) + 80), v6, 0, v2, v1, v0, 60.0f, 90.0f);
+        *(int *)(v6 + 2296) = 0x42700000;
+        *(char *)(v6 + 6) = 2;
+        /* fall through */
+    case 2:
+        v7 = func_0041D6B0((v6 + 2296), *(float *)(v6 + 16));
+        if ((v7 & 255) == 1) {
+            *(int *)(v6 + 2300) = (*(int *)(v6 + 2300) & -129);
+            *(int *)(v6 + 2300) = (*(int *)(v6 + 2300) | 512);
+            *(int *)(v6 + 2300) = (*(int *)(v6 + 2300) | 256);
+            v7 = func_00376B40(v6, 9);
         }
         break;
     }

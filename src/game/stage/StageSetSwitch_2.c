@@ -190,3 +190,7 @@ void func_002FE000(char *p0) {
     *(char *)(p0 + 2080) = 0;
     func_002FC180();
 }
+
+void func_002FDFF0(char *p0) {
+    *(char *)(p0 + 2080) = 1;
+}

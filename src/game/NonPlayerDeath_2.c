@@ -80,3 +80,32 @@ float func_002839B0(char *p0, char *p1) {
     *(float *)(p1 + 0) = *(float *)(p0 + 9012);
     return t0;
 }
+
+typedef struct { float x, y, z, w; } V4_283;
+
+int func_00283820(char *p, int k, float *out, float *r) {
+    float s = (*(float *)(p + 0x2618) + (*(float *)(p + 0x2610) + *(float *)(p + 0x2614))) / 3.0f;
+    switch (k) {
+    case 0:
+        *(V4_283 *)out = *(V4_283 *)(p + 0x50);
+        *r = 100.0f * s;
+        return 1;
+    case 1:
+        *(V4_283 *)out = *(V4_283 *)(p + 0x50);
+        out[0] = *(float *)(*(char **)(*(char **)(p + 0x410) + 0x104) + 0x30);
+        out[1] = *(float *)(*(char **)(*(char **)(p + 0x410) + 0x104) + 0x34);
+        out[2] = *(float *)(*(char **)(*(char **)(p + 0x410) + 0x104) + 0x38);
+        out[3] = 1.0f;
+        *r = 100.0f * s;
+        return 1;
+    case 2:
+        *(V4_283 *)out = *(V4_283 *)(p + 0x50);
+        out[0] = *(float *)(*(char **)(*(char **)(p + 0x454) + 0x104) + 0x30);
+        out[1] = *(float *)(*(char **)(*(char **)(p + 0x454) + 0x104) + 0x34);
+        out[2] = *(float *)(*(char **)(*(char **)(p + 0x454) + 0x104) + 0x38);
+        out[3] = 1.0f;
+        *r = 100.0f * s;
+        return 1;
+    }
+    return 0;
+}
